@@ -1,0 +1,33 @@
+{
+    "id": "mybin",
+    "name": "My Bin",
+    "description": {
+        "fr_FR": "Gestion de vos poubelles.",
+        "en_US": "Management of your bins."
+    },
+    "utilization": "Créez un équipement t définisez vos critère de rammasage des vos poubelles.",
+    "licence": "AGPL",
+    "author": "hugoKs3",
+    "require": "4.0.61",
+    "category": "organization",
+    "hasDependency": false,
+    "hasOwnDeamon": false,
+    "maxDependancyInstallTime": 0,
+    "changelog": "https:\/\/hugoks3.github.io\/plugin-mybin\/#language#\/changelog",
+    "documentation": "https:\/\/hugoks3.github.io\/plugin-mybin\/#language#\/",
+    "link" : {
+		"forum":"https://community.jeedom.com/t/plugin-mybin/43183"
+	},
+    "language": [
+        "fr_FR",
+        "en_US"
+    ],
+    "compatibility": [
+        "miniplus",
+        "smart",
+        "rpi",
+        "docker",
+        "diy",
+        "v4"
+    ]
+}
