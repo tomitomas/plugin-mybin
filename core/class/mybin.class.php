@@ -58,7 +58,7 @@ class mybin extends eqLogic {
     public function postUpdate() {
 
     }
-
+}
 
 class mybinCmd extends cmd {
 
