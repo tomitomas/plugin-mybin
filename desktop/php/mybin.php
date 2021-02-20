@@ -197,38 +197,63 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Heure de ramassage}}</label>
-								<div class="col-sm-3">
-                                    <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_time">
-                                    <?php
-									for ($i = 0; $i <= 23; $i++) {
-										echo '<option value="'.$i.'00">'.$i.':00</option>';
-                                        echo '<option value="'.$i.'30">'.$i.':30</option>';
-                                    }
-                                    ?>
-                                    </select>
+								<div class="col-sm-5">
+                                    <span class="col-sm-2">
+                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_hour">
+                                        <?php
+                                        for ($i = 0; $i <= 23; $i++) {
+                                            echo '<option value="'.$i.'">'.$i.'</option>';
+                                        }
+                                        ?>
+                                        </select>
+                                    </span>
+                                    <span class="col-sm-1">
+                                        <label>h</label>
+                                    </span>
+                                    <span class="col-sm-2">
+                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_minute">
+                                        <?php
+                                        for ($i = 0; $i <= 59; $i++) {
+                                            echo '<option value="'.$i.'">'.$i.'</option>';
+                                        }
+                                        ?>
+                                        </select>
+                                    </span>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Notification}}</label>
 								<div class="col-sm-7">
-                                    <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_notif_veille">
-                                        <option value="1">{{La veille}}</option>
-                                        <option value="0">{{Le jour même}}</option>
-                                    </select>
-                                    <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_notif_hour">
-                                    <?php
-									for ($i = 0; $i <= 23; $i++) {
-										echo '<option value="'.$i.'">'.$i.'</option>';
-                                    }
-                                    ?>
-                                    </select>
-                                    <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_notif_minute">
-                                    <?php
-									for ($i = 0; $i <= 59; $i++) {
-										echo '<option value="'.$i.'">'.$i.'</option>';
-                                    }
-                                    ?>
-                                    </select>
+                                    <span class="col-sm-6">
+                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_notif_veille">
+                                            <option value="1">{{La veille}}</option>
+                                            <option value="0">{{Le jour même}}</option>
+                                        </select>
+                                    </span>
+                                    <span class="col-sm-1">
+                                        <label>{{à}}</label>
+                                    </span>
+                                    <span class="col-sm-2">
+                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_notif_hour">
+                                        <?php
+                                        for ($i = 0; $i <= 23; $i++) {
+                                            echo '<option value="'.$i.'">'.$i.'</option>';
+                                        }
+                                        ?>
+                                        </select>
+                                    </span>
+                                    <span class="col-sm-1">
+                                        <label>h</label>
+                                    </span>
+                                    <span class="col-sm-2">
+                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_notif_minute">
+                                        <?php
+                                        for ($i = 0; $i <= 59; $i++) {
+                                            echo '<option value="'.$i.'">'.$i.'</option>';
+                                        }
+                                        ?>
+                                        </select>
+                                    </span>
 								</div>
 							</div>
 						</div>
