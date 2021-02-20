@@ -213,6 +213,11 @@ class mybin extends eqLogic {
         }
         $version = jeedom::versionAlias($_version);
         
+        $greenBinCmd = $this->getCmd(null, 'greenbin');
+        $yellowBinCmd = $this->getCmd(null, 'yellowbin');
+        $greenbin = $greenBinCmd->execCmd();
+        $yellowbin = $yellowBinCmd->execCmd();
+        
         $binimg = "none";
         if ($greenbin == 1) {
             $binimg = "green";
