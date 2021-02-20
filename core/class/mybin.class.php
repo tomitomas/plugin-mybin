@@ -56,7 +56,7 @@ class mybin extends eqLogic {
         $ishour = false;
         $isminute = false;
         for ($i = 0; $i <= 6; $i++) {
-            if ($this->getConfiguration($bin.'_'.$i) == $day) {
+            if ($this->getConfiguration($bin.'_'.$i) == 1 && $i == $day) {
                 $isday = true;
                 break;
             }
@@ -67,7 +67,7 @@ class mybin extends eqLogic {
         if ($this->getConfiguration($bin.'_notif_hour') == $hour) {
             $ishour = true;
         }
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin: day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin ' . $bin . ': day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
         if ($isday && $ishour && $isminute) {
             notifBin($bin);
         }
@@ -79,13 +79,13 @@ class mybin extends eqLogic {
         $isminute = false;
         $myday = $day;
         if ($this->getConfiguration($bin.'_notif_veille') == 1) {
-            $myday = $myday - 1;
-            if ($myday == -1) {
-                $myday = 6;
+            $myday = $myday + 1;
+            if ($myday == 7) {
+                $myday = 0;
             }                
         }
         for ($i = 0; $i <= 6; $i++) {
-            if ($this->getConfiguration($bin.'_'.$i) == $myday) {
+            if ($this->getConfiguration($bin.'_'.$i) == 1 && $i == $myday) {
                 $isday = true;
                 break;
             }
@@ -96,7 +96,7 @@ class mybin extends eqLogic {
         if ($this->getConfiguration($bin.'_hour') == $hour) {
             $ishour = true;
         }
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin: day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin ' . $bin . ': day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
         if ($isday && $ishour && $isminute) {
             ackBin($bin);
         }
