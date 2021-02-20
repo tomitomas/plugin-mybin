@@ -71,7 +71,19 @@ class mybin extends eqLogic {
 
     // Fonction exécutée automatiquement avant la création de l'équipement
     public function preInsert() {
-
+        $this->setDisplay('height','200px');
+        $this->setDisplay('width', '200px');
+        $this->setConfiguration('widgetTemplate', 1);
+        $this->setConfiguration('greenbin_hour', 8);
+        $this->setConfiguration('greenbin_minute', 0);
+        $this->setConfiguration('greenbin_notif_veille', 1);
+        $this->setConfiguration('greenbin_notif_hour', 20);
+        $this->setConfiguration('greenbin_notif_minute', 0);
+        $this->setConfiguration('yellowbin_hour', 8);
+        $this->setConfiguration('yellowbin_minute', 0);
+        $this->setConfiguration('yellowbin_notif_veille', 1);
+        $this->setConfiguration('yellowbin_notif_hour', 20);
+        $this->setConfiguration('yellowbin_notif_minute', 0);
     }
 
  
@@ -83,25 +95,13 @@ class mybin extends eqLogic {
     // Fonction exécutée automatiquement après la mise à jour de l'équipement
 
     public function postUpdate() {
-        $cmd = $this->getCmd(null, 'ackgreen');
+        $cmd = $this->getCmd(null, 'ack');
         if (!is_object($cmd))
         {
             $cmd = new linksysCmd();
-            $cmd->setLogicalId('ackgreen');
+            $cmd->setLogicalId('ack');
             $cmd->setEqLogic_id($this->getId());
-            $cmd->setName('Ack Poubelle verte');
-            $cmd->setType('action');
-            $cmd->setSubType('other');
-            $cmd->setEventOnly(1);
-            $cmd->save();
-        }
-        $cmd = $this->getCmd(null, 'ackyellow');
-        if (!is_object($cmd))
-        {
-            $cmd = new linksysCmd();
-            $cmd->setLogicalId('ackyellow');
-            $cmd->setEqLogic_id($this->getId());
-            $cmd->setName('Ack Poubelle jaune');
+            $cmd->setName('Ack');
             $cmd->setType('action');
             $cmd->setSubType('other');
             $cmd->setEventOnly(1);
@@ -179,7 +179,7 @@ class mybin extends eqLogic {
             $cron->save();
         }
         
-        if ($this->getConfiguration($bin.'_autoack') == 1 && $daysack <> '') {
+        if ($daysack <> '') {
             $cron = cron::byClassAndFunction('mybin', $ack);
             if ( ! is_object($cron)) {
                 $cron = new cron();
@@ -188,13 +188,60 @@ class mybin extends eqLogic {
                 $cron->setEnable(1);
                 $cron->setDeamon(0);
             }
+            $cronExpr = $this->getConfiguration($bin.'_minute') . ' ' . $this->getConfiguration($bin.'_hour') . ' * * '.$daysack;        
+            $cron->setSchedule($cronExpr);
+            $cron->save();
         }
+    }
+    
+    public function toHtml($_version = 'dashboard') {
+        if ($this->getConfiguration('widgetTemplate') != 1) {
+    		return parent::toHtml($_version);
+    	}
+        $replace = $this->preToHtml($_version);
+        if (!is_array($replace)) {
+            return $replace;
+        }
+        $version = jeedom::versionAlias($_version);
+        
+        $binimg = "none";
+        if ($greenbin == 1) {
+            $binimg = "green";
+        }
+        if ($yellowbin == 1) {
+            $binimg = "yellow";
+        }
+        if ($greenbin == 1 && $yellowbin == 1) {
+            $binimg = "both";
+        }
+        $replace['#binimg#'] = $binimg;
+        
+        $ackCmd = $this->getCmd(null, 'ack');
+        $replace['#ack_id#'] = $ackCmd->getId();
+
+        $html = template_replace($replace, getTemplate('core', $version, 'mybin.template', __CLASS__));
+        cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
+        return $html;
     }
 }
 
 class mybinCmd extends cmd {
 
-    public function execute( $_options = array() ) {
-
+    public function dontRemoveCmd() {
+		return true;
+	}
+    
+	public function execute($_options = null) {
+        $eqLogic = $this->getEqLogic();
+        if (!is_object($eqLogic) || $eqLogic->getIsEnable() != 1) {
+            throw new Exception(__('Equipement desactivé impossible d\éxecuter la commande : ' . $this->getHumanName(), __FILE__));
+        }
+        log::add('mybin', 'debug', 'Execution de la commande ' . $this->getLogicalId());
+        switch ($this->getLogicalId()) {
+            case "ack":
+                $eqLogic->ackGreenBin();
+                $eqLogic->ackYellowBin();
+                break;
+        }
     }
 }

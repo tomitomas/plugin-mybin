@@ -237,23 +237,10 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<legend><i class="fas fa-camera-retro"></i> {{Widget}}</legend>
 							<div class="form-group">
 								<label class="col-sm-4 control-label">{{Template de widget}}
-									<sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour utiliser le template de widget représentant le compteur Linky}}"></i></sup>
+									<sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour utiliser le template de widget}}"></i></sup>
 								</label>
 								<div class="col-sm-1">
 									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="widgetTemplate"/>
-								</div>
-							</div>
-							<br>
-							<div class="form-group" id="templateParams">
-								<label class="col-sm-5 control-label">{{Couleur de fond}}
-									<sup><i class="fas fa-question-circle tooltips" title="{{Sélectionner la couleur de fond du template de widget}}"></i></sup>
-								</label>
-								<div class="col-sm-3">
-									<input type="color" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="widgetBGColor"/>
-								</div>
-								<label class="col-sm-2 control-label">{{Transparent}} </label>
-								<div class="col-sm-2">
-									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="widgetTransparent"/>
 								</div>
 							</div>
 						</div>
