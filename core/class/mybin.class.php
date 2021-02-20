@@ -28,9 +28,77 @@ class mybin extends eqLogic {
    * Tableau multidimensionnel - exemple: array('custom' => true, 'custom::layout' => false)
 	public static $_widgetPossibility = array();
    */
+    
+    public static function cron5() {
+        $eqLogics = self::byType(__CLASS__, true);
+
+        foreach ($eqLogics as $eqLogic)
+        {
+            $eqLogic->checkBins();
+        }
+    }
 
     /*     * *********************Méthodes d'instance************************* */
 
+    public function checkBins() {
+        $day = 1 * date('w');
+        $hour = 1 * date('G');
+        $minute = 1 * date('i');
+        $this->checkNotifBin('yellowbin', $day, $hour, $minute);
+        $this->checkNotifBin('greenbin', $day, $hour, $minute);
+        $this->checkAckBin('yellowbin', $day, $hour, $minute);
+        $this->checkAckBin('greenbin', $day, $hour, $minute);
+    }
+    
+    public function checkNotifBin($bin, $day, $hour, $minute) {
+        $isday = false;
+        $ishour = false;
+        $isminute = false;
+        for ($i = 0; $i <= 6; $i++) {
+            if ($this->getConfiguration($bin.'_'.$i) == $day) {
+                $isday = true;
+                break;
+            }
+        }
+        if ($this->getConfiguration($bin.'_notif_minute') == $minute) {
+            $isminute = true;
+        }
+        if ($this->getConfiguration($bin.'_notif_hour') == $hour) {
+            $ishour = true;
+        }
+        if ($isday && $ishour && $isminute) {
+            notifBin($bin);
+        }
+    }
+    
+    public function checkAckBin($bin, $day, $hour, $minute) {
+        $isday = false;
+        $ishour = false;
+        $isminute = false;
+        $myday = $day;
+        if ($this->getConfiguration($bin.'_notif_veille') == 1) {
+            $myday = $myday - 1;
+            if ($myday == -1) {
+                $myday = 6;
+            }                
+        }
+        for ($i = 0; $i <= 6; $i++) {
+            if ($this->getConfiguration($bin.'_'.$i) == $myday) {
+                $isday = true;
+                break;
+            }
+        }
+        if ($this->getConfiguration($bin.'_minute') == $minute) {
+            $isminute = true;
+        }
+        if ($this->getConfiguration($bin.'_hour') == $hour) {
+            $ishour = true;
+        }
+        if ($isday && $ishour && $isminute) {
+            ackBin($bin);
+        }
+    }
+    
     public function notifYellowBin() {
         $this->notifBin('yellowbin');
     }
@@ -127,60 +195,7 @@ class mybin extends eqLogic {
             $cmd->setTemplate('dashboard', 'line');
             $cmd->save();
         }
-        
-        if ($this->getIsEnable() == 1) {
-            $this->configureCrons('greenbin', 'notifGreenBin', 'ackGreenBin');
-            $this->configureCrons('yellowbin', 'notifYellowBin', 'ackYellowBin');
-        }
 
-    }
-    
-    public function configureCrons($bin, $notif, $ack) {
-        $daysack = '';
-        $daysnotif = '';
-        for ($i = 0; $i <= 6; $i++) {
-            if ($this->getConfiguration($bin.'_'.$i) == 1) {
-                $daysack = $daysack . $i . ',';
-                $myday = $i;
-                if ($this->getConfiguration($bin.'_notif_veille') == 1) {
-                    $myday = $myday - 1;
-                    if ($myday == -1) {
-                        $myday = 6;
-                    }
-                }
-                $daysnotif = $daysnotif . $myday . ',';
-            }
-        }
-        $daysack = substr($daysack, 0, -1);
-        $daysnotif = substr($daysnotif, 0, -1);
-        
-        if ($daysnotif <> '') {
-            $cron = cron::byClassAndFunction('mybin', $notif);
-            if ( ! is_object($cron)) {
-                $cron = new cron();
-                $cron->setClass('mybin');
-                $cron->setFunction($notif);
-                $cron->setEnable(1);
-                $cron->setDeamon(0);
-            }
-            $cronExpr = $this->getConfiguration($bin.'_notif_minute') . ' ' . $this->getConfiguration($bin.'_notif_hour') . ' * * '.$daysnotif;        
-            $cron->setSchedule($cronExpr);
-            $cron->save();
-        }
-        
-        if ($daysack <> '') {
-            $cron = cron::byClassAndFunction('mybin', $ack);
-            if ( ! is_object($cron)) {
-                $cron = new cron();
-                $cron->setClass('mybin');
-                $cron->setFunction($ack);
-                $cron->setEnable(1);
-                $cron->setDeamon(0);
-            }
-            $cronExpr = $this->getConfiguration($bin.'_minute') . ' ' . $this->getConfiguration($bin.'_hour') . ' * * '.$daysack;        
-            $cron->setSchedule($cronExpr);
-            $cron->save();
-        }
     }
     
     public function toHtml($_version = 'dashboard') {
