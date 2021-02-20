@@ -60,8 +60,8 @@ class mybin extends eqLogic {
 
     // Fonction exécutée automatiquement avant la création de l'équipement
     public function preInsert() {
-        $this->setDisplay('height','200px');
-        $this->setDisplay('width', '200px');
+        $this->setDisplay('height','100px');
+        $this->setDisplay('width', '180px');
         $this->setConfiguration('widgetTemplate', 1);
         $this->setConfiguration('greenbin_hour', 8);
         $this->setConfiguration('greenbin_minute', 0);
