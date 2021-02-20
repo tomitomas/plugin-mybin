@@ -30,7 +30,16 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 // Fonction exécutée automatiquement après la suppression du plugin
   function mybin_remove() {
-
+      $cron = cron::byClassAndFunction('mybin', 'notifGreenBin');
+      if (is_object($cron)) {
+          $cron->stop();
+          $cron->remove();
+      }
+      $cron = cron::byClassAndFunction('mybin', 'notifYellowBin');
+      if (is_object($cron)) {
+          $cron->stop();
+          $cron->remove();
+      }
   }
 
 ?>

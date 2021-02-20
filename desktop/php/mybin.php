@@ -121,15 +121,28 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Heure de ramassage}}</label>
-								<div class="col-sm-3">
-                                    <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="verte_time">
-                                    <?php
-									for ($i = 0; $i <= 23; $i++) {
-										echo '<option value="'.$i.'00">'.$i.':00</option>';
-                                        echo '<option value="'.$i.'30">'.$i.':30</option>';
-                                    }
-                                    ?>
-                                    </select>
+								<div class="col-sm-5">
+                                    <span class="col-sm-2">
+                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="greenbin_hour">
+                                        <?php
+                                        for ($i = 0; $i <= 23; $i++) {
+                                            echo '<option value="'.$i.'">'.$i.'</option>';
+                                        }
+                                        ?>
+                                        </select>
+                                    </span>
+                                    <span class="col-sm-1">
+                                        <label>h</label>
+                                    </span>
+                                    <span class="col-sm-2">
+                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="greenbin_minute">
+                                        <?php
+                                        for ($i = 0; $i <= 59; $i++) {
+                                            echo '<option value="'.$i.'">'.$i.'</option>';
+                                        }
+                                        ?>
+                                        </select>
+                                    </span>
 								</div>
 							</div>
 							<div class="form-group">

@@ -50,9 +50,22 @@ class mybin extends eqLogic {
         $this->notifBin('greenbin');
     }
     
+    public function ackYellowBin() {
+        $this->ackBin('yellowbin');
+    }
+    
+    public function ackGreenBin() {
+        $this->ackBin('greenbin');
+    }
+    
     public function notifBin($mybin) {
         $cmd = $this->getCmd(null, $mybin);
         $cmd->event(1);
+    }
+    
+    public function ackBin($mybin) {
+        $cmd = $this->getCmd(null, $mybin);
+        $cmd->event(0);
     }
 
 
@@ -126,15 +139,19 @@ class mybin extends eqLogic {
             $cmd->save();
         }
         
-        $this->configureCron('greenbin', 'notifGreenBin');
-        $this->configureCron('yellowbin', 'notifYellowBin');
+        if ($this->getIsEnable() == 1) {
+            $this->configureCrons('greenbin', 'notifGreenBin', 'ackGreenBin');
+            $this->configureCrons('yellowbin', 'notifYellowBin', 'ackYellowBin');
+        }
 
     }
     
-    public function configureCron($bin, $method) {
-        $days = '';
+    public function configureCrons($bin, $notif, $ack) {
+        $daysack = '';
+        $daysnotif = '';
         for ($i = 0; $i <= 6; $i++) {
             if ($this->getConfiguration($bin.'_'.$i) == 1) {
+                $daysack = $daysack . $i . ',';
                 $myday = $i;
                 if ($this->getConfiguration($bin.'_notif_veille') == 1) {
                     $myday = $myday - 1;
@@ -142,21 +159,35 @@ class mybin extends eqLogic {
                         $myday = 6;
                     }
                 }
-                $days = $days . $myday . ',';
+                $daysnotif = $daysnotif . $myday . ',';
             }
         }
-        if ($days <> '') {
-            $cron = cron::byClassAndFunction('mybin', $method);
+        $daysack = substr($daysack, 0, -1);
+        $daysnotif = substr($daysnotif, 0, -1);
+        
+        if ($daysnotif <> '') {
+            $cron = cron::byClassAndFunction('mybin', $notif);
             if ( ! is_object($cron)) {
                 $cron = new cron();
                 $cron->setClass('mybin');
-                $cron->setFunction($method);
+                $cron->setFunction($notif);
                 $cron->setEnable(1);
                 $cron->setDeamon(0);
             }
-            $cronExpr = $this->getConfiguration($bin.'_notif_minute') . ' ' . $this->getConfiguration($bin.'_notif_hour') . ' * * '.substr($days, 0, -1);        
+            $cronExpr = $this->getConfiguration($bin.'_notif_minute') . ' ' . $this->getConfiguration($bin.'_notif_hour') . ' * * '.$daysnotif;        
             $cron->setSchedule($cronExpr);
             $cron->save();
+        }
+        
+        if ($this->getConfiguration($bin.'_autoack') == 1 && $daysack <> '') {
+            $cron = cron::byClassAndFunction('mybin', $ack);
+            if ( ! is_object($cron)) {
+                $cron = new cron();
+                $cron->setClass('mybin');
+                $cron->setFunction($ack);
+                $cron->setEnable(1);
+                $cron->setDeamon(0);
+            }
         }
     }
 }
