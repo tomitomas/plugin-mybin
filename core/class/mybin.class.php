@@ -31,14 +31,28 @@ class mybin extends eqLogic {
 
     /*     * ***********************Methode static*************************** */
 
-    public static function cron5() {
+    public static function cron() {
+        $eqLogics = self::byType(__CLASS__, true);
 
+        foreach ($eqLogics as $eqLogic)
+        {
+            $eqLogic->checkBins();
+        }
     }
 
     /*     * *********************Méthodes d'instance************************* */
 
-    public function pullLinksys() {
-
+    public function notifYellowBin() {
+        $this->notifBin('yellowbin');
+    }
+    
+    public function notifGreenBin() {
+        $this->notifBin('greenbin');
+    }
+    
+    public function notifBin($mybin) {
+        $cmd = $this->getCmd(null, $mybin);
+        $cmd->event(1);
     }
 
 
@@ -56,7 +70,94 @@ class mybin extends eqLogic {
     // Fonction exécutée automatiquement après la mise à jour de l'équipement
 
     public function postUpdate() {
+        $cmd = $this->getCmd(null, 'ackgreen');
+        if (!is_object($cmd))
+        {
+            $cmd = new linksysCmd();
+            $cmd->setLogicalId('ackgreen');
+            $cmd->setEqLogic_id($this->getId());
+            $cmd->setName('Ack Poubelle verte');
+            $cmd->setType('action');
+            $cmd->setSubType('other');
+            $cmd->setEventOnly(1);
+            $cmd->save();
+        }
+        $cmd = $this->getCmd(null, 'ackyellow');
+        if (!is_object($cmd))
+        {
+            $cmd = new linksysCmd();
+            $cmd->setLogicalId('ackyellow');
+            $cmd->setEqLogic_id($this->getId());
+            $cmd->setName('Ack Poubelle jaune');
+            $cmd->setType('action');
+            $cmd->setSubType('other');
+            $cmd->setEventOnly(1);
+            $cmd->save();
+        }
 
+        $cmd = $this->getCmd(null, 'greenbin');
+        if (!is_object($cmd))
+        {
+            $cmd = new linksysCmd();
+            $cmd->setLogicalId('greenbin');
+            $cmd->setEqLogic_id($this->getId());
+            $cmd->setName('Poubelle verte');
+            $cmd->setType('info');
+            $cmd->setSubType('binary');
+            $cmd->setEventOnly(1);
+            $cmd->setIsHistorized(0);
+            $cmd->setTemplate('mobile', 'line');
+            $cmd->setTemplate('dashboard', 'line');
+            $cmd->save();
+        }
+        $cmd = $this->getCmd(null, 'yellowbin');
+        if (!is_object($cmd))
+        {
+            $cmd = new linksysCmd();
+            $cmd->setLogicalId('yellowbin');
+            $cmd->setEqLogic_id($this->getId());
+            $cmd->setName('Poubelle jaune');
+            $cmd->setType('info');
+            $cmd->setSubType('binary');
+            $cmd->setEventOnly(1);
+            $cmd->setIsHistorized(0);
+            $cmd->setTemplate('mobile', 'line');
+            $cmd->setTemplate('dashboard', 'line');
+            $cmd->save();
+        }
+        
+        $this->configureCron('greenbin', 'notifGreenBin');
+        $this->configureCron('yellowbin', 'notifYellowBin');
+
+    }
+    
+    public function configureCron($bin, $method) {
+        $days = '';
+        for ($i = 0; $i <= 6; $i++) {
+            if ($this->getConfiguration($bin.'_'.$i) == 1) {
+                $myday = $i;
+                if ($this->getConfiguration($bin.'_notif_veille') == 1) {
+                    $myday = $myday - 1;
+                    if ($myday == -1) {
+                        $myday = 6;
+                    }
+                }
+                $days = $days . $myday . ',';
+            }
+        }
+        if ($days <> '') {
+            $cron = cron::byClassAndFunction('mybin', $method);
+            if ( ! is_object($cron)) {
+                $cron = new cron();
+                $cron->setClass('mybin');
+                $cron->setFunction($method);
+                $cron->setEnable(1);
+                $cron->setDeamon(0);
+            }
+            $cronExpr = $this->getConfiguration($bin.'_notif_minute') . ' ' . $this->getConfiguration($bin.'_notif_hour') . ' * * '.substr($days, 0, -1);        
+            $cron->setSchedule($cronExpr);
+            $cron->save();
+        }
     }
 }
 

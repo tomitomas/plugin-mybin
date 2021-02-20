@@ -110,13 +110,13 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Jour(s) de ramassage}}</label>
 								<div class="col-sm-7">
-								    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="verte_lundi" />{{Lundi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="verte_mardi" />{{Mardi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="verte_mercredi" />{{Mercredi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="verte_jeudi" />{{Jeudi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="verte_vendredi" />{{Vendredi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="verte_samedi" />{{Samedi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="verte_dimanche" />{{Dimanche}}</label>
+								    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_1" />{{Lundi}}</label>
+                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_2" />{{Mardi}}</label>
+                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_3" />{{Mercredi}}</label>
+                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_4" />{{Jeudi}}</label>
+                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_5" />{{Vendredi}}</label>
+                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_6" />{{Samedi}}</label>
+                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_0" />{{Dimanche}}</label>
 								</div>
 							</div>
 							<div class="form-group">
@@ -124,7 +124,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								<div class="col-sm-7">
                                     <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="verte_time">
                                     <?php
-									for ($i = 6; $i <= 20; $i++) {
+									for ($i = 0; $i <= 23; $i++) {
 										echo '<option value="'.$i.'00">'.$i.':00</option>';
                                         echo '<option value="'.$i.'30">'.$i.':30</option>';
                                     }
@@ -135,21 +135,33 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Notification}}</label>
 								<div class="col-sm-7">
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="verte_notif_veille" />{{Veille}}</label>
-                                    <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="verte_notif_hour">
-                                    <?php
-									for ($i = 0; $i <= 23; $i++) {
-										echo '<option value="'.$i.'">'.$i.'</option>';
-                                    }
-                                    ?>
-                                    </select>
-                                    <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="verte_notif_minute">
-                                    <?php
-									for ($i = 0; $i <= 59; $i++) {
-										echo '<option value="'.$i.'">'.$i.'</option>';
-                                    }
-                                    ?>
-                                    </select>
+                                    <span class="col-sm-2">
+                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="greenbin_notif_veille">
+                                            <option value="1">{{La veille}}</option>
+                                            <option value="0">{{Le jour même}}</option>
+                                        </select>
+                                    </span>
+                                    <span class="col-sm-2">
+                                        <label>{{à}}</label>
+                                    </span>
+                                    <span class="col-sm-2">
+                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="greenbin_notif_hour">
+                                        <?php
+                                        for ($i = 0; $i <= 23; $i++) {
+                                            echo '<option value="'.$i.'">'.$i.'</option>';
+                                        }
+                                        ?>
+                                        </select>
+                                    </span>
+                                    <span class="col-sm-2">
+                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="greenbin_notif_minute">
+                                        <?php
+                                        for ($i = 0; $i <= 59; $i++) {
+                                            echo '<option value="'.$i.'">'.$i.'</option>';
+                                        }
+                                        ?>
+                                        </select>
+                                    </span>
 								</div>
 							</div>
 							<br>
@@ -158,21 +170,21 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Jour(s) de ramassage}}</label>
 								<div class="col-sm-7">
-								    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="jaune_lundi" />{{Lundi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="jaune_mardi" />{{Mardi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="jaune_mercredi" />{{Mercredi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="jaune_jeudi" />{{Jeudi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="jaune_vendredi" />{{Vendredi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="jaune_samedi" />{{Samedi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="jaune_dimanche" />{{Dimanche}}</label>
+								    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="yellowbin_1" />{{Lundi}}</label>
+                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="yellowbin_2" />{{Mardi}}</label>
+                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="yellowbin_3" />{{Mercredi}}</label>
+                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="yellowbin_4" />{{Jeudi}}</label>
+                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="yellowbin_5" />{{Vendredi}}</label>
+                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="yellowbin_6" />{{Samedi}}</label>
+                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="yellowbin_0" />{{Dimanche}}</label>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Heure de ramassage}}</label>
-								<div class="col-sm-7">
-                                    <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="jaune_time">
+								<div class="col-sm-3">
+                                    <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_time">
                                     <?php
-									for ($i = 6; $i <= 20; $i++) {
+									for ($i = 0; $i <= 23; $i++) {
 										echo '<option value="'.$i.'00">'.$i.':00</option>';
                                         echo '<option value="'.$i.'30">'.$i.':30</option>';
                                     }
@@ -183,15 +195,18 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Notification}}</label>
 								<div class="col-sm-7">
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="jaune_notif_veille" />{{Veille}}</label>
-                                    <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="jaune_notif_hour">
+                                    <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_notif_veille">
+                                        <option value="1">{{La veille}}</option>
+                                        <option value="0">{{Le jour même}}</option>
+                                    </select>
+                                    <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_notif_hour">
                                     <?php
 									for ($i = 0; $i <= 23; $i++) {
 										echo '<option value="'.$i.'">'.$i.'</option>';
                                     }
                                     ?>
                                     </select>
-                                    <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="jaune_notif_minute">
+                                    <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_notif_minute">
                                     <?php
 									for ($i = 0; $i <= 59; $i++) {
 										echo '<option value="'.$i.'">'.$i.'</option>';
