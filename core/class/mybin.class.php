@@ -44,6 +44,7 @@ class mybin extends eqLogic {
         $day = 1 * date('w');
         $hour = 1 * date('G');
         $minute = 1 * date('i');
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkbins: day ' . $day . ', hour ' . $hour . ', minute ' . $minute);
         $this->checkNotifBin('yellowbin', $day, $hour, $minute);
         $this->checkNotifBin('greenbin', $day, $hour, $minute);
         $this->checkAckBin('yellowbin', $day, $hour, $minute);
@@ -66,6 +67,7 @@ class mybin extends eqLogic {
         if ($this->getConfiguration($bin.'_notif_hour') == $hour) {
             $ishour = true;
         }
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin: day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
         if ($isday && $ishour && $isminute) {
             notifBin($bin);
         }
@@ -94,6 +96,7 @@ class mybin extends eqLogic {
         if ($this->getConfiguration($bin.'_hour') == $hour) {
             $ishour = true;
         }
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin: day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
         if ($isday && $ishour && $isminute) {
             ackBin($bin);
         }
@@ -116,11 +119,13 @@ class mybin extends eqLogic {
     }
     
     public function notifBin($mybin) {
+        log::add(__CLASS__, 'info', $this->getHumanName() . ' ' . $mybin . ' notification on');
         $cmd = $this->getCmd(null, $mybin);
         $cmd->event(1);
     }
     
     public function ackBin($mybin) {
+        log::add(__CLASS__, 'info', $this->getHumanName() . ' ' . $mybin . ' acknowledged');
         $cmd = $this->getCmd(null, $mybin);
         $cmd->event(0);
     }
