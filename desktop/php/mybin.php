@@ -135,7 +135,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Notification}}</label>
 								<div class="col-sm-7">
-                                    <span class="col-sm-4">
+                                    <span class="col-sm-6">
                                         <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="greenbin_notif_veille">
                                             <option value="1">{{La veille}}</option>
                                             <option value="0">{{Le jour même}}</option>
@@ -152,6 +152,9 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         }
                                         ?>
                                         </select>
+                                    </span>
+                                    <span class="col-sm-1">
+                                        <label>h</label>
                                     </span>
                                     <span class="col-sm-2">
                                         <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="greenbin_notif_minute">
