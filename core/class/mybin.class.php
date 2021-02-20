@@ -69,7 +69,7 @@ class mybin extends eqLogic {
         }
         log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin ' . $bin . ': day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
         if ($isday && $ishour && $isminute) {
-            notifBin($bin);
+            $this->notifBin($bin);
         }
     }
     
@@ -98,7 +98,7 @@ class mybin extends eqLogic {
         }
         log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin ' . $bin . ': day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
         if ($isday && $ishour && $isminute) {
-            ackBin($bin);
+            $this->ackBin($bin);
         }
     }
     
