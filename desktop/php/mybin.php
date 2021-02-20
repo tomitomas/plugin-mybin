@@ -121,7 +121,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Heure de ramassage}}</label>
-								<div class="col-sm-7">
+								<div class="col-sm-3">
                                     <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="verte_time">
                                     <?php
 									for ($i = 0; $i <= 23; $i++) {
@@ -135,13 +135,13 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Notification}}</label>
 								<div class="col-sm-7">
-                                    <span class="col-sm-2">
+                                    <span class="col-sm-4">
                                         <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="greenbin_notif_veille">
                                             <option value="1">{{La veille}}</option>
                                             <option value="0">{{Le jour même}}</option>
                                         </select>
                                     </span>
-                                    <span class="col-sm-2">
+                                    <span class="col-sm-1">
                                         <label>{{à}}</label>
                                     </span>
                                     <span class="col-sm-2">
