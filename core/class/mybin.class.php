@@ -55,8 +55,15 @@ class mybin extends eqLogic {
         $isday = false;
         $ishour = false;
         $isminute = false;
+        $myday = $day;
+        if ($this->getConfiguration($bin.'_notif_veille') == 1) {
+            $myday = $myday + 1;
+            if ($myday == 7) {
+                $myday = 0;
+            }                
+        }
         for ($i = 0; $i <= 6; $i++) {
-            if ($this->getConfiguration($bin.'_'.$i) == 1 && $i == $day) {
+            if ($this->getConfiguration($bin.'_'.$i) == 1 && $i == $myday) {
                 $isday = true;
                 break;
             }
@@ -77,15 +84,8 @@ class mybin extends eqLogic {
         $isday = false;
         $ishour = false;
         $isminute = false;
-        $myday = $day;
-        if ($this->getConfiguration($bin.'_notif_veille') == 1) {
-            $myday = $myday + 1;
-            if ($myday == 7) {
-                $myday = 0;
-            }                
-        }
         for ($i = 0; $i <= 6; $i++) {
-            if ($this->getConfiguration($bin.'_'.$i) == 1 && $i == $myday) {
+            if ($this->getConfiguration($bin.'_'.$i) == 1 && $i == $day) {
                 $isday = true;
                 break;
             }
