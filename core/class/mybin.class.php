@@ -87,7 +87,7 @@ class mybin extends eqLogic {
         $cmd = $this->getCmd(null, 'ack');
         if (!is_object($cmd))
         {
-            $cmd = new linksysCmd();
+            $cmd = new mybinCmd();
             $cmd->setLogicalId('ack');
             $cmd->setEqLogic_id($this->getId());
             $cmd->setName('Ack');
@@ -100,7 +100,7 @@ class mybin extends eqLogic {
         $cmd = $this->getCmd(null, 'greenbin');
         if (!is_object($cmd))
         {
-            $cmd = new linksysCmd();
+            $cmd = new mybinCmd();
             $cmd->setLogicalId('greenbin');
             $cmd->setEqLogic_id($this->getId());
             $cmd->setName('Poubelle verte');
@@ -115,7 +115,7 @@ class mybin extends eqLogic {
         $cmd = $this->getCmd(null, 'yellowbin');
         if (!is_object($cmd))
         {
-            $cmd = new linksysCmd();
+            $cmd = new mybinCmd();
             $cmd->setLogicalId('yellowbin');
             $cmd->setEqLogic_id($this->getId());
             $cmd->setName('Poubelle jaune');
