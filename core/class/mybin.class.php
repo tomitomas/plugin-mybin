@@ -29,17 +29,6 @@ class mybin extends eqLogic {
 	public static $_widgetPossibility = array();
    */
 
-    /*     * ***********************Methode static*************************** */
-
-    public static function cron() {
-        $eqLogics = self::byType(__CLASS__, true);
-
-        foreach ($eqLogics as $eqLogic)
-        {
-            $eqLogic->checkBins();
-        }
-    }
-
     /*     * *********************Méthodes d'instance************************* */
 
     public function notifYellowBin() {
