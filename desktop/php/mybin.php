@@ -126,7 +126,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="greenbin_hour">
                                         <?php
                                         for ($i = 0; $i <= 23; $i++) {
-                                            echo '<option value="'.$i.'">'.$i.'</option>';
+                                            echo '<option value="'.$i.'">';
+                                            if ($i < 10) {
+                                                echo '0';
+                                            }
+                                            echo $i.'</option>';
                                         }
                                         ?>
                                         </select>
@@ -138,7 +142,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="greenbin_minute">
                                         <?php
                                         for ($i = 0; $i <= 55; $i = $i + 5) {
-                                            echo '<option value="'.$i.'">'.$i.'</option>';
+                                            echo '<option value="'.$i.'">';
+                                            if ($i < 10) {
+                                                echo '0';
+                                            }
+                                            echo $i.'</option>';
                                         }
                                         ?>
                                         </select>
@@ -161,7 +169,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="greenbin_notif_hour">
                                         <?php
                                         for ($i = 0; $i <= 23; $i++) {
-                                            echo '<option value="'.$i.'">'.$i.'</option>';
+                                            echo '<option value="'.$i.'">';
+                                            if ($i < 10) {
+                                                echo '0';
+                                            }
+                                            echo $i.'</option>';
                                         }
                                         ?>
                                         </select>
@@ -173,7 +185,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="greenbin_notif_minute">
                                         <?php
                                         for ($i = 0; $i <= 55; $i = $i + 5) {
-                                            echo '<option value="'.$i.'">'.$i.'</option>';
+                                            echo '<option value="'.$i.'">';
+                                            if ($i < 10) {
+                                                echo '0';
+                                            }
+                                            echo $i.'</option>';
                                         }
                                         ?>
                                         </select>
@@ -202,7 +218,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_hour">
                                         <?php
                                         for ($i = 0; $i <= 23; $i++) {
-                                            echo '<option value="'.$i.'">'.$i.'</option>';
+                                            echo '<option value="'.$i.'">';
+                                            if ($i < 10) {
+                                                echo '0';
+                                            }
+                                            echo $i.'</option>';
                                         }
                                         ?>
                                         </select>
@@ -214,7 +234,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_minute">
                                         <?php
                                         for ($i = 0; $i <= 55; $i = $i + 5) {
-                                            echo '<option value="'.$i.'">'.$i.'</option>';
+                                            echo '<option value="'.$i.'">';
+                                            if ($i < 10) {
+                                                echo '0';
+                                            }
+                                            echo $i.'</option>';
                                         }
                                         ?>
                                         </select>
@@ -237,7 +261,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_notif_hour">
                                         <?php
                                         for ($i = 0; $i <= 23; $i++) {
-                                            echo '<option value="'.$i.'">'.$i.'</option>';
+                                            echo '<option value="'.$i.'">';
+                                            if ($i < 10) {
+                                                echo '0';
+                                            }
+                                            echo $i.'</option>';
                                         }
                                         ?>
                                         </select>
@@ -249,7 +277,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_notif_minute">
                                         <?php
                                         for ($i = 0; $i <= 55; $i = $i + 5) {
-                                            echo '<option value="'.$i.'">'.$i.'</option>';
+                                            echo '<option value="'.$i.'">';
+                                            if ($i < 10) {
+                                                echo '0';
+                                            }
+                                            echo $i.'</option>';
                                         }
                                         ?>
                                         </select>
