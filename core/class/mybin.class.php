@@ -354,7 +354,7 @@ class mybin extends eqLogic {
         
         $day = 1 * date('w');
         $theday = $day;
-        for ($i = 1; $i < 7; $i++) {
+        for ($i = 1; $i <= 7; $i++) {
             $replace['#day'.$i.'#'] = $this->getDayLetter($theday);
             $theday++;
             if ($theday == 7) {
@@ -363,7 +363,7 @@ class mybin extends eqLogic {
         }
         
         $dt = new DateTime("now");
-        for ($i = 1; $i < 7; $i++) {
+        for ($i = 1; $i <= 7; $i++) {
             $week = $dt->format('W');
             $day = $dt->format('w');
             $isGreen = $this->checkIfBin('greenbin', $week, $day);
