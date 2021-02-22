@@ -14,11 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
+/*
 $('#modalbtn').on('click', function () {
     jeedom.cmd.getSelectModal({cmd: {type: 'action',subType : 'message'}}, function(result) {
         $('.eqLogicAttr[data-l1key=configuration][data-l2key=ttscmd]').value(result.human);
     });
 });
+*/
 
 $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 /*

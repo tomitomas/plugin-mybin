@@ -1,14 +1,13 @@
 {
-    "plugins\/linksys\/plugin_info\/configuration.php": {
-        "401 - Accès non autorisé": "401 - Accès non autorisé",
-        "Récupération des données à la minute": "Récupération des données à la minute"
+    "plugins\/mybin\/plugin_info\/configuration.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé"
     },
-    "plugins\/linksys\/desktop\/php\/linksys.php": {
+    "plugins\/mybin\/desktop\/php\/mybin.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
         "Gestion": "Gestion",
         "Ajouter": "Ajouter",
         "Configuration": "Configuration",
-        "Mes routeurs Linksys": "Mes routeurs Linksys",
+        "Mes poubelles": "Mes poubelles",
         "Rechercher": "Rechercher",
         "Configuration avancée": "Configuration avancée",
         "Dupliquer": "Dupliquer",
@@ -16,22 +15,36 @@
         "Supprimer": "Supprimer",
         "Equipement": "Equipement",
         "Commandes": "Commandes",
-        "Nom de l'équipement Linksys": "Nom de l'équipement Linksys",
+        "Nom de l'équipement My Bin": "Nom de l'équipement My Bin",
         "Objet parent": "Objet parent",
         "Aucun": "Aucun",
         "Catégorie": "Catégorie",
         "Options": "Options",
         "Activer": "Activer",
         "Visible": "Visible",
-        "Identifiant Admin": "Identifiant Admin",
-        "Mot de passe Admin": "Mot de passe Admin",
-        "Adresse IP du routeur": "Adresse IP du routeur",
         "Id": "Id",
         "Nom": "Nom",
         "Type": "Type",
-        "Action": "Action"
+        "Action": "Action",
+        "Poubelle verte": "Poubelle verte",
+        "Jour(s) de ramassage": "Jour(s) de ramassage",
+        "Heure de ramassage": "Heure de ramassage",
+        "Lundi": "Lundi",
+        "Mardi": "Mardi",
+        "Mercredi": "Mercredi",
+        "Jeudi": "Jeudi",
+        "Vendredi": "Vendredi",
+        "Samedi": "Samedi",
+        "Dimanche": "Dimanche",
+        "Notification": "Notification",
+        "La veille": "La veille",
+        "Le jour même": "Le jour même",
+        "à": "à",
+        "Poubelle jaune": "Poubelle jaune",
+        "Template de widget": "Template de widget"
+        
     },
-    "plugins\/linksys\/desktop\/js\/linksys.js": {
+    "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
         "Max": "Max",
         "Unité": "Unité",
@@ -39,14 +52,11 @@
         "Historiser": "Historiser",
         "Tester": "Tester"
     },
-    "plugins\/linksys\/core\/class\/linksys.class.php": {
-        "L\\'adresse IP du routeur doit être renseignée": "L\\'adresse IP du routeur doit être renseignée",
-        "L\\'identifiant du compte Admin doit être renseigné": "L\\'identifiant du compte Admin doit être renseigné",
-        "Le mot de passe du compte Admin doit être renseigné": "Le mot de passe du compte Admin doit être renseigné",
-        "L\\'adresse IP a un format invalide": "L\\'adresse IP a un format invalide",
-        "Impossible de se connecter au routeur, vérifiez vos paramètres": "Impossible de se connecter au routeur, vérifiez vos paramètres"
-    },
-    "info.json": {
-        "Récupérer les informations du compteur communicant Gazpar à partir de son compte-client GRDF.": "Récupérer les informations du compteur communicant Gazpar à partir de son compte-client GRDF."
+    "plugins\/mybin\/core\/class\/mybin.class.php": {
+        "Il faut sortir les deux poubelles": "Il faut sortir les deux poubelles",
+        "Il faut sortir la poubelle verte": "Il faut sortir la poubelle verte",
+        "Il faut sortir la poubelle jaune": "Il faut sortir la poubelle jaune",
+        "L\\'heure de notification est après l\\'heure de collecte pour la poublle verte": "L\\'heure de notification est après l\\'heure de collecte pour la poublle verte",
+        "L\\'heure de notification est après l\\'heure de collecte pour la poublle jaune": "L\\'heure de notification est après l\\'heure de collecte pour la poublle jaune"
     }
 }

@@ -300,6 +300,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="widgetTemplate"/>
 								</div>
 							</div>
+                            <!--
                             <div class="form-group">
 								<label class="col-sm-4 control-label">{{Commande TTS}}
 									<sup><i class="fas fa-question-circle tooltips" title="{{Commande TTS à exécuter lorsque qu'il faut sortir les poubelles}}"></i></sup>
@@ -311,6 +312,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     </span>
                                 </div>
 							</div>
+                            -->
 						</div>
 
 					</fieldset>

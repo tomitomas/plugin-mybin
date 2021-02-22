@@ -1,49 +1,39 @@
-# Plugin Linksys
+# Plugin My Bin
 
-Plugin allowing to control some aspects of your compatible Linksys routers.
-
-What is available:
-- Model and firmware
-- Status of Guest network and Parental controls mode
-- Number of devices connected to the router per type of connection 
-- Activate/Deactivate parental controls
-- Activate/Deactivate guest network
-- Reboot
-- Activate/Deactivate router LEDs
-- Control firmware upgrade
-- WAN status
-
->**Important**      
->This plugin has been tested with Linkys Velop VLP01 and firmware 1.1.13.202617. Will most probably work with others.
+Very silpe plugin for Jeedom easing the management of your home bins.
 
 # Configuration
 
 ## Plugin configuration
 
-The plugin **Linksys** does not require any specific configuration and should only be activated after installation.
+The plugin **My Bin** does not require any specific configuration and should only be activated after installation.
 
 The data is checked every 5 minutes.
 
 ## Equipment configuration
 
-To access the different equipment **Linksys**, go to the menu **Plugins → Communication → Linksys**.
+To access the different equipment **My Bin**, go to the menu **Plugins → Organization → My Bin**.
 
-On the equipment page, fill in local router IP address, Admin login (usually 'admin'), and Admin password
+On the equipment page, fill in the collect days and times for your bins as well as how to be notified.
+
+# Utilisation
+
+Eqch equipment creates 5 comamnds:
+- Yellow bin & Green bin : 1 if one of the bin needs to be put out
+- Ack: Puts both commands above to 0. This command is automatically called at collect time.
+- Refresh: well... refresh ;)
+- Global status : 'N' if no bin to put out, 'Y' if yellow bin to put out, 'G' if green bin to put out, 'B' if both bins to put out.
+
+A widget's template is available that offers a visual indication (colored bin).
 
 # Contributions
 
-This plugin is opened for contributions and even encouraged! Please submit your pull requests for improvements/fixes on <a href="https://github.com/hugoKs3/plugin-jazpar" target="_blank">Github</a>
-
-# Credits
-
-This plugin has been inspired by the work done by:
-
--   [reujab](https://github.com/reujab)  through his JNAP Go library:  [linksys](https://github.com/reujab/linksys)
+This plugin is opened for contributions and even encouraged! Please submit your pull requests for improvements/fixes on <a href="https://github.com/hugoKs3/plugin-mybin" target="_blank">Github</a>
 
 # Disclaimer
 
 -   This code does not pretend to be bug-free
--   Although it should not harm your Jeedom system or Linksys router, it is provided without any warranty or liability
+-   Although it should not harm your Jeedom system, it is provided without any warranty or liability
 
 # ChangeLog
 Available [here](./changelog.html).

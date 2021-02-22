@@ -156,6 +156,7 @@ class mybin extends eqLogic {
         if ($currentStatus <> $globalstatus) {
             $cmd->event($globalstatus);
             $this->refreshWidget();
+            /*
             $ttsid = str_replace("#", "", $this->getConfiguration('ttscmd'));
             if ($ttsid <> '' && $globalstatus <> 'N') {
                 $ttscmd = cmd::byId($ttsid);
@@ -166,6 +167,7 @@ class mybin extends eqLogic {
                     $ttscmd->execCmd($options);
                 }
             }
+            */
         }
     }
 
@@ -190,7 +192,26 @@ class mybin extends eqLogic {
  
     //Fonction exécutée automatiquement avant la mise à jour de l'équipement
     public function preUpdate() {
-
+        if ($this->getConfiguration('greenbin_notif_veille') == 0) {
+            if ($this->getConfiguration('greenbin_notif_hour') > $this->getConfiguration('greenbin_hour')) {
+                throw new Exception(__('L\'heure de notification est après l\'heure de collecte pour la poublle verte',__FILE__));
+            }
+            if ($this->getConfiguration('greenbin_notif_hour') == $this->getConfiguration('greenbin_hour')) {
+                if ($this->getConfiguration('greenbin_notif_minute') > $this->getConfiguration('greenbin_minute')) {
+                    throw new Exception(__('L\'heure de notification est après l\'heure de collecte pour la poublle verte',__FILE__));
+                }
+            }
+        }
+        if ($this->getConfiguration('yellowbin_notif_veille') == 0) {
+            if ($this->getConfiguration('yellowbin_notif_hour') > $this->getConfiguration('yellowbin_hour')) {
+                throw new Exception(__('L\'heure de notification est après l\'heure de collecte pour la poublle jaune',__FILE__));
+            }
+            if ($this->getConfiguration('yellowbin_notif_hour') == $this->getConfiguration('yellowbin_hour')) {
+                if ($this->getConfiguration('greenbin_notif_minute') > $this->getConfiguration('greenbin_minute')) {
+                    throw new Exception(__('L\'heure de notification est après l\'heure de collecte pour la poublle jaune',__FILE__));
+                }
+            }
+        }
     }
 
     // Fonction exécutée automatiquement après la mise à jour de l'équipement

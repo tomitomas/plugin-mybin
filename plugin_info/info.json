@@ -2,10 +2,10 @@
     "id": "mybin",
     "name": "My Bin",
     "description": {
-        "fr_FR": "Gestion de vos poubelles.",
-        "en_US": "Management of your bins."
+        "fr_FR": "Poubelle verte ? Poubelle jaune ? Laquelle faut-il sortir ce soir ? Utilisez ce petit plugin pour ne plus avoir à vous en rappeler ! ",
+        "en_US": "Green bin? Yellow bin? Which one needs to be put out tonight? Use this simple plugin for not having to remember it anymore!"
     },
-    "utilization": "Créez un équipement t définisez vos critère de rammasage des vos poubelles.",
+    "utilization": "Créez un équipement et définisez vos critères de rammasage ds vos poubelles.",
     "licence": "AGPL",
     "author": "hugoKs3",
     "require": "4.0.61",
@@ -15,9 +15,6 @@
     "maxDependancyInstallTime": 0,
     "changelog": "https:\/\/hugoks3.github.io\/plugin-mybin\/#language#\/changelog",
     "documentation": "https:\/\/hugoks3.github.io\/plugin-mybin\/#language#\/",
-    "link" : {
-		"forum":"https://community.jeedom.com/t/plugin-mybin/43183"
-	},
     "language": [
         "fr_FR",
         "en_US"
