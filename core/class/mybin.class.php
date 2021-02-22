@@ -53,9 +53,6 @@ class mybin extends eqLogic {
     }
     
     public function checkNotifBin($bin, $day, $hour, $minute) {
-        $options = array('message'=> 'blqh');
-        $id = str_replace("#", "", $this->getConfiguration('ttscmd'));
-        cmd::byId($id)->execCmd($options);
         $isday = false;
         $ishour = false;
         $isminute = false;
@@ -142,19 +139,33 @@ class mybin extends eqLogic {
         $cmd = $this->getCmd(null, 'yellowbin');
         $yellowbin = $cmd->execCmd();
         $globalstatus = 'N';
+        $message = '';
         if ($greenbin && $yellowbin) {
             $globalstatus = 'B';
+            $message = __('Il faut sortir les deux poubelles', __FILE__);
         } elseif ($greenbin) {
             $globalstatus = 'G';
+            $message = __('Il faut sortir la poubelle verte', __FILE__);
         } elseif ($yellowbin) {
-           $globalstatus = 'Y'; 
+            $globalstatus = 'Y';
+            $message = __('Il faut sortir la poubelle jaune', __FILE__);
         }
         log::add(__CLASS__, 'info', $this->getHumanName() . ' Set global status: ' . $globalstatus);
         $cmd = $this->getCmd(null, 'globalstatus');
         $currentStatus = $cmd->execCmd();
         if ($currentStatus <> $globalstatus) {
-           $cmd->event($globalstatus);
-           $this->refreshWidget();         
+            $cmd->event($globalstatus);
+            $this->refreshWidget();
+            $ttsid = str_replace("#", "", $this->getConfiguration('ttscmd'));
+            if ($ttsid <> '' && $globalstatus <> 'N') {
+                $ttscmd = cmd::byId($ttsid);
+                if (!is_object($ttscmd)) {
+                    log::add(__CLASS__, 'error', $this->getHumanName() . ' TTS Command '.$ttsid.' does not exist');
+                } else {
+                    $options = array('message'=> $message);
+                    cmd::byId($id)->execCmd($options);
+                }
+            }
         }
     }
 
