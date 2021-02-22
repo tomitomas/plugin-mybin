@@ -290,6 +290,7 @@ class mybin extends eqLogic {
         $html = template_replace($replace, getTemplate('core', $version, 'mybin.template', __CLASS__));
         cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
         return $html;
+        
     }
 }
 
