@@ -53,6 +53,7 @@ class mybin extends eqLogic {
     }
     
     public function checkNotifBin($bin, $week, $day, $hour, $minute) {
+        $isweek = false;
         $isday = false;
         $ishour = false;
         $isminute = false;
