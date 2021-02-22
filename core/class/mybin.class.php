@@ -242,7 +242,7 @@ class mybin extends eqLogic {
         }
         $cmd = $this->getCmd(null, 'refresh');
         if (!is_object($cmd)) {
-            $cmd = new jazparCmd();
+            $cmd = new mybinCmd();
             $cmd->setLogicalId('refresh');
             $cmd->setEqLogic_id($this->getId());
             $cmd->setName('Rafraichir');
