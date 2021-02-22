@@ -28,10 +28,13 @@ if (!isConnect('admin')) {
 			<i class="fa fa-list-alt"></i> {{Paramètres}}
 		</legend>
         <div class="form-group">
-			<input class="configKey form-control" data-l1key="myttscmd"/>
-            <span class="input-group-btn">
-                <a class="btn btn-default cursor" title="Rechercher une commande" id="mymodal"><i class="fas fa-list-alt"></i></a>
-            </span>
+            <label class="col-sm-4 control-label">{{Commande TTS : }}</label>
+            <div class="col-sm-2">
+                <input class="configKey form-control" data-l1key="myttscmd"/>
+                <span class="input-group-btn">
+                    <a class="btn btn-default cursor" title="Rechercher une commande" id="mymodal"><i class="fas fa-list-alt"></i></a>
+                </span>
+            </div>
 		</div>
 	</fieldset>
 </form>
