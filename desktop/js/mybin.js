@@ -15,7 +15,7 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 $('#modalbtn').on('click', function () {
-    jeedom.cmd.getSelectModal({cmd: {type: 'action'}}, function(result) {
+    jeedom.cmd.getSelectModal({cmd: {type: 'action',subType : 'message'}}, function(result) {
         $('.eqLogicAttr[data-l1key=configuration][data-l2key=ttscmd]').value(result.human);
     });
 });
