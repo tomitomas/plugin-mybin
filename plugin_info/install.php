@@ -38,6 +38,8 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
         if ($eqLogic->getConfiguration('yellowbin_impaire', 'unset') === 'unset') {
             $eqLogic->setConfiguration('yellowbin_impaire', 1);
         }
+        $eqLogic->setDisplay('height','160px');
+        $eqLogic->setDisplay('width', '372px');
         $eqLogic->save();
       }
   }
