@@ -122,14 +122,14 @@ class mybin extends eqLogic {
         log::add(__CLASS__, 'info', $this->getHumanName() . ' ' . $mybin . ' notification on');
         $cmd = $this->getCmd(null, $mybin);
         $cmd->event(1);
-        setGlobalStatus();
+        $this->setGlobalStatus();
     }
     
     public function ackBin($mybin) {
         log::add(__CLASS__, 'info', $this->getHumanName() . ' ' . $mybin . ' acknowledged');
         $cmd = $this->getCmd(null, $mybin);
         $cmd->event(0);
-        setGlobalStatus();
+        $this->setGlobalStatus();
     }
     
     public function setGlobalStatus() {
