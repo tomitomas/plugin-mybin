@@ -54,7 +54,8 @@ class mybin extends eqLogic {
     
     public function checkNotifBin($bin, $day, $hour, $minute) {
         $options = array('message'=> 'blqh');
-        cmd::byId($this->getConfiguration('ttscmd'))->execCmd($options);
+        $id = str_replace("#", "", $this->getConfiguration('ttscmd'));
+        cmd::byId($id)->execCmd($options);
         $isday = false;
         $ishour = false;
         $isminute = false;
