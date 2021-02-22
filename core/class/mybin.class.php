@@ -351,11 +351,87 @@ class mybin extends eqLogic {
         
         $globalstatusCmd = $this->getCmd(null, 'globalstatus');
         $replace['#globalstatus_id#'] = $globalstatusCmd->getId();
+        
+        $day = 1 * date('w');
+        $theday = $day;
+        for ($i = 1; $i < 7; $i++) {
+            $replace['#day'.$i.'#'] = $this->getDayLetter($theday);
+            $theday++;
+            if ($theday == 7) {
+                $theday = 0;
+            }
+        }
+        
+        $dt = new DateTime("now");
+        for ($i = 1; $i < 7; $i++) {
+            $week = $dt->format('W');
+            $day = $dt->format('w');
+            $isGreen = $this->checkIfBin('greenbin', $week, $day);
+            $isYellow = $this->checkIfBin('yellowbin', $week, $day);
+            $replace['#binimg_day'.$i.'#'] = "nothing";
+            if ($isGreen) {
+                $replace['#binimg_day'.$i.'#'] = "green";
+            }
+            if ($isYellow) {
+                $replace['#binimg_day'.$i.'#'] = "yellow";
+            }
+            if ($isGreen && $isYellow) {
+                $replace['#binimg_day'.$i.'#'] = "both";
+            }
+            $dt->modify('+1 day');
+        }
 
         $html = template_replace($replace, getTemplate('core', $version, 'mybin.template', __CLASS__));
         cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
         return $html;
         
+    }
+    
+    public function checkIfBin($bin, $week, $day) {
+        $isweek = false;
+        $isday = false;
+        if (($week%2 == 0 && $this->getConfiguration($bin.'_paire') == 1) || ($week%2 != 0 && $this->getConfiguration($bin.'_impaire') == 1)) {
+            $isweek = true;
+        }
+        for ($i = 0; $i <= 6; $i++) {
+            if ($this->getConfiguration($bin.'_'.$i) == 1 && $i == $day) {
+                $isday = true;
+                break;
+            }
+        }
+        if ($isweek && $isday) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    public function getDayLetter($dayNb) {
+        $day = '';
+        switch ($dayNb) {
+            case 0:
+                $day = __('D',__FILE__);
+                break;
+            case 1:
+                $day = __('L',__FILE__);
+                break;
+            case 2:
+                $day = __('M',__FILE__);
+                break;
+            case 3:
+                $day = __('M',__FILE__);
+                break;
+            case 4:
+                $day = __('J',__FILE__);
+                break;
+            case 5:
+                $day = __('V',__FILE__);
+                break;
+            case 6:
+                $day = __('S',__FILE__);
+                break;
+        }
+        return $day;
     }
 }
 
