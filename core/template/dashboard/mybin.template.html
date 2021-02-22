@@ -3,12 +3,15 @@
 		<span class="warning" title="#alert_name#">
 			<i class='#alert_icon#'></i>
 		</span>
+        <span class="cmd refresh pull-right cursor" data-cmd_id="#refresh_id#">
+			<i class="fas fa-sync"></i>
+		</span>
 		<span class="reportModeVisible">#name_display# <span class="object_name">#object_name#</span></span>
 		<a href="#eqLink#" class="reportModeHidden">#name_display# <span class="object_name">#object_name#</span></a>
 	</center>   
     <div>
         <center>
-            <span class="cmd ack cursor" data-cmd_id="#globalstatus_id#">
+            <span class="cmd ack cursor" data-type="info" data-subtype="string" data-cmd_id="#globalstatus_id#">
                 <img src="plugins/mybin/data/images/#binimg#.png" width="70px">
             </span>
         </center>
@@ -17,5 +20,12 @@
         $('.eqLogic[data-eqLogic_uid=#uid#] .ack').on('click', function () {
             jeedom.cmd.execute({id: '#ack_id#'});
         });
+        if ('#refresh_id#' != ''){
+			$('.eqLogic[data-eqLogic_uid=#uid#] .refresh').on('click', function () {
+				jeedom.cmd.execute({id: '#refresh_id#'});
+			});
+		}else{
+			$('.eqLogic[data-eqLogic_uid=#uid#] .refresh').remove();
+		}
     </script> 
 </div>

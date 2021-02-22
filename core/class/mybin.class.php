@@ -147,7 +147,11 @@ class mybin extends eqLogic {
         }
         log::add(__CLASS__, 'info', $this->getHumanName() . ' Set global status: ' . $globalstatus);
         $cmd = $this->getCmd(null, 'globalstatus');
-        $cmd->event($globalstatus);
+        $currentStatus = $cmd->execCmd();
+        if ($currentStatus <> $globalstatus) {
+           $cmd->event($globalstatus);
+           $this->refreshWidget();         
+        }
     }
 
 
@@ -236,6 +240,17 @@ class mybin extends eqLogic {
             $cmd->setTemplate('dashboard', 'line');
             $cmd->save();
         }
+        $cmd = $this->getCmd(null, 'refresh');
+        if (!is_object($cmd)) {
+            $cmd = new jazparCmd();
+            $cmd->setLogicalId('refresh');
+            $cmd->setEqLogic_id($this->getId());
+            $cmd->setName('Rafraichir');
+            $cmd->setType('action');
+            $cmd->setSubType('other');
+            $cmd->setEventOnly(1);
+            $cmd->save();
+        }
 
     }
     
@@ -296,6 +311,9 @@ class mybinCmd extends cmd {
             case "ack":
                 $eqLogic->ackGreenBin();
                 $eqLogic->ackYellowBin();
+                break;
+            case "refresh":
+                $eqLogic->checkBins();
                 break;
         }
     }
