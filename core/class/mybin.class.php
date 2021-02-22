@@ -41,27 +41,39 @@ class mybin extends eqLogic {
     /*     * *********************Méthodes d'instance************************* */
 
     public function checkBins() {
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' tts command: ' . $this->getConfiguration('ttscmd'));
+        $week = 1 * date('W');
         $day = 1 * date('w');
         $hour = 1 * date('G');
         $minute = 1 * date('i');
         log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkbins: day ' . $day . ', hour ' . $hour . ', minute ' . $minute);
-        $this->checkNotifBin('yellowbin', $day, $hour, $minute);
-        $this->checkNotifBin('greenbin', $day, $hour, $minute);
-        $this->checkAckBin('yellowbin', $day, $hour, $minute);
-        $this->checkAckBin('greenbin', $day, $hour, $minute);
+        $this->checkNotifBin('yellowbin', $week, $day, $hour, $minute);
+        $this->checkNotifBin('greenbin', $week, $day, $hour, $minute);
+        $this->checkAckBin('yellowbin', $week, $day, $hour, $minute);
+        $this->checkAckBin('greenbin', $week, $day, $hour, $minute);
     }
     
-    public function checkNotifBin($bin, $day, $hour, $minute) {
+    public function checkNotifBin($bin, $week, $day, $hour, $minute) {
         $isday = false;
         $ishour = false;
         $isminute = false;
         $myday = $day;
+        $myweek = $week;
         if ($this->getConfiguration($bin.'_notif_veille') == 1) {
             $myday = $myday + 1;
             if ($myday == 7) {
                 $myday = 0;
-            }                
+            }
+            // attention aux semaines paires/impaires
+            // si myday == 1, cad Lundi, ca veut dire qu'on est aujourd'hui dimanche, dernier jour de la semaine ==> week +1
+            if ($myday == 1) {
+                $myweek = $myweek + 1;
+                if ($myweek == 53) {
+                    $myweek = 1;
+                }
+            }
+        }
+        if (($myweek%2 == 1 && $this->getConfiguration($bin.'_paire') == 1) || ($myweek%2 == 0 && $this->getConfiguration($bin.'_impaire') == 1)) {
+            $isweek = true;
         }
         for ($i = 0; $i <= 6; $i++) {
             if ($this->getConfiguration($bin.'_'.$i) == 1 && $i == $myday) {
@@ -75,16 +87,20 @@ class mybin extends eqLogic {
         if ($this->getConfiguration($bin.'_notif_hour') == $hour) {
             $ishour = true;
         }
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin ' . $bin . ': day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
-        if ($isday && $ishour && $isminute) {
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin ' . $bin . ': week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
+        if ($isweek && $isday && $ishour && $isminute) {
             $this->notifBin($bin);
         }
     }
     
-    public function checkAckBin($bin, $day, $hour, $minute) {
+    public function checkAckBin($bin, $week, $day, $hour, $minute) {
+        $isweek = false;
         $isday = false;
         $ishour = false;
         $isminute = false;
+        if (($week%2 == 1 && $this->getConfiguration($bin.'_paire') == 1) || ($week%2 == 0 && $this->getConfiguration($bin.'_impaire') == 1)) {
+            $isweek = true;
+        }
         for ($i = 0; $i <= 6; $i++) {
             if ($this->getConfiguration($bin.'_'.$i) == 1 && $i == $day) {
                 $isday = true;
@@ -97,8 +113,8 @@ class mybin extends eqLogic {
         if ($this->getConfiguration($bin.'_hour') == $hour) {
             $ishour = true;
         }
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin ' . $bin . ': day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
-        if ($isday && $ishour && $isminute) {
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin ' . $bin . ': week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
+        if ($isweek && $isday && $ishour && $isminute) {
             $this->ackBin($bin);
         }
     }
@@ -187,6 +203,10 @@ class mybin extends eqLogic {
         $this->setConfiguration('yellowbin_notif_veille', 1);
         $this->setConfiguration('yellowbin_notif_hour', 20);
         $this->setConfiguration('yellowbin_notif_minute', 0);
+        $this->setConfiguration('greenbin_paire', 1);
+        $this->setConfiguration('greenbin_impaire', 1);
+        $this->setConfiguration('yellowbin_paire', 1);
+        $this->setConfiguration('yellowbin_impaire', 1);
     }
 
  

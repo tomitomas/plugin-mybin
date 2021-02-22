@@ -108,6 +108,13 @@ $eqLogics = eqLogic::byType($plugin->getId());
 
 							<legend><i class="icon divers-slightly"></i> {{Poubelle verte}}</legend>
 							<div class="form-group">
+								<label class="col-sm-3 control-label">{{Semaine(s) de ramassage}}</label>
+								<div class="col-sm-7">
+								    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_paire" />{{Semaines paires}}</label>
+                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_impaire" />{{Semaines impaires}}</label>
+								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Jour(s) de ramassage}}</label>
 								<div class="col-sm-7">
 								    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_1" />{{Lundi}}</label>
@@ -199,6 +206,13 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<br>
 
 							<legend><i class="icon divers-garbage8"></i> {{Poubelle jaune}}</legend>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{{Semaine(s) de ramassage}}</label>
+								<div class="col-sm-7">
+								    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="yellowbin_paire" />{{Semaines paires}}</label>
+                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="yellowbin_impaire" />{{Semaines impaires}}</label>
+								</div>
+							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Jour(s) de ramassage}}</label>
 								<div class="col-sm-7">
