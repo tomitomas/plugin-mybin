@@ -41,6 +41,7 @@ class mybin extends eqLogic {
     /*     * *********************Méthodes d'instance************************* */
 
     public function checkBins() {
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' tts command: ' . $this->getConfiguration('ttscmd'));
         $day = 1 * date('w');
         $hour = 1 * date('G');
         $minute = 1 * date('i');
