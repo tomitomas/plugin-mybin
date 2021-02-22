@@ -45,8 +45,9 @@ class mybin extends eqLogic {
         $hour = 1 * date('G');
         $minute = 1 * date('i');
         log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkbins: day ' . $day . ', hour ' . $hour . ', minute ' . $minute);
-        $this->checkNotifBin('yellowbin', $day, $hour, $minute);
-        $this->checkNotifBin('greenbin', $day, $hour, $minute);
+        $yellowbin = $this->checkNotifBin('yellowbin', $day, $hour, $minute);
+        $greenbin = $this->checkNotifBin('greenbin', $day, $hour, $minute);
+        $this->setGlobalStatusAndTTS($greenbin, $yellowbin);
         $this->checkAckBin('yellowbin', $day, $hour, $minute);
         $this->checkAckBin('greenbin', $day, $hour, $minute);
     }
@@ -77,6 +78,9 @@ class mybin extends eqLogic {
         log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin ' . $bin . ': day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
         if ($isday && $ishour && $isminute) {
             $this->notifBin($bin);
+            return true;
+        } else {
+            return false;
         }
     }
     
@@ -128,6 +132,20 @@ class mybin extends eqLogic {
         log::add(__CLASS__, 'info', $this->getHumanName() . ' ' . $mybin . ' acknowledged');
         $cmd = $this->getCmd(null, $mybin);
         $cmd->event(0);
+    }
+    
+    public function setGlobalStatusAndTTS($greenbin, $yellowbin) {
+        $globalstatus = 'N';
+        if ($greenbin && $yellowbin) {
+            $globalstatus = 'B';
+        } elseif ($greenbin) {
+            $globalstatus = 'G';
+        } elseif ($yellowbin) {
+           $globalstatus = 'Y'; 
+        }
+        log::add(__CLASS__, 'info', $this->getHumanName() . ' Set global status: ' . $globalstatus);
+        $cmd = $this->getCmd(null, 'globalstatus');
+        $cmd->event($globalstatus);
     }
 
 
@@ -200,6 +218,21 @@ class mybin extends eqLogic {
             $cmd->setTemplate('dashboard', 'line');
             $cmd->save();
         }
+        $cmd = $this->getCmd(null, 'globalstatus');
+        if (!is_object($cmd))
+        {
+            $cmd = new mybinCmd();
+            $cmd->setLogicalId('globalstatus');
+            $cmd->setEqLogic_id($this->getId());
+            $cmd->setName('Statut global');
+            $cmd->setType('info');
+            $cmd->setSubType('other');
+            $cmd->setEventOnly(1);
+            $cmd->setIsHistorized(0);
+            $cmd->setTemplate('mobile', 'line');
+            $cmd->setTemplate('dashboard', 'line');
+            $cmd->save();
+        }
 
     }
     
@@ -232,6 +265,9 @@ class mybin extends eqLogic {
         
         $ackCmd = $this->getCmd(null, 'ack');
         $replace['#ack_id#'] = $ackCmd->getId();
+        
+        $globalstatusCmd = $this->getCmd(null, 'globalstatus');
+        $replace['#globalstatus_id#'] = $globalstatusCmd->getId();
 
         $html = template_replace($replace, getTemplate('core', $version, 'mybin.template', __CLASS__));
         cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
