@@ -72,7 +72,7 @@ class mybin extends eqLogic {
                 }
             }
         }
-        if (($myweek%2 == 1 && $this->getConfiguration($bin.'_paire') == 1) || ($myweek%2 == 0 && $this->getConfiguration($bin.'_impaire') == 1)) {
+        if (($myweek%2 == 0 && $this->getConfiguration($bin.'_paire') == 1) || ($myweek%2 != 0 && $this->getConfiguration($bin.'_impaire') == 1)) {
             $isweek = true;
         }
         for ($i = 0; $i <= 6; $i++) {
@@ -98,7 +98,7 @@ class mybin extends eqLogic {
         $isday = false;
         $ishour = false;
         $isminute = false;
-        if (($week%2 == 1 && $this->getConfiguration($bin.'_paire') == 1) || ($week%2 == 0 && $this->getConfiguration($bin.'_impaire') == 1)) {
+        if (($week%2 == 0 && $this->getConfiguration($bin.'_paire') == 1) || ($week%2 != 0 && $this->getConfiguration($bin.'_impaire') == 1)) {
             $isweek = true;
         }
         for ($i = 0; $i <= 6; $i++) {
