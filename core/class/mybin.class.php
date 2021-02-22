@@ -188,7 +188,7 @@ class mybin extends eqLogic {
         }
     }
 
-    function lastWeekNumberOfYear() {
+    public function lastWeekNumberOfYear() {
         $year = date('Y');
         $week_count = date('W', strtotime($year . '-12-31'));
         if ($week_count == '01'){
