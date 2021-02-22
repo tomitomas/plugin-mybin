@@ -68,7 +68,7 @@ class mybin extends eqLogic {
             // si myday == 1, cad Lundi, ca veut dire qu'on est aujourd'hui dimanche, dernier jour de la semaine ==> week +1
             if ($myday == 1) {
                 $myweek = $myweek + 1;
-                if ($myweek == 53) {
+                if ($myweek > $this->lastWeekNumberOfYear()) {
                     $myweek = 1;
                 }
             }
@@ -188,6 +188,14 @@ class mybin extends eqLogic {
         }
     }
 
+    function lastWeekNumberOfYear() {
+        $year = date('Y');
+        $week_count = date('W', strtotime($year . '-12-31'));
+        if ($week_count == '01'){
+            $week_count = date('W', strtotime($year . '-12-24'));
+        }
+        return intval($week_count);
+    }
 
     // Fonction exécutée automatiquement avant la création de l'équipement
     public function preInsert() {
