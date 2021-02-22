@@ -1,6 +1,6 @@
 # Plugin My Bin
 
-Very silpe plugin for Jeedom easing the management of your home bins.
+Very simple plugin for Jeedom easing the management of your home bins.
 
 # Configuration
 
