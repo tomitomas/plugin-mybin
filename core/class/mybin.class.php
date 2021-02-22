@@ -163,7 +163,7 @@ class mybin extends eqLogic {
                     log::add(__CLASS__, 'error', $this->getHumanName() . ' TTS Command '.$ttsid.' does not exist');
                 } else {
                     $options = array('message'=> $message);
-                    cmd::byId($id)->execCmd($options);
+                    $ttscmd::byId($id)->execCmd($options);
                 }
             }
         }
