@@ -42,7 +42,8 @@
         "Le jour même": "The same day",
         "à": "at",
         "Poubelle jaune": "Yellow bin",
-        "Template de widget": "Widget's template"
+        "Template de widget": "Widget's template",
+        "Semaine(s) de ramassage": "Week(s) of collect"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",

@@ -41,7 +41,8 @@
         "Le jour même": "Le jour même",
         "à": "à",
         "Poubelle jaune": "Poubelle jaune",
-        "Template de widget": "Template de widget"
+        "Template de widget": "Template de widget",
+        "Semaine(s) de ramassage": "Semaine(s) de ramassage"
         
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
