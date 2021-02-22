@@ -278,9 +278,11 @@ class mybin extends eqLogic {
 
 class mybinCmd extends cmd {
 
+    /*
     public function dontRemoveCmd() {
 		return true;
 	}
+    */
     
 	public function execute($_options = null) {
         $eqLogic = $this->getEqLogic();
