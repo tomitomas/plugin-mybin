@@ -45,9 +45,8 @@ class mybin extends eqLogic {
         $hour = 1 * date('G');
         $minute = 1 * date('i');
         log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkbins: day ' . $day . ', hour ' . $hour . ', minute ' . $minute);
-        $yellowbin = $this->checkNotifBin('yellowbin', $day, $hour, $minute);
-        $greenbin = $this->checkNotifBin('greenbin', $day, $hour, $minute);
-        $this->setGlobalStatusAndTTS($greenbin, $yellowbin);
+        $this->checkNotifBin('yellowbin', $day, $hour, $minute);
+        $this->checkNotifBin('greenbin', $day, $hour, $minute);
         $this->checkAckBin('yellowbin', $day, $hour, $minute);
         $this->checkAckBin('greenbin', $day, $hour, $minute);
     }
@@ -78,9 +77,6 @@ class mybin extends eqLogic {
         log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin ' . $bin . ': day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
         if ($isday && $ishour && $isminute) {
             $this->notifBin($bin);
-            return true;
-        } else {
-            return false;
         }
     }
     
@@ -126,15 +122,21 @@ class mybin extends eqLogic {
         log::add(__CLASS__, 'info', $this->getHumanName() . ' ' . $mybin . ' notification on');
         $cmd = $this->getCmd(null, $mybin);
         $cmd->event(1);
+        setGlobalStatus();
     }
     
     public function ackBin($mybin) {
         log::add(__CLASS__, 'info', $this->getHumanName() . ' ' . $mybin . ' acknowledged');
         $cmd = $this->getCmd(null, $mybin);
         $cmd->event(0);
+        setGlobalStatus();
     }
     
-    public function setGlobalStatusAndTTS($greenbin, $yellowbin) {
+    public function setGlobalStatus() {
+        $cmd = $this->getCmd('greenbin', $mybin);
+        $greenbin = $cmd->execCmd();
+        $cmd = $this->getCmd('yellowbin', $mybin);
+        $yellowbin = $cmd->execCmd();
         $globalstatus = 'N';
         if ($greenbin && $yellowbin) {
             $globalstatus = 'B';
