@@ -133,9 +133,9 @@ class mybin extends eqLogic {
     }
     
     public function setGlobalStatus() {
-        $cmd = $this->getCmd('greenbin', $mybin);
+        $cmd = $this->getCmd(null, 'greenbin');
         $greenbin = $cmd->execCmd();
-        $cmd = $this->getCmd('yellowbin', $mybin);
+        $cmd = $this->getCmd(null, 'yellowbin');
         $yellowbin = $cmd->execCmd();
         $globalstatus = 'N';
         if ($greenbin && $yellowbin) {
