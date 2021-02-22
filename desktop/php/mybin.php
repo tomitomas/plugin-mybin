@@ -304,7 +304,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								<label class="col-sm-4 control-label">{{Commande TTS}}
 									<sup><i class="fas fa-question-circle tooltips" title="{{Commande TTS à exécuter lorsque qu'il faut sortir les poubelles}}"></i></sup>
 								</label>
-                                <div class=" col-sm-4 input-group">
+                                <div class=" col-sm-6 input-group">
                                     <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ttscmd"/>
                                     <span class="input-group-btn">
                                         <a class="btn btn-default cursor" title="Rechercher un équipement" id="modalbtn"><i class="fas fa-list-alt"></i></a>
@@ -322,20 +322,19 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				<!--<a class="btn btn-success btn-sm cmdAction pull-right" data-action="add" style="margin-top:5px;">
 				<i class="fa fa-plus-circle"></i> {{Commandes}}</a><br/> -->
 				<br/>
-				<table id="table_cmd" class="table table-bordered table-condensed">
-					<thead>
-						<tr>
-							<th>{{Id}}</th>
-							<th>{{Nom}}</th>
-							<th>{{Type}}</th>
-							<th>{{Options}}</th>
-							<th>{{Paramètres}}</th>
-							<th>{{Action}}</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
+                <table id="table_cmd" class="table table-bordered table-condensed">
+                    <thead>
+                        <tr>
+                            <th style="width:50px;">{{Id}}</th>
+                            <th style="width:300px;">{{Nom}}</th>
+                            <th>{{Type}}</th>
+                            <th class="col-xs-3">{{Options}}</th>
+                            <th class="col-xs-2">{{Action}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
 			</div>
 		</div>
 
