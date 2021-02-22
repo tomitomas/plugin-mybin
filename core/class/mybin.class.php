@@ -227,6 +227,7 @@ class mybin extends eqLogic {
             $cmd->setName('Statut global');
             $cmd->setType('info');
             $cmd->setSubType('string');
+            $cmd->setGeneric_type('GENERIC_INFO');
             $cmd->setEventOnly(1);
             $cmd->setIsHistorized(0);
             $cmd->setTemplate('mobile', 'line');
