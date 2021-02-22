@@ -304,7 +304,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								<label class="col-sm-4 control-label">{{Commande TTS}}
 									<sup><i class="fas fa-question-circle tooltips" title="{{Commande TTS à exécuter lorsque qu'il faut sortir les poubelles}}"></i></sup>
 								</label>
-                                <div class=" col-sm-1 input-group">
+                                <div class=" col-sm-4 input-group">
                                     <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ttscmd"/>
                                     <span class="input-group-btn">
                                         <a class="btn btn-default cursor" title="Rechercher un équipement" id="modalbtn"><i class="fas fa-list-alt"></i></a>
