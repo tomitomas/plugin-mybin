@@ -106,7 +106,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							</div>
 							<br>
 
-							<legend><i class="fas fa-magic"></i> {{Poubelle verte}}</legend>
+							<legend><i class="icon divers-slightly"></i> {{Poubelle verte}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Jour(s) de ramassage}}</label>
 								<div class="col-sm-7">
@@ -198,7 +198,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							</div>
 							<br>
 
-							<legend><i class="fas fa-magic"></i> {{Poubelle jaune}}</legend>
+							<legend><i class="icon divers-garbage8"></i> {{Poubelle jaune}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Jour(s) de ramassage}}</label>
 								<div class="col-sm-7">
@@ -291,7 +291,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 						</div>
 
 						<div class="col-lg-5">
-							<legend><i class="fas fa-camera-retro"></i> {{Options}}</legend>
+							<legend><i class="icon jeedomapp-preset"></i> {{Options}}</legend>
 							<div class="form-group">
 								<label class="col-sm-4 control-label">{{Template de widget}}
 									<sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour utiliser le template de widget}}"></i></sup>
