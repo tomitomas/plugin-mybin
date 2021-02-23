@@ -62,273 +62,551 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				<br/>
 				<form class="form-horizontal">
 					<fieldset>
-						<div class="col-lg-6">
-							<legend><i class="fas fa-wrench"></i> {{Général}}</legend>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Nom de l'équipement My Bin}}</label>
-								<div class="col-sm-7">
-									<input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
-									<input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement My Bin}}"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label" >{{Objet parent}}</label>
-								<div class="col-sm-7">
-									<select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
-										<option value="">{{Aucun}}</option>
-										<?php	$options = '';
-										foreach ((jeeObject::buildTree(null, false)) as $object) {
-											$options .= '<option value="' . $object->getId() . '">' . str_repeat('&nbsp;&nbsp;', $object->getConfiguration('parentNumber')) . $object->getName() . '</option>';
-										}
-										echo $options;
-										?>
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Catégorie}}</label>
-								<div class="col-sm-9">
-									<?php
-									foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
-										echo '<label class="checkbox-inline">';
-										echo '<input type="checkbox" class="eqLogicAttr" data-l1key="category" data-l2key="' . $key . '" />' . $value['name'];
-										echo '</label>';
-									}
-									?>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Options}}</label>
-								<div class="col-sm-7">
-									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
-									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
-								</div>
-							</div>
-							<br>
-
-							<legend><i class="icon divers-slightly"></i> {{Poubelle verte}}</legend>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Semaine(s) de ramassage}}</label>
-								<div class="col-sm-7">
-								    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_paire" />{{Semaines paires}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_impaire" />{{Semaines impaires}}</label>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Jour(s) de ramassage}}</label>
-								<div class="col-sm-7">
-								    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_1" />{{Lundi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_2" />{{Mardi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_3" />{{Mercredi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_4" />{{Jeudi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_5" />{{Vendredi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_6" />{{Samedi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="greenbin_0" />{{Dimanche}}</label>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Heure de ramassage}}</label>
-								<div class="col-sm-7">
-                                    <span class="col-sm-2">
-                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="greenbin_hour">
-                                        <?php
-                                        for ($i = 0; $i <= 23; $i++) {
-                                            echo '<option value="'.$i.'">';
-                                            if ($i < 10) {
-                                                echo '0';
+						<div style="width: 100%; display:inline-block;">
+                            <div class="col-lg-6">
+                                <legend><i class="fas fa-wrench"></i> {{Général}}</legend>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Nom de l'équipement My Bin}}</label>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
+                                        <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement My Bin}}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" >{{Objet parent}}</label>
+                                    <div class="col-sm-7">
+                                        <select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
+                                            <option value="">{{Aucun}}</option>
+                                            <?php	$options = '';
+                                            foreach ((jeeObject::buildTree(null, false)) as $object) {
+                                                $options .= '<option value="' . $object->getId() . '">' . str_repeat('&nbsp;&nbsp;', $object->getConfiguration('parentNumber')) . $object->getName() . '</option>';
                                             }
-                                            echo $i.'</option>';
+                                            echo $options;
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Catégorie}}</label>
+                                    <div class="col-sm-9">
+                                        <?php
+                                        foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
+                                            echo '<label class="checkbox-inline">';
+                                            echo '<input type="checkbox" class="eqLogicAttr" data-l1key="category" data-l2key="' . $key . '" />' . $value['name'];
+                                            echo '</label>';
                                         }
                                         ?>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Options}}</label>
+                                    <div class="col-sm-7">
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                            <div class="col-lg-5" style="float: right;">
+                                <legend><i class="icon jeedomapp-preset"></i> {{Options}}</legend>
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">{{Template de widget}}
+                                        <sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour utiliser le template de widget}}"></i></sup>
+                                    </label>
+                                    <div class="col-sm-1">
+                                        <input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="widgetTemplate"/>
+                                    </div>
+                                </div>
+                                <!--
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">{{Commande TTS}}
+                                        <sup><i class="fas fa-question-circle tooltips" title="{{Commande TTS à exécuter lorsque qu'il faut sortir les poubelles}}"></i></sup>
+                                    </label>
+                                    <div class=" col-sm-6 input-group">
+                                        <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ttscmd"/>
+                                        <span class="input-group-btn">
+                                            <a class="btn btn-default cursor" title="Rechercher un équipement" id="modalbtn"><i class="fas fa-list-alt"></i></a>
+                                        </span>
+                                    </div>
+                                </div>
+                                -->
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            <div class="col-lg-6">
+                                <legend><i class="icon divers-slightly"></i> {{Déchêts ménagers}}</legend>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Activer}}
+                                    </label>
+                                    <div class="col-sm-1">
+                                        <input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin1_active"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Couleur de la poubelle}}</label>
+                                    <div class="col-sm-7">
+                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin1_color">
+                                            <option value="green">{{Verte}}</option>
+                                            <option value="yellow">{{Jaune}}</option>
+                                            <option value="braun">{{Marron}}</option>
+                                            <option value="blue">{{Bleue}}</option>
                                         </select>
-                                    </span>
-                                    <span class="col-sm-1">
-                                        <label>h</label>
-                                    </span>
-                                    <span class="col-sm-2">
-                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="greenbin_minute">
-                                        <?php
-                                        for ($i = 0; $i <= 55; $i = $i + 5) {
-                                            echo '<option value="'.$i.'">';
-                                            if ($i < 10) {
-                                                echo '0';
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Semaine(s) de ramassage}}</label>
+                                    <div class="col-sm-7">
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin1_paire" />{{Semaines paires}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin1_impaire" />{{Semaines impaires}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Jour(s) de ramassage}}</label>
+                                    <div class="col-sm-7">
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin1_1" />{{Lundi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin1_2" />{{Mardi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin1_3" />{{Mercredi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin1_4" />{{Jeudi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin1_5" />{{Vendredi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin1_6" />{{Samedi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin1_0" />{{Dimanche}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Heure de ramassage}}</label>
+                                    <div class="col-sm-7">
+                                        <span class="col-sm-2">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin1_hour">
+                                            <?php
+                                            for ($i = 0; $i <= 23; $i++) {
+                                                echo '<option value="'.$i.'">';
+                                                if ($i < 10) {
+                                                    echo '0';
+                                                }
+                                                echo $i.'</option>';
                                             }
-                                            echo $i.'</option>';
-                                        }
-                                        ?>
-                                        </select>
-                                    </span>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Notification}}</label>
-								<div class="col-sm-7">
-                                    <span class="col-sm-6">
-                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="greenbin_notif_veille">
-                                            <option value="1">{{La veille}}</option>
-                                            <option value="0">{{Le jour même}}</option>
-                                        </select>
-                                    </span>
-                                    <span class="col-sm-1">
-                                        <label>{{à}}</label>
-                                    </span>
-                                    <span class="col-sm-2">
-                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="greenbin_notif_hour">
-                                        <?php
-                                        for ($i = 0; $i <= 23; $i++) {
-                                            echo '<option value="'.$i.'">';
-                                            if ($i < 10) {
-                                                echo '0';
+                                            ?>
+                                            </select>
+                                        </span>
+                                        <span class="col-sm-1">
+                                            <label>h</label>
+                                        </span>
+                                        <span class="col-sm-2">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin1_minute">
+                                            <?php
+                                            for ($i = 0; $i <= 55; $i = $i + 5) {
+                                                echo '<option value="'.$i.'">';
+                                                if ($i < 10) {
+                                                    echo '0';
+                                                }
+                                                echo $i.'</option>';
                                             }
-                                            echo $i.'</option>';
-                                        }
-                                        ?>
-                                        </select>
-                                    </span>
-                                    <span class="col-sm-1">
-                                        <label>h</label>
-                                    </span>
-                                    <span class="col-sm-2">
-                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="greenbin_notif_minute">
-                                        <?php
-                                        for ($i = 0; $i <= 55; $i = $i + 5) {
-                                            echo '<option value="'.$i.'">';
-                                            if ($i < 10) {
-                                                echo '0';
+                                            ?>
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Notification}}</label>
+                                    <div class="col-sm-7">
+                                        <span class="col-sm-6">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin1_notif_veille">
+                                                <option value="1">{{La veille}}</option>
+                                                <option value="0">{{Le jour même}}</option>
+                                            </select>
+                                        </span>
+                                        <span class="col-sm-1">
+                                            <label>{{à}}</label>
+                                        </span>
+                                        <span class="col-sm-2">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin1_notif_hour">
+                                            <?php
+                                            for ($i = 0; $i <= 23; $i++) {
+                                                echo '<option value="'.$i.'">';
+                                                if ($i < 10) {
+                                                    echo '0';
+                                                }
+                                                echo $i.'</option>';
                                             }
-                                            echo $i.'</option>';
-                                        }
-                                        ?>
-                                        </select>
-                                    </span>
-								</div>
-							</div>
-							<br>
-
-							<legend><i class="icon divers-garbage8"></i> {{Poubelle jaune}}</legend>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Semaine(s) de ramassage}}</label>
-								<div class="col-sm-7">
-								    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="yellowbin_paire" />{{Semaines paires}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="yellowbin_impaire" />{{Semaines impaires}}</label>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Jour(s) de ramassage}}</label>
-								<div class="col-sm-7">
-								    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="yellowbin_1" />{{Lundi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="yellowbin_2" />{{Mardi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="yellowbin_3" />{{Mercredi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="yellowbin_4" />{{Jeudi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="yellowbin_5" />{{Vendredi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="yellowbin_6" />{{Samedi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="yellowbin_0" />{{Dimanche}}</label>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Heure de ramassage}}</label>
-								<div class="col-sm-7">
-                                    <span class="col-sm-2">
-                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_hour">
-                                        <?php
-                                        for ($i = 0; $i <= 23; $i++) {
-                                            echo '<option value="'.$i.'">';
-                                            if ($i < 10) {
-                                                echo '0';
+                                            ?>
+                                            </select>
+                                        </span>
+                                        <span class="col-sm-1">
+                                            <label>h</label>
+                                        </span>
+                                        <span class="col-sm-2">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin1_notif_minute">
+                                            <?php
+                                            for ($i = 0; $i <= 55; $i = $i + 5) {
+                                                echo '<option value="'.$i.'">';
+                                                if ($i < 10) {
+                                                    echo '0';
+                                                }
+                                                echo $i.'</option>';
                                             }
-                                            echo $i.'</option>';
-                                        }
-                                        ?>
-                                        </select>
-                                    </span>
-                                    <span class="col-sm-1">
-                                        <label>h</label>
-                                    </span>
-                                    <span class="col-sm-2">
-                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_minute">
-                                        <?php
-                                        for ($i = 0; $i <= 55; $i = $i + 5) {
-                                            echo '<option value="'.$i.'">';
-                                            if ($i < 10) {
-                                                echo '0';
-                                            }
-                                            echo $i.'</option>';
-                                        }
-                                        ?>
-                                        </select>
-                                    </span>
-								</div>
+                                            ?>
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+                                <br>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Notification}}</label>
-								<div class="col-sm-7">
-                                    <span class="col-sm-6">
-                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_notif_veille">
-                                            <option value="1">{{La veille}}</option>
-                                            <option value="0">{{Le jour même}}</option>
+							<div class="col-lg-6" style="float: right;">
+                                <legend><i class="icon divers-garbage8"></i> {{Déchêts recyclables}}</legend>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Activer}}
+                                    </label>
+                                    <div class="col-sm-1">
+                                        <input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin2_active"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Couleur de la poubelle}}</label>
+                                    <div class="col-sm-7">
+                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin2_color">
+                                            <option value="green">{{Verte}}</option>
+                                            <option value="yellow">{{Jaune}}</option>
+                                            <option value="braun">{{Marron}}</option>
+                                            <option value="blue">{{Bleue}}</option>
                                         </select>
-                                    </span>
-                                    <span class="col-sm-1">
-                                        <label>{{à}}</label>
-                                    </span>
-                                    <span class="col-sm-2">
-                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_notif_hour">
-                                        <?php
-                                        for ($i = 0; $i <= 23; $i++) {
-                                            echo '<option value="'.$i.'">';
-                                            if ($i < 10) {
-                                                echo '0';
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Semaine(s) de ramassage}}</label>
+                                    <div class="col-sm-7">
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin2_paire" />{{Semaines paires}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin2_impaire" />{{Semaines impaires}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Jour(s) de ramassage}}</label>
+                                    <div class="col-sm-7">
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin2_1" />{{Lundi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin2_2" />{{Mardi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin2_3" />{{Mercredi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin2_4" />{{Jeudi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin2_5" />{{Vendredi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin2_6" />{{Samedi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin2_0" />{{Dimanche}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Heure de ramassage}}</label>
+                                    <div class="col-sm-7">
+                                        <span class="col-sm-2">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin2_hour">
+                                            <?php
+                                            for ($i = 0; $i <= 23; $i++) {
+                                                echo '<option value="'.$i.'">';
+                                                if ($i < 10) {
+                                                    echo '0';
+                                                }
+                                                echo $i.'</option>';
                                             }
-                                            echo $i.'</option>';
-                                        }
-                                        ?>
-                                        </select>
-                                    </span>
-                                    <span class="col-sm-1">
-                                        <label>h</label>
-                                    </span>
-                                    <span class="col-sm-2">
-                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="yellowbin_notif_minute">
-                                        <?php
-                                        for ($i = 0; $i <= 55; $i = $i + 5) {
-                                            echo '<option value="'.$i.'">';
-                                            if ($i < 10) {
-                                                echo '0';
+                                            ?>
+                                            </select>
+                                        </span>
+                                        <span class="col-sm-1">
+                                            <label>h</label>
+                                        </span>
+                                        <span class="col-sm-2">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin2_minute">
+                                            <?php
+                                            for ($i = 0; $i <= 55; $i = $i + 5) {
+                                                echo '<option value="'.$i.'">';
+                                                if ($i < 10) {
+                                                    echo '0';
+                                                }
+                                                echo $i.'</option>';
                                             }
-                                            echo $i.'</option>';
-                                        }
-                                        ?>
+                                            ?>
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Notification}}</label>
+                                    <div class="col-sm-7">
+                                        <span class="col-sm-6">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin2_notif_veille">
+                                                <option value="1">{{La veille}}</option>
+                                                <option value="0">{{Le jour même}}</option>
+                                            </select>
+                                        </span>
+                                        <span class="col-sm-1">
+                                            <label>{{à}}</label>
+                                        </span>
+                                        <span class="col-sm-2">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin2_notif_hour">
+                                            <?php
+                                            for ($i = 0; $i <= 23; $i++) {
+                                                echo '<option value="'.$i.'">';
+                                                if ($i < 10) {
+                                                    echo '0';
+                                                }
+                                                echo $i.'</option>';
+                                            }
+                                            ?>
+                                            </select>
+                                        </span>
+                                        <span class="col-sm-1">
+                                            <label>h</label>
+                                        </span>
+                                        <span class="col-sm-2">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin2_notif_minute">
+                                            <?php
+                                            for ($i = 0; $i <= 55; $i = $i + 5) {
+                                                echo '<option value="'.$i.'">';
+                                                if ($i < 10) {
+                                                    echo '0';
+                                                }
+                                                echo $i.'</option>';
+                                            }
+                                            ?>
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+                                <br>
+						    </div>
+                        </div>
+                        <div>
+                            <div class="col-lg-6">
+                                <legend><i class="icon nature-tree101"></i> {{Déchêts végétaux}}</legend>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Activer}}
+                                    </label>
+                                    <div class="col-sm-1">
+                                        <input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin3_active"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Couleur de la poubelle}}</label>
+                                    <div class="col-sm-7">
+                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin3_color">
+                                            <option value="green">{{Verte}}</option>
+                                            <option value="yellow">{{Jaune}}</option>
+                                            <option value="braun">{{Marron}}</option>
+                                            <option value="blue">{{Bleue}}</option>
                                         </select>
-                                    </span>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-lg-5">
-							<legend><i class="icon jeedomapp-preset"></i> {{Options}}</legend>
-							<div class="form-group">
-								<label class="col-sm-4 control-label">{{Template de widget}}
-									<sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour utiliser le template de widget}}"></i></sup>
-								</label>
-								<div class="col-sm-1">
-									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="widgetTemplate"/>
-								</div>
-							</div>
-                            <!--
-                            <div class="form-group">
-								<label class="col-sm-4 control-label">{{Commande TTS}}
-									<sup><i class="fas fa-question-circle tooltips" title="{{Commande TTS à exécuter lorsque qu'il faut sortir les poubelles}}"></i></sup>
-								</label>
-                                <div class=" col-sm-6 input-group">
-                                    <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ttscmd"/>
-                                    <span class="input-group-btn">
-                                        <a class="btn btn-default cursor" title="Rechercher un équipement" id="modalbtn"><i class="fas fa-list-alt"></i></a>
-                                    </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Semaine(s) de ramassage}}</label>
+                                    <div class="col-sm-7">
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin3_paire" />{{Semaines paires}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin3_impaire" />{{Semaines impaires}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Jour(s) de ramassage}}</label>
+                                    <div class="col-sm-7">
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin3_1" />{{Lundi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin3_2" />{{Mardi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin3_3" />{{Mercredi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin3_4" />{{Jeudi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin3_5" />{{Vendredi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin3_6" />{{Samedi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin3_0" />{{Dimanche}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Heure de ramassage}}</label>
+                                    <div class="col-sm-7">
+                                        <span class="col-sm-2">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin3_hour">
+                                            <?php
+                                            for ($i = 0; $i <= 23; $i++) {
+                                                echo '<option value="'.$i.'">';
+                                                if ($i < 10) {
+                                                    echo '0';
+                                                }
+                                                echo $i.'</option>';
+                                            }
+                                            ?>
+                                            </select>
+                                        </span>
+                                        <span class="col-sm-1">
+                                            <label>h</label>
+                                        </span>
+                                        <span class="col-sm-2">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin3_minute">
+                                            <?php
+                                            for ($i = 0; $i <= 55; $i = $i + 5) {
+                                                echo '<option value="'.$i.'">';
+                                                if ($i < 10) {
+                                                    echo '0';
+                                                }
+                                                echo $i.'</option>';
+                                            }
+                                            ?>
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Notification}}</label>
+                                    <div class="col-sm-7">
+                                        <span class="col-sm-6">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin3_notif_veille">
+                                                <option value="1">{{La veille}}</option>
+                                                <option value="0">{{Le jour même}}</option>
+                                            </select>
+                                        </span>
+                                        <span class="col-sm-1">
+                                            <label>{{à}}</label>
+                                        </span>
+                                        <span class="col-sm-2">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin3_notif_hour">
+                                            <?php
+                                            for ($i = 0; $i <= 23; $i++) {
+                                                echo '<option value="'.$i.'">';
+                                                if ($i < 10) {
+                                                    echo '0';
+                                                }
+                                                echo $i.'</option>';
+                                            }
+                                            ?>
+                                            </select>
+                                        </span>
+                                        <span class="col-sm-1">
+                                            <label>h</label>
+                                        </span>
+                                        <span class="col-sm-2">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin3_notif_minute">
+                                            <?php
+                                            for ($i = 0; $i <= 55; $i = $i + 5) {
+                                                echo '<option value="'.$i.'">';
+                                                if ($i < 10) {
+                                                    echo '0';
+                                                }
+                                                echo $i.'</option>';
+                                            }
+                                            ?>
+                                            </select>
+                                        </span>
+                                    </div>
                                 </div>
 							</div>
-                            -->
-						</div>
-
+							<div class="col-lg-6" style="float: right;">
+                                <legend><i class="icon nourriture-wine23"></i> {{Déchêts en verre}}</legend>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Activer}}
+                                    </label>
+                                    <div class="col-sm-1">
+                                        <input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin4_active"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Couleur de la poubelle}}</label>
+                                    <div class="col-sm-7">
+                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin4_color">
+                                            <option value="green">{{Verte}}</option>
+                                            <option value="yellow">{{Jaune}}</option>
+                                            <option value="braun">{{Marron}}</option>
+                                            <option value="blue">{{Bleue}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Semaine(s) de ramassage}}</label>
+                                    <div class="col-sm-7">
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin4_paire" />{{Semaines paires}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin4_impaire" />{{Semaines impaires}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Jour(s) de ramassage}}</label>
+                                    <div class="col-sm-7">
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin4_1" />{{Lundi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin4_2" />{{Mardi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin4_3" />{{Mercredi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin4_4" />{{Jeudi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin4_5" />{{Vendredi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin4_6" />{{Samedi}}</label>
+                                        <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="bin4_0" />{{Dimanche}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Heure de ramassage}}</label>
+                                    <div class="col-sm-7">
+                                        <span class="col-sm-2">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin4_hour">
+                                            <?php
+                                            for ($i = 0; $i <= 23; $i++) {
+                                                echo '<option value="'.$i.'">';
+                                                if ($i < 10) {
+                                                    echo '0';
+                                                }
+                                                echo $i.'</option>';
+                                            }
+                                            ?>
+                                            </select>
+                                        </span>
+                                        <span class="col-sm-1">
+                                            <label>h</label>
+                                        </span>
+                                        <span class="col-sm-2">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin4_minute">
+                                            <?php
+                                            for ($i = 0; $i <= 55; $i = $i + 5) {
+                                                echo '<option value="'.$i.'">';
+                                                if ($i < 10) {
+                                                    echo '0';
+                                                }
+                                                echo $i.'</option>';
+                                            }
+                                            ?>
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">{{Notification}}</label>
+                                    <div class="col-sm-7">
+                                        <span class="col-sm-6">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin4_notif_veille">
+                                                <option value="1">{{La veille}}</option>
+                                                <option value="0">{{Le jour même}}</option>
+                                            </select>
+                                        </span>
+                                        <span class="col-sm-1">
+                                            <label>{{à}}</label>
+                                        </span>
+                                        <span class="col-sm-2">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin4_notif_hour">
+                                            <?php
+                                            for ($i = 0; $i <= 23; $i++) {
+                                                echo '<option value="'.$i.'">';
+                                                if ($i < 10) {
+                                                    echo '0';
+                                                }
+                                                echo $i.'</option>';
+                                            }
+                                            ?>
+                                            </select>
+                                        </span>
+                                        <span class="col-sm-1">
+                                            <label>h</label>
+                                        </span>
+                                        <span class="col-sm-2">
+                                            <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin4_notif_minute">
+                                            <?php
+                                            for ($i = 0; $i <= 55; $i = $i + 5) {
+                                                echo '<option value="'.$i.'">';
+                                                if ($i < 10) {
+                                                    echo '0';
+                                                }
+                                                echo $i.'</option>';
+                                            }
+                                            ?>
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+						    </div>
+                        </div>
 					</fieldset>
 				</form>
 				<hr>

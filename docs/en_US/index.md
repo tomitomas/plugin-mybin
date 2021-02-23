@@ -18,13 +18,12 @@ On the equipment page, fill in the collect days and times for your bins as well 
 
 # Utilisation
 
-Eqch equipment creates 5 comamnds:
-- Yellow bin & Green bin : 1 if one of the bin needs to be put out
-- Ack: Puts both commands above to 0. This command is automatically called at collect time.
+Eqch equipment creates 9 comamnds:
+- 1 for each bin indicating the ones to put out
+- 1 for each bin to acknowledge it. These commands will be automatically called at collect time of concernd bin
 - Refresh: well... refresh ;)
-- Global status : 'N' if no bin to put out, 'Y' if yellow bin to put out, 'G' if green bin to put out, 'B' if both bins to put out.
 
-A widget's template is available that offers a visual indication (colored bin).
+A widget's template is available that offers a visual indication (colored bin), and a calendar. A click on the icon will 'ack' the bin.
 
 # Contributions
 

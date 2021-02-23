@@ -11,8 +11,17 @@
 	</center>   
     <div>
         <center>
-            <span class="cmd ack cursor" data-type="info" data-subtype="string" data-cmd_id="#globalstatus_id#">
-                <img src="plugins/mybin/data/images/#binimg#.png" width="70px">
+            <span class="cmd ack1 cursor" data-type="info" data-subtype="string">
+                <img src="plugins/mybin/data/images/#bin1img#.png" width="70px">
+            </span>
+            <span class="cmd ack2 cursor" data-type="info" data-subtype="string">
+                <img src="plugins/mybin/data/images/#bin2img#.png" width="70px">
+            </span>
+            <span class="cmd ack3 cursor" data-type="info" data-subtype="string">
+                <img src="plugins/mybin/data/images/#bin3img#.png" width="70px">
+            </span>
+            <span class="cmd ack4 cursor" data-type="info" data-subtype="string">
+                <img src="plugins/mybin/data/images/#bin4img#.png" width="70px">
             </span>
         </center>
     </div>
@@ -21,30 +30,55 @@
         <center>
             <table style="width: 90%;">
                 <tr>
-                    <th style="width: 14%;"><center>#day1#</center></th>
-                    <th style="width: 14%;"><center>#day2#</center></th>
-                    <th style="width: 14%;"><center>#day3#</center></th>
-                    <th style="width: 14%;"><center>#day4#</center></th>
-                    <th style="width: 14%;"><center>#day5#</center></th>
-                    <th style="width: 14%;"><center>#day6#</center></th>
-                    <th style="width: 14%;"><center>#day7#</center></th>
+                    <th style="width: 14%;"><center>#day1#</center><center>#date1#</center></th>
+                    <th style="width: 14%;"><center>#day2#</center><center>#date2#</center></th>
+                    <th style="width: 14%;"><center>#day3#</center><center>#date3#</center></th>
+                    <th style="width: 14%;"><center>#day4#</center><center>#date4#</center></th>
+                    <th style="width: 14%;"><center>#day5#</center><center>#date5#</center></th>
+                    <th style="width: 14%;"><center>#day6#</center><center>#date6#</center></th>
+                    <th style="width: 14%;"><center>#day7#</center><center>#date7#</center></th>
                 </tr>
                 <tr>
-                    <td style="width: 14%;"><center><img src="plugins/mybin/data/images/#binimg_day1#.png" width="20px"></center></td>
-                    <td style="width: 14%;"><center><img src="plugins/mybin/data/images/#binimg_day2#.png" width="20px"></center></td>
-                    <td style="width: 14%;"><center><img src="plugins/mybin/data/images/#binimg_day3#.png" width="20px"></center></td>
-                    <td style="width: 14%;"><center><img src="plugins/mybin/data/images/#binimg_day4#.png" width="20px"></center></td>
-                    <td style="width: 14%;"><center><img src="plugins/mybin/data/images/#binimg_day5#.png" width="20px"></center></td>
-                    <td style="width: 14%;"><center><img src="plugins/mybin/data/images/#binimg_day6#.png" width="20px"></center></td>
-                    <td style="width: 14%;"><center><img src="plugins/mybin/data/images/#binimg_day7#.png" width="20px"></center></td>
+                    <td style="width: 14%;"><center>#binimg_day1#</center></td>
+                    <td style="width: 14%;"><center>#binimg_day2#</center></td>
+                    <td style="width: 14%;"><center>#binimg_day3#</center></td>
+                    <td style="width: 14%;"><center>#binimg_day4#</center></td>
+                    <td style="width: 14%;"><center>#binimg_day5#</center></td>
+                    <td style="width: 14%;"><center>#binimg_day6#</center></td>
+                    <td style="width: 14%;"><center>#binimg_day7#</center></td>
                 </tr>
             </table>
         </center>
     </div>
-    <script>    
-        $('.eqLogic[data-eqLogic_uid=#uid#] .ack').on('click', function () {
-            jeedom.cmd.execute({id: '#ack_id#'});
-        });
+    <script>
+        if ('#ack1_id#' != ''){
+            $('.eqLogic[data-eqLogic_uid=#uid#] .ack1').on('click', function () {
+                jeedom.cmd.execute({id: '#ack1_id#'});
+            });
+        } else {
+            $('.eqLogic[data-eqLogic_uid=#uid#] .ack1').remove();
+        }
+        if ('#ack2_id#' != ''){
+            $('.eqLogic[data-eqLogic_uid=#uid#] .ack2').on('click', function () {
+                jeedom.cmd.execute({id: '#ack2_id#'});
+            });
+        } else {
+            $('.eqLogic[data-eqLogic_uid=#uid#] .ack2').remove();
+        }
+        if ('#ack3_id#' != ''){
+            $('.eqLogic[data-eqLogic_uid=#uid#] .ack3').on('click', function () {
+                jeedom.cmd.execute({id: '#ack3_id#'});
+            });
+        } else {
+            $('.eqLogic[data-eqLogic_uid=#uid#] .ack3').remove();
+        }
+        if ('#ack4_id#' != ''){
+            $('.eqLogic[data-eqLogic_uid=#uid#] .ack4').on('click', function () {
+                jeedom.cmd.execute({id: '#ack4_id#'});
+            });
+        } else {
+            $('.eqLogic[data-eqLogic_uid=#uid#] .ack4').remove();
+        }
         if ('#refresh_id#' != ''){
 			$('.eqLogic[data-eqLogic_uid=#uid#] .refresh').on('click', function () {
 				jeedom.cmd.execute({id: '#refresh_id#'});

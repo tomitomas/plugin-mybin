@@ -25,23 +25,7 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 // Fonction exécutée automatiquement après la mise à jour du plugin
   function mybin_update() {
-      foreach (eqLogic::byType('mybin') as $eqLogic) {
-        if ($eqLogic->getConfiguration('greenbin_paire', 'unset') === 'unset') {
-            $eqLogic->setConfiguration('greenbin_paire', 1);
-        }
-        if ($eqLogic->getConfiguration('greenbin_impaire', 'unset') === 'unset') {
-            $eqLogic->setConfiguration('greenbin_impaire', 1);
-        }
-        if ($eqLogic->getConfiguration('yellowbin_paire', 'unset') === 'unset') {
-            $eqLogic->setConfiguration('yellowbin_paire', 1);
-        }
-        if ($eqLogic->getConfiguration('yellowbin_impaire', 'unset') === 'unset') {
-            $eqLogic->setConfiguration('yellowbin_impaire', 1);
-        }
-        $eqLogic->setDisplay('height','160px');
-        $eqLogic->setDisplay('width', '372px');
-        $eqLogic->save();
-      }
+
   }
 
 // Fonction exécutée automatiquement après la suppression du plugin

@@ -43,7 +43,11 @@
         "à": "at",
         "Poubelle jaune": "Yellow bin",
         "Template de widget": "Widget's template",
-        "Semaine(s) de ramassage": "Week(s) of collect"
+        "Semaine(s) de ramassage": "Week(s) of collect",
+        "Déchêts ménagers": "Common bin",
+        "Déchêts recyclables": "Recycled",
+        "Déchêts végétaux": "Green bin",
+        "Déchêts en verre": "Glass"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
@@ -57,7 +61,6 @@
         "Il faut sortir les deux poubelles": "Both bins must be put out",
         "Il faut sortir la poubelle verte": "The green bin must be put out",
         "Il faut sortir la poubelle jaune": "The yellow bin must be put out",
-        "L\\'heure de notification est après l\\'heure de collecte pour la poublle verte": "The time of notification is after the time of collect for the green bin",
-        "L\\'heure de notification est après l\\'heure de collecte pour la poublle jaune": "The time of notification is after the time of collect for the yellow bin"
+        "L\\'heure de notification est après l\\'heure de collecte pour la poublle ": "The time of notification is after the time of collect for bin ",
     }
 }
