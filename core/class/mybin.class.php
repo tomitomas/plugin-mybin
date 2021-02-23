@@ -158,7 +158,7 @@ class mybin extends eqLogic {
         $this->setDisplay('height','160px');
         $this->setDisplay('width', '372px');
         $this->setConfiguration('widgetTemplate', 1);
-        for ($i = 0; $i <= 4; $i++) {
+        for ($i = 1; $i <= 4; $i++) {
             $this->setConfiguration('bin'.$i.'_hour', 8);
             $this->setConfiguration('bin'.$i.'_minute', 0);
             $this->setConfiguration('bin'.$i.'_notif_veille', 1);
@@ -176,7 +176,7 @@ class mybin extends eqLogic {
  
     //Fonction exécutée automatiquement avant la mise à jour de l'équipement
     public function preUpdate() {
-        for ($i = 0; $i <= 4; $i++) {
+        for ($i = 1; $i <= 4; $i++) {
             if ($this->getConfiguration('bin'.$i.'_notif_veille') == 0) {
                 if ($this->getConfiguration('bin'.$i.'_notif_hour') > $this->getConfiguration('bin'.$i.'_hour')) {
                     throw new Exception(__('L\'heure de notification est après l\'heure de collecte pour la poublle ',__FILE__) . $i);
@@ -326,7 +326,7 @@ class mybin extends eqLogic {
         $version = jeedom::versionAlias($_version);
         
         //Status
-        for ($i = 0; $i <= 4; $i++) {
+        for ($i = 1; $i <= 4; $i++) {
             $binCmd = $this->getCmd(null, 'bin'.$i);
             $binStatus = $binCmd->execCmd();
             $binimg = "nothing";
@@ -353,7 +353,7 @@ class mybin extends eqLogic {
             $display = "";
             $week = $dt->format('W');
             $day = $dt->format('w');
-            for ($j = 0; $j <= 4; $j++) {
+            for ($j = 1; $j <= 4; $j++) {
                 if ($this->checkIfBin('bin'.$j, $week, $day)) {
                     $color = $this->getConfiguration('bin'.$j.'_color');
                     $display = $display . '<img src="plugins/mybin/data/images/'.$color.'.png" width="20px">';
