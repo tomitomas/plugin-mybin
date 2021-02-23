@@ -18,13 +18,12 @@ Sur la page de l'équipement, renseignez les jours et heures de collecte de vos 
 
 # Utilisation
 
-Chaque équipement cré 5 commandes:
-- Poubelle jaune & Poubelle verte : à 1 si il faut sortir la poubelle
-- Ack : Permet de remettre les deux commandes ci-dessus à 0. Cette commande est automatiquement appelée à l'heure de collecte.
+Chaque équipement cré 9 commandes:
+- une pour chaque poubelle indiquant si il faut la sortir (à 1 dans ce cas)
+- une commande 'ack' pour chaque poubelle remettant le statut à 0. Ces commabdes sont automatiquement appelées à l'heure de collecte
 - Rrefresh : refresh quoi... :)
-- Status global : 'N' si pas de poubelle à sortir, 'Y' si poubelle jaune à sortir, 'G' si poubelle verte à sortir, 'B' si les deux poubelles doivent être sorties
 
-Un template de widget est disponible qui offre une indication visuelle (poubelle colorée).
+Un template de widget est disponible qui offre une indication visuelle (poubelle colorée), ainsi qu'un calendrier.
 
 # Contributions
 
