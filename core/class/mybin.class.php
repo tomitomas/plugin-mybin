@@ -457,7 +457,7 @@ class mybinCmd extends cmd {
                 $eqLogic->refreshWidget();
                 break;
             case "refresh":
-                $eqLogic->checkBins();
+                $eqLogic->refreshWidget();
                 break;
         }
     }
