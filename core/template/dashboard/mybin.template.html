@@ -11,6 +11,9 @@
 	</center>   
     <div style="height: 70px">
         <center>
+            <span class="nobin">
+                <i>Il n'y a aucune poubelle à sortir</i>
+            </span>
             <span class="cmd ack1 cursor" data-type="info" data-subtype="binary">
                 <img src="plugins/mybin/data/images/#bin1img#.png" width="70px">
             </span>
@@ -52,6 +55,7 @@
     </div>
     <script>
         if ('#ack1_id#' != ''){
+            $('.eqLogic[data-eqLogic_uid=#uid#] .nobin').remove();
             $('.eqLogic[data-eqLogic_uid=#uid#] .ack1').on('click', function () {
                 jeedom.cmd.execute({id: '#ack1_id#'});
             });
@@ -59,6 +63,7 @@
             $('.eqLogic[data-eqLogic_uid=#uid#] .ack1').remove();
         }
         if ('#ack2_id#' != ''){
+            $('.eqLogic[data-eqLogic_uid=#uid#] .nobin').remove();
             $('.eqLogic[data-eqLogic_uid=#uid#] .ack2').on('click', function () {
                 jeedom.cmd.execute({id: '#ack2_id#'});
             });
@@ -66,6 +71,7 @@
             $('.eqLogic[data-eqLogic_uid=#uid#] .ack2').remove();
         }
         if ('#ack3_id#' != ''){
+            $('.eqLogic[data-eqLogic_uid=#uid#] .nobin').remove();
             $('.eqLogic[data-eqLogic_uid=#uid#] .ack3').on('click', function () {
                 jeedom.cmd.execute({id: '#ack3_id#'});
             });
@@ -73,6 +79,7 @@
             $('.eqLogic[data-eqLogic_uid=#uid#] .ack3').remove();
         }
         if ('#ack4_id#' != ''){
+            $('.eqLogic[data-eqLogic_uid=#uid#] .nobin').remove();
             $('.eqLogic[data-eqLogic_uid=#uid#] .ack4').on('click', function () {
                 jeedom.cmd.execute({id: '#ack4_id#'});
             });
