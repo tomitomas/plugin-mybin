@@ -57,6 +57,9 @@ class mybin extends eqLogic {
     }
     
     public function checkNotifBin($bin, $week, $day, $hour, $minute) {
+        if ($this->getConfiguration($bin.'_active') != 1) {
+            return 0;
+        }
         $isweek = false;
         $isday = false;
         $ishour = false;
@@ -102,6 +105,9 @@ class mybin extends eqLogic {
     }
     
     public function checkAckBin($bin, $week, $day, $hour, $minute) {
+        if ($this->getConfiguration($bin.'_active') != 1) {
+            return 0;
+        }
         $isweek = false;
         $isday = false;
         $ishour = false;
@@ -171,6 +177,8 @@ class mybin extends eqLogic {
         $this->setConfiguration('bin2_color', 'yellow');
         $this->setConfiguration('bin3_color', 'green');
         $this->setConfiguration('bin4_color', 'blue');
+        
+        $this->setConfiguration('bin1_active', 1);
     }
 
  
@@ -327,6 +335,9 @@ class mybin extends eqLogic {
         
         //Status
         for ($i = 1; $i <= 4; $i++) {
+            if ($this->getConfiguration('bin'.$i.'_active') != 1) {
+                continue;
+            }
             $binCmd = $this->getCmd(null, 'bin'.$i);
             $binStatus = $binCmd->execCmd();
             $binimg = "nothing";
@@ -370,6 +381,9 @@ class mybin extends eqLogic {
     }
     
     public function checkIfBin($bin, $week, $day) {
+        if ($this->getConfiguration($bin.'_active') != 1) {
+            return false;
+        }
         $isweek = false;
         $isday = false;
         if (($week%2 == 0 && $this->getConfiguration($bin.'_paire') == 1) || ($week%2 != 0 && $this->getConfiguration($bin.'_impaire') == 1)) {
