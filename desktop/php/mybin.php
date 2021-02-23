@@ -137,7 +137,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <div class="col-lg-6">
                                 <legend><i class="icon divers-slightly"></i> {{Déchêts ménagers}}</legend>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">{{Activer}}
+                                    <label class="col-sm-3 control-label">{{Activer}}
                                     </label>
                                     <div class="col-sm-1">
                                         <input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin1_active"/>
@@ -255,7 +255,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<div class="col-lg-6" style="float: right;">
                                 <legend><i class="icon divers-garbage8"></i> {{Déchêts recyclables}}</legend>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">{{Activer}}
+                                    <label class="col-sm-3 control-label">{{Activer}}
                                     </label>
                                     <div class="col-sm-1">
                                         <input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin2_active"/>
@@ -375,7 +375,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <div class="col-lg-6">
                                 <legend><i class="icon nature-tree101"></i> {{Déchêts végétaux}}</legend>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">{{Activer}}
+                                    <label class="col-sm-3 control-label">{{Activer}}
                                     </label>
                                     <div class="col-sm-1">
                                         <input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin3_active"/>
@@ -492,7 +492,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<div class="col-lg-6" style="float: right;">
                                 <legend><i class="icon nourriture-wine23"></i> {{Déchêts en verre}}</legend>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">{{Activer}}
+                                    <label class="col-sm-3 control-label">{{Activer}}
                                     </label>
                                     <div class="col-sm-1">
                                         <input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="bin4_active"/>
