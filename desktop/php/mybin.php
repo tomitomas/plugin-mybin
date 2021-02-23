@@ -62,7 +62,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				<br/>
 				<form class="form-horizontal">
 					<fieldset>
-						<div style="display:inline-block;">
+						<div>
                         <div class="col-lg-6">
 							<legend><i class="fas fa-wrench"></i> {{Général}}</legend>
 							<div class="form-group">
