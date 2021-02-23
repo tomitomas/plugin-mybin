@@ -159,7 +159,7 @@ class mybin extends eqLogic {
 
     // Fonction exécutée automatiquement avant la création de l'équipement
     public function preInsert() {
-        $this->setDisplay('height','160px');
+        $this->setDisplay('height','190px');
         $this->setDisplay('width', '372px');
         $this->setConfiguration('widgetTemplate', 1);
         for ($i = 1; $i <= 4; $i++) {
@@ -355,7 +355,7 @@ class mybin extends eqLogic {
             $week = 1 * $dt->format('W');
             $dateD = $dt->format('d');
             $dateM = $dt->format('m');
-            $replace['#day'.$i.'#'] = $this->getDayLetter($theday);
+            $replace['#day'.$i.'#'] = $this->getDayLetter($day);
             $replace['#date'.$i.'#'] = $dateD . '/' . $dateM;
             $display = "";
             for ($j = 1; $j <= 4; $j++) {
