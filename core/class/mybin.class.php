@@ -159,7 +159,7 @@ class mybin extends eqLogic {
 
     // Fonction exécutée automatiquement avant la création de l'équipement
     public function preInsert() {
-        $this->setDisplay('height','190px');
+        $this->setDisplay('height','200px');
         $this->setDisplay('width', '372px');
         $this->setConfiguration('widgetTemplate', 1);
         for ($i = 1; $i <= 4; $i++) {
