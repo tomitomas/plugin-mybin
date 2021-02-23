@@ -62,7 +62,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				<br/>
 				<form class="form-horizontal">
 					<fieldset>
-						<div class="col-lg-6">
+						<div> 
+                        <span class="col-lg-6">
 							<legend><i class="fas fa-wrench"></i> {{Général}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Nom de l'équipement My Bin}}</label>
@@ -105,7 +106,33 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
 							<br>
-
+                        </span>
+                        <span class="col-lg-5">
+							<legend><i class="icon jeedomapp-preset"></i> {{Options}}</legend>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">{{Template de widget}}
+									<sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour utiliser le template de widget}}"></i></sup>
+								</label>
+								<div class="col-sm-1">
+									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="widgetTemplate"/>
+								</div>
+							</div>
+                            <!--
+                            <div class="form-group">
+								<label class="col-sm-4 control-label">{{Commande TTS}}
+									<sup><i class="fas fa-question-circle tooltips" title="{{Commande TTS à exécuter lorsque qu'il faut sortir les poubelles}}"></i></sup>
+								</label>
+                                <div class=" col-sm-6 input-group">
+                                    <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ttscmd"/>
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default cursor" title="Rechercher un équipement" id="modalbtn"><i class="fas fa-list-alt"></i></a>
+                                    </span>
+                                </div>
+							</div>
+                            -->
+						</span>
+                        </div>
+                        <div class="col-lg-6">
 							<legend><i class="icon divers-slightly"></i> {{Poubelle verte}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Semaine(s) de ramassage}}</label>
@@ -302,31 +329,6 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     </span>
 								</div>
 							</div>
-						</div>
-
-						<div class="col-lg-5">
-							<legend><i class="icon jeedomapp-preset"></i> {{Options}}</legend>
-							<div class="form-group">
-								<label class="col-sm-4 control-label">{{Template de widget}}
-									<sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour utiliser le template de widget}}"></i></sup>
-								</label>
-								<div class="col-sm-1">
-									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="widgetTemplate"/>
-								</div>
-							</div>
-                            <!--
-                            <div class="form-group">
-								<label class="col-sm-4 control-label">{{Commande TTS}}
-									<sup><i class="fas fa-question-circle tooltips" title="{{Commande TTS à exécuter lorsque qu'il faut sortir les poubelles}}"></i></sup>
-								</label>
-                                <div class=" col-sm-6 input-group">
-                                    <input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ttscmd"/>
-                                    <span class="input-group-btn">
-                                        <a class="btn btn-default cursor" title="Rechercher un équipement" id="modalbtn"><i class="fas fa-list-alt"></i></a>
-                                    </span>
-                                </div>
-							</div>
-                            -->
 						</div>
 
 					</fieldset>
