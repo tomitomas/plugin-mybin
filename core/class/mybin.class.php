@@ -333,19 +333,16 @@ class mybin extends eqLogic {
         
         //Status
         for ($i = 1; $i <= 4; $i++) {
-            if ($this->getConfiguration('bin'.$i.'_active') != 1) {
-                $replace['#ack'.$i.'_id#'] = '';
-                continue;
-            }
             $binCmd = $this->getCmd(null, 'bin'.$i);
             $binStatus = $binCmd->execCmd();
-            $binimg = "nothing";
-            if ($binStatus == 1) {
+            if ($this->getConfiguration('bin'.$i.'_active') == 1 && $binStatus == 1) {
                 $binimg = $this->getConfiguration('bin'.$i.'_color');
+                $replace['#bin'.$i.'img#'] = $binimg;
+                $ackCmd = $this->getCmd(null, 'ack'.$i);
+                $replace['#ack'.$i.'_id#'] = $ackCmd->getId();
+            } else {
+                $replace['#ack'.$i.'_id#'] = '';
             }
-            $replace['#bin'.$i.'img#'] = $binimg;
-            $ackCmd = $this->getCmd(null, 'ack'.$i);
-            $replace['#ack'.$i.'_id#'] = $ackCmd->getId();
         }
         
         // calendar
