@@ -132,6 +132,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 -->
                             </div>
                         </div>
+                        <hr>
                         <div>
                             <div class="col-lg-6">
                                 <legend><i class="icon divers-slightly"></i> {{Poubelle verte}}</legend>
@@ -231,6 +232,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         </span>
                                     </div>
                                 </div>
+                                <br>
 							</div>
 							<div class="col-lg-6" style="float: right;">
                                 <legend><i class="icon divers-garbage8"></i> {{Poubelle jaune}}</legend>
@@ -330,9 +332,10 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         </span>
                                     </div>
                                 </div>
+                                <br>
 						    </div>
                         </div>
-<div>
+                        <div>
                             <div class="col-lg-6">
                                 <legend><i class="icon divers-slightly"></i> {{Poubelle verte}}</legend>
                                 <div class="form-group">
