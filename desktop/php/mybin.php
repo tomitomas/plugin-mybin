@@ -132,7 +132,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             -->
 						</span>
                         </div>
-                        <div class="col-lg-6">
+                        <div>
+                        <span class="col-lg-6">
 							<legend><i class="icon divers-slightly"></i> {{Poubelle verte}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Semaine(s) de ramassage}}</label>
@@ -229,8 +230,9 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         </select>
                                     </span>
 								</div>
-							</div>
-							<br>
+                            </div>
+							</span>
+							<span class="col-lg-6">
 
 							<legend><i class="icon divers-garbage8"></i> {{Poubelle jaune}}</legend>
 							<div class="form-group">
@@ -329,8 +331,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     </span>
 								</div>
 							</div>
-						</div>
-
+						</span>
+                        </div>
 					</fieldset>
 				</form>
 				<hr>
