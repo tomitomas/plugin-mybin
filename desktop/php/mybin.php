@@ -132,7 +132,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             -->
 						</div>
                         </div>
-                        <div style="display:inline-block;">
+                        <div>
                         <div class="col-lg-6">
 							<legend><i class="icon divers-slightly"></i> {{Poubelle verte}}</legend>
 							<div class="form-group">
