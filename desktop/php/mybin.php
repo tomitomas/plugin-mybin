@@ -63,7 +63,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				<form class="form-horizontal">
 					<fieldset>
 						<div style="display:inline-block;">
-                        <span class="col-lg-6">
+                        <div class="col-lg-6">
 							<legend><i class="fas fa-wrench"></i> {{Général}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Nom de l'équipement My Bin}}</label>
@@ -106,8 +106,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
 							<br>
-                        </span>
-                        <span class="col-lg-5">
+                        </div>
+                        <div class="col-lg-5" style="float: right;">
 							<legend><i class="icon jeedomapp-preset"></i> {{Options}}</legend>
 							<div class="form-group">
 								<label class="col-sm-4 control-label">{{Template de widget}}
@@ -130,10 +130,10 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 </div>
 							</div>
                             -->
-						</span>
+						</div>
                         </div>
                         <div style="display:inline-block;">
-                        <span class="col-lg-6">
+                        <div class="col-lg-6">
 							<legend><i class="icon divers-slightly"></i> {{Poubelle verte}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Semaine(s) de ramassage}}</label>
@@ -231,8 +231,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     </span>
 								</div>
                             </div>
-							</span>
-							<span class="col-lg-6">
+							</div>
+							<div class="col-lg-6" style="float: right;">
 
 							<legend><i class="icon divers-garbage8"></i> {{Poubelle jaune}}</legend>
 							<div class="form-group">
@@ -331,7 +331,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     </span>
 								</div>
 							</div>
-						</span>
+						</div>
                         </div>
 					</fieldset>
 				</form>
