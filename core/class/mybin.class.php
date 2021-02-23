@@ -283,7 +283,7 @@ class mybin extends eqLogic {
             $cmd = new mybinCmd();
             $cmd->setLogicalId('ack3');
             $cmd->setEqLogic_id($this->getId());
-            $cmd->setName('Déchêts végétaux');
+            $cmd->setName('Ack Déchêts végétaux');
             $cmd->setType('action');
             $cmd->setSubType('other');
             $cmd->setEventOnly(1);
@@ -295,7 +295,7 @@ class mybin extends eqLogic {
             $cmd = new mybinCmd();
             $cmd->setLogicalId('ack4');
             $cmd->setEqLogic_id($this->getId());
-            $cmd->setName('Déchêts en verre');
+            $cmd->setName('Ack Déchêts en verre');
             $cmd->setType('action');
             $cmd->setSubType('other');
             $cmd->setEventOnly(1);
