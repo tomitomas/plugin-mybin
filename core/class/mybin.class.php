@@ -140,14 +140,12 @@ class mybin extends eqLogic {
         log::add(__CLASS__, 'info', $this->getHumanName() . ' ' . $mybin . ' notification on');
         $cmd = $this->getCmd(null, $mybin);
         $cmd->event(1);
-        $this->setGlobalStatus();
     }
     
     public function ackBin($mybin) {
         log::add(__CLASS__, 'info', $this->getHumanName() . ' ' . $mybin . ' acknowledged');
         $cmd = $this->getCmd(null, $mybin);
         $cmd->event(0);
-        $this->setGlobalStatus();
     }
 
     public function lastWeekNumberOfYear() {
@@ -336,6 +334,7 @@ class mybin extends eqLogic {
         //Status
         for ($i = 1; $i <= 4; $i++) {
             if ($this->getConfiguration('bin'.$i.'_active') != 1) {
+                $replace['#ack'.$i.'_id#'] = '';
                 continue;
             }
             $binCmd = $this->getCmd(null, 'bin'.$i);
@@ -448,15 +447,19 @@ class mybinCmd extends cmd {
         switch ($this->getLogicalId()) {
             case "ack1":
                 $eqLogic->ackBin('bin1');
+                $eqLogic->refreshWidget();
                 break;
             case "ack2":
                 $eqLogic->ackBin('bin2');
+                $eqLogic->refreshWidget();
                 break;
             case "ack3":
                 $eqLogic->ackBin('bin3');
+                $eqLogic->refreshWidget();
                 break;
             case "ack4":
                 $eqLogic->ackBin('bin4');
+                $eqLogic->refreshWidget();
                 break;
             case "refresh":
                 $eqLogic->checkBins();
