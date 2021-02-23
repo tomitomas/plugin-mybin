@@ -177,6 +177,9 @@ class mybin extends eqLogic {
         $this->setConfiguration('bin4_color', 'blue');
         
         $this->setConfiguration('bin1_active', 1);
+        
+        $this->setIsEnable(1);
+        $this->setIsVisible(1);
     }
 
  
