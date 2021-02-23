@@ -189,7 +189,7 @@ class mybin extends eqLogic {
                 }
                 if ($this->getConfiguration('bin'.$i.'_notif_hour') == $this->getConfiguration('bin'.$i.'_hour')) {
                     if ($this->getConfiguration('bin'.$i.'_notif_minute') > $this->getConfiguration('bin'.$i.'_minute')) {
-                        throw new Exception(__('L\'heure de notification est après l\'heure de collecte pour la poublle verte',__FILE__) . $i);
+                        throw new Exception(__('L\'heure de notification est après l\'heure de collecte pour la poublle verte ',__FILE__) . $i);
                     }
                 }
             }
@@ -349,20 +349,15 @@ class mybin extends eqLogic {
         }
         
         // calendar
-        $day = 1 * date('w');
-        $theday = $day;
-        for ($i = 1; $i <= 7; $i++) {
-            $replace['#day'.$i.'#'] = $this->getDayLetter($theday);
-            $theday++;
-            if ($theday == 7) {
-                $theday = 0;
-            }
-        }
         $dt = new DateTime("now");
         for ($i = 1; $i <= 7; $i++) {
+            $day = 1 * $dt->format('w');
+            $week = 1 * $dt->format('W');
+            $dateD = $dt->format('d');
+            $dateM = $dt->format('m');
+            $replace['#day'.$i.'#'] = $this->getDayLetter($theday);
+            $replace['#date'.$i.'#'] = $dateD . '/' . $dateM;
             $display = "";
-            $week = $dt->format('W');
-            $day = $dt->format('w');
             for ($j = 1; $j <= 4; $j++) {
                 if ($this->checkIfBin('bin'.$j, $week, $day)) {
                     $color = $this->getConfiguration('bin'.$j.'_color');

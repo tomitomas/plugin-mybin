@@ -26,7 +26,6 @@
         "Nom": "Nom",
         "Type": "Type",
         "Action": "Action",
-        "Poubelle verte": "Poubelle verte",
         "Jour(s) de ramassage": "Jour(s) de ramassage",
         "Heure de ramassage": "Heure de ramassage",
         "Lundi": "Lundi",
@@ -40,10 +39,12 @@
         "La veille": "La veille",
         "Le jour même": "Le jour même",
         "à": "à",
-        "Poubelle jaune": "Poubelle jaune",
         "Template de widget": "Template de widget",
-        "Semaine(s) de ramassage": "Semaine(s) de ramassage"
-        
+        "Semaine(s) de ramassage": "Semaine(s) de ramassage",
+        "Déchêts ménagers": "Déchêts ménagers",
+        "Déchêts recyclables": "Déchêts recyclables",
+        "Déchêts végétaux": "Déchêts végétaux",
+        "Déchêts en verre": "Déchêts en verre"      
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
@@ -57,7 +58,6 @@
         "Il faut sortir les deux poubelles": "Il faut sortir les deux poubelles",
         "Il faut sortir la poubelle verte": "Il faut sortir la poubelle verte",
         "Il faut sortir la poubelle jaune": "Il faut sortir la poubelle jaune",
-        "L\\'heure de notification est après l\\'heure de collecte pour la poublle verte": "L\\'heure de notification est après l\\'heure de collecte pour la poublle verte",
-        "L\\'heure de notification est après l\\'heure de collecte pour la poublle jaune": "L\\'heure de notification est après l\\'heure de collecte pour la poublle jaune"
+        "L\\'heure de notification est après l\\'heure de collecte pour la poublle ": "L\\'heure de notification est après l\\'heure de collecte pour la poublle "
     }
 }
