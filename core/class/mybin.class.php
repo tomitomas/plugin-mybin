@@ -300,7 +300,7 @@ class mybin extends eqLogic {
             $display = "";
             foreach ($eqLogics as $eqLogic) {
                 if ($eqLogic->checkIfBin($week, $day)) {
-                    $color = $this->getConfiguration('color');
+                    $color = $eqLogic->getConfiguration('color');
                     $display = $display . '<img src="plugins/mybin/data/images/'.$color.'.png" width="20px">';
                 }
             }
