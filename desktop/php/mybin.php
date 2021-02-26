@@ -32,7 +32,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 		<div class="eqLogicThumbnailContainer">
 			<?php
 			foreach ($eqLogics as $eqLogic) {
-                if($eqLogic->getConfiguration('type','') != 'bin') {
+                if($eqLogic->getConfiguration('type','') == 'whole') {
                     continue;
                 }
 				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
