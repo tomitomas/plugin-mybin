@@ -60,7 +60,7 @@ class mybin extends eqLogic {
     public function refreshWhole() {
         $eqLogics = self::byType(__CLASS__, true);
         foreach ($eqLogics as $eqLogic) {
-            if ($this->getConfiguration('type') == 'whole') {
+            if ($eqLogic->getConfiguration('type') == 'whole') {
                 $eqLogic->refreshWidget();
                 break;
             }
@@ -155,7 +155,7 @@ class mybin extends eqLogic {
     
     public function ackBin() {
         log::add(__CLASS__, 'info', $this->getHumanName() . ' acknowledged');
-        $cmd = $this->getCmd(null, 'ack');
+        $cmd = $this->getCmd(null, 'bin');
         $cmd->event(0);
     }
 
