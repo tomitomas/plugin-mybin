@@ -34,30 +34,40 @@ class mybin extends eqLogic {
 
         foreach ($eqLogics as $eqLogic)
         {
-            $eqLogic->checkBins();
+            $eqLogic->checkBin();
         }
     }
 
     /*     * *********************Méthodes d'instance************************* */
 
-    public function checkBins() {
+    public function checkBin() {
+        if ($eqLogic>getConfiguration('type', '') <> 'bin') {
+            return;
+        }
         $week = 1 * date('W');
         $day = 1 * date('w');
         $hour = 1 * date('G');
         $minute = 1 * date('i');
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkbins: day ' . $day . ', hour ' . $hour . ', minute ' . $minute);
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkbin: day ' . $day . ', hour ' . $hour . ', minute ' . $minute);
         $change = 0;
-        for ($i = 1; $i <= 4; $i++) {
-            $change = $change + $this->checkNotifBin('bin'.$i, $week, $day, $hour, $minute);
-            $change = $change + $this->checkAckBin('bin'.$i, $week, $day, $hour, $minute);
-        }
+        $change = $change + $this->checkNotifBin($week, $day, $hour, $minute);
+        $change = $change + $this->checkAckBin($week, $day, $hour, $minute);
         if ($change > 0 || ($hour == 0 && $minute == 5)) {
-            $this->refreshWidget();
+            $this->refreshWhole();
         }
     }
     
-    public function checkNotifBin($bin, $week, $day, $hour, $minute) {
-        if ($this->getConfiguration($bin.'_active') != 1) {
+    public function refreshWhole() {
+        foreach ($eqLogics as $eqLogic) {
+            if ($eqLogic->getConfiguration('type') == 'whole') {
+                $eqLogic->refreshWidget();
+                break;
+            }
+        }
+    }
+    
+    public function checkNotifBin($week, $day, $hour, $minute) {
+        if (!$this->getIsEnable()) {
             return 0;
         }
         $isweek = false;
@@ -66,7 +76,7 @@ class mybin extends eqLogic {
         $isminute = false;
         $myday = $day;
         $myweek = $week;
-        if ($this->getConfiguration($bin.'_notif_veille') == 1) {
+        if ($this->getConfiguration('notif_veille') == 1) {
             $myday = $myday + 1;
             if ($myday == 7) {
                 $myday = 0;
@@ -80,71 +90,71 @@ class mybin extends eqLogic {
                 }
             }
         }
-        if (($myweek%2 == 0 && $this->getConfiguration($bin.'_paire') == 1) || ($myweek%2 != 0 && $this->getConfiguration($bin.'_impaire') == 1)) {
+        if (($myweek%2 == 0 && $this->getConfiguration('paire') == 1) || ($myweek%2 != 0 && $this->getConfiguration('impaire') == 1)) {
             $isweek = true;
         }
         for ($i = 0; $i <= 6; $i++) {
-            if ($this->getConfiguration($bin.'_'.$i) == 1 && $i == $myday) {
+            if ($this->getConfiguration('day_'.$i) == 1 && $i == $myday) {
                 $isday = true;
                 break;
             }
         }
-        if ($this->getConfiguration($bin.'_notif_minute') == $minute) {
+        if ($this->getConfiguration('notif_minute') == $minute) {
             $isminute = true;
         }
-        if ($this->getConfiguration($bin.'_notif_hour') == $hour) {
+        if ($this->getConfiguration('notif_hour') == $hour) {
             $ishour = true;
         }
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin ' . $bin . ': week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin: week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
         if ($isweek && $isday && $ishour && $isminute) {
-            $this->notifBin($bin);
+            $this->notifBin();
             return 1;
         } else {
             return 0;
         }
     }
     
-    public function checkAckBin($bin, $week, $day, $hour, $minute) {
-        if ($this->getConfiguration($bin.'_active') != 1) {
+    public function checkAckBin($week, $day, $hour, $minute) {
+        if (!$this->getIsEnable()) {
             return 0;
         }
         $isweek = false;
         $isday = false;
         $ishour = false;
         $isminute = false;
-        if (($week%2 == 0 && $this->getConfiguration($bin.'_paire') == 1) || ($week%2 != 0 && $this->getConfiguration($bin.'_impaire') == 1)) {
+        if (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) {
             $isweek = true;
         }
         for ($i = 0; $i <= 6; $i++) {
-            if ($this->getConfiguration($bin.'_'.$i) == 1 && $i == $day) {
+            if ($this->getConfiguration('day_'.$i) == 1 && $i == $day) {
                 $isday = true;
                 break;
             }
         }
-        if ($this->getConfiguration($bin.'_minute') == $minute) {
+        if ($this->getConfiguration('minute') == $minute) {
             $isminute = true;
         }
-        if ($this->getConfiguration($bin.'_hour') == $hour) {
+        if ($this->getConfiguration('hour') == $hour) {
             $ishour = true;
         }
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin ' . $bin . ': week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin: week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
         if ($isweek && $isday && $ishour && $isminute) {
-            $this->ackBin($bin);
+            $this->ackBin();
             return 1;
         } else {
             return 0;
         }
     }
     
-    public function notifBin($mybin) {
-        log::add(__CLASS__, 'info', $this->getHumanName() . ' ' . $mybin . ' notification on');
-        $cmd = $this->getCmd(null, $mybin);
+    public function notifBin() {
+        log::add(__CLASS__, 'info', $this->getHumanName() . ' notification on');
+        $cmd = $this->getCmd(null, 'bin');
         $cmd->event(1);
     }
     
-    public function ackBin($mybin) {
-        log::add(__CLASS__, 'info', $this->getHumanName() . ' ' . $mybin . ' acknowledged');
-        $cmd = $this->getCmd(null, $mybin);
+    public function ackBin() {
+        log::add(__CLASS__, 'info', $this->getHumanName() . ' acknowledged');
+        $cmd = $this->getCmd(null, 'ack');
         $cmd->event(0);
     }
 
@@ -159,40 +169,36 @@ class mybin extends eqLogic {
 
     // Fonction exécutée automatiquement avant la création de l'équipement
     public function preInsert() {
-        $this->setDisplay('height','200px');
-        $this->setDisplay('width', '372px');
-        $this->setConfiguration('widgetTemplate', 1);
-        for ($i = 1; $i <= 4; $i++) {
-            $this->setConfiguration('bin'.$i.'_hour', 8);
-            $this->setConfiguration('bin'.$i.'_minute', 0);
-            $this->setConfiguration('bin'.$i.'_notif_veille', 1);
-            $this->setConfiguration('bin'.$i.'_notif_hour', 20);
-            $this->setConfiguration('bin'.$i.'_notif_minute', 0);
-            $this->setConfiguration('bin'.$i.'_paire', 1);
-            $this->setConfiguration('bin'.$i.'_impaire', 1);
+        if ($this->getConfiguration('type','') == 'whole') {
+            $this->setDisplay('height','200px');
+            $this->setDisplay('width', '372px');
+            $this->setIsEnable(1);
+            $this->setIsVisible(1);
+        } else {
+            $this->setConfiguration('hour', 8);
+            $this->setConfiguration('minute', 0);
+            $this->setConfiguration('notif_veille', 1);
+            $this->setConfiguration('notif_hour', 20);
+            $this->setConfiguration('notif_minute', 0);
+            $this->setConfiguration('paire', 1);
+            $this->setConfiguration('impaire', 1);
+            $this->setConfiguration('color', 'green');       
+            $this->setIsEnable(1);
+            $this->setIsVisible(0);
         }
-        $this->setConfiguration('bin1_color', 'braun');
-        $this->setConfiguration('bin2_color', 'yellow');
-        $this->setConfiguration('bin3_color', 'green');
-        $this->setConfiguration('bin4_color', 'blue');
-        
-        $this->setConfiguration('bin1_active', 1);
-        
-        $this->setIsEnable(1);
-        $this->setIsVisible(1);
     }
 
  
     //Fonction exécutée automatiquement avant la mise à jour de l'équipement
     public function preUpdate() {
-        for ($i = 1; $i <= 4; $i++) {
-            if ($this->getConfiguration('bin'.$i.'_notif_veille') == 0) {
-                if ($this->getConfiguration('bin'.$i.'_notif_hour') > $this->getConfiguration('bin'.$i.'_hour')) {
-                    throw new Exception(__('L\'heure de notification est après l\'heure de collecte pour la poublle ',__FILE__) . $i);
+        if ($this->getConfiguration('type','') <> 'whole') {
+            if ($this->getConfiguration('notif_veille') == 0) {
+                if ($this->getConfiguration('notif_hour') > $this->getConfiguration('hour')) {
+                    throw new Exception(__('L\'heure de notification est après l\'heure de collecte pour la poublle ',__FILE__));
                 }
-                if ($this->getConfiguration('bin'.$i.'_notif_hour') == $this->getConfiguration('bin'.$i.'_hour')) {
-                    if ($this->getConfiguration('bin'.$i.'_notif_minute') > $this->getConfiguration('bin'.$i.'_minute')) {
-                        throw new Exception(__('L\'heure de notification est après l\'heure de collecte pour la poublle verte ',__FILE__) . $i);
+                if ($this->getConfiguration('notif_hour') == $this->getConfiguration('hour')) {
+                    if ($this->getConfiguration('notif_minute') > $this->getConfiguration('minute')) {
+                        throw new Exception(__('L\'heure de notification est après l\'heure de collecte pour la poublle verte ',__FILE__));
                     }
                 }
             }
@@ -202,130 +208,53 @@ class mybin extends eqLogic {
     // Fonction exécutée automatiquement après la mise à jour de l'équipement
 
     public function postUpdate() {
-        $cmd = $this->getCmd(null, 'bin1');
-        if (!is_object($cmd))
-        {
-            $cmd = new mybinCmd();
-            $cmd->setLogicalId('bin1');
-            $cmd->setEqLogic_id($this->getId());
-            $cmd->setName('Déchêts ménagers');
-            $cmd->setType('info');
-            $cmd->setSubType('binary');
-            $cmd->setEventOnly(1);
-            $cmd->setIsHistorized(0);
-            $cmd->setTemplate('mobile', 'line');
-            $cmd->setTemplate('dashboard', 'line');
-            $cmd->save();
-        }
-        $cmd = $this->getCmd(null, 'bin2');
-        if (!is_object($cmd))
-        {
-            $cmd = new mybinCmd();
-            $cmd->setLogicalId('bin2');
-            $cmd->setEqLogic_id($this->getId());
-            $cmd->setName('Déchêts recyclables');
-            $cmd->setType('info');
-            $cmd->setSubType('binary');
-            $cmd->setEventOnly(1);
-            $cmd->setIsHistorized(0);
-            $cmd->setTemplate('mobile', 'line');
-            $cmd->setTemplate('dashboard', 'line');
-            $cmd->save();
-        }
-        $cmd = $this->getCmd(null, 'bin3');
-        if (!is_object($cmd))
-        {
-            $cmd = new mybinCmd();
-            $cmd->setLogicalId('bin3');
-            $cmd->setEqLogic_id($this->getId());
-            $cmd->setName('Déchêts végétaux');
-            $cmd->setType('info');
-            $cmd->setSubType('binary');
-            $cmd->setEventOnly(1);
-            $cmd->setIsHistorized(0);
-            $cmd->setTemplate('mobile', 'line');
-            $cmd->setTemplate('dashboard', 'line');
-            $cmd->save();
-        }
-        $cmd = $this->getCmd(null, 'bin4');
-        if (!is_object($cmd))
-        {
-            $cmd = new mybinCmd();
-            $cmd->setLogicalId('bin4');
-            $cmd->setEqLogic_id($this->getId());
-            $cmd->setName('Déchêts en verre');
-            $cmd->setType('info');
-            $cmd->setSubType('binary');
-            $cmd->setEventOnly(1);
-            $cmd->setIsHistorized(0);
-            $cmd->setTemplate('mobile', 'line');
-            $cmd->setTemplate('dashboard', 'line');
-            $cmd->save();
-        }
-        $cmd = $this->getCmd(null, 'ack1');
-        if (!is_object($cmd))
-        {
-            $cmd = new mybinCmd();
-            $cmd->setLogicalId('ack1');
-            $cmd->setEqLogic_id($this->getId());
-            $cmd->setName('Ack Déchêts ménagers');
-            $cmd->setType('action');
-            $cmd->setSubType('other');
-            $cmd->setEventOnly(1);
-            $cmd->save();
-        }
-        $cmd = $this->getCmd(null, 'ack2');
-        if (!is_object($cmd))
-        {
-            $cmd = new mybinCmd();
-            $cmd->setLogicalId('ack2');
-            $cmd->setEqLogic_id($this->getId());
-            $cmd->setName('Ack Déchêts recyclables');
-            $cmd->setType('action');
-            $cmd->setSubType('other');
-            $cmd->setEventOnly(1);
-            $cmd->save();
-        }
-        $cmd = $this->getCmd(null, 'ack3');
-        if (!is_object($cmd))
-        {
-            $cmd = new mybinCmd();
-            $cmd->setLogicalId('ack3');
-            $cmd->setEqLogic_id($this->getId());
-            $cmd->setName('Ack Déchêts végétaux');
-            $cmd->setType('action');
-            $cmd->setSubType('other');
-            $cmd->setEventOnly(1);
-            $cmd->save();
-        }
-        $cmd = $this->getCmd(null, 'ack4');
-        if (!is_object($cmd))
-        {
-            $cmd = new mybinCmd();
-            $cmd->setLogicalId('ack4');
-            $cmd->setEqLogic_id($this->getId());
-            $cmd->setName('Ack Déchêts en verre');
-            $cmd->setType('action');
-            $cmd->setSubType('other');
-            $cmd->setEventOnly(1);
-            $cmd->save();
-        }
-        $cmd = $this->getCmd(null, 'refresh');
-        if (!is_object($cmd)) {
-            $cmd = new mybinCmd();
-            $cmd->setLogicalId('refresh');
-            $cmd->setEqLogic_id($this->getId());
-            $cmd->setName('Rafraichir');
-            $cmd->setType('action');
-            $cmd->setSubType('other');
-            $cmd->setEventOnly(1);
-            $cmd->save();
+        if ($this->getConfiguration('type','') <> 'whole') {
+            $cmd = $this->getCmd(null, 'bin');
+            if (!is_object($cmd))
+            {
+                $cmd = new mybinCmd();
+                $cmd->setLogicalId('bin');
+                $cmd->setEqLogic_id($this->getId());
+                $cmd->setName('Poubelle à sortir');
+                $cmd->setType('info');
+                $cmd->setSubType('binary');
+                $cmd->setEventOnly(1);
+                $cmd->setIsHistorized(0);
+                $cmd->setTemplate('mobile', 'line');
+                $cmd->setTemplate('dashboard', 'line');
+                $cmd->save();
+            }
+            $cmd = $this->getCmd(null, 'ack');
+            if (!is_object($cmd))
+            {
+                $cmd = new mybinCmd();
+                $cmd->setLogicalId('ack');
+                $cmd->setEqLogic_id($this->getId());
+                $cmd->setName('Ack');
+                $cmd->setType('action');
+                $cmd->setSubType('other');
+                $cmd->setEventOnly(1);
+                $cmd->save();
+            }
+            /*
+            $cmd = $this->getCmd(null, 'refresh');
+            if (!is_object($cmd)) {
+                $cmd = new mybinCmd();
+                $cmd->setLogicalId('refresh');
+                $cmd->setEqLogic_id($this->getId());
+                $cmd->setName('Rafraichir');
+                $cmd->setType('action');
+                $cmd->setSubType('other');
+                $cmd->setEventOnly(1);
+                $cmd->save();
+            }
+            */
         }
 
     }
     
     public function toHtml($_version = 'dashboard') {
-        if ($this->getConfiguration('widgetTemplate') != 1) {
+        if ($this->getConfiguration('type') <> 'whole') {
     		return parent::toHtml($_version);
     	}
         $replace = $this->preToHtml($_version);
@@ -335,18 +264,29 @@ class mybin extends eqLogic {
         $version = jeedom::versionAlias($_version);
         
         //Status
-        for ($i = 1; $i <= 4; $i++) {
-            $binCmd = $this->getCmd(null, 'bin'.$i);
+        $binnotifs = "";
+        $binscript = "";
+        foreach ($eqLogics as $eqLogic) {
+            $binCmd = $eqLogic->getCmd(null, 'bin');
             $binStatus = $binCmd->execCmd();
-            if ($this->getConfiguration('bin'.$i.'_active') == 1 && $binStatus == 1) {
-                $binimg = $this->getConfiguration('bin'.$i.'_color');
+            if ($eqLogic->getIsEnable() == 1 && $binStatus == 1) {
+                $binimg = $eqLogic->getConfiguration('color');
+                $ackCmd = $eqLogic->getCmd(null, 'ack');
+                
+                $binnotifs = $binnotifs . '<span class="cmd ack'.$ackCmd->getId().' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="70px"></span>';
+                $binscript = $binscript . "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
                 $replace['#bin'.$i.'img#'] = $binimg;
-                $ackCmd = $this->getCmd(null, 'ack'.$i);
+
                 $replace['#ack'.$i.'_id#'] = $ackCmd->getId();
             } else {
                 $replace['#ack'.$i.'_id#'] = '';
             }
         }
+        $replace['#binscript#'] = $binscript;
+        if ($binnotifs == "") {
+            $binnotifs = '<span class="nobin"><br/><i>'.__('Il n\'y a (plus) aucune poubelle à sortir',__FILE__).'</i></span>';
+        }
+        $replace['#binnotifs#'] = $binnotifs;
         
         // calendar
         $dt = new DateTime("now");
@@ -358,9 +298,9 @@ class mybin extends eqLogic {
             $replace['#day'.$i.'#'] = $this->getDayLetter($day);
             $replace['#date'.$i.'#'] = $dateD . '/' . $dateM;
             $display = "";
-            for ($j = 1; $j <= 4; $j++) {
-                if ($this->checkIfBin('bin'.$j, $week, $day)) {
-                    $color = $this->getConfiguration('bin'.$j.'_color');
+            foreach ($eqLogics as $eqLogic) {
+                if ($eqLogic->checkIfBin($week, $day)) {
+                    $color = $this->getConfiguration('color');
                     $display = $display . '<img src="plugins/mybin/data/images/'.$color.'.png" width="20px">';
                 }
             }
@@ -374,17 +314,17 @@ class mybin extends eqLogic {
         
     }
     
-    public function checkIfBin($bin, $week, $day) {
-        if ($this->getConfiguration($bin.'_active') != 1) {
+    public function checkIfBin($week, $day) {
+        if ($this->getIsEnable() != 1) {
             return false;
         }
         $isweek = false;
         $isday = false;
-        if (($week%2 == 0 && $this->getConfiguration($bin.'_paire') == 1) || ($week%2 != 0 && $this->getConfiguration($bin.'_impaire') == 1)) {
+        if (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) {
             $isweek = true;
         }
         for ($i = 0; $i <= 6; $i++) {
-            if ($this->getConfiguration($bin.'_'.$i) == 1 && $i == $day) {
+            if ($this->getConfiguration('day_'.$i) == 1 && $i == $day) {
                 $isday = true;
                 break;
             }
@@ -423,6 +363,47 @@ class mybin extends eqLogic {
         }
         return $day;
     }
+    
+    public static function createWhole() {
+		$eqLogicClient = new mybin();
+        $defaultRoom = intval(config::byKey('parentObject','mybin','',true));
+		$eqLogicClient->setName(__('Mes poubelles', __FILE__));
+		$eqLogicClient->setIsEnable(1);
+		$eqLogicClient->setIsVisible(1);
+		$eqLogicClient->setLogicalId($name);
+		$eqLogicClient->setEqType_name(__('Mes poubelles', __FILE__));
+		if($defaultRoom) $eqLogicClient->setObject_id($defaultRoom);
+		$eqLogicClient->setConfiguration('type', 'whole');
+		$eqLogicClient->save();
+        log::add('mybin', 'info', "Ensemble créé");
+	}
+    
+    public static function postConfig_globalWidget($value) {
+        $eqLogics = self::byType(__CLASS__, true);
+        foreach ($eqLogics as $eqLogic) {
+            if ($eqLogic->getConfiguration('type') == 'whole') {
+                if ($value == 1) {
+                    $eqLogic->setIsVisible(1);
+                } else {
+                    $eqLogic->setIsVisible(0);
+                } 
+                $eqLogic->save();
+                break;
+            }
+        }
+    }
+    
+    public static function postConfig_parentObject($value) {
+        $eqLogics = self::byType(__CLASS__, true);
+        foreach ($eqLogics as $eqLogic) {
+            if ($eqLogic->getConfiguration('type') == 'whole') {
+                $defaultRoom = intval($value);
+                if($defaultRoom) $eqLogic->setObject_id($defaultRoom);
+                $eqLogic->save();
+                break;
+            }
+        }
+    }
 }
 
 class mybinCmd extends cmd {
@@ -440,24 +421,9 @@ class mybinCmd extends cmd {
         }
         log::add('mybin', 'debug', 'Execution de la commande ' . $this->getLogicalId());
         switch ($this->getLogicalId()) {
-            case "ack1":
-                $eqLogic->ackBin('bin1');
-                $eqLogic->refreshWidget();
-                break;
-            case "ack2":
-                $eqLogic->ackBin('bin2');
-                $eqLogic->refreshWidget();
-                break;
-            case "ack3":
-                $eqLogic->ackBin('bin3');
-                $eqLogic->refreshWidget();
-                break;
-            case "ack4":
-                $eqLogic->ackBin('bin4');
-                $eqLogic->refreshWidget();
-                break;
-            case "refresh":
-                $eqLogic->refreshWidget();
+            case "ack":
+                $eqLogic->ackBin();
+                $eqLogic->refreshWhole();
                 break;
         }
     }

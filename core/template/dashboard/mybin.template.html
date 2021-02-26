@@ -3,14 +3,12 @@
 		<span class="warning" title="#alert_name#">
 			<i class='#alert_icon#'></i>
 		</span>
-        <span class="cmd refresh pull-right cursor" data-cmd_id="#refresh_id#">
-			<i class="fas fa-sync"></i>
-		</span>
 		<span class="reportModeVisible">#name_display# <span class="object_name">#object_name#</span></span>
-		<a href="#eqLink#" class="reportModeHidden">#name_display# <span class="object_name">#object_name#</span></a>
+		<a href="/index.php?v=d&m=mybin&p=mybin" class="reportModeHidden">#name_display# <span class="object_name">#object_name#</span></a>
 	</center>   
     <div style="height: 70px">
         <center>
+            #binnotifs#
             <span class="nobin">
                 <br/>
                 <i>Il n'y a (plus) aucune poubelle à sortir</i>
@@ -55,6 +53,7 @@
         </center>
     </div>
     <script>
+        #binscript#
         if ('#ack1_id#' != ''){
             $('.eqLogic[data-eqLogic_uid=#uid#] .nobin').remove();
             $('.eqLogic[data-eqLogic_uid=#uid#] .ack1').on('click', function () {
@@ -87,12 +86,5 @@
         } else {
             $('.eqLogic[data-eqLogic_uid=#uid#] .ack4').remove();
         }
-        if ('#refresh_id#' != ''){
-			$('.eqLogic[data-eqLogic_uid=#uid#] .refresh').on('click', function () {
-				jeedom.cmd.execute({id: '#refresh_id#'});
-			});
-		}else{
-			$('.eqLogic[data-eqLogic_uid=#uid#] .refresh').remove();
-		}
     </script> 
 </div>

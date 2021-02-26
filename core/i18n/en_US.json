@@ -69,5 +69,6 @@
         "Il faut sortir la poubelle verte": "The green bin must be put out",
         "Il faut sortir la poubelle jaune": "The yellow bin must be put out",
         "L\\'heure de notification est après l\\'heure de collecte pour la poublle ": "The time of notification is after the time of collect for bin ",
+        "Il n\'y a (plus) aucune poubelle à sortir": "There\'s no more bin to put out"
     }
 }
