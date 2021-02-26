@@ -47,7 +47,14 @@
         "Déchêts ménagers": "Common bin",
         "Déchêts recyclables": "Recycled",
         "Déchêts végétaux": "Green bin",
-        "Déchêts en verre": "Glass"
+        "Déchêts en verre": "Glass",
+        "D": "Su",
+        "L": "M",
+        "Ma": "Tu",
+        "Me": "W",
+        "J": "Th",
+        "V": "F",
+        "S": "Sa"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",

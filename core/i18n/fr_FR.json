@@ -44,7 +44,14 @@
         "Déchêts ménagers": "Déchêts ménagers",
         "Déchêts recyclables": "Déchêts recyclables",
         "Déchêts végétaux": "Déchêts végétaux",
-        "Déchêts en verre": "Déchêts en verre"      
+        "Déchêts en verre": "Déchêts en verre",
+        "D": "D",
+        "L": "L",
+        "Ma": "Ma",
+        "Me": "Me",
+        "J": "J",
+        "V": "V",
+        "S": "S"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",

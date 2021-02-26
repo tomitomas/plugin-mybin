@@ -406,10 +406,10 @@ class mybin extends eqLogic {
                 $day = __('L',__FILE__);
                 break;
             case 2:
-                $day = __('M',__FILE__);
+                $day = __('Ma',__FILE__);
                 break;
             case 3:
-                $day = __('M',__FILE__);
+                $day = __('Me',__FILE__);
                 break;
             case 4:
                 $day = __('J',__FILE__);
