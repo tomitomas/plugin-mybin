@@ -41,7 +41,7 @@ class mybin extends eqLogic {
     /*     * *********************Méthodes d'instance************************* */
 
     public function checkBin() {
-        if ($eqLogic>getConfiguration('type', '') <> 'bin') {
+        if ($this>getConfiguration('type', '') == 'whole') {
             return;
         }
         $week = 1 * date('W');
