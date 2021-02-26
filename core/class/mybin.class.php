@@ -59,7 +59,7 @@ class mybin extends eqLogic {
     
     public function refreshWhole() {
         foreach ($eqLogics as $eqLogic) {
-            if ($eqLogic->getConfiguration('type') == 'whole') {
+            if ($this->getConfiguration('type') == 'whole') {
                 $eqLogic->refreshWidget();
                 break;
             }
@@ -370,8 +370,8 @@ class mybin extends eqLogic {
 		$eqLogicClient->setName(__('Mes poubelles', __FILE__));
 		$eqLogicClient->setIsEnable(1);
 		$eqLogicClient->setIsVisible(1);
-		$eqLogicClient->setLogicalId($name);
-		$eqLogicClient->setEqType_name(__('Mes poubelles', __FILE__));
+		$eqLogicClient->setLogicalId(__('Mes poubelles', __FILE__));
+		$eqLogicClient->setEqType_name('mybin');
 		if($defaultRoom) $eqLogicClient->setObject_id($defaultRoom);
 		$eqLogicClient->setConfiguration('type', 'whole');
 		$eqLogicClient->save();
