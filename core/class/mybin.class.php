@@ -195,11 +195,11 @@ class mybin extends eqLogic {
         if ($this->getConfiguration('type','') <> 'whole') {
             if ($this->getConfiguration('notif_veille') == 0) {
                 if ($this->getConfiguration('notif_hour') > $this->getConfiguration('hour')) {
-                    throw new Exception(__('L\'heure de notification est après l\'heure de collecte pour la poublle ',__FILE__));
+                    throw new Exception(__('L\'heure de notification est après l\'heure de collecte',__FILE__));
                 }
                 if ($this->getConfiguration('notif_hour') == $this->getConfiguration('hour')) {
                     if ($this->getConfiguration('notif_minute') > $this->getConfiguration('minute')) {
-                        throw new Exception(__('L\'heure de notification est après l\'heure de collecte pour la poublle verte ',__FILE__));
+                        throw new Exception(__('L\'heure de notification est après l\'heure de collecte',__FILE__));
                     }
                 }
             }
@@ -411,12 +411,10 @@ class mybin extends eqLogic {
 }
 
 class mybinCmd extends cmd {
-
-    /*
+    
     public function dontRemoveCmd() {
 		return true;
 	}
-    */
     
 	public function execute($_options = null) {
         $eqLogic = $this->getEqLogic();

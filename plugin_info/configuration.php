@@ -34,7 +34,7 @@ if (!isConnect('admin')) {
 			</div>
 		</div>
         <div class="form-group">
-		  <label class="col-lg-4 control-label" >{{Pièce pour le widget général}}</label>
+		  <label class="col-lg-4 control-label" >{{Pièce pour le widget global : }}</label>
 		  <div class="col-lg-3">
 			<select id="sel_object" class="configKey form-control" data-l1key="parentObject">
 			  <option value="">{{Aucune}}</option>
