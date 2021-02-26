@@ -270,7 +270,7 @@ class mybin extends eqLogic {
         $binnotifs = "";
         $binscript = "";
         foreach ($eqLogics as $eqLogic) {
-            if ($this->getConfiguration('type') <> 'whole') {
+            if ($this->getConfiguration('type') == 'whole') {
                 continue;
             }
             $binCmd = $eqLogic->getCmd(null, 'bin');
@@ -305,7 +305,7 @@ class mybin extends eqLogic {
             $replace['#date'.$i.'#'] = $dateD . '/' . $dateM;
             $display = "";
             foreach ($eqLogics as $eqLogic) {
-                if ($this->getConfiguration('type') <> 'whole') {
+                if ($this->getConfiguration('type') == 'whole') {
                     continue;
                 }
                 if ($eqLogic->checkIfBin($week, $day)) {
