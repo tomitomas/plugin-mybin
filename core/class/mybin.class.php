@@ -273,6 +273,7 @@ class mybin extends eqLogic {
             if ($this->getConfiguration('type') == 'whole') {
                 continue;
             }
+            log::add(__CLASS__, 'debug', $eqLogic->getHumanName() . ' eqlogic');
             $binCmd = $eqLogic->getCmd(null, 'bin');
             $binStatus = $binCmd->execCmd();
             if ($eqLogic->getIsEnable() == 1 && $binStatus == 1) {
@@ -281,11 +282,6 @@ class mybin extends eqLogic {
                 
                 $binnotifs = $binnotifs . '<span class="cmd ack'.$ackCmd->getId().' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="70px"></span>';
                 $binscript = $binscript . "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
-                $replace['#bin'.$i.'img#'] = $binimg;
-
-                $replace['#ack'.$i.'_id#'] = $ackCmd->getId();
-            } else {
-                $replace['#ack'.$i.'_id#'] = '';
             }
         }
         $replace['#binscript#'] = $binscript;
