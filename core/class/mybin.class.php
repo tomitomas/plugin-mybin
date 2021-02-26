@@ -270,10 +270,9 @@ class mybin extends eqLogic {
         $binnotifs = "";
         $binscript = "";
         foreach ($eqLogics as $eqLogic) {
-            if ($this->getConfiguration('type') == 'whole') {
+            if ($eqLogic->getConfiguration('type') == 'whole') {
                 continue;
             }
-            log::add(__CLASS__, 'debug', $eqLogic->getHumanName() . ' eqlogic');
             $binCmd = $eqLogic->getCmd(null, 'bin');
             $binStatus = $binCmd->execCmd();
             if ($eqLogic->getIsEnable() == 1 && $binStatus == 1) {
@@ -301,7 +300,7 @@ class mybin extends eqLogic {
             $replace['#date'.$i.'#'] = $dateD . '/' . $dateM;
             $display = "";
             foreach ($eqLogics as $eqLogic) {
-                if ($this->getConfiguration('type') == 'whole') {
+                if ($eqLogic->getConfiguration('type') == 'whole') {
                     continue;
                 }
                 if ($eqLogic->checkIfBin($week, $day)) {
