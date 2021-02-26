@@ -58,6 +58,7 @@ class mybin extends eqLogic {
     }
     
     public function refreshWhole() {
+        $eqLogics = self::byType(__CLASS__, true);
         foreach ($eqLogics as $eqLogic) {
             if ($this->getConfiguration('type') == 'whole') {
                 $eqLogic->refreshWidget();
@@ -263,10 +264,15 @@ class mybin extends eqLogic {
         }
         $version = jeedom::versionAlias($_version);
         
+        $eqLogics = self::byType(__CLASS__, true);
+        
         //Status
         $binnotifs = "";
         $binscript = "";
         foreach ($eqLogics as $eqLogic) {
+            if ($this->getConfiguration('type') <> 'whole') {
+                continue;
+            }
             $binCmd = $eqLogic->getCmd(null, 'bin');
             $binStatus = $binCmd->execCmd();
             if ($eqLogic->getIsEnable() == 1 && $binStatus == 1) {
@@ -299,6 +305,9 @@ class mybin extends eqLogic {
             $replace['#date'.$i.'#'] = $dateD . '/' . $dateM;
             $display = "";
             foreach ($eqLogics as $eqLogic) {
+                if ($this->getConfiguration('type') <> 'whole') {
+                    continue;
+                }
                 if ($eqLogic->checkIfBin($week, $day)) {
                     $color = $eqLogic->getConfiguration('color');
                     $display = $display . '<img src="plugins/mybin/data/images/'.$color.'.png" width="20px">';
