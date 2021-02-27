@@ -398,7 +398,7 @@ class mybin extends eqLogic {
         }
     }
     
-    public function getImage($color) {
+    public function getImage() {
         $color = $this->getConfiguration('color','');
         if ($color == '') {
             return 'plugins/mybin/plugin_info/mybin_icon.png';
