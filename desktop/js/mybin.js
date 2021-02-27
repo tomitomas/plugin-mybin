@@ -87,8 +87,8 @@ function addAction(_action, _type, _labels) {
   var div = '<div class="' + _type + '">';
     div += '<div class="form-group ">';
 
-      div += '<label class="col-sm-1 control-label">Action</label>';
-      div += '<div class="col-sm-2">';
+      div += '<label class="col-sm-3 control-label">Action</label>';
+      div += '<div class="col-sm-7">';
         div += '<div class="input-group">';
           div += '<span class="input-group-btn">';
             div += '<a class="btn btn-default bt_removeAction roundedLeft" data-type="' + _type + '"><i class="fas fa-minus-circle"></i></a>';

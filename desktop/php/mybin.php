@@ -220,7 +220,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<br>
 							<legend><i class="icon divers-slightly"></i> {{Action(s) sur collecte}}</legend>
                             <div class="form-group">
-                                <a class="btn btn-success btn-sm addAction" data-type="action_collect" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a>
+                                <label class="col-sm-3 control-label"><a class="btn btn-success btn-sm addAction" data-type="action_collect" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
                                 <div id="div_action_collect"></div>
                             </div>
 						</div>
