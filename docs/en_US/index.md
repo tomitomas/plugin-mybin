@@ -6,7 +6,9 @@ Very simple plugin for Jeedom easing the management of your home bins.
 
 ## Plugin configuration
 
-The plugin **My Bin** does not require any specific configuration and should only be activated after installation.
+On the plugin's configuration page, you can choose to use a global widget whch will display a collect calendar for your different bins as well as an icon for each bin that needs to be put out.
+
+You cqn also choose the parent object for this widget.
 
 The data is checked every 5 minutes.
 
@@ -14,16 +16,15 @@ The data is checked every 5 minutes.
 
 To access the different equipment **My Bin**, go to the menu **Plugins → Organization → My Bin**.
 
-On the equipment page, fill in the collect days and times for your bins as well as how to be notified.
+On the equipment page, fill in the collect days and times for your bin, its color, as well as when to be notified.
+
+You can also specify commands that will be executed at collect and notification times.
 
 # Utilisation
 
-Eqch equipment creates 9 comamnds:
-- 1 for each bin indicating the ones to put out
-- 1 for each bin to acknowledge it. These commands will be automatically called at collect time of concernd bin
-- Refresh: well... refresh ;)
-
-A widget's template is available that offers a visual indication (colored bin), and a calendar. A click on the icon will 'ack' the bin.
+Each equipment creates 2 comamnds:
+- 1 indicating if the bin needs to be put out
+- 1 to acknowledge it. This command will be automatically called at collect time
 
 # Contributions
 
