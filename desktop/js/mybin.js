@@ -25,10 +25,9 @@ $('#modalbtn').on('click', function () {
 $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 $("#div_action_collect").sortable({axis: "y", cursor: "move", items: ".action_collect", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 
-var _labels; // variable pour memoriser les labels "action", la variable est remplie à la sauvegarde dans printEqLogic
 // tous les boutons d'action regroupés !
 $('.addAction').off('click').on('click', function () {
-  addAction({}, $(this).attr('data-type'), _labels);
+  addAction({}, $(this).attr('data-type'));
 });
 
 /*
@@ -83,7 +82,7 @@ function addCmdToTable(_cmd) {
     jeedom.cmd.changeType($('#table_cmd tbody tr:last'), init(_cmd.subType));
 }
 
-function addAction(_action, _type, _labels) {
+function addAction(_action, _type) {
   var div = '<div class="' + _type + '">';
     div += '<div class="form-group ">';
 
@@ -118,6 +117,7 @@ function saveEqLogic(_eqLogic) {
     _eqLogic.configuration = {};
   }
   _eqLogic.configuration.action_collect = $('#div_action_collect .action_collect').getValues('.expressionAttr');
+  _eqLogic.configuration.action_notif = $('#div_action_notif .action_notif').getValues('.expressionAttr');
 
   return _eqLogic;
 }
@@ -126,13 +126,17 @@ function saveEqLogic(_eqLogic) {
 function printEqLogic(_eqLogic) {
 
   $('#div_action_collect').empty();
-
-  _labels = '<option value="" select></option>'; // initialise notre liste deroulante de labels avec le choix "vide"
+  $('#div_action_notif').empty();
 
   if (isset(_eqLogic.configuration)) {
     if (isset(_eqLogic.configuration.action_collect)) {
       for (var i in _eqLogic.configuration.action_collect) {
-        addAction(_eqLogic.configuration.action_collect[i], 'action_collect', _labels);
+        addAction(_eqLogic.configuration.action_collect[i], 'action_collect');
+      }
+    }
+    if (isset(_eqLogic.configuration.action_notif)) {
+      for (var i in _eqLogic.configuration.action_notif) {
+        addAction(_eqLogic.configuration.action_notif[i], 'action_notif');
       }
     }
   }

@@ -151,12 +151,18 @@ class mybin extends eqLogic {
         log::add(__CLASS__, 'info', $this->getHumanName() . ' notification on');
         $cmd = $this->getCmd(null, 'bin');
         $cmd->event(1);
+        foreach ($this->getConfiguration('action_notif') as $action) {
+            $this->execAction($action);
+        }
     }
     
     public function ackBin() {
         log::add(__CLASS__, 'info', $this->getHumanName() . ' acknowledged');
         $cmd = $this->getCmd(null, 'bin');
         $cmd->event(0);
+        foreach ($this->getConfiguration('action_collect') as $action) {
+            $this->execAction($action);
+        }
     }
 
     public function lastWeekNumberOfYear() {
@@ -405,6 +411,22 @@ class mybin extends eqLogic {
             return 'plugins/mybin/core/assets/'.$color.'_icon.png';
         }
 	}
+    
+    public function execAction($action) {
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' Execution de l\'action ' . $action['cmd']);
+        try {
+            $options = array();
+            if (isset($action['options'])) {
+                $options = $action['options'];
+                foreach ($options as $key => $value) {
+                    $value = str_replace('#bin_color#', $this->getConfiguration('color'), $value);
+                }
+            }
+            scenarioExpression::createAndExec('action', $action['cmd'], $options);
+        } catch (Exception $e) {
+            log::add(__CLASS__, 'error', $this->getHumanName() . ' Erreur lors de l\'execution de l\'action ' . $action['cmd'] . ': ' . $e->getMessage());
+        }
+    }
 }
 
 class mybinCmd extends cmd {
