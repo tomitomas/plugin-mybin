@@ -22,9 +22,10 @@ Vous pouvez également spécifier des actions qui seront exécutées au ramassag
 
 # Utilisation
 
-Chaque équipement cré 2 commandes :
+Chaque équipement crée 3 commandes :
 - une indiquant si il faut sortir la poubelle (à 1 dans ce cas)
 - une commande 'ack' remettant le statut à 0. Cette commabdes et automatiquement appelée à l'heure de ramassage
+- une commande 'compteur' qui s'incrémente à chaque ack (manuel ou automatique)
 
 # Contributions
 
