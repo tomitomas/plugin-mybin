@@ -237,19 +237,8 @@ class mybin extends eqLogic {
                 $cmd->setEventOnly(1);
                 $cmd->save();
             }
-            /*
-            $cmd = $this->getCmd(null, 'refresh');
-            if (!is_object($cmd)) {
-                $cmd = new mybinCmd();
-                $cmd->setLogicalId('refresh');
-                $cmd->setEqLogic_id($this->getId());
-                $cmd->setName('Rafraichir');
-                $cmd->setType('action');
-                $cmd->setSubType('other');
-                $cmd->setEventOnly(1);
-                $cmd->save();
-            }
-            */
+            $this->setConfiguration('image',$this->getImage();
+            $this->save();
         }
 
     }
@@ -408,6 +397,15 @@ class mybin extends eqLogic {
             }
         }
     }
+    
+    public function getImage($color) {
+        $color = $this->getConfiguration('color','');
+        if ($color == '') {
+            return 'plugins/mybin/plugin_info/mybin_icon.png';
+        } else {
+            return 'plugins/mybin/core/assets/'.$color.'_icon.png';
+        }
+	}
 }
 
 class mybinCmd extends cmd {
