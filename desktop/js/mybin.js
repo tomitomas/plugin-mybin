@@ -84,7 +84,7 @@ function addCmdToTable(_cmd) {
 }
 
 function addAction(_action, _type, _labels) {
-  //var div = '<div class="' + _type + '">';
+  var div = '<div class="' + _type + '">';
     var div = '';
       div += '<label class="col-sm-3 control-label">Action</label>';
       div += '<div class="col-sm-4">';
@@ -104,7 +104,7 @@ function addAction(_action, _type, _labels) {
         div += jeedom.cmd.displayActionOption(init(_action.cmd, ''), _action.options);
       div += '</div>';
 
-    //div += '</div>';
+    div += '</div>';
   //div += '</div>';
 
   $('#div_' + _type).append(div);
