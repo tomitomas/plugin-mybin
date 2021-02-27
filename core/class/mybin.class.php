@@ -204,6 +204,7 @@ class mybin extends eqLogic {
                 }
             }
         }
+        $this->setConfiguration('image',$this->getImage());
     }
 
     // Fonction exécutée automatiquement après la mise à jour de l'équipement
@@ -237,8 +238,6 @@ class mybin extends eqLogic {
                 $cmd->setEventOnly(1);
                 $cmd->save();
             }
-            //$this->setConfiguration('image',$this->getImage());
-            //$this->save();
         }
 
     }
