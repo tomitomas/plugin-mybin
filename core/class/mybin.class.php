@@ -420,6 +420,7 @@ class mybin extends eqLogic {
                 $options = $action['options'];
                 foreach ($options as $key => $value) {
                     $value = str_replace('#bin_color#', $this->getConfiguration('color'), $value);
+                    $options[$key] = $value;
                 }
             }
             scenarioExpression::createAndExec('action', $action['cmd'], $options);
