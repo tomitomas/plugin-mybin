@@ -160,6 +160,9 @@ class mybin extends eqLogic {
         log::add(__CLASS__, 'info', $this->getHumanName() . ' acknowledged');
         $cmd = $this->getCmd(null, 'bin');
         $cmd->event(0);
+        $cmd = $this->getCmd(null, 'counter');
+        $value = $cmd->execCmd();
+        $cmd->event($value + 1);
         foreach ($this->getConfiguration('action_collect') as $action) {
             $this->execAction($action);
         }
@@ -242,6 +245,21 @@ class mybin extends eqLogic {
                 $cmd->setType('action');
                 $cmd->setSubType('other');
                 $cmd->setEventOnly(1);
+                $cmd->save();
+            }
+            $cmd = $this->getCmd(null, 'counter');
+            if (!is_object($cmd))
+            {
+                $cmd = new mybinCmd();
+                $cmd->setLogicalId('counter');
+                $cmd->setEqLogic_id($this->getId());
+                $cmd->setName('Compteur');
+                $cmd->setType('info');
+                $cmd->setSubType('numeric');
+                $cmd->setEventOnly(1);
+                $cmd->setIsHistorized(1);
+                $cmd->setTemplate('mobile', 'line');
+                $cmd->setTemplate('dashboard', 'line');
                 $cmd->save();
             }
         }

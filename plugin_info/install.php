@@ -29,7 +29,21 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
       foreach (eqLogic::byType('mybin') as $eqLogic) {
         if ($eqLogic->getConfiguration('type') == 'whole') {
             $wholeFound = true;
-            break;
+        } else {
+            $cmd = $eqLogic->getCmd(null, 'counter');
+            if (!is_object($cmd)) {
+                $cmd = new mybinCmd();
+                $cmd->setLogicalId('counter');
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->setName('Compteur');
+                $cmd->setType('info');
+                $cmd->setSubType('numeric');
+                $cmd->setEventOnly(1);
+                $cmd->setIsHistorized(1);
+                $cmd->setTemplate('mobile', 'line');
+                $cmd->setTemplate('dashboard', 'line');
+                $cmd->save();
+            }
         }
       }
       if (!wholeFound) {
