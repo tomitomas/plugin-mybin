@@ -218,11 +218,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
 							<br>
-							<legend><i class="icon divers-slightly"></i> {{Action(s) sur collecte}}</legend>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label"><a class="btn btn-success btn-sm addAction" data-type="action_collect" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
-                                <div id="div_action_collect"></div>
-                            </div>
+							<legend><i class="icon divers-slightly"></i> {{Action(s) sur collecte}}</legend><label><a class="btn btn-success btn-sm addAction" data-type="action_collect" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
+                            <div class="form-group" id="div_action_collect"></div>
 						</div>
 					</fieldset>
 				</form>

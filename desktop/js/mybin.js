@@ -84,11 +84,10 @@ function addCmdToTable(_cmd) {
 }
 
 function addAction(_action, _type, _labels) {
-  var div = '<div class="' + _type + '">';
-    div += '<div class="form-group ">';
-
+  //var div = '<div class="' + _type + '">';
+    var div = '';
       div += '<label class="col-sm-3 control-label">Action</label>';
-      div += '<div class="col-sm-7">';
+      div += '<div class="col-sm-4">';
         div += '<div class="input-group">';
           div += '<span class="input-group-btn">';
             div += '<a class="btn btn-default bt_removeAction roundedLeft" data-type="' + _type + '"><i class="fas fa-minus-circle"></i></a>';
@@ -101,12 +100,12 @@ function addAction(_action, _type, _labels) {
         div += '</div>';
       div += '</div>';
 
-      div += '<div class="col-sm-5 actionOptions">';
+      div += '<div class="col-sm-3 actionOptions">';
         div += jeedom.cmd.displayActionOption(init(_action.cmd, ''), _action.options);
       div += '</div>';
 
-    div += '</div>';
-  div += '</div>';
+    //div += '</div>';
+  //div += '</div>';
 
   $('#div_' + _type).append(div);
   $('#div_' + _type + ' .' + _type + '').last().setValues(_action, '.expressionAttr');
