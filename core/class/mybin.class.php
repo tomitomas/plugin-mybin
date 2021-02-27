@@ -237,8 +237,8 @@ class mybin extends eqLogic {
                 $cmd->setEventOnly(1);
                 $cmd->save();
             }
-            $this->setConfiguration('image',$this->getImage());
-            $this->save();
+            //$this->setConfiguration('image',$this->getImage());
+            //$this->save();
         }
 
     }
