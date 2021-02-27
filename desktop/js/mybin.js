@@ -88,7 +88,7 @@ function addAction(_action, _type, _labels) {
     div += '<div class="form-group ">';
 
       div += '<label class="col-sm-3 control-label">Action</label>';
-      div += '<div class="col-sm-4">';
+      div += '<div class="col-sm-3">';
         div += '<div class="input-group">';
           div += '<span class="input-group-btn">';
             div += '<a class="btn btn-default bt_removeAction roundedLeft" data-type="' + _type + '"><i class="fas fa-minus-circle"></i></a>';
@@ -101,7 +101,7 @@ function addAction(_action, _type, _labels) {
         div += '</div>';
       div += '</div>';
 
-      div += '<div class="col-sm-3 actionOptions">';
+      div += '<div class="col-sm-4 actionOptions">';
         div += jeedom.cmd.displayActionOption(init(_action.cmd, ''), _action.options);
       div += '</div>';
 
