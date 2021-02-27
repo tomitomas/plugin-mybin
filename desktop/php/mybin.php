@@ -113,12 +113,17 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">{{Couleur de la poubelle}}</label>
                                 <div class="col-sm-7">
-                                    <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="color">
-                                        <option value="green">{{Verte}}</option>
-                                        <option value="yellow">{{Jaune}}</option>
-                                        <option value="braun">{{Marron}}</option>
-                                        <option value="blue">{{Bleue}}</option>
-                                    </select>
+                                    <span class="col-sm-4">
+                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="color">
+                                            <option value="green">{{Verte}}</option>
+                                            <option value="yellow">{{Jaune}}</option>
+                                            <option value="braun">{{Marron}}</option>
+                                            <option value="blue">{{Bleue}}</option>
+                                        </select>
+                                    </span>
+                                    <span class="col-sm-3">
+                                        tag <strong>#bin_color#</strong>
+                                    </span>
                                 </div>
                             </div>
 							<div class="form-group">
