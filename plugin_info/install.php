@@ -20,12 +20,21 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 // Fonction exécutée automatiquement après l'installation du plugin
   function mybin_install() {
-
+      mybin::createWhole();
   }
 
 // Fonction exécutée automatiquement après la mise à jour du plugin
   function mybin_update() {
-
+      $wholeFound = false;
+      foreach (eqLogic::byType('mybin') as $eqLogic) {
+        if ($eqLogic->getConfiguration('type') == 'whole') {
+            $wholeFound = true;
+            break;
+        }
+      }
+      if (!wholeFound) {
+          mybin::createWhole();
+      }
   }
 
 // Fonction exécutée automatiquement après la suppression du plugin

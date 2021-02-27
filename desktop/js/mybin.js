@@ -23,6 +23,12 @@ $('#modalbtn').on('click', function () {
 */
 
 $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
+$("#div_action_collect").sortable({axis: "y", cursor: "move", items: ".action_collect", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
+
+// tous les boutons d'action regroupés !
+$('.addAction').off('click').on('click', function () {
+  addAction({}, $(this).attr('data-type'));
+});
 
 /*
  * Fonction permettant l'affichage des commandes dans l'équipement
@@ -74,4 +80,64 @@ function addCmdToTable(_cmd) {
         $('#table_cmd tbody tr:last .cmdAttr[data-l1key=type]').value(init(_cmd.type));
     }
     jeedom.cmd.changeType($('#table_cmd tbody tr:last'), init(_cmd.subType));
+}
+
+function addAction(_action, _type) {
+  var div = '<div class="' + _type + '">';
+    div += '<div class="form-group ">';
+
+      div += '<label class="col-sm-3 control-label">Action</label>';
+      div += '<div class="col-sm-3">';
+        div += '<div class="input-group">';
+          div += '<span class="input-group-btn">';
+            div += '<a class="btn btn-default bt_removeAction roundedLeft" data-type="' + _type + '"><i class="fas fa-minus-circle"></i></a>';
+          div += '</span>';
+          div += '<input class="expressionAttr form-control cmdAction" data-l1key="cmd" data-type="' + _type + '" />';
+          div += '<span class="input-group-btn">';
+            div += '<a class="btn btn-default listAction" data-type="' + _type + '" title="{{Sélectionner un mot-clé}}"><i class="fa fa-tasks"></i></a>';
+            div += '<a class="btn btn-default listCmdAction roundedRight" data-type="' + _type + '" title="{{Sélectionner une commande}}"><i class="fas fa-list-alt"></i></a>';
+          div += '</span>';
+        div += '</div>';
+      div += '</div>';
+
+      div += '<div class="col-sm-4 actionOptions">';
+        div += jeedom.cmd.displayActionOption(init(_action.cmd, ''), _action.options);
+      div += '</div>';
+
+    div += '</div>';
+  div += '</div>';
+
+  $('#div_' + _type).append(div);
+  $('#div_' + _type + ' .' + _type + '').last().setValues(_action, '.expressionAttr');
+}
+
+// Fct core permettant de sauvegarder
+function saveEqLogic(_eqLogic) {
+  if (!isset(_eqLogic.configuration)) {
+    _eqLogic.configuration = {};
+  }
+  _eqLogic.configuration.action_collect = $('#div_action_collect .action_collect').getValues('.expressionAttr');
+  _eqLogic.configuration.action_notif = $('#div_action_notif .action_notif').getValues('.expressionAttr');
+
+  return _eqLogic;
+}
+
+// fct core permettant de restituer les cmd declarées
+function printEqLogic(_eqLogic) {
+
+  $('#div_action_collect').empty();
+  $('#div_action_notif').empty();
+
+  if (isset(_eqLogic.configuration)) {
+    if (isset(_eqLogic.configuration.action_collect)) {
+      for (var i in _eqLogic.configuration.action_collect) {
+        addAction(_eqLogic.configuration.action_collect[i], 'action_collect');
+      }
+    }
+    if (isset(_eqLogic.configuration.action_notif)) {
+      for (var i in _eqLogic.configuration.action_notif) {
+        addAction(_eqLogic.configuration.action_notif[i], 'action_notif');
+      }
+    }
+  }
 }

@@ -1,6 +1,8 @@
 {
     "plugins\/mybin\/plugin_info\/configuration.php": {
-        "401 - Accès non autorisé": "401 - Accès non autorisé"
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Afficher un widget global pour toutes les poubelles : ": "Afficher un widget global pour toutes les poubelles : ",
+        "Pièce pour le widget global : ": "Pièce pour le widget global : "
     },
     "plugins\/mybin\/desktop\/php\/mybin.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
@@ -39,12 +41,7 @@
         "La veille": "La veille",
         "Le jour même": "Le jour même",
         "à": "à",
-        "Template de widget": "Template de widget",
         "Semaine(s) de ramassage": "Semaine(s) de ramassage",
-        "Déchêts ménagers": "Déchêts ménagers",
-        "Déchêts recyclables": "Déchêts recyclables",
-        "Déchêts végétaux": "Déchêts végétaux",
-        "Déchêts en verre": "Déchêts en verre",
         "D": "D",
         "L": "L",
         "Ma": "Ma",
@@ -62,9 +59,7 @@
         "Tester": "Tester"
     },
     "plugins\/mybin\/core\/class\/mybin.class.php": {
-        "Il faut sortir les deux poubelles": "Il faut sortir les deux poubelles",
-        "Il faut sortir la poubelle verte": "Il faut sortir la poubelle verte",
-        "Il faut sortir la poubelle jaune": "Il faut sortir la poubelle jaune",
-        "L\\'heure de notification est après l\\'heure de collecte pour la poublle ": "L\\'heure de notification est après l\\'heure de collecte pour la poublle "
+        "L\\'heure de notification est après l\\'heure de collecte": "L\\'heure de notification est après l\\'heure de collecte",
+        "Il n\'y a (plus) aucune poubelle à sortir": "Il n\'y a (plus) aucune poubelle à sortir"
     }
 }

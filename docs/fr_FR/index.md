@@ -6,7 +6,9 @@ Petit plugin pour Jeedom facilitant la gestion des poubelles domestiques
 
 ## Configuration du plugin
 
-Le plugin **My Bin** ne nécessite aucune configuration spécifique et doit seulement être activé après l'installation.
+Sur la page de configuration du plugin, vous pouvez choisir d'utiliser un widget global qui affichera un calendrier de rammasage de vos différentes poubelles ainsi qu'une icône pour chaque poubelle devant être sortie.
+
+Vous pouvez également spécifier l'objet parent pour ce widget.
 
 Les données sont vérifiées toutes les 5 minutes.
 
@@ -14,16 +16,15 @@ Les données sont vérifiées toutes les 5 minutes.
 
 Pour accéder aux différents équipements **My Bin**, dirigez-vous vers le menu **Plugins → Organisation → My Bin**.
 
-Sur la page de l'équipement, renseignez les jours et heures de collecte de vos poublles ainsi que le moment pour être notifié.
+Sur la page de l'équipement, renseignez les jours et heures de collecte de votre poubelle, sa couleur, ainsi que le moment pour être notifié.
+
+Vous pouvez également spécifier des actions qui seront exécutées au ramassage et à la notification.
 
 # Utilisation
 
-Chaque équipement cré 9 commandes:
-- une pour chaque poubelle indiquant si il faut la sortir (à 1 dans ce cas)
-- une commande 'ack' pour chaque poubelle remettant le statut à 0. Ces commabdes sont automatiquement appelées à l'heure de collecte
-- Rrefresh : refresh quoi... :)
-
-Un template de widget est disponible qui offre une indication visuelle (poubelle colorée), ainsi qu'un calendrier.
+Chaque équipement cré 2 commandes :
+- une indiquant si il faut sortir la poubelle (à 1 dans ce cas)
+- une commande 'ack' remettant le statut à 0. Cette commabdes et automatiquement appelée à l'heure de ramassage
 
 # Contributions
 
