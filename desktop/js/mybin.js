@@ -85,7 +85,8 @@ function addCmdToTable(_cmd) {
 
 function addAction(_action, _type, _labels) {
   var div = '<div class="' + _type + '">';
-    var div = '';
+    div += '<div class="form-group ">';
+
       div += '<label class="col-sm-3 control-label">Action</label>';
       div += '<div class="col-sm-4">';
         div += '<div class="input-group">';
@@ -105,7 +106,7 @@ function addAction(_action, _type, _labels) {
       div += '</div>';
 
     div += '</div>';
-  //div += '</div>';
+  div += '</div>';
 
   $('#div_' + _type).append(div);
   $('#div_' + _type + ' .' + _type + '').last().setValues(_action, '.expressionAttr');
