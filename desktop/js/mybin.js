@@ -14,20 +14,58 @@
  * You should have received a copy of the GNU General Public License
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
-/*
-$('#modalbtn').on('click', function () {
-    jeedom.cmd.getSelectModal({cmd: {type: 'action',subType : 'message'}}, function(result) {
-        $('.eqLogicAttr[data-l1key=configuration][data-l2key=ttscmd]').value(result.human);
-    });
-});
-*/
 
 $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 $("#div_action_collect").sortable({axis: "y", cursor: "move", items: ".action_collect", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
+$("#div_action_notif").sortable({axis: "y", cursor: "move", items: ".action_notif", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 
 // tous les boutons d'action regroupés !
 $('.addAction').off('click').on('click', function () {
   addAction({}, $(this).attr('data-type'));
+});
+
+
+// permet d'afficher la liste des cmd Jeedom pour choisir sa commande de type "action"
+$("body").off('click','.listCmdAction').on('click','.listCmdAction', function () {
+  var type = $(this).attr('data-type');
+  var el = $(this).closest('.' + type).find('.expressionAttr[data-l1key=cmd]');
+  jeedom.cmd.getSelectModal({cmd: {type: 'action'}}, function (result) {
+    el.value(result.human);
+    jeedom.cmd.displayActionOption(el.value(), '', function (html) {
+      el.closest('.' + type).find('.actionOptions').html(html);
+    });
+
+  });
+});
+
+// copier/coller du core (cmd.configure.php), permet de choisir la liste des actions (scenario, attendre, ...)
+$("body").undelegate(".listAction", 'click').delegate(".listAction", 'click', function () {
+  var type = $(this).attr('data-type');
+  var el = $(this).closest('.' + type).find('.expressionAttr[data-l1key=cmd]');
+  jeedom.getSelectActionModal({}, function (result) {
+    el.value(result.human);
+    jeedom.cmd.displayActionOption(el.value(), '', function (html) {
+      el.closest('.' + type).find('.actionOptions').html(html);
+      taAutosize();
+    });
+  });
+});
+
+//sert à charger les champs quand on clique dehors -> A garder !!!
+$('body').off('focusout','.cmdAction.expressionAttr[data-l1key=cmd]').on('focusout','.cmdAction.expressionAttr[data-l1key=cmd]',function (event) {
+  var type = $(this).attr('data-type');
+  var expression = $(this).closest('.' + type).getValues('.expressionAttr');
+  var el = $(this);
+  jeedom.cmd.displayActionOption($(this).value(), init(expression[0].options), function (html) {
+    el.closest('.' + type).find('.actionOptions').html(html);
+  });
+
+});
+
+// tous les - qui permettent de supprimer la ligne
+$("body").off('click','.bt_removeAction').on('click','.bt_removeAction',function () {
+  var type = $(this).attr('data-type');
+  $(this).closest('.' + type).remove();
 });
 
 /*
