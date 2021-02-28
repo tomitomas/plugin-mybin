@@ -226,7 +226,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label" data-help="{{Seuil au-delà duquel les notifications seront suspendues}}">{{Seuil}}</label>
+								<label class="col-sm-3 control-label help" data-help="{{Seuil au-delà duquel les notifications seront suspendues. Laissez le champ vide pour aucun seuil.}}">{{Seuil}}</label>
 								<div class="col-sm-4">
                                     <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="seuil"/>
 								</div>
