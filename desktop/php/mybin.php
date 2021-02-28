@@ -229,7 +229,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 
 							<legend><i class="fas fa-tachometer-alt"></i> {{Compteur}}</legend>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label help" data-help="{{En automatique, le compteur s'incrémentera à chaque ramassage ou lorsque la commande 'ack' est exécutée. En manuel, il ne s'incrémentera que si la commande 'ack' est exécutée.}}">{{Compteur}}</label>
+                                <label class="col-sm-3 control-label help" data-help="{{En automatique, le compteur s'incrémentera à chaque ramassage ou lorsque la commande 'ack' est exécutée. En manuel, il ne s'incrémentera que si la commande 'ack' est exécutée.}}">{{Type}}</label>
                                 <div class="col-sm-7">
                                     <span class="col-sm-4">
                                         <select id="sel_counter" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="counter">
