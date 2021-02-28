@@ -208,6 +208,8 @@ class mybin extends eqLogic {
             $this->setIsEnable(1);
             $this->setIsVisible(1);
         } else {
+            $this->setDisplay('height','140px');
+            $this->setDisplay('width', '260px');
             $this->setConfiguration('hour', 8);
             $this->setConfiguration('minute', 0);
             $this->setConfiguration('notif_veille', 1);
