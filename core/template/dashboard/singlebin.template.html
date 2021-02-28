@@ -106,12 +106,12 @@
         innerRadius: 72,
         dataLabels: {
           y: 6,
-          format: '<span>{y}</span> <span>#unite#</span>'
+          format: '<span>{y}</span> <span>#counter_unite#</span>'
         },
       }]
     })
   } else {
-    $('.cmd[data-cmd_uid=#uid#] .gauge').append('<center><span class="label label-danger">#state#</span></center>')
+    $('.cmd[data-cmd_uid=#counter_uid#] .gauge').append('<center><span class="label label-danger">#counter_state#</span></center>')
   }
     </script> 
 </div>

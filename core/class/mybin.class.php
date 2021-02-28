@@ -309,7 +309,7 @@ class mybin extends eqLogic {
             log::add(__CLASS__, 'debug', $this->getHumanName() . ' config before ' . $cmdCounter->getConfiguration('maxValue'));
             $cmdCounter->setConfiguration('maxValue', $threshold);
             log::add(__CLASS__, 'debug', $this->getHumanName() . ' config after ' . $cmdCounter->getConfiguration('maxValue'));
-            $cmdCounter->save();
+            $cmdCounter->save(true);
         }
 
     }
@@ -396,13 +396,13 @@ class mybin extends eqLogic {
             $counterCmd = $this->getCmd(null, 'counter');
             $replace['#counter_id#'] = $counterCmd->getId();
             $replace['#counter_uid#'] = $counterCmd->getId();
-            $replace['#counter_uid#'] = $counterCmd->getId();
             $replace['#counter_eqLogic_id#'] = $replace['#uid#'];
             $replace['#counter_collectDate#'] = $counterCmd->getCollectDate();
             $replace['#counter_valueDate#'] = $counterCmd->getValueDate();
             $replace['#counter_minValue#'] = $counterCmd->getConfiguration('minValue', 0);
             $replace['#counter_maxValue#'] = $counterCmd->getConfiguration('maxValue');
             $replace['#counter_state#'] = $counterCmd->execCmd();
+            $replace['#counter_unite#'] = $counterCmd->getUnite();
             
             $html = template_replace($replace, getTemplate('core', $version, 'singlebin.template', __CLASS__));
             cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
