@@ -73,9 +73,9 @@ $eqLogics = eqLogic::byType($plugin->getId());
 									<input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
 									<input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement My Bin}}"/>
 								</div>
-                                <span class="col-sm-2">
+                                <div class="col-sm-2">
                                     tag <strong>#bin_namer#</strong>
-                                </span>
+                                </div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label" >{{Objet parent}}</label>
@@ -227,9 +227,12 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label help" data-help="{{Seuil au-delà duquel les notifications seront suspendues. Laissez le champ vide pour aucun seuil.}}">{{Seuil}}</label>
-								<div class="col-sm-4">
+								<div class="col-sm-3">
                                     <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="seuil"/>
 								</div>
+                                <div class="col-sm-4">
+                                    tag <strong>#bin_threshold#</strong>
+                                </div>
 							</div>
 							<br>
 							<legend><i class="fas fa-truck"></i> {{Action(s) sur ramassage}}</legend><label><a class="btn btn-success btn-sm addAction" data-type="action_collect" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
