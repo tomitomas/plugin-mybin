@@ -22,10 +22,11 @@ You can also specify commands that will be executed at collect and notification 
 
 # Utilisation
 
-Each equipment creates 3 comamnds:
+Each equipment creates 4 comamnds:
 - one indicating if the bin needs to be put out
 - one to acknowledge it. This command will be automatically called at collect time
 - one counter which increments itself at each ack (manual or automatic)
+- one action to reset counter
 
 # Contributions
 
