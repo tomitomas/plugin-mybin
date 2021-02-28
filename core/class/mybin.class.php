@@ -304,11 +304,10 @@ class mybin extends eqLogic {
                 $cmd->save();
             }
             $threshold = $this->getConfiguration('seuil','');
-            $cmd = $this->getCmd(null, 'counter');
-            $cmd->setConfiguration('minValue', 0);
-            $cmd->setConfiguration('maxValue', $threshold);
-            $cmd->setName('blah');
-            $cmd->save();
+            $cmdCounter = $this->getCmd(null, 'counter');
+            $cmdCounter->setConfiguration('minValue', 0);
+            $cmdCounter->setConfiguration('maxValue', $threshold);
+            $cmdCounter->save();
         }
 
     }
