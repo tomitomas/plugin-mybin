@@ -148,7 +148,7 @@ class mybin extends eqLogic {
     }
     
     public function notifBin() {
-        $seuil = $this->getConfiguration('seuil');
+        $seuil = $this->getConfiguration('seuil', '');
         if ($seuil <> '') {
             $cmd = $this->getCmd(null, 'counter');
             $counter = $cmd->execCmd();
@@ -231,7 +231,7 @@ class mybin extends eqLogic {
                     }
                 }
             }
-            if ($this->getConfiguration('seuil') <> '') {
+            if ($this->getConfiguration('seuil', '') <> '') {
                 $options = array('options' => array('min_range' => 0));
                 if (!filter_var($this->getConfiguration('seuil'), FILTER_VALIDATE_INT, $options)) {
                     throw new Exception(__('Le seuil doit être un entier positif ou être laissé vide',__FILE__));
