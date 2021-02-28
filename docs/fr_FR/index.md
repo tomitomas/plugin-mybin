@@ -20,6 +20,8 @@ Sur la page de l'équipement, renseignez les jours et heures de collecte de votr
 
 Vous pouvez également spécifier des actions qui seront exécutées au ramassage et à la notification.
 
+Un paramètre "seuil" est disponible : une fois que le compteur atteint la valeur spécifiée dans ce paramètre, les notifications seront désactivées.
+
 # Utilisation
 
 Chaque équipement crée 4 commandes :

@@ -20,6 +20,8 @@ On the equipment page, fill in the collect days and times for your bin, its colo
 
 You can also specify commands that will be executed at collect and notification times.
 
+A "threshold" parameter is available: when the counter reaches this value, notifications will be suspended.
+
 # Utilisation
 
 Each equipment creates 4 comamnds:
