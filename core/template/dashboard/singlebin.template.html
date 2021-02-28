@@ -5,24 +5,25 @@
 		</span>
 		<span class="reportModeVisible">#name_display# <span class="object_name">#object_name#</span></span>
 		<a href="/index.php?v=d&m=mybin&p=mybin" class="reportModeHidden">#name_display# <span class="object_name">#object_name#</span></a>
-	</center>   
-    <div style="width: 50%; display:inline-block;">
-        <center>
-            #binnotifs#
-        </center>
-    </div>
-    <br/>
-    <div style="width: 50%; float: right;">
-        <center>
-            <div class="cmd cmd-widget arcgauge" data-type="info" data-subtype="numeric" data-template="default" data-cmd_id="#counter_id#" data-cmd_uid="#counter_uid#" data-version="#version#" data-eqLogic_id="#counter_eqLogic_id#" title="{{Date de valeur}} : #counter_valueDate#<br/>{{Date de collecte}} : #counter_collectDate#" >
-                <div class="title">
-                  <span class="cmdName">Compteur</span>
+	</center>
+    <div>
+        <div style="width: 50%;">
+            <center>
+                #binnotifs#
+            </center>
+        </div>
+        <div style="width: 50%; float: right;">
+            <center>
+                <div class="cmd cmd-widget arcgauge" data-type="info" data-subtype="numeric" data-template="default" data-cmd_id="#counter_id#" data-cmd_uid="#counter_uid#" data-version="#version#" data-eqLogic_id="#counter_eqLogic_id#" title="{{Date de valeur}} : #counter_valueDate#<br/>{{Date de collecte}} : #counter_collectDate#" >
+                    <div class="title">
+                      <span class="cmdName">Compteur</span>
+                    </div>
+                    <div class="content-sm">
+                      <div class="gauge cursor" data-cmd_id="#counter_id#"></div>
+                    </div>
                 </div>
-                <div class="content-sm">
-                  <div class="gauge cursor" data-cmd_id="#counter_id#"></div>
-                </div>
-            </div>
-        </center>
+            </center>
+        </div>
     </div>
     <script>
         #binscript#
