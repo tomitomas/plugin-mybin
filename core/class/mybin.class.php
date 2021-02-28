@@ -306,7 +306,9 @@ class mybin extends eqLogic {
             $threshold = $this->getConfiguration('seuil','');
             $cmdCounter = $this->getCmd(null, 'counter');
             //$cmdCounter->setConfiguration('minValue', 0);
+            log::add(__CLASS__, 'debug', $this->getHumanName() . ' config before ' . $cmdCounter->getConfiguration());
             $cmdCounter->setConfiguration('maxValue', '50');
+            log::add(__CLASS__, 'debug', $this->getHumanName() . ' config after ' . $cmdCounter->getConfiguration());
             $cmdCounter->save();
         }
 
