@@ -171,7 +171,7 @@ class mybin extends eqLogic {
     public function resetCounter() {
         log::add(__CLASS__, 'info', $this->getHumanName() . ' counter reset');
         $cmdCounter = $this->getCmd(null, 'counter');
-        $cmd->event(0);
+        $cmdCounter->event(0);
     }
 
     public function lastWeekNumberOfYear() {
