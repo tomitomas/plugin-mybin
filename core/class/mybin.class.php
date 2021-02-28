@@ -309,6 +309,7 @@ class mybin extends eqLogic {
             log::add(__CLASS__, 'debug', $this->getHumanName() . ' config before ' . $cmdCounter->getConfiguration('maxValue'));
             $cmdCounter->setConfiguration('maxValue', '50');
             log::add(__CLASS__, 'debug', $this->getHumanName() . ' config after ' . $cmdCounter->getConfiguration('maxValue'));
+            $cmdCounter->setChanged(true);
             $cmdCounter->save();
         }
 
