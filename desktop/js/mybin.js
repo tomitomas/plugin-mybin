@@ -136,14 +136,12 @@ function addAction(_action, _type) {
             div += '<a class="btn btn-default listCmdAction roundedRight" data-type="' + _type + '" title="{{Sélectionner une commande}}"><i class="fas fa-list-alt"></i></a>';
           div += '</span>';
         div += '</div>';
-      div += '</div>';
-      div += '<br/>';
-
-      div += '<div class="col-sm-7 actionOptions">';
+          div += '<div class="input-group actionOptions">';
         div += jeedom.cmd.displayActionOption(init(_action.cmd, ''), _action.options);
       div += '</div>';
+      div += '</div>';
+      div += '</div>';
 
-    div += '</div>';
   div += '</div>';
 
   $('#div_' + _type).append(div);
