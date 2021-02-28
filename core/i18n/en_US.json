@@ -50,7 +50,9 @@
         "V": "F",
         "S": "Sa",
         "Seuil": "Threshold",
-        "Seuil au-delà duquel les notifications seront suspendues. Laissez le champ vide pour aucun seuil.": "Threshold at which notifications will be suspended. Keep the field empty for no threshold"
+        "Seuil au-delà duquel les notifications seront suspendues. Laissez le champ vide pour aucun seuil.": "Threshold at which notifications will be suspended. Keep the field empty for no threshold",
+        "En automatique, le compteur s'incrémentera à chaque ramassage ou lorsque la commande 'ack' est exécutée. En manuel, il ne s'incrémentera que si la commande 'ack' est exécutée.": "When automatic, the counter will be incremented at each collect time or when the command 'ack' is executed. When manual, it will only be incremented when command 'ack' is called.",
+        "Compteur": "Counter"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",

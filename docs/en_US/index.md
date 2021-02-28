@@ -20,14 +20,15 @@ On the equipment page, fill in the collect days and times for your bin, its colo
 
 You can also specify commands that will be executed at collect and notification times.
 
-A "threshold" parameter is available: when the counter reaches this value, notifications will be suspended.
+A counter is also available (manual or automatic) with a threshold: when the counter reaches the threshold value, notifications will be suspended.
+
 
 # Utilisation
 
 Each equipment creates 4 comamnds:
 - one indicating if the bin needs to be put out
 - one to acknowledge it. This command will be automatically called at collect time
-- one counter which increments itself at each ack (manual or automatic)
+- one counter which increments itself at each ack (depending on the counter configuration)
 - one action to reset counter
 
 # Contributions

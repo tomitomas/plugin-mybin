@@ -140,7 +140,7 @@ class mybin extends eqLogic {
         }
         log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin: week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
         if ($isweek && $isday && $ishour && $isminute) {
-            $this->ackBin();
+            $this->ackBin(true);
             return 1;
         } else {
             return 0;
@@ -165,16 +165,19 @@ class mybin extends eqLogic {
         }
     }
     
-    public function ackBin() {
+    public function ackBin($auto) {
         $cmd = $this->getCmd(null, 'bin');
         $value = $cmd->execCmd();
         if ($value == 1) {
             $cmd->event(0);
-            $cmd = $this->getCmd(null, 'counter');
             log::add(__CLASS__, 'info', $this->getHumanName() . ' acknowledged');
-            $value = $cmd->execCmd();
-            $cmd->event($value + 1);
-            log::add(__CLASS__, 'info', $this->getHumanName() . ' counter incremented to ' . $value + 1);
+            $counterType = $this->getConfiguration('counter', 'auto');
+            if (($counterType == 'auto' && $auto) || ($counterType == 'manu' && !$auto)) {
+                $cmd = $this->getCmd(null, 'counter');
+                $value = $cmd->execCmd();
+                $cmd->event($value + 1);
+                log::add(__CLASS__, 'info', $this->getHumanName() . ' counter incremented to ' . $value + 1);
+            }
             foreach ($this->getConfiguration('action_collect') as $action) {
                 $this->execAction($action);
             }
@@ -211,7 +214,8 @@ class mybin extends eqLogic {
             $this->setConfiguration('notif_minute', 0);
             $this->setConfiguration('paire', 1);
             $this->setConfiguration('impaire', 1);
-            $this->setConfiguration('color', 'green');       
+            $this->setConfiguration('color', 'green');   
+            $this->setConfiguration('counter', 'auto');  
             $this->setIsEnable(1);
             $this->setIsVisible(0);
         }
@@ -501,7 +505,7 @@ class mybinCmd extends cmd {
         log::add('mybin', 'debug', 'Execution de la commande ' . $this->getLogicalId());
         switch ($this->getLogicalId()) {
             case "ack":
-                $eqLogic->ackBin();
+                $eqLogic->ackBin(false);
                 $eqLogic->refreshWhole();
                 break;
             case "resetcounter":

@@ -20,14 +20,14 @@ Sur la page de l'équipement, renseignez les jours et heures de collecte de votr
 
 Vous pouvez également spécifier des actions qui seront exécutées au ramassage et à la notification.
 
-Un paramètre "seuil" est disponible : une fois que le compteur atteint la valeur spécifiée dans ce paramètre, les notifications seront désactivées.
+Un compteur est également disponible (manuel ou automaique) ainsi qu'un seuil : une fois que le compteur atteint la valeur spécifiée dans ce paramètre, les notifications seront désactivées. 
 
 # Utilisation
 
 Chaque équipement crée 4 commandes :
 - une indiquant si il faut sortir la poubelle (à 1 dans ce cas)
 - une commande 'ack' remettant le statut à 0. Cette commabdes et automatiquement appelée à l'heure de ramassage
-- une commande 'compteur' qui s'incrémente à chaque ack (manuel ou automatique)
+- une commande 'compteur' qui s'incrémente à chaque ack (en fonction de la configuration du compteur)
 - une commande 'reset' pour réinitialiser le compteur
 
 # Contributions

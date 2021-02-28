@@ -117,7 +117,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 <label class="col-sm-3 control-label">{{Couleur de la poubelle}}</label>
                                 <div class="col-sm-7">
                                     <span class="col-sm-4">
-                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="color">
+                                        <select id="sel_color" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="color">
                                             <option value="green">{{Verte}}</option>
                                             <option value="yellow">{{Jaune}}</option>
                                             <option value="braun">{{Marron}}</option>
@@ -152,7 +152,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								<label class="col-sm-3 control-label">{{Heure de ramassage}}</label>
 								<div class="col-sm-7">
                                     <span class="col-sm-2">
-                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="hour">
+                                        <select id="sel_hour" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="hour">
                                         <?php
                                         for ($i = 0; $i <= 23; $i++) {
                                             echo '<option value="'.$i.'">';
@@ -168,7 +168,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <label>h</label>
                                     </span>
                                     <span class="col-sm-2">
-                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="minute">
+                                        <select id="sel_minute" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="minute">
                                         <?php
                                         for ($i = 0; $i <= 55; $i = $i + 5) {
                                             echo '<option value="'.$i.'">';
@@ -186,7 +186,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								<label class="col-sm-3 control-label">{{Notification}}</label>
 								<div class="col-sm-7">
                                     <span class="col-sm-6">
-                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_veille">
+                                        <select id="sel_veille" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_veille">
                                             <option value="1">{{La veille}}</option>
                                             <option value="0">{{Le jour même}}</option>
                                         </select>
@@ -195,7 +195,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <label>{{à}}</label>
                                     </span>
                                     <span class="col-sm-2">
-                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_hour">
+                                        <select id="sel_notif_hour" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_hour">
                                         <?php
                                         for ($i = 0; $i <= 23; $i++) {
                                             echo '<option value="'.$i.'">';
@@ -211,7 +211,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <label>h</label>
                                     </span>
                                     <span class="col-sm-2">
-                                        <select id="sel_object_template" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_minute">
+                                        <select id="sel_notif_minute" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_minute">
                                         <?php
                                         for ($i = 0; $i <= 55; $i = $i + 5) {
                                             echo '<option value="'.$i.'">';
@@ -225,6 +225,20 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     </span>
 								</div>
 							</div>
+                            <br>
+
+							<legend><i class="fas fa-tachometer-alt"></i> {{Compteur}}</legend>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label help" data-help="{{En automatique, le compteur s'incrémentera à chaque ramassage ou lorsque la commande 'ack' est exécutée. En manuel, il ne s'incrémentera que si la commande 'ack' est exécutée.}}">{{Compteur}}</label>
+                                <div class="col-sm-7">
+                                    <span class="col-sm-4">
+                                        <select id="sel_counter" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="counter">
+                                            <option value="auto">{{Automatique}}</option>
+                                            <option value="manu">{{Manuel}}</option>
+                                        </select>
+                                    </span>
+                                </div>
+                            </div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label help" data-help="{{Seuil au-delà duquel les notifications seront suspendues. Laissez le champ vide pour aucun seuil.}}">{{Seuil}}</label>
 								<div class="col-sm-3">

@@ -50,7 +50,9 @@
         "V": "V",
         "S": "S",
         "Seuil": "Seuil",
-        "Seuil au-delà duquel les notifications seront suspendues. Laissez le champ vide pour aucun seuil.": "Seuil au-delà duquel les notifications seront suspendues. Laissez le champ vide pour aucun seuil."
+        "Seuil au-delà duquel les notifications seront suspendues. Laissez le champ vide pour aucun seuil.": "Seuil au-delà duquel les notifications seront suspendues. Laissez le champ vide pour aucun seuil.",
+        "En automatique, le compteur s'incrémentera à chaque ramassage ou lorsque la commande 'ack' est exécutée. En manuel, il ne s'incrémentera que si la commande 'ack' est exécutée.": "En automatique, le compteur s'incrémentera à chaque ramassage ou lorsque la commande 'ack' est exécutée. En manuel, il ne s'incrémentera que si la commande 'ack' est exécutée.",
+        "Compteur": "Compteur"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",

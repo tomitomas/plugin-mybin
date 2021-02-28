@@ -30,6 +30,9 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
         if ($eqLogic->getConfiguration('type') == 'whole') {
             $wholeFound = true;
         } else {
+            if (empty($eqLogic->getConfiguration('counter'))) {
+                $eqLogic->setConfiguration('counter', 'auto');
+            }     
             $cmd = $eqLogic->getCmd(null, 'counter');
             if (!is_object($cmd)) {
                 $cmd = new mybinCmd();
