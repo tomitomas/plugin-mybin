@@ -58,6 +58,7 @@ class mybin extends eqLogic {
     }
     
     public function refreshWhole() {
+        $this->refreshWidget();
         $eqLogics = self::byType(__CLASS__, true);
         foreach ($eqLogics as $eqLogic) {
             if ($eqLogic->getConfiguration('type') == 'whole') {
