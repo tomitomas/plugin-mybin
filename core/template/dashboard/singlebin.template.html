@@ -1,0 +1,117 @@
+<div class="eqLogic eqLogic-widget #eqType#" style="width:#width#;height:#height#;#style#" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#" data-eqType="#eqType#" data-translate-category="#translate_category#" data-category="#category#" data-tags="#tags#" >
+	<center class="widget-name">
+		<span class="warning" title="#alert_name#">
+			<i class='#alert_icon#'></i>
+		</span>
+		<span class="reportModeVisible">#name_display# <span class="object_name">#object_name#</span></span>
+		<a href="/index.php?v=d&m=mybin&p=mybin" class="reportModeHidden">#name_display# <span class="object_name">#object_name#</span></a>
+	</center>   
+    <div style="height: 70px">
+        <center>
+            #binnotifs#
+        </center>
+    </div>
+    <br/>
+    <div>
+        <center>
+            <div class="cmd cmd-widget arcgauge" data-type="info" data-subtype="numeric" data-template="default" data-cmd_id="#counter_id#" data-cmd_uid="#counter_uid#" data-version="#version#" data-eqLogic_id="#counter_eqLogic_id#" title="{{Date de valeur}} : #counter_valueDate#<br/>{{Date de collecte}} : #counter_collectDate#" >
+                <div class="content-sm">
+                  <div class="gauge cursor" data-cmd_id="#counter_id#"></div>
+                </div>
+            </div>
+        </center>
+    </div>
+    <script>
+        #binscript#
+        
+        jeedom.cmd.update['#id#'] = function(_options) {
+            $('.cmd[data-cmd_id=#counter_id#]').attr('title','{{Date de valeur}} : '+_options.valueDate+'<br/>{{Date de collecte}} : '+_options.collectDate)
+            if ($('.cmd[data-cmd_uid=#counter_uid#] .gauge').highcharts() !== undefined) {
+              $('.cmd[data-cmd_uid=#counter_uid#] .gauge').highcharts().series[0].points[0].update(_options.display_value)
+            }
+          }
+
+  if (is_numeric('#state#')) {
+    $('.cmd[data-cmd_uid=#counter_uid#] .gauge').empty().highcharts({
+      chart: {
+        style: {
+          fontFamily: 'Roboto'
+        },
+        type: 'solidgauge',
+        plotBackgroundColor: null,
+        plotBackgroundImage: null,
+        backgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false,
+        height: 40,
+        spacingTop: 0,
+        spacingLeft: 0,
+        spacingRight: 0,
+        spacingBottom: 0,
+        borderWidth : 0
+      },
+      title: null,
+      pane: {
+        center: ['50%', '100%'],
+        size: 80,
+        startAngle: - 90,
+        endAngle: 90,
+        background: {
+          backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+          innerRadius: '90%',
+          outerRadius: '100%',
+          shape: 'arc',
+          borderWidth: 0
+        }
+      },
+      tooltip: {
+        enabled: false
+      },
+      // the value axis
+      yAxis: {
+        stops: [
+        [0, '#cmdColor#']
+        ],
+        lineWidth: 0,
+        minorTickInterval: null,
+        tickPixelInterval: 400,
+        labels : {enabled: false},
+        tickWidth: 0,
+        min: ('#minValue#' == '') ? 0 : parseInt('#counter_minValue#'),
+        max: ('#maxValue#' == '') ? 100 : parseInt('#counter_maxValue#'),
+        title: {
+          text: ''
+        }
+      },
+      labels : {enabled: false},
+      plotOptions: {
+        solidgauge: {
+          dataLabels: {
+            y: 9,
+            borderWidth: 0,
+            useHTML: true
+          }
+        }
+      },
+      credits: {
+        enabled: false
+      },
+      exporting : {
+        enabled: false
+      },
+      series: [{
+        name: '',
+        data: [Math.round(parseFloat('#state#') * 10) / 10],
+        radius: 92,
+        innerRadius: 72,
+        dataLabels: {
+          y: 6,
+          format: '<span>{y}</span> <span>#unite#</span>'
+        },
+      }]
+    })
+  } else {
+    $('.cmd[data-cmd_uid=#uid#] .gauge').append('<center><span class="label label-danger">#state#</span></center>')
+  }
+    </script> 
+</div>

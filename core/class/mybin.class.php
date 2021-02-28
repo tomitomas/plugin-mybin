@@ -315,7 +315,7 @@ class mybin extends eqLogic {
     }
     
     public function toHtml($_version = 'dashboard') {
-        if ($this->getConfiguration('type') <> 'whole') {
+        if (($this->getConfiguration('type') <> 'whole' && $this->getConfiguration('widgetTemplate') == 0) || $this->getIsEnable() == 0) {
     		return parent::toHtml($_version);
     	}
         $replace = $this->preToHtml($_version);
@@ -324,56 +324,78 @@ class mybin extends eqLogic {
         }
         $version = jeedom::versionAlias($_version);
         
-        $eqLogics = self::byType(__CLASS__, true);
-        
-        //Status
-        $binnotifs = "";
-        $binscript = "";
-        foreach ($eqLogics as $eqLogic) {
-            if ($eqLogic->getConfiguration('type') == 'whole') {
-                continue;
-            }
-            $binCmd = $eqLogic->getCmd(null, 'bin');
-            $binStatus = $binCmd->execCmd();
-            if ($eqLogic->getIsEnable() == 1 && $binStatus == 1) {
-                $binimg = $eqLogic->getConfiguration('color');
-                $ackCmd = $eqLogic->getCmd(null, 'ack');
-                
-                $binnotifs = $binnotifs . '<span class="cmd ack'.$ackCmd->getId().' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="70px"></span>';
-                $binscript = $binscript . "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
-            }
-        }
-        $replace['#binscript#'] = $binscript;
-        if ($binnotifs == "") {
-            $binnotifs = '<span class="nobin"><br/><i>'.__('Il n\'y a (plus) aucune poubelle à sortir',__FILE__).'</i></span>';
-        }
-        $replace['#binnotifs#'] = $binnotifs;
-        
-        // calendar
-        $dt = new DateTime("now");
-        for ($i = 1; $i <= 7; $i++) {
-            $day = 1 * $dt->format('w');
-            $week = 1 * $dt->format('W');
-            $dateD = $dt->format('d');
-            $dateM = $dt->format('m');
-            $replace['#day'.$i.'#'] = $this->getDayLetter($day);
-            $replace['#date'.$i.'#'] = $dateD . '/' . $dateM;
-            $display = "";
+        // global widget
+        if ($this->getConfiguration('type') == 'whole') {
+            $eqLogics = self::byType(__CLASS__, true);
+
+            //Status
+            $binnotifs = "";
+            $binscript = "";
             foreach ($eqLogics as $eqLogic) {
                 if ($eqLogic->getConfiguration('type') == 'whole') {
                     continue;
                 }
-                if ($eqLogic->checkIfBin($week, $day)) {
-                    $color = $eqLogic->getConfiguration('color');
-                    $display = $display . '<img src="plugins/mybin/data/images/'.$color.'.png" width="20px">';
+                $binCmd = $eqLogic->getCmd(null, 'bin');
+                $binStatus = $binCmd->execCmd();
+                if ($eqLogic->getIsEnable() == 1 && $binStatus == 1) {
+                    $binimg = $eqLogic->getConfiguration('color');
+                    $ackCmd = $eqLogic->getCmd(null, 'ack');
+
+                    $binnotifs = $binnotifs . '<span class="cmd ack'.$ackCmd->getId().' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="70px"></span>';
+                    $binscript = $binscript . "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
                 }
             }
-            $replace['#binimg_day'.$i.'#'] = $display;
-            $dt->modify('+1 day');
-        }
+            $replace['#binscript#'] = $binscript;
+            if ($binnotifs == "") {
+                $binnotifs = '<span class="nobin"><br/><i>'.__('Il n\'y a (plus) aucune poubelle à sortir',__FILE__).'</i></span>';
+            }
+            $replace['#binnotifs#'] = $binnotifs;
 
-        $html = template_replace($replace, getTemplate('core', $version, 'mybin.template', __CLASS__));
-        cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
+            // calendar
+            $dt = new DateTime("now");
+            for ($i = 1; $i <= 7; $i++) {
+                $day = 1 * $dt->format('w');
+                $week = 1 * $dt->format('W');
+                $dateD = $dt->format('d');
+                $dateM = $dt->format('m');
+                $replace['#day'.$i.'#'] = $this->getDayLetter($day);
+                $replace['#date'.$i.'#'] = $dateD . '/' . $dateM;
+                $display = "";
+                foreach ($eqLogics as $eqLogic) {
+                    if ($eqLogic->getConfiguration('type') == 'whole') {
+                        continue;
+                    }
+                    if ($eqLogic->checkIfBin($week, $day)) {
+                        $color = $eqLogic->getConfiguration('color');
+                        $display = $display . '<img src="plugins/mybin/data/images/'.$color.'.png" width="20px">';
+                    }
+                }
+                $replace['#binimg_day'.$i.'#'] = $display;
+                $dt->modify('+1 day');
+            }
+
+            $html = template_replace($replace, getTemplate('core', $version, 'mybin.template', __CLASS__));
+            cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
+        }
+        
+        // single bin widget 
+        else {
+            $binnotifs = '<span class="cmd" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/none.png" width="70px"></span>';
+            $binscript = "";
+            $binCmd = $this->getCmd(null, 'bin');
+            $binStatus = $binCmd->execCmd();
+            if ($binStatus == 1) {
+                $binimg = $this->getConfiguration('color');
+                $ackCmd = $this->getCmd(null, 'ack');
+                $binnotifs = '<span class="cmd ack'.$ackCmd->getId().' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="70px"></span>';
+                $binscript = "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
+            }
+            $replace['#binscript#'] = $binscript;
+            $replace['#binnotifs#'] = $binnotifs;
+            
+            $html = template_replace($replace, getTemplate('core', $version, 'singlebin.template', __CLASS__));
+            cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
+        }
         return $html;
         
     }

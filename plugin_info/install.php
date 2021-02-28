@@ -62,6 +62,7 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
                 $cmd->setEventOnly(1);
                 $cmd->save();
             }
+            $eqLogic->save();
         }
       }
       if (!wholeFound) {
