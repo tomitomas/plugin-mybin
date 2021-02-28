@@ -255,6 +255,17 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<legend><i class="icon jeedom-alerte2"></i> {{Action(s) sur notification}}</legend><label><a class="btn btn-success btn-sm addAction" data-type="action_notif" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
                             <div id="div_action_notif"></div>
 						</div>
+                        <div class="col-lg-5">
+							<legend><i class="icon jeedomapp-preset"></i> {{Options}}</legend>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">{{Template de widget}}
+									<sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour utiliser le template de widget}}"></i></sup>
+								</label>
+								<div class="col-sm-1">
+									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="widgetTemplate"/>
+								</div>
+							</div>
+                        </div>
 					</fieldset>
 				</form>
 				<hr>

@@ -30,6 +30,9 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
         if ($eqLogic->getConfiguration('type') == 'whole') {
             $wholeFound = true;
         } else {
+            if ($eqLogic->getConfiguration('widgetTemplate', 'unset') === 'unset') {
+                $eqLogic->setConfiguration('widgetTemplate', 1);
+            }
             if (empty($eqLogic->getConfiguration('counter'))) {
                 $eqLogic->setConfiguration('counter', 'auto');
             }     
