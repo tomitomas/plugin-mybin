@@ -294,6 +294,7 @@ class mybin extends eqLogic {
                 $cmd->setTemplate('mobile', 'line');
                 $cmd->setTemplate('dashboard', 'line');
                 $cmd->save();
+                $cmd->event(0);
             }
             $cmd = $this->getCmd(null, 'resetcounter');
             if (!is_object($cmd))
