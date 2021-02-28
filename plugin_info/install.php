@@ -50,6 +50,10 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
                 $cmd->setTemplate('dashboard', 'line');
                 $cmd->save();
             }
+            $value = $cmd->execCmd();
+            if ($value == '') {
+               $cmd->event(0); 
+            }
             $cmd = $eqLogic->getCmd(null, 'resetcounter');
             if (!is_object($cmd))
             {
