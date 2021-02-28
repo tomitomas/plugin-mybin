@@ -44,6 +44,18 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
                 $cmd->setTemplate('dashboard', 'line');
                 $cmd->save();
             }
+            $cmd = $eqLogic->getCmd(null, 'resetcounter');
+            if (!is_object($cmd))
+            {
+                $cmd = new mybinCmd();
+                $cmd->setLogicalId('resetcounter');
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->setName('Reset Compteur');
+                $cmd->setType('action');
+                $cmd->setSubType('other');
+                $cmd->setEventOnly(1);
+                $cmd->save();
+            }
         }
       }
       if (!wholeFound) {

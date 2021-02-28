@@ -167,6 +167,12 @@ class mybin extends eqLogic {
             $this->execAction($action);
         }
     }
+    
+    public function resetCounter() {
+        log::add(__CLASS__, 'info', $this->getHumanName() . ' counter reset');
+        $cmdCounter = $this->getCmd(null, 'counter');
+        $cmd->event(0);
+    }
 
     public function lastWeekNumberOfYear() {
         $year = date('Y');
@@ -260,6 +266,18 @@ class mybin extends eqLogic {
                 $cmd->setIsHistorized(1);
                 $cmd->setTemplate('mobile', 'line');
                 $cmd->setTemplate('dashboard', 'line');
+                $cmd->save();
+            }
+            $cmd = $this->getCmd(null, 'resetcounter');
+            if (!is_object($cmd))
+            {
+                $cmd = new mybinCmd();
+                $cmd->setLogicalId('resetcounter');
+                $cmd->setEqLogic_id($this->getId());
+                $cmd->setName('Reset Compteur');
+                $cmd->setType('action');
+                $cmd->setSubType('other');
+                $cmd->setEventOnly(1);
                 $cmd->save();
             }
         }
@@ -464,6 +482,9 @@ class mybinCmd extends cmd {
             case "ack":
                 $eqLogic->ackBin();
                 $eqLogic->refreshWhole();
+                break;
+            case "resetcounter":
+                $eqLogic->resetCounter();
                 break;
         }
     }
