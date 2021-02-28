@@ -48,7 +48,9 @@
         "Me": "W",
         "J": "Th",
         "V": "F",
-        "S": "Sa"
+        "S": "Sa",
+        "Seuil": "Threshold",
+        "Seuil au-delà duquel les notifications seront suspendues. Laissez le champ vide pour aucun seuil.": "Threshold at which notifications will be suspended. Keep the field empty for no threshold"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
@@ -60,6 +62,7 @@
     },
     "plugins\/mybin\/core\/class\/mybin.class.php": {
         "L\\'heure de notification est après l\\'heure de collecte": "The time of notification is after the time of collect",
-        "Il n\'y a (plus) aucune poubelle à sortir": "There\'s no more bin to put out"
+        "Il n\'y a (plus) aucune poubelle à sortir": "There\'s no more bin to put out",
+        "Le seuil doit être un entier positif ou être laissé vide": "The threshold must be a positive integer or must be left empty"
     }
 }

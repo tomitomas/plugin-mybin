@@ -148,23 +148,36 @@ class mybin extends eqLogic {
     }
     
     public function notifBin() {
-        log::add(__CLASS__, 'info', $this->getHumanName() . ' notification on');
+        $seuil = $this->getConfiguration('seuil');
+        if ($seuil <> '') {
+            $cmd = $this->getCmd(null, 'counter');
+            $counter = $cmd->execCmd();
+            if ($counter >= $seuil) {
+                log::add(__CLASS__, 'info', $this->getHumanName() . ' notification skipped because threshold reached');
+                return;
+            }
+        }
         $cmd = $this->getCmd(null, 'bin');
         $cmd->event(1);
+        log::add(__CLASS__, 'info', $this->getHumanName() . ' notification on');
         foreach ($this->getConfiguration('action_notif') as $action) {
             $this->execAction($action);
         }
     }
     
     public function ackBin() {
-        log::add(__CLASS__, 'info', $this->getHumanName() . ' acknowledged');
         $cmd = $this->getCmd(null, 'bin');
-        $cmd->event(0);
-        $cmd = $this->getCmd(null, 'counter');
         $value = $cmd->execCmd();
-        $cmd->event($value + 1);
-        foreach ($this->getConfiguration('action_collect') as $action) {
-            $this->execAction($action);
+        if ($value == 1) {
+            $cmd->event(0);
+            $cmd = $this->getCmd(null, 'counter');
+            log::add(__CLASS__, 'info', $this->getHumanName() . ' acknowledged');
+            $value = $cmd->execCmd();
+            $cmd->event($value + 1);
+            log::add(__CLASS__, 'info', $this->getHumanName() . ' counter incremented to ' . $value + 1);
+            foreach ($this->getConfiguration('action_collect') as $action) {
+                $this->execAction($action);
+            }
         }
     }
     
@@ -216,6 +229,12 @@ class mybin extends eqLogic {
                     if ($this->getConfiguration('notif_minute') > $this->getConfiguration('minute')) {
                         throw new Exception(__('L\'heure de notification est après l\'heure de collecte',__FILE__));
                     }
+                }
+            }
+            if ($this->getConfiguration('seuil') <> '') {
+                $options = array('options' => array('min_range' => 0));
+                if (!filter_var($this->getConfiguration('seuil'), FILTER_VALIDATE_INT, $options)) {
+                    throw new Exception(__('Le seuil doit être un entier positif ou être laissé vide',__FILE__));
                 }
             }
         }

@@ -48,7 +48,9 @@
         "Me": "Me",
         "J": "J",
         "V": "V",
-        "S": "S"
+        "S": "S",
+        "Seuil": "Seuil",
+        "Seuil au-delà duquel les notifications seront suspendues. Laissez le champ vide pour aucun seuil.": "Seuil au-delà duquel les notifications seront suspendues. Laissez le champ vide pour aucun seuil."
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
@@ -60,6 +62,7 @@
     },
     "plugins\/mybin\/core\/class\/mybin.class.php": {
         "L\\'heure de notification est après l\\'heure de collecte": "L\\'heure de notification est après l\\'heure de collecte",
-        "Il n\'y a (plus) aucune poubelle à sortir": "Il n\'y a (plus) aucune poubelle à sortir"
+        "Il n\'y a (plus) aucune poubelle à sortir": "Il n\'y a (plus) aucune poubelle à sortir",
+        "Le seuil doit être un entier positif ou être laissé vide": "Le seuil doit être un entier positif ou être laissé vide"
     }
 }

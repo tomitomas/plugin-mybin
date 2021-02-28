@@ -225,6 +225,12 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     </span>
 								</div>
 							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label" data-help="{{Seuil au-delà duquel les notifications seront suspendues}}">{{Seuil}}</label>
+								<div class="col-sm-4">
+                                    <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="seuil"/>
+								</div>
+							</div>
 							<br>
 							<legend><i class="fas fa-truck"></i> {{Action(s) sur ramassage}}</legend><label><a class="btn btn-success btn-sm addAction" data-type="action_collect" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
                             <div id="div_action_collect"></div>
