@@ -173,7 +173,7 @@ class mybin extends eqLogic {
             $cmd->event(0);
             log::add(__CLASS__, 'info', $this->getHumanName() . ' acknowledged');
             $counterType = $this->getConfiguration('counter', 'auto');
-            if (($counterType == 'auto' && $auto) || ($counterType == 'manu' && !$auto)) {
+            if (($counterType == 'auto') || ($counterType == 'manu' && !$auto)) {
                 $cmd = $this->getCmd(null, 'counter');
                 $value = $cmd->execCmd();
                 $cmd->event($value + 1);
@@ -311,9 +311,7 @@ class mybin extends eqLogic {
             
             $threshold = $this->getConfiguration('seuil','');
             $cmdCounter = $this->getCmd(null, 'counter');
-            log::add(__CLASS__, 'debug', $this->getHumanName() . ' config before ' . $cmdCounter->getConfiguration('maxValue'));
             $cmdCounter->setConfiguration('maxValue', $threshold);
-            log::add(__CLASS__, 'debug', $this->getHumanName() . ' config after ' . $cmdCounter->getConfiguration('maxValue'));
             $cmdCounter->save(true);
         }
 
