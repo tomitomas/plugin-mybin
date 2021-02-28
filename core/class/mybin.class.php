@@ -306,7 +306,7 @@ class mybin extends eqLogic {
             $threshold = $this->getConfiguration('seuil','');
             $cmdCounter = $this->getCmd(null, 'counter');
             //$cmdCounter->setConfiguration('minValue', 0);
-            $cmdCounter->setConfiguration('maxValue', $threshold);
+            $cmdCounter->setConfiguration('maxValue', '50');
             $cmdCounter->save();
         }
 
