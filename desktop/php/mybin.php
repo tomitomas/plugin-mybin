@@ -74,7 +74,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 									<input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement My Bin}}"/>
 								</div>
                                 <div class="col-sm-2">
-                                    tag <strong>#bin_namer#</strong>
+                                    tag <strong>#bin_name#</strong>
                                 </div>
 							</div>
 							<div class="form-group">
