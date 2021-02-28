@@ -189,6 +189,7 @@ class mybin extends eqLogic {
         log::add(__CLASS__, 'info', $this->getHumanName() . ' counter reset');
         $cmdCounter = $this->getCmd(null, 'counter');
         $cmdCounter->event(0);
+        $this->refreshWidget();
     }
 
     public function lastWeekNumberOfYear() {
@@ -406,6 +407,10 @@ class mybin extends eqLogic {
             $replace['#counter_maxValue#'] = $counterCmd->getConfiguration('maxValue');
             $replace['#counter_state#'] = $counterCmd->execCmd();
             $replace['#counter_unite#'] = $counterCmd->getUnite();
+            
+            $resetCmd = $this->getCmd(null, 'resetcounter');
+            $replace['#reset_id#'] = $resetCmd->getId();
+            $replace['#reset_uid#'] = $resetCmd->getId();
             
             $html = template_replace($replace, getTemplate('core', $version, 'singlebin.template', __CLASS__));
             cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);

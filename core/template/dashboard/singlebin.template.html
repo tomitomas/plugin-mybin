@@ -7,7 +7,7 @@
 		<a href="/index.php?v=d&m=mybin&p=mybin" class="reportModeHidden">#name_display# <span class="object_name">#object_name#</span></a>
 	</center>
     <div>
-        <div style="width: 50%;">
+        <div style="width: 50%; display:inline-block;">
             <center>
                 #binnotifs#
             </center>
@@ -22,11 +22,20 @@
                       <div class="gauge cursor" data-cmd_id="#counter_id#"></div>
                     </div>
                 </div>
+                <div class="cmd cmd-widget reportModeHidden" data-type="action" data-subtype="other" data-template="default" data-cmd_id="#reset_id#" data-cmd_uid="#reset_uid#" data-version="#version#" data-eqLogic_id="#reset_eqLogic_id#">
+                    <div class="content-xs">
+                        <a class="btn btn-sm btn-default action tooltips">Reset compteur</a>
+                    </div>
+                </div>
             </center>
         </div>
     </div>
     <script>
         #binscript#
+            
+        $('.cmd[data-cmd_uid=#reset_uid#]:last .action').off('click').on('click', function () {
+            jeedom.cmd.execute({id: '#reset_id#'});
+        });
         
         jeedom.cmd.update['#counter_id#'] = function(_options) {
             $('.cmd[data-cmd_id=#counter_id#]').attr('title','{{Date de valeur}} : '+_options.valueDate+'<br/>{{Date de collecte}} : '+_options.collectDate)
