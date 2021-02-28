@@ -69,10 +69,13 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<legend><i class="fas fa-wrench"></i> {{Général}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Nom de l'équipement My Bin}}</label>
-								<div class="col-sm-7">
+								<div class="col-sm-5">
 									<input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
 									<input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement My Bin}}"/>
 								</div>
+                                <span class="col-sm-2">
+                                    tag <strong>#bin_namer#</strong>
+                                </span>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label" >{{Objet parent}}</label>

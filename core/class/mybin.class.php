@@ -456,6 +456,7 @@ class mybin extends eqLogic {
                 $options = $action['options'];
                 foreach ($options as $key => $value) {
                     $value = str_replace('#bin_color#', $this->getConfiguration('color'), $value);
+                    $value = str_replace('#bin_name#', $this->getName(), $value);
                     $options[$key] = $value;
                 }
             }
