@@ -1,4 +1,4 @@
-<div class="eqLogic eqLogic-widget #eqType#" style="width:#width#;height:#height#;#style#" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#" data-eqType="#eqType#" data-translate-category="#translate_category#" data-category="#category#" data-tags="#tags#" >
+<div class="eqLogic eqLogic-widget #eqType# allowResize" style="width:#width#;height:#height#;#style#" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#" data-eqType="#eqType#" data-translate-category="#translate_category#" data-category="#category#" data-tags="#tags#" >
 	<center class="widget-name">
 		<span class="warning" title="#alert_name#">
 			<i class='#alert_icon#'></i>
@@ -24,14 +24,14 @@
     <script>
         #binscript#
         
-        jeedom.cmd.update['#id#'] = function(_options) {
+        jeedom.cmd.update['#counter_id#'] = function(_options) {
             $('.cmd[data-cmd_id=#counter_id#]').attr('title','{{Date de valeur}} : '+_options.valueDate+'<br/>{{Date de collecte}} : '+_options.collectDate)
             if ($('.cmd[data-cmd_uid=#counter_uid#] .gauge').highcharts() !== undefined) {
               $('.cmd[data-cmd_uid=#counter_uid#] .gauge').highcharts().series[0].points[0].update(_options.display_value)
             }
           }
 
-  if (is_numeric('#state#')) {
+  if (is_numeric('#counter_state#')) {
     $('.cmd[data-cmd_uid=#counter_uid#] .gauge').empty().highcharts({
       chart: {
         style: {
@@ -77,8 +77,8 @@
         tickPixelInterval: 400,
         labels : {enabled: false},
         tickWidth: 0,
-        min: ('#minValue#' == '') ? 0 : parseInt('#counter_minValue#'),
-        max: ('#maxValue#' == '') ? 100 : parseInt('#counter_maxValue#'),
+        min: ('#counter_minValue#' == '') ? 0 : parseInt('#counter_minValue#'),
+        max: ('#counter_maxValue#' == '') ? 100 : parseInt('#counter_maxValue#'),
         title: {
           text: ''
         }
@@ -101,7 +101,7 @@
       },
       series: [{
         name: '',
-        data: [Math.round(parseFloat('#state#') * 10) / 10],
+        data: [Math.round(parseFloat('#counter_state#') * 10) / 10],
         radius: 92,
         innerRadius: 72,
         dataLabels: {
