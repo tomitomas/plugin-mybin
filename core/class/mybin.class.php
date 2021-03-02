@@ -440,6 +440,7 @@ class mybin extends eqLogic {
         $isweek = false;
         $isday = false;
         
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' specific_day: ' . $this->getConfiguration('specific_day'));
         foreach ($this->getConfiguration('specific_day') as $specificDay) {
             $todayStr = $dt->format("d/m/Y");
             if (isset($specificDay['specific_day'])) {
