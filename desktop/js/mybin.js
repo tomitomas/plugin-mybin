@@ -24,6 +24,11 @@ $('.addAction').off('click').on('click', function () {
   addAction({}, $(this).attr('data-type'));
 });
 
+// tous les boutons de jours spécifiques regroupés !
+$('.addDay').off('click').on('click', function () {
+  addAction({}, $(this).attr('data-type'));
+});
+
 
 // permet d'afficher la liste des cmd Jeedom pour choisir sa commande de type "action"
 $("body").off('click','.listCmdAction').on('click','.listCmdAction', function () {
@@ -63,9 +68,8 @@ $('body').off('focusout','.cmdAction.expressionAttr[data-l1key=cmd]').on('focuso
 });
 
 // tous les - qui permettent de supprimer la ligne
-$("body").off('click','.bt_removeAction').on('click','.bt_removeAction',function () {
-  var type = $(this).attr('data-type');
-  $(this).closest('.' + type).remove();
+$("body").off('click','.bt_removeDay').on('click','.bt_removeDay',function () {
+  $(this).closest('.specific_day').remove();
 });
 
 /*
@@ -146,6 +150,26 @@ function addAction(_action, _type) {
 
   $('#div_' + _type).append(div);
   $('#div_' + _type + ' .' + _type + '').last().setValues(_action, '.expressionAttr');
+}
+
+function addAction(_action, _type) {
+  var div = '<div class="specific_day">';
+    div += '<div class="form-group ">';
+
+      div += '<div class="col-sm-7">';
+        div += '<div class="input-group">';
+          div += '<span class="input-group-btn">';
+            div += '<a class="btn btn-default bt_removeDay roundedLeft" data-type="specific_day"><i class="fas fa-minus-circle"></i></a>';
+          div += '</span>';
+          div +=  '<input class="form-control input-sm value execute eqLogicAttr" data-type="specific_day" type="date" class="eqLogicAttr" data-l1key="configuration" data-l2key="mydate">'
+        div += '</div>';
+      div += '</div>';
+      div += '</div>';
+
+  div += '</div>';
+
+  $('#div_specific_day').append(div);
+  $('#div_specific_day' + ' .specific_day').last().setValues(_action, '.expressionAttr');
 }
 
 // Fct core permettant de sauvegarder
