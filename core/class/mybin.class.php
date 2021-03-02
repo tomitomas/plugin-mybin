@@ -98,9 +98,9 @@ class mybin extends eqLogic {
             $dt->modify('+1 day');
         }
         foreach ($this->getConfiguration('specific_day') as $specificDay) {
-            $todayStr = $dt->format("d/m/Y");
-            if (isset($specificDay['specific_day'])) {
-                if ($todayStr == $specificDay['specific_day']) {
+            $todayStr = $dt->format("Y-m-d");
+            if (isset($specificDay['myday'])) {
+                if ($todayStr == $specificDay['myday']) {
                     $isSpecificDay = true;
                     break;
                 }
@@ -439,17 +439,12 @@ class mybin extends eqLogic {
         $isSpecificDay = false;
         $isweek = false;
         $isday = false;
-        
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' specific_day: ' . $this->getConfiguration('specific_day'));
+
         foreach ($this->getConfiguration('specific_day') as $specificDay) {
-            log::add(__CLASS__, 'debug', $this->getHumanName() . ' $specific_day: ' . $specificDay);
-            foreach ($specificDay as $key => $value) {
-               log::add(__CLASS__, 'debug', $this->getHumanName() . ' $specific_day: ' . $key . ' -> ' .$value); 
-            }
-            $todayStr = $dt->format("d/m/Y");
-            if (isset($specificDay['specific_day'])) {
-                log::add(__CLASS__, 'debug', $this->getHumanName() . ' $todayStr: ' . $todayStr . ', $specificDay: ' . $specificDay['specific_day']);
-                if ($todayStr == $specificDay['specific_day']) {
+            $todayStr = $dt->format("Y-m-d");
+            if (isset($specificDay['myday'])) {
+                log::add(__CLASS__, 'debug', $this->getHumanName() . ' $todayStr: ' . $todayStr . ', $specificDay: ' . $specificDay['myday']);
+                if ($todayStr == $specificDay['myday']) {
                     $isSpecificDay = true;
                     break;
                 }
