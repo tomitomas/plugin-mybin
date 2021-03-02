@@ -443,6 +443,7 @@ class mybin extends eqLogic {
         foreach ($this->getConfiguration('specific_day') as $specificDay) {
             $todayStr = $dt->format("d/m/Y");
             if (isset($specificDay['specific_day'])) {
+                log::add(__CLASS__, 'debug', $this->getHumanName() . ' $todayStr: ' . $todayStr . ', $specificDay: ' . $specificDay['specific_day']);
                 if ($todayStr == $specificDay['specific_day']) {
                     $isSpecificDay = true;
                     break;
