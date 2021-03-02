@@ -122,6 +122,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                             <option value="yellow">{{Jaune}}</option>
                                             <option value="braun">{{Marron}}</option>
                                             <option value="blue">{{Bleue}}</option>
+                                            <option value="grey">{{Grise}}</option>
                                         </select>
                                     </span>
                                     <span class="col-sm-3">

@@ -54,7 +54,12 @@
         "En automatique, le compteur s'incrémentera à chaque ramassage ou lorsque la commande 'ack' est exécutée. En manuel, il ne s'incrémentera que si la commande 'ack' est exécutée.": "When automatic, the counter will be incremented at each collect time or when the command 'ack' is executed. When manual, it will only be incremented when command 'ack' is called.",
         "Compteur": "Counter",
         "Template de widget": "Widget template",
-        "Cocher la case pour utiliser le template de widget": "Check this option to use widget template"
+        "Cocher la case pour utiliser le template de widget": "Check this option to use widget template",
+        "Grise": "Grey",
+        "Verte": "Green",
+        "Jaune": "Yellow",
+        "Marron": "Braun",
+        "Bleue": "Blue"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
