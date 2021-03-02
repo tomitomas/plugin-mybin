@@ -443,6 +443,9 @@ class mybin extends eqLogic {
         log::add(__CLASS__, 'debug', $this->getHumanName() . ' specific_day: ' . $this->getConfiguration('specific_day'));
         foreach ($this->getConfiguration('specific_day') as $specificDay) {
             log::add(__CLASS__, 'debug', $this->getHumanName() . ' $specific_day: ' . $specificDay);
+            foreach ($specificDay as $key => $value) {
+               log::add(__CLASS__, 'debug', $this->getHumanName() . ' $specific_day: ' . $key . ' -> ' .$value); 
+            }
             $todayStr = $dt->format("d/m/Y");
             if (isset($specificDay['specific_day'])) {
                 log::add(__CLASS__, 'debug', $this->getHumanName() . ' $todayStr: ' . $todayStr . ', $specificDay: ' . $specificDay['specific_day']);
