@@ -156,7 +156,7 @@ function addDay(_day) {
   var div = '<div class="specific_day">';
     div += '<div class="form-group ">';
 
-      div += '<div class="col-sm-4">';
+      div += '<div class="col-sm-6">';
         div += '<div class="input-group">';
           div += '<span class="input-group-btn">';
             div += '<a class="btn btn-default bt_removeDay roundedLeft" data-type="specific_day"><i class="fas fa-minus-circle"></i></a>';
@@ -164,6 +164,35 @@ function addDay(_day) {
           div +=  '<input class="form-control input-sm value execute eqLogicAttr" data-type="specific_day" type="date" class="eqLogicAttr" data-l1key="configuration" data-l2key="mydate">'
         div += '</div>';
       div += '</div>';
+      div += '<div class="col-sm-1">';
+        div += '<label>{{à}}</label>';
+      div += '</div>';
+        div += '<div class="col-sm-2">';
+         div += '<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="specific_day_hour">';
+            for (var i = 0; i <= 23; i++) {
+                div += '<option value="' + i + '">';
+                if (i < 10) {
+                    div += '0';
+                }
+                div += i + '</option>';
+            }
+         div += '</select>';
+        div += '</div>'; 
+      div += '<div class="col-sm-1">';
+        div += '<label>h</label>';
+      div += '</div>';
+        div += '<div class="col-sm-2">';
+         div += '<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="specific_day_minute">';
+            for (var i = 0; i <= 55; i++) {
+                div += '<option value="' + i + '">';
+                if (i < 10) {
+                    div += '0';
+                }
+                div += i + '</option>';
+            }
+         div += '</select>';
+        div += '</div>';   
+    
       div += '</div>';
 
   div += '</div>';

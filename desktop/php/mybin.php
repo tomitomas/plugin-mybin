@@ -130,6 +130,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     </span>
                                 </div>
                             </div>
+                            <br/>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Semaine(s) de ramassage}}</label>
 								<div class="col-sm-7">
@@ -183,6 +184,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     </span>
 								</div>
 							</div>
+                            <br/>
                             <div class="form-group">
 								<label class="col-sm-3 control-label">{{Jour(s) particuliers)}}</label>
 							    <div class="col-sm-7">
