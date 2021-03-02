@@ -152,11 +152,11 @@ function addAction(_action, _type) {
   $('#div_' + _type + ' .' + _type + '').last().setValues(_action, '.expressionAttr');
 }
 
-function addAction(_action, _type) {
+function addDay(_day) {
   var div = '<div class="specific_day">';
     div += '<div class="form-group ">';
 
-      div += '<div class="col-sm-7">';
+      div += '<div class="col-sm-4">';
         div += '<div class="input-group">';
           div += '<span class="input-group-btn">';
             div += '<a class="btn btn-default bt_removeDay roundedLeft" data-type="specific_day"><i class="fas fa-minus-circle"></i></a>';
