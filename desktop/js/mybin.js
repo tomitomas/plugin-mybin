@@ -26,7 +26,7 @@ $('.addAction').off('click').on('click', function () {
 
 // tous les boutons de jours spécifiques regroupés !
 $('.addDay').off('click').on('click', function () {
-  addAction({}, $(this).attr('data-type'));
+  addDay({}, $(this).attr('data-type'));
 });
 
 
