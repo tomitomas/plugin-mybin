@@ -383,7 +383,7 @@ class mybin extends eqLogic {
         
         // single bin widget 
         else {
-            $binnotifs = '<span class="cmd" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/none.png" width="70px"></span>';
+            $binnotifs = '<span class="cmd" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/none2.png" width="70px"></span>';
             $binscript = "";
             $binCmd = $this->getCmd(null, 'bin');
             $binStatus = $binCmd->execCmd();
