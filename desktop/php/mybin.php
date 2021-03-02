@@ -151,7 +151,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
                             <div class="form-group">
-								<label class="col-sm-3 control-label">{{Jour(s) particuliers de ramassage}}</label>
+								<label class="col-sm-3 control-label">{{Jour(s) particulier(s) de ramassage}}</label>
 							    <div class="col-sm-7">
                                     <a class="btn btn-success btn-sm addDay" data-type="specific_day" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter un jour}}</a>
                                     <div id="div_specific_day"></div>

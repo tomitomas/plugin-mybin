@@ -159,7 +159,7 @@ function addDay(_day) {
       div += '<div class="col-sm-6">';
         div += '<div class="input-group">';
           div += '<span class="input-group-btn">';
-            div += '<a class="btn btn-default bt_removeDay roundedLeft" data-type="specific_day"><i class="fas fa-minus-circle"></i></a>';
+            div += '<a class="btn btn-default bt_removeDay roundedLeft" data-l1key="specific_day" data-type="specific_day"><i class="fas fa-minus-circle"></i></a>';
           div += '</span>';
           div +=  '<input class="form-control input-sm value execute eqLogicAttr myday" data-type="specific_day" type="date" class="eqLogicAttr" data-l1key="myday">'
         div += '</div>';
