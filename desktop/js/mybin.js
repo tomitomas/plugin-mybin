@@ -26,7 +26,7 @@ $('.addAction').off('click').on('click', function () {
 
 // tous les boutons de jours spécifiques regroupés !
 $('.addDay').off('click').on('click', function () {
-  addDay({}, $(this).attr('data-type'));
+  addDay({});
 });
 
 
@@ -161,44 +161,16 @@ function addDay(_day) {
           div += '<span class="input-group-btn">';
             div += '<a class="btn btn-default bt_removeDay roundedLeft" data-type="specific_day"><i class="fas fa-minus-circle"></i></a>';
           div += '</span>';
-          div +=  '<input class="form-control input-sm value execute eqLogicAttr" data-type="specific_day" type="date" class="eqLogicAttr" data-l1key="configuration" data-l2key="mydate">'
+          div +=  '<input class="form-control input-sm value execute eqLogicAttr myday" data-type="specific_day" type="date" class="eqLogicAttr" data-l1key="myday">'
         div += '</div>';
-      div += '</div>';
-      div += '<div class="col-sm-1">';
-        div += '<label>{{à}}</label>';
-      div += '</div>';
-        div += '<div class="col-sm-2">';
-         div += '<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="specific_day_hour">';
-            for (var i = 0; i <= 23; i++) {
-                div += '<option value="' + i + '">';
-                if (i < 10) {
-                    div += '0';
-                }
-                div += i + '</option>';
-            }
-         div += '</select>';
-        div += '</div>'; 
-      div += '<div class="col-sm-1">';
-        div += '<label>h</label>';
-      div += '</div>';
-        div += '<div class="col-sm-2">';
-         div += '<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="specific_day_minute">';
-            for (var i = 0; i <= 55; i++) {
-                div += '<option value="' + i + '">';
-                if (i < 10) {
-                    div += '0';
-                }
-                div += i + '</option>';
-            }
-         div += '</select>';
-        div += '</div>';   
+      div += '</div>';  
     
       div += '</div>';
 
   div += '</div>';
 
   $('#div_specific_day').append(div);
-  $('#div_specific_day' + ' .specific_day').last().setValues(_action, '.expressionAttr');
+  $('#div_specific_day .specific_day').last().setValues(_day, '.myday');
 }
 
 // Fct core permettant de sauvegarder
@@ -208,6 +180,7 @@ function saveEqLogic(_eqLogic) {
   }
   _eqLogic.configuration.action_collect = $('#div_action_collect .action_collect').getValues('.expressionAttr');
   _eqLogic.configuration.action_notif = $('#div_action_notif .action_notif').getValues('.expressionAttr');
+  _eqLogic.configuration.specific_day = $('#div_specific_day .specific_day').getValues('.myday');
 
   return _eqLogic;
 }
@@ -217,6 +190,7 @@ function printEqLogic(_eqLogic) {
 
   $('#div_action_collect').empty();
   $('#div_action_notif').empty();
+  $('#div_specific_day').empty();
 
   if (isset(_eqLogic.configuration)) {
     if (isset(_eqLogic.configuration.action_collect)) {
@@ -227,6 +201,11 @@ function printEqLogic(_eqLogic) {
     if (isset(_eqLogic.configuration.action_notif)) {
       for (var i in _eqLogic.configuration.action_notif) {
         addAction(_eqLogic.configuration.action_notif[i], 'action_notif');
+      }
+    }
+    if (isset(_eqLogic.configuration.specific_day)) {
+      for (var i in _eqLogic.configuration.specific_day) {
+        addDay(_eqLogic.configuration.specific_day[i]);
       }
     }
   }
