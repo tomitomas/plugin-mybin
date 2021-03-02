@@ -137,6 +137,12 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="impaire" />{{Semaines impaires}}</label>
 								</div>
 							</div>
+                            <div class="form-group">
+								<label class="col-sm-3 control-label">{{Jour(s) particuliers)}}</label>
+								<div class="col-sm-7">
+                                    <input class="form-control input-sm value execute eqLogicAttr" type="date" class="eqLogicAttr" data-l1key="configuration" data-l2key="mydate">
+								</div>
+							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Jour(s) de ramassage}}</label>
 								<div class="col-sm-7">
