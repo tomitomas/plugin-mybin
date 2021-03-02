@@ -59,7 +59,9 @@
         "Verte": "Green",
         "Jaune": "Yellow",
         "Marron": "Braun",
-        "Bleue": "Blue"
+        "Bleue": "Blue",
+        "Jour(s) particulier(s) de ramassage": "Specific day(s) of collect",
+        "Ajouter un jour": "Add a day"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",

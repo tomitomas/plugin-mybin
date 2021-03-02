@@ -59,7 +59,9 @@
         "Verte": "Verte",
         "Jaune": "Jaune",
         "Marron": "Marron",
-        "Bleue": "Bleue"
+        "Bleue": "Bleue",
+        "Jour(s) particulier(s) de ramassage": "Jour(s) particulier(s) de ramassage",
+        "Ajouter un jour": "Ajouter un jour"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
