@@ -130,6 +130,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     </span>
                                 </div>
                             </div>
+                            <br/>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Semaine(s) de ramassage}}</label>
 								<div class="col-sm-7">
@@ -149,6 +150,14 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="day_0" />{{Dimanche}}</label>
 								</div>
 							</div>
+                            <div class="form-group">
+								<label class="col-sm-3 control-label">{{Jour(s) particulier(s) de ramassage}}</label>
+							    <div class="col-sm-7">
+                                    <a class="btn btn-success btn-sm addDay" data-type="specific_day" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter un jour}}</a>
+                                    <div id="div_specific_day"></div>
+                                </div>
+							</div>
+                            <br/>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Heure de ramassage}}</label>
 								<div class="col-sm-7">
@@ -183,6 +192,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     </span>
 								</div>
 							</div>
+                            <br/>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Notification}}</label>
 								<div class="col-sm-7">

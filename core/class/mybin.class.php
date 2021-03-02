@@ -72,6 +72,10 @@ class mybin extends eqLogic {
         if (!$this->getIsEnable()) {
             return 0;
         }
+        
+        $dt = new DateTime("now");
+        
+        $isSpecificDay = false;
         $isweek = false;
         $isday = false;
         $ishour = false;
@@ -91,6 +95,16 @@ class mybin extends eqLogic {
                     $myweek = 1;
                 }
             }
+            $dt->modify('+1 day');
+        }
+        foreach ($this->getConfiguration('specific_day') as $specificDay) {
+            $todayStr = $dt->format("Y-m-d");
+            if (isset($specificDay['myday'])) {
+                if ($todayStr == $specificDay['myday']) {
+                    $isSpecificDay = true;
+                    break;
+                }
+            }
         }
         if (($myweek%2 == 0 && $this->getConfiguration('paire') == 1) || ($myweek%2 != 0 && $this->getConfiguration('impaire') == 1)) {
             $isweek = true;
@@ -108,7 +122,7 @@ class mybin extends eqLogic {
             $ishour = true;
         }
         log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin: week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
-        if ($isweek && $isday && $ishour && $isminute) {
+        if ((($isweek && $isday) || $isSpecificDay) && $ishour && $isminute) {
             $this->notifBin();
             return 1;
         } else {
@@ -358,7 +372,6 @@ class mybin extends eqLogic {
             $dt = new DateTime("now");
             for ($i = 1; $i <= 7; $i++) {
                 $day = 1 * $dt->format('w');
-                $week = 1 * $dt->format('W');
                 $dateD = $dt->format('d');
                 $dateM = $dt->format('m');
                 $replace['#day'.$i.'#'] = $this->getDayLetter($day);
@@ -368,7 +381,7 @@ class mybin extends eqLogic {
                     if ($eqLogic->getConfiguration('type') == 'whole') {
                         continue;
                     }
-                    if ($eqLogic->checkIfBin($week, $day)) {
+                    if ($eqLogic->checkIfBin($dt)) {
                         $color = $eqLogic->getConfiguration('color');
                         $display = $display . '<img src="plugins/mybin/data/images/'.$color.'.png" width="20px">';
                     }
@@ -418,12 +431,29 @@ class mybin extends eqLogic {
         
     }
     
-    public function checkIfBin($week, $day) {
+    public function checkIfBin($dt) {
         if ($this->getIsEnable() != 1) {
             return false;
         }
+        
+        $isSpecificDay = false;
         $isweek = false;
         $isday = false;
+
+        foreach ($this->getConfiguration('specific_day') as $specificDay) {
+            $todayStr = $dt->format("Y-m-d");
+            if (isset($specificDay['myday'])) {
+                log::add(__CLASS__, 'debug', $this->getHumanName() . ' $todayStr: ' . $todayStr . ', $specificDay: ' . $specificDay['myday']);
+                if ($todayStr == $specificDay['myday']) {
+                    $isSpecificDay = true;
+                    break;
+                }
+            }
+        }
+        
+        $day = 1 * $dt->format('w');
+        $week = 1 * $dt->format('W');
+        
         if (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) {
             $isweek = true;
         }
@@ -433,7 +463,7 @@ class mybin extends eqLogic {
                 break;
             }
         }
-        if ($isweek && $isday) {
+        if ($isSpecificDay || ($isweek && $isday)) {
             return true;
         } else {
             return false;

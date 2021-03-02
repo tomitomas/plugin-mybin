@@ -24,6 +24,11 @@ $('.addAction').off('click').on('click', function () {
   addAction({}, $(this).attr('data-type'));
 });
 
+// tous les boutons de jours spécifiques regroupés !
+$('.addDay').off('click').on('click', function () {
+  addDay({});
+});
+
 
 // permet d'afficher la liste des cmd Jeedom pour choisir sa commande de type "action"
 $("body").off('click','.listCmdAction').on('click','.listCmdAction', function () {
@@ -63,9 +68,8 @@ $('body').off('focusout','.cmdAction.expressionAttr[data-l1key=cmd]').on('focuso
 });
 
 // tous les - qui permettent de supprimer la ligne
-$("body").off('click','.bt_removeAction').on('click','.bt_removeAction',function () {
-  var type = $(this).attr('data-type');
-  $(this).closest('.' + type).remove();
+$("body").off('click','.bt_removeDay').on('click','.bt_removeDay',function () {
+  $(this).closest('.specific_day').remove();
 });
 
 /*
@@ -148,6 +152,27 @@ function addAction(_action, _type) {
   $('#div_' + _type + ' .' + _type + '').last().setValues(_action, '.expressionAttr');
 }
 
+function addDay(_day) {
+  var div = '<div class="specific_day">';
+    div += '<div class="form-group ">';
+
+      div += '<div class="col-sm-6">';
+        div += '<div class="input-group">';
+          div += '<span class="input-group-btn">';
+            div += '<a class="btn btn-default bt_removeDay roundedLeft" data-l1key="specific_day" data-type="specific_day"><i class="fas fa-minus-circle"></i></a>';
+          div += '</span>';
+          div +=  '<input class="form-control input-sm value execute eqLogicAttr myday" data-type="specific_day" type="date" class="eqLogicAttr" data-l1key="myday">'
+        div += '</div>';
+      div += '</div>';  
+    
+      div += '</div>';
+
+  div += '</div>';
+
+  $('#div_specific_day').append(div);
+  $('#div_specific_day .specific_day').last().setValues(_day, '.myday');
+}
+
 // Fct core permettant de sauvegarder
 function saveEqLogic(_eqLogic) {
   if (!isset(_eqLogic.configuration)) {
@@ -155,6 +180,7 @@ function saveEqLogic(_eqLogic) {
   }
   _eqLogic.configuration.action_collect = $('#div_action_collect .action_collect').getValues('.expressionAttr');
   _eqLogic.configuration.action_notif = $('#div_action_notif .action_notif').getValues('.expressionAttr');
+  _eqLogic.configuration.specific_day = $('#div_specific_day .specific_day').getValues('.myday');
 
   return _eqLogic;
 }
@@ -164,6 +190,7 @@ function printEqLogic(_eqLogic) {
 
   $('#div_action_collect').empty();
   $('#div_action_notif').empty();
+  $('#div_specific_day').empty();
 
   if (isset(_eqLogic.configuration)) {
     if (isset(_eqLogic.configuration.action_collect)) {
@@ -174,6 +201,11 @@ function printEqLogic(_eqLogic) {
     if (isset(_eqLogic.configuration.action_notif)) {
       for (var i in _eqLogic.configuration.action_notif) {
         addAction(_eqLogic.configuration.action_notif[i], 'action_notif');
+      }
+    }
+    if (isset(_eqLogic.configuration.specific_day)) {
+      for (var i in _eqLogic.configuration.specific_day) {
+        addDay(_eqLogic.configuration.specific_day[i]);
       }
     }
   }
