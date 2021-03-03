@@ -441,6 +441,7 @@ class mybin extends eqLogic {
         $isday = false;
 
         if (isset($this->getConfiguration('specific_day'))) {
+            log::add(__CLASS__, 'debug', $this->getHumanName() . ' specific_day: ' . $this->getConfiguration('specific_day'));
             foreach ($this->getConfiguration('specific_day') as $specificDay) {
                 $todayStr = $dt->format("Y-m-d");
                 if (isset($specificDay['myday'])) {
