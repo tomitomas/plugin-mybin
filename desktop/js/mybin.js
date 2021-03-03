@@ -67,9 +67,14 @@ $('body').off('focusout','.cmdAction.expressionAttr[data-l1key=cmd]').on('focuso
 
 });
 
-// tous les - qui permettent de supprimer la ligne
 $("body").off('click','.bt_removeDay').on('click','.bt_removeDay',function () {
   $(this).closest('.specific_day').remove();
+});
+
+// tous les - qui permettent de supprimer la ligne
+$("body").off('click','.bt_removeAction').on('click','.bt_removeAction',function () {
+  var type = $(this).attr('data-type');
+  $(this).closest('.' + type).remove();
 });
 
 /*
