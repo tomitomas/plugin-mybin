@@ -97,12 +97,15 @@ class mybin extends eqLogic {
             }
             $dt->modify('+1 day');
         }
-        foreach ($this->getConfiguration('specific_day') as $specificDay) {
-            $todayStr = $dt->format("Y-m-d");
-            if (isset($specificDay['myday'])) {
-                if ($todayStr == $specificDay['myday']) {
-                    $isSpecificDay = true;
-                    break;
+        $specificDays = $this->getConfiguration('specific_day');
+        if (is_array($specificDays)) {
+            foreach ($specificDays as $specificDay) {
+                $todayStr = $dt->format("Y-m-d");
+                if (isset($specificDay['myday'])) {
+                    if ($todayStr == $specificDay['myday']) {
+                        $isSpecificDay = true;
+                        break;
+                    }
                 }
             }
         }
@@ -175,8 +178,11 @@ class mybin extends eqLogic {
         $cmd = $this->getCmd(null, 'bin');
         $cmd->event(1);
         log::add(__CLASS__, 'info', $this->getHumanName() . ' notification on');
-        foreach ($this->getConfiguration('action_notif') as $action) {
-            $this->execAction($action);
+        $action_notif = $this->getConfiguration('action_notif');
+        if (is_array($action_notif)) {
+            foreach ($action_notif as $action) {
+                $this->execAction($action);
+            }
         }
     }
     
@@ -193,8 +199,11 @@ class mybin extends eqLogic {
                 $cmd->event($value + 1);
                 log::add(__CLASS__, 'info', $this->getHumanName() . ' counter incremented to ' . $value + 1);
             }
-            foreach ($this->getConfiguration('action_collect') as $action) {
-                $this->execAction($action);
+            $action_collect = $this->getConfiguration('action_collect');
+            if (is_array($action_collect)) {
+                foreach ($action_collect as $action) {
+                    $this->execAction($action);
+                }
             }
         }
     }
@@ -440,7 +449,6 @@ class mybin extends eqLogic {
         $isweek = false;
         $isday = false;
 
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' specific_day: ' . $this->getConfiguration('specific_day'));
         $specificDays = $this->getConfiguration('specific_day');
         if (is_array($specificDays)) {
             foreach ($specificDays as $specificDay) {
