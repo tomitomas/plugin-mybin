@@ -441,13 +441,16 @@ class mybin extends eqLogic {
         $isday = false;
 
         log::add(__CLASS__, 'debug', $this->getHumanName() . ' specific_day: ' . $this->getConfiguration('specific_day'));
-        foreach ($this->getConfiguration('specific_day') as $specificDay) {
-            $todayStr = $dt->format("Y-m-d");
-            if (isset($specificDay['myday'])) {
-                log::add(__CLASS__, 'debug', $this->getHumanName() . ' $todayStr: ' . $todayStr . ', $specificDay: ' . $specificDay['myday']);
-                if ($todayStr == $specificDay['myday']) {
-                    $isSpecificDay = true;
-                    break;
+        $specificDays = $this->getConfiguration('specific_day');
+        if (is_array($specificDays)) {
+            foreach ($specificDays as $specificDay) {
+                $todayStr = $dt->format("Y-m-d");
+                if (isset($specificDay['myday'])) {
+                    log::add(__CLASS__, 'debug', $this->getHumanName() . ' $todayStr: ' . $todayStr . ', $specificDay: ' . $specificDay['myday']);
+                    if ($todayStr == $specificDay['myday']) {
+                        $isSpecificDay = true;
+                        break;
+                    }
                 }
             }
         }
