@@ -18,6 +18,7 @@
 $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 $("#div_action_collect").sortable({axis: "y", cursor: "move", items: ".action_collect", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 $("#div_action_notif").sortable({axis: "y", cursor: "move", items: ".action_notif", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
+$("#div_specific_day").sortable({axis: "y", cursor: "move", items: ".specific_day", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 
 // tous les boutons d'action regroupés !
 $('.addAction').off('click').on('click', function () {
