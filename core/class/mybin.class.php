@@ -137,10 +137,28 @@ class mybin extends eqLogic {
         if (!$this->getIsEnable()) {
             return 0;
         }
+        
+        $dt = new DateTime("now");
+        
+        $isSpecificDay = false;
         $isweek = false;
         $isday = false;
         $ishour = false;
         $isminute = false;
+        
+        $specificDays = $this->getConfiguration('specific_day');
+        if (is_array($specificDays)) {
+            foreach ($specificDays as $specificDay) {
+                $todayStr = $dt->format("Y-m-d");
+                if (isset($specificDay['myday'])) {
+                    if ($todayStr == $specificDay['myday']) {
+                        $isSpecificDay = true;
+                        break;
+                    }
+                }
+            }
+        }
+        
         if (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) {
             $isweek = true;
         }
@@ -157,7 +175,7 @@ class mybin extends eqLogic {
             $ishour = true;
         }
         log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin: week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
-        if ($isweek && $isday && $ishour && $isminute) {
+        if ((($isweek && $isday) || $isSpecificDay) && $ishour && $isminute) {
             $this->ackBin(true);
             return 1;
         } else {
