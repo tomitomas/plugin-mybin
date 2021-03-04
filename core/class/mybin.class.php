@@ -396,11 +396,12 @@ class mybin extends eqLogic {
             $replace['#binnotifs#'] = $binnotifs;
 
             // calendar
-            $dt = new DateTime("now");
-            for ($i = 1; $i <= 7; $i++) {
-                $day = 1 * $dt->format('w');
-                $dateD = $dt->format('d');
-                $dateM = $dt->format('m');
+            $dtDisplay = new DateTime("now");
+            $calendarType = config::byKey('calendarType','mybin','',true);
+            for ($i = 1; $i <= 7; $i++) {                         
+                $day = 1 * $dtDisplay->format('w');
+                $dateD = $dtDisplay->format('d');
+                $dateM = $dtDisplay->format('m');
                 $replace['#day'.$i.'#'] = $this->getDayLetter($day);
                 $replace['#date'.$i.'#'] = $dateD . '/' . $dateM;
                 $display = "";
@@ -408,13 +409,17 @@ class mybin extends eqLogic {
                     if ($eqLogic->getConfiguration('type') == 'whole') {
                         continue;
                     }
-                    if ($eqLogic->checkIfBin($dt)) {
+                    $dtCheck = DateTime::createFromInterface($dtDisplay);
+                    if ($this->getConfiguration('notif_veille') == 1 && $calendarType == 'notif') {
+                        $dtCheck->modify('+1 day');
+                    }
+                    if ($eqLogic->checkIfBin($dtCheck)) {
                         $color = $eqLogic->getConfiguration('color');
                         $display = $display . '<img src="plugins/mybin/data/images/'.$color.'.png" width="20px">';
                     }
                 }
                 $replace['#binimg_day'.$i.'#'] = $display;
-                $dt->modify('+1 day');
+                $dtDisplay->modify('+1 day');
             }
 
             $html = template_replace($replace, getTemplate('core', $version, 'mybin.template', __CLASS__));

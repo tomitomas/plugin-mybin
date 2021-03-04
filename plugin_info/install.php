@@ -21,10 +21,17 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 // Fonction exécutée automatiquement après l'installation du plugin
   function mybin_install() {
       mybin::createWhole();
+      config::save('calendarType', 'collect', 'mybin');
   }
 
 // Fonction exécutée automatiquement après la mise à jour du plugin
   function mybin_update() {
+      
+      $calendarType = config::byKey('calendarType','mybin','unset',true);
+      if ($calendarType == 'unset') {
+          config::save('calendarType', 'collect', 'mybin');
+      }
+      
       $wholeFound = false;
       foreach (eqLogic::byType('mybin') as $eqLogic) {
         if ($eqLogic->getConfiguration('type') == 'whole') {
