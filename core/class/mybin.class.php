@@ -288,6 +288,13 @@ class mybin extends eqLogic {
             }
         }
         $this->setConfiguration('image',$this->getImage());
+        
+        $threshold = $this->getConfiguration('seuil','');
+        $cmdCounter = $this->getCmd(null, 'counter');
+        if (is_object($cmdCounter)) {
+            $cmdCounter->setConfiguration('maxValue', $threshold);
+            $cmdCounter->save(true);
+        }
     }
 
     // Fonction exécutée automatiquement après la mise à jour de l'équipement
@@ -334,6 +341,10 @@ class mybin extends eqLogic {
                 $cmd->setIsHistorized(1);
                 $cmd->setTemplate('mobile', 'line');
                 $cmd->setTemplate('dashboard', 'line');
+                
+                $threshold = $this->getConfiguration('seuil','');
+                $cmd->setConfiguration('maxValue', $threshold);
+                                
                 $cmd->save();
                 $cmd->event(0);
             }
@@ -349,11 +360,6 @@ class mybin extends eqLogic {
                 $cmd->setEventOnly(1);
                 $cmd->save();
             }
-            
-            $threshold = $this->getConfiguration('seuil','');
-            $cmdCounter = $this->getCmd(null, 'counter');
-            $cmdCounter->setConfiguration('maxValue', $threshold);
-            $cmdCounter->save(true);
         }
 
     }
