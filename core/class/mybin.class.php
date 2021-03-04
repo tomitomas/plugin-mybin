@@ -410,7 +410,7 @@ class mybin extends eqLogic {
                         continue;
                     }
                     $dtCheck = DateTime::createFromFormat("Y-m-d", $dtDisplay->format("Y-m-d"));
-                    if ($this->getConfiguration('notif_veille') == 1 && $calendarType == 'notif') {
+                    if ($eqLogic->getConfiguration('notif_veille') == 1 && $calendarType == 'notif') {
                         $dtCheck->modify('+1 day');
                     }
                     if ($eqLogic->checkIfBin($dtCheck)) {
