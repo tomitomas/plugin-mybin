@@ -384,8 +384,8 @@ class mybin extends eqLogic {
                 if ($eqLogic->getIsEnable() == 1 && $binStatus == 1) {
                     $binimg = $eqLogic->getConfiguration('color');
                     $ackCmd = $eqLogic->getCmd(null, 'ack');
-
-                    $binnotifs = $binnotifs . '<span class="cmd ack'.$ackCmd->getId().' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="70px"></span>';
+                    $counterCmd = $eqLogic->getCmd(null, 'counter');
+                    $binnotifs = $binnotifs . '<span class="cmd ack'.$ackCmd->getId().' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="70px"><br/>Compteur : ' . $counterCmd->execCmd() . '</span>';
                     $binscript = $binscript . "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
                 }
             }
