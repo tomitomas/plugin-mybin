@@ -356,6 +356,7 @@ class mybin extends eqLogic {
                 $cmd->save();
             }
         }
+        $this->emptyCacheWidget();
 
     }
     
