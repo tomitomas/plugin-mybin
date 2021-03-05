@@ -45,11 +45,14 @@ class mybin extends eqLogic {
             return;
         }
 
-        // Hack degueu
+        /************************************ Hack degueu ***************************************************************/
+        // Devrait etre fait dans le postUpdate mais, pour une raison que j'ignore, la DB ne se met pas à jour
         $threshold = $this->getConfiguration('seuil','');
         $cmd = $this->getCmd(null, 'counter');
+        $cmd->setConfiguration('minValue', 0); 
         $cmd->setConfiguration('maxValue', $threshold); 
         $cmd->save();
+        /****************************************************************************************************************/
 
         $week = 1 * date('W');
         $day = 1 * date('w');
@@ -328,7 +331,6 @@ class mybin extends eqLogic {
                 $cmd->setEventOnly(1);
                 $cmd->save();
             }
-            $threshold = $this->getConfiguration('seuil','');
             $cmd = $this->getCmd(null, 'counter');
             if (!is_object($cmd))
             {
@@ -341,19 +343,9 @@ class mybin extends eqLogic {
                 $cmd->setEventOnly(1);
                 $cmd->setIsHistorized(1);
                 $cmd->setTemplate('mobile', 'line');
-                $cmd->setTemplate('dashboard', 'line');
-                
-                $cmd->setConfiguration('maxValue', $threshold);         
+                $cmd->setTemplate('dashboard', 'line');       
                 $cmd->save();
                 $cmd->event(0);
-            } else {
-                log::add(__CLASS__, 'debug', $this->getHumanName() . ' maxValue before set ' . $cmd->getConfiguration('maxValue'));
-                $cmd->setConfiguration('maxValue', $threshold); 
-                log::add(__CLASS__, 'debug', $this->getHumanName() . ' maxValue after set ' . $cmd->getConfiguration('maxValue'));   
-                log::add(__CLASS__, 'debug', $this->getHumanName() . ' _changed after set ' . $cmd->getChanged());      
-                $cmd->save(true);
-                $cmdCounter = $this->getCmd(null, 'counter');
-                log::add(__CLASS__, 'debug', $this->getHumanName() . ' amaxValue after save ' . $cmdCounter->getConfiguration('maxValue')); 
             }
             $cmd = $this->getCmd(null, 'resetcounter');
             if (!is_object($cmd))
