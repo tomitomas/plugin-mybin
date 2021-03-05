@@ -343,7 +343,7 @@ class mybin extends eqLogic {
                 log::add(__CLASS__, 'debug', $this->getHumanName() . ' try to record maxValue to ' . $threshold);
                 $cmd->setConfiguration('maxValue', $threshold); 
                 log::add(__CLASS__, 'debug', $this->getHumanName() . ' avant save ' . $cmd->getConfiguration('maxValue'));        
-                $cmd->save();
+                $cmd->save(true);
                 log::add(__CLASS__, 'debug', $this->getHumanName() . ' apres save ' . $cmd->getConfiguration('maxValue')); 
             }
             $cmd = $this->getCmd(null, 'resetcounter');
