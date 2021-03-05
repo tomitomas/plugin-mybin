@@ -44,12 +44,27 @@ class mybin extends eqLogic {
         if ($this->getConfiguration('type', '') == 'whole') {
             return;
         }
+
+        $change = 0;
+
+        /************************************ Hack degueu ***************************************************************/
+        // Devrait etre fait dans le postUpdate mais, pour une raison que j'ignore, la DB ne se met pas à jour
+        $threshold = $this->getConfiguration('seuil','');
+        $cmd = $this->getCmd(null, 'counter');
+        $cmd->setConfiguration('minValue', 0); 
+        $cmd->setConfiguration('maxValue', $threshold);
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' threshold change: ' . $cmd->getChanged());
+        if ($cmd->getChanged()) {
+            $change = $change + 1;
+        }
+        $cmd->save();
+        /****************************************************************************************************************/
+
         $week = 1 * date('W');
         $day = 1 * date('w');
         $hour = 1 * date('G');
         $minute = 1 * date('i');
         log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkbin: day ' . $day . ', hour ' . $hour . ', minute ' . $minute);
-        $change = 0;
         $change = $change + $this->checkNotifBin($week, $day, $hour, $minute);
         $change = $change + $this->checkAckBin($week, $day, $hour, $minute);
         if ($change > 0 || ($hour == 0 && $minute == 5)) {
@@ -321,7 +336,6 @@ class mybin extends eqLogic {
                 $cmd->setEventOnly(1);
                 $cmd->save();
             }
-            $threshold = $this->getConfiguration('seuil','');
             $cmd = $this->getCmd(null, 'counter');
             if (!is_object($cmd))
             {
@@ -334,14 +348,9 @@ class mybin extends eqLogic {
                 $cmd->setEventOnly(1);
                 $cmd->setIsHistorized(1);
                 $cmd->setTemplate('mobile', 'line');
-                $cmd->setTemplate('dashboard', 'line');
-                
-                $cmd->setConfiguration('maxValue', $threshold);         
+                $cmd->setTemplate('dashboard', 'line');       
                 $cmd->save();
                 $cmd->event(0);
-            } else {
-                $cmd->setConfiguration('maxValue', $threshold);         
-                $cmd->save();
             }
             $cmd = $this->getCmd(null, 'resetcounter');
             if (!is_object($cmd))
