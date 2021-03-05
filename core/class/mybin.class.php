@@ -44,6 +44,13 @@ class mybin extends eqLogic {
         if ($this->getConfiguration('type', '') == 'whole') {
             return;
         }
+
+        // Hack degueu
+        $threshold = $this->getConfiguration('seuil','');
+        $cmd = $this->getCmd(null, 'counter');
+        $cmd->setConfiguration('maxValue', $threshold); 
+        $cmd->save();
+
         $week = 1 * date('W');
         $day = 1 * date('w');
         $hour = 1 * date('G');
