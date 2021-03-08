@@ -123,6 +123,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                             <option value="braun">{{Marron}}</option>
                                             <option value="blue">{{Bleue}}</option>
                                             <option value="grey">{{Grise}}</option>
+											<option value="black">{{Noire}}</option>
                                         </select>
                                     </span>
                                     <span class="col-sm-3">
