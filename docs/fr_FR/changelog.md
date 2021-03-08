@@ -6,6 +6,7 @@
 
 # 08/03/2021
 - Nouvelle couleur de poubelle : noire
+- Nouvelle couleur d'icone pour statut 0 (pour une meilleur visibilité sur fond blanc)
 
 # 05/03/2021
 - Première version publique (stable)
