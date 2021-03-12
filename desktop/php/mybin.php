@@ -120,7 +120,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <select id="sel_color" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="color">
                                             <option value="green">{{Verte}}</option>
                                             <option value="yellow">{{Jaune}}</option>
-                                            <option value="braun">{{Marron}}</option>
+                                            <option value="brown">{{Marron}}</option>
                                             <option value="blue">{{Bleue}}</option>
                                             <option value="grey">{{Grise}}</option>
 											<option value="black">{{Noire}}</option>
@@ -132,6 +132,23 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 </div>
                             </div>
                             <br/>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{{Mois de ramassage}}</label>
+								<div class="col-sm-7">
+								    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_1" />{{Janvier}}</label>
+                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_2" />{{Février}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_3" />{{Mars}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_4" />{{Avril}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_5" />{{Mai}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_6" />{{Juin}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_7" />{{Juillet}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_8" />{{Août}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_9" />{{Septembre}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_10" />{{Octobre}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_11" />{{Novembre}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_12" />{{Décembre}}</label>
+								</div>
+							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Semaine(s) de ramassage}}</label>
 								<div class="col-sm-7">
@@ -195,16 +212,13 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							</div>
                             <br/>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Notification}}</label>
+								<label class="col-sm-3 control-label help" data-help="{{Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.}}">{{Notification}}</label>
 								<div class="col-sm-7">
-                                    <span class="col-sm-6">
-                                        <select id="sel_veille" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_veille">
-                                            <option value="1">{{La veille}}</option>
-                                            <option value="0">{{Le jour même}}</option>
-                                        </select>
-                                    </span>
-                                    <span class="col-sm-1">
-                                        <label>{{à}}</label>
+									<span class="col-sm-2">
+                                    	<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_days"/>
+									</span>
+									<span class="col-sm-3">
+                                        <label>{{jour(s) avant à}}</label>
                                     </span>
                                     <span class="col-sm-2">
                                         <select id="sel_notif_hour" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_hour">

@@ -66,7 +66,21 @@
         "Bleue": "Bleue",
         "Noire": "Noire",
         "Jour(s) particulier(s) de ramassage": "Jour(s) particulier(s) de ramassage",
-        "Ajouter un jour": "Ajouter un jour"
+        "Ajouter un jour": "Ajouter un jour",
+        "Janvier": "Janvier",
+        "Février": "Février",
+        "Mars": "Mars",
+        "Avril": "Avril", 
+        "Mai": "Mai", 
+        "Juin": "Juin",
+        "Juillet": "Juillet",
+        "Août": "Août",
+        "Septembre": "Septembre",
+        "Octobre": "Octobre",
+        "Novembre": "Novembre",
+        "Décembre": "Décembre", 
+        "Mois de ramassage": "Mois de ramassage",
+        "Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.": "Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas."
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
@@ -79,6 +93,7 @@
     "plugins\/mybin\/core\/class\/mybin.class.php": {
         "L\\'heure de notification est après l\\'heure de collecte": "L\\'heure de notification est après l\\'heure de collecte",
         "Il n\'y a (plus) aucune poubelle à sortir": "Il n\'y a (plus) aucune poubelle à sortir",
-        "Le seuil doit être un entier positif ou être laissé vide": "Le seuil doit être un entier positif ou être laissé vide"
+        "Le seuil doit être un entier positif ou être laissé vide": "Le seuil doit être un entier positif ou être laissé vide", 
+        "Le nombre de jours pour la notification doit être un entier positif ou être laissé vide": "Le nombre de jours pour la notification doit être un entier positif ou être laissé vide"
     }
 }

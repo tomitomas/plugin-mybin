@@ -60,13 +60,10 @@ class mybin extends eqLogic {
         $cmd->save();
         /****************************************************************************************************************/
 
-        $week = 1 * date('W');
-        $day = 1 * date('w');
         $hour = 1 * date('G');
         $minute = 1 * date('i');
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkbin: day ' . $day . ', hour ' . $hour . ', minute ' . $minute);
-        $change = $change + $this->checkNotifBin($week, $day, $hour, $minute);
-        $change = $change + $this->checkAckBin($week, $day, $hour, $minute);
+        $change = $change + $this->checkNotifBin();
+        $change = $change + $this->checkAckBin();
         if ($change > 0 || ($hour == 0 && $minute == 5)) {
             $this->refreshWhole();
         }
@@ -83,35 +80,29 @@ class mybin extends eqLogic {
         }
     }
     
-    public function checkNotifBin($week, $day, $hour, $minute) {
+    public function checkNotifBin() {
         if (!$this->getIsEnable()) {
             return 0;
         }
         
         $dt = new DateTime("now");
+        $delay = $this->getConfiguration('notif_days', 0);
+        if ($delay > 0) {
+            $dt->modify('+'.$delay.' day');
+        }
+        $month = 1 * date('n');
+        $week = 1 * date('W');
+        $day = 1 * date('w');
+        $hour = 1 * date('G');
+        $minute = 1 * date('i');
         
         $isSpecificDay = false;
+        $isMonth = false;
         $isweek = false;
         $isday = false;
         $ishour = false;
         $isminute = false;
-        $myday = $day;
-        $myweek = $week;
-        if ($this->getConfiguration('notif_veille') == 1) {
-            $myday = $myday + 1;
-            if ($myday == 7) {
-                $myday = 0;
-            }
-            // attention aux semaines paires/impaires
-            // si myday == 1, cad Lundi, ca veut dire qu'on est aujourd'hui dimanche, dernier jour de la semaine ==> week +1
-            if ($myday == 1) {
-                $myweek = $myweek + 1;
-                if ($myweek > $this->lastWeekNumberOfYear()) {
-                    $myweek = 1;
-                }
-            }
-            $dt->modify('+1 day');
-        }
+
         $specificDays = $this->getConfiguration('specific_day');
         if (is_array($specificDays)) {
             foreach ($specificDays as $specificDay) {
@@ -124,11 +115,14 @@ class mybin extends eqLogic {
                 }
             }
         }
-        if (($myweek%2 == 0 && $this->getConfiguration('paire') == 1) || ($myweek%2 != 0 && $this->getConfiguration('impaire') == 1)) {
+        if ($this->getConfiguration('month_'.$month) == 1) {
+            $isMonth = true;
+        }
+        if (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) {
             $isweek = true;
         }
         for ($i = 0; $i <= 6; $i++) {
-            if ($this->getConfiguration('day_'.$i) == 1 && $i == $myday) {
+            if ($this->getConfiguration('day_'.$i) == 1 && $i == $day) {
                 $isday = true;
                 break;
             }
@@ -139,8 +133,8 @@ class mybin extends eqLogic {
         if ($this->getConfiguration('notif_hour') == $hour) {
             $ishour = true;
         }
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin: week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
-        if ((($isweek && $isday) || $isSpecificDay) && $ishour && $isminute) {
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin: month ' . $isMonth . ', week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
+        if ((($isMonth && $isweek && $isday) || $isSpecificDay) && $ishour && $isminute) {
             $this->notifBin();
             return 1;
         } else {
@@ -148,14 +142,21 @@ class mybin extends eqLogic {
         }
     }
     
-    public function checkAckBin($week, $day, $hour, $minute) {
+    public function checkAckBin() {
         if (!$this->getIsEnable()) {
             return 0;
         }
         
         $dt = new DateTime("now");
+
+        $month = 1 * date('n');
+        $week = 1 * date('W');
+        $day = 1 * date('w');
+        $hour = 1 * date('G');
+        $minute = 1 * date('i');
         
         $isSpecificDay = false;
+        $ismonth = false;
         $isweek = false;
         $isday = false;
         $ishour = false;
@@ -174,6 +175,9 @@ class mybin extends eqLogic {
             }
         }
         
+        if ($this->getConfiguration('month_'.$month) == 1) {
+            $isMonth = true;
+        }
         if (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) {
             $isweek = true;
         }
@@ -189,8 +193,8 @@ class mybin extends eqLogic {
         if ($this->getConfiguration('hour') == $hour) {
             $ishour = true;
         }
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin: week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
-        if ((($isweek && $isday) || $isSpecificDay) && $ishour && $isminute) {
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin: month ' . $ismonth . ', week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
+        if ((($ismonth && $isweek && $isday) || $isSpecificDay) && $ishour && $isminute) {
             $this->ackBin(true);
             return 1;
         } else {
@@ -248,15 +252,6 @@ class mybin extends eqLogic {
         $this->refreshWidget();
     }
 
-    public function lastWeekNumberOfYear() {
-        $year = date('Y');
-        $week_count = date('W', strtotime($year . '-12-31'));
-        if ($week_count == '01'){
-            $week_count = date('W', strtotime($year . '-12-24'));
-        }
-        return intval($week_count);
-    }
-
     // Fonction exécutée automatiquement avant la création de l'équipement
     public function preInsert() {
         if ($this->getConfiguration('type','') == 'whole') {
@@ -269,13 +264,16 @@ class mybin extends eqLogic {
             $this->setDisplay('width', '260px');
             $this->setConfiguration('hour', 8);
             $this->setConfiguration('minute', 0);
-            $this->setConfiguration('notif_veille', 1);
+            $this->setConfiguration('notif_days', 1);
             $this->setConfiguration('notif_hour', 20);
             $this->setConfiguration('notif_minute', 0);
             $this->setConfiguration('paire', 1);
             $this->setConfiguration('impaire', 1);
             $this->setConfiguration('color', 'green');   
-            $this->setConfiguration('counter', 'auto');  
+            $this->setConfiguration('counter', 'auto');
+            for ($i = 1; $i <= 12; $i++) {
+                $this->setConfiguration('month_'.$i, 1);
+            } 
             $this->setIsEnable(1);
             $this->setIsVisible(0);
         }
@@ -285,7 +283,15 @@ class mybin extends eqLogic {
     //Fonction exécutée automatiquement avant la mise à jour de l'équipement
     public function preUpdate() {
         if ($this->getConfiguration('type','') <> 'whole') {
-            if ($this->getConfiguration('notif_veille') == 0) {
+            if ($this->getConfiguration('notif_days', '') <> '') {
+                $options = array('options' => array('min_range' => 0));
+                if (!filter_var($this->getConfiguration('notif_days'), FILTER_VALIDATE_INT, $options)) {
+                    throw new Exception(__('Le nombre de jours pour la notification doit être un entier positif ou être laissé vide',__FILE__));
+                }
+            } else {
+                $this->setConfiguration('notif_days', 0);
+            }
+            if ($this->getConfiguration('notif_days', 0) == 0) {
                 if ($this->getConfiguration('notif_hour') > $this->getConfiguration('hour')) {
                     throw new Exception(__('L\'heure de notification est après l\'heure de collecte',__FILE__));
                 }
@@ -421,8 +427,8 @@ class mybin extends eqLogic {
                         continue;
                     }
                     $dtCheck = DateTime::createFromFormat("Y-m-d", $dtDisplay->format("Y-m-d"));
-                    if ($eqLogic->getConfiguration('notif_veille') == 1 && $calendarType == 'notif') {
-                        $dtCheck->modify('+1 day');
+                    if ($eqLogic->getConfiguration('notif_days', 0) > 0 && $calendarType == 'notif') {
+                        $dtCheck->modify('+'.$eqLogic->getConfiguration('notif_days').' day');
                     }
                     if ($eqLogic->checkIfBin($dtCheck)) {
                         $color = $eqLogic->getConfiguration('color');
@@ -480,6 +486,7 @@ class mybin extends eqLogic {
         }
         
         $isSpecificDay = false;
+        $ismonth = false;
         $isweek = false;
         $isday = false;
 
@@ -499,7 +506,11 @@ class mybin extends eqLogic {
         
         $day = 1 * $dt->format('w');
         $week = 1 * $dt->format('W');
+        $month = 1 * $dt->format('n');
         
+        if ($this->getConfiguration('month_'.$month) == 1) {
+            $isMonth = true;
+        }
         if (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) {
             $isweek = true;
         }
@@ -509,7 +520,7 @@ class mybin extends eqLogic {
                 break;
             }
         }
-        if ($isSpecificDay || ($isweek && $isday)) {
+        if ($isSpecificDay || ($isMonth && $isweek && $isday)) {
             return true;
         } else {
             return false;

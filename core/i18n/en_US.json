@@ -62,11 +62,25 @@
         "Grise": "Grey",
         "Verte": "Green",
         "Jaune": "Yellow",
-        "Marron": "Braun",
+        "Marron": "Brown",
         "Bleue": "Blue",
         "Noire": "Black",
         "Jour(s) particulier(s) de ramassage": "Specific day(s) of collect",
-        "Ajouter un jour": "Add a day"
+        "Ajouter un jour": "Add a day",
+        "Janvier": "January",
+        "Février": "February",
+        "Mars": "March",
+        "Avril": "April", 
+        "Mai": "May", 
+        "Juin": "June",
+        "Juillet": "July",
+        "Août": "August",
+        "Septembre": "September",
+        "Octobre": "October",
+        "Novembre": "November",
+        "Décembre": "December",
+        "Mois de ramassage": "Month(s) of collect",
+        "Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.": "To be notified the very day of collect, keep the field empty. Be careful at the time in this case."
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
@@ -79,6 +93,7 @@
     "plugins\/mybin\/core\/class\/mybin.class.php": {
         "L\\'heure de notification est après l\\'heure de collecte": "The time of notification is after the time of collect",
         "Il n\'y a (plus) aucune poubelle à sortir": "There\'s no more bin to put out",
-        "Le seuil doit être un entier positif ou être laissé vide": "The threshold must be a positive integer or must be left empty"
+        "Le seuil doit être un entier positif ou être laissé vide": "The threshold must be a positive integer or must be left empty",
+        "Le nombre de jours pour la notification doit être un entier positif ou être laissé vide": "The number of days for the notification must be a positive integer or must be left empty"
     }
 }
