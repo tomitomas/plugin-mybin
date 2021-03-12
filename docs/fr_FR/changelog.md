@@ -6,6 +6,7 @@
 
 # 12/03/2021
 - Possibilité de spécifier les mois
+- Correction sur la couleur marron
 
 # 08/03/2021
 - Nouvelle couleur de poubelle : noire

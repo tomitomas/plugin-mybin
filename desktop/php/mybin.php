@@ -120,7 +120,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                         <select id="sel_color" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="color">
                                             <option value="green">{{Verte}}</option>
                                             <option value="yellow">{{Jaune}}</option>
-                                            <option value="braun">{{Marron}}</option>
+                                            <option value="brown">{{Marron}}</option>
                                             <option value="blue">{{Bleue}}</option>
                                             <option value="grey">{{Grise}}</option>
 											<option value="black">{{Noire}}</option>

@@ -6,6 +6,7 @@
 
 # 12/03/2021
 - Possibility to specify months
+- Fix on brown color
 
 # 08/03/2021
 - New bin color: black

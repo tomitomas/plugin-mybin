@@ -48,6 +48,9 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
                     $eqLogic->setConfiguration('month_'.$i, 1);
                 }
             }
+            if ($eqLogic->getConfiguration('color') === 'braun') {
+                $eqLogic->setConfiguration('color', 'brown');
+            }
             
             $cmd = $eqLogic->getCmd(null, 'counter');
             if (!is_object($cmd)) {
