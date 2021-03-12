@@ -212,7 +212,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							</div>
                             <br/>
 							<div class="form-group">
-								<label class="col-sm-3 control-label" data-help="{{Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.}}">{{Notification}}</label>
+								<label class="col-sm-3 control-label help" data-help="{{Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.}}">{{Notification}}</label>
 								<div class="col-sm-7">
 									<span class="col-sm-2">
                                     	<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_days"/>
