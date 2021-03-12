@@ -6,6 +6,7 @@
 
 # 12/03/2021
 - Possibility to specify months
+- Possibility to define the number of days before collect for notification
 - Fix on brown color
 
 # 08/03/2021

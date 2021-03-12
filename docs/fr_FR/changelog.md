@@ -6,6 +6,7 @@
 
 # 12/03/2021
 - Possibilité de spécifier les mois
+- Possibilité de définir le nombre de jours avant ramassage pour notification
 - Correction sur la couleur marron
 
 # 08/03/2021

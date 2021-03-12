@@ -220,8 +220,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                             <option value="0">{{Le jour même}}</option>
                                         </select>
                                     </span>
-                                    <span class="col-sm-1">
-                                        <label>{{à}}</label>
+									<span class="col-sm-3">
+                                    	<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_days"/>
+									</span>
+									<span class="col-sm-3">
+                                        <label>{{jour(s) avant à}}</label>
                                     </span>
                                     <span class="col-sm-2">
                                         <select id="sel_notif_hour" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_hour">
