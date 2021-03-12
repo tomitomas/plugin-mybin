@@ -79,7 +79,8 @@
         "Octobre": "Octobre",
         "Novembre": "Novembre",
         "Décembre": "Décembre", 
-        "Mois de ramassage": "Mois de ramassage"
+        "Mois de ramassage": "Mois de ramassage",
+        "Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.": "Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas."
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",

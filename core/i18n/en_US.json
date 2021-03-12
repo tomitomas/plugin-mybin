@@ -79,7 +79,8 @@
         "Octobre": "October",
         "Novembre": "November",
         "Décembre": "December",
-        "Mois de ramassage": "Month(s) of collect"
+        "Mois de ramassage": "Month(s) of collect",
+        "Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.": "To be notified the very day of collect, keep the field empty. Be careful at the time in this case."
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
