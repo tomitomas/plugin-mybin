@@ -103,37 +103,6 @@ class mybin extends eqLogic {
         $ishour = false;
         $isminute = false;
 
-        /*
-        $myday = $day;
-        $myweek = $week;
-        $mymonth = $month;
-        $delay = $this->getConfiguration('notif_days', 0);
-        if ($delay > 0) {
-            $myday = $myday + $delay;
-            if ($myday == 7) {
-                $myday = 0;
-            }
-            // attention aux semaines paires/impaires
-            // si myday == 1, cad Lundi, ca veut dire qu'on est aujourd'hui dimanche, dernier jour de la semaine ==> week +1
-            if ($myday == 1) {
-                $myweek = $myweek + 1;
-                if ($myweek > $this->lastWeekNumberOfYear()) {
-                    $myweek = 1;
-                }
-            }
-            // Attention au dernier jour du mois
-            // Si on est aujour'hui le le dernier jour du mois, $month + 1
-            if (date('j') == date('t)')) {
-                $mymonth = $mymonth + 1;
-                if ($mymonth == 13) {
-                    $mymonth = 1; 
-                }
-            }
-
-            $dt->modify('+'.$delay.' day');
-        }
-        */
-
         $specificDays = $this->getConfiguration('specific_day');
         if (is_array($specificDays)) {
             foreach ($specificDays as $specificDay) {
@@ -319,6 +288,8 @@ class mybin extends eqLogic {
                 if (!filter_var($this->getConfiguration('notif_days'), FILTER_VALIDATE_INT, $options)) {
                     throw new Exception(__('Le nombre de jours pour la notification doit être un entier positif ou être laissé vide',__FILE__));
                 }
+            } else {
+                $this->setConfiguration('notif_days', 0);
             }
             if ($this->getConfiguration('notif_days', 0) == 0) {
                 if ($this->getConfiguration('notif_hour') > $this->getConfiguration('hour')) {
