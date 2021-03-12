@@ -4,6 +4,9 @@
 >
 >As a reminder if there is no information on the update, it means that it only concerns the updating of documentation, translation or text.
 
+# 12/03/2021
+- Possibility to specify months
+
 # 08/03/2021
 - New bin color: black
 - New icon color for no bin (for better visibility on white background)

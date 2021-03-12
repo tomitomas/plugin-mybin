@@ -133,6 +133,23 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             </div>
                             <br/>
 							<div class="form-group">
+								<label class="col-sm-3 control-label">{{Mois de ramassage}}</label>
+								<div class="col-sm-7">
+								    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_1" />{{Janvier}}</label>
+                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_2" />{{Février}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_3" />{{Mars}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_4" />{{Avril}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_5" />{{Mai}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_6" />{{Juin}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_7" />{{Juillet}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_8" />{{Août}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_9" />{{Septembre}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_10" />{{Octobre}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_11" />{{Novembre}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_12" />{{Décembre}}</label>
+								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Semaine(s) de ramassage}}</label>
 								<div class="col-sm-7">
 								    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="paire" />{{Semaines paires}}</label>

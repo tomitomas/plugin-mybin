@@ -42,7 +42,13 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
             }
             if (empty($eqLogic->getConfiguration('counter'))) {
                 $eqLogic->setConfiguration('counter', 'auto');
-            }     
+            }
+            for ($i = 1; $i <= 12; $i++) {
+                if ($eqLogic->getConfiguration('month_'.$i, 'unset') === 'unset') {
+                    $eqLogic->setConfiguration('month_'.$i, 1);
+                }
+            }
+            
             $cmd = $eqLogic->getCmd(null, 'counter');
             if (!is_object($cmd)) {
                 $cmd = new mybinCmd();

@@ -66,7 +66,19 @@
         "Bleue": "Bleue",
         "Noire": "Noire",
         "Jour(s) particulier(s) de ramassage": "Jour(s) particulier(s) de ramassage",
-        "Ajouter un jour": "Ajouter un jour"
+        "Ajouter un jour": "Ajouter un jour",
+        "Janvier": "Janvier",
+        "Février": "Février",
+        "Mars": "Mars",
+        "Avril": "Avril", 
+        "Mai": "Mai", 
+        "Juin": "Juin",
+        "Juillet": "Juillet",
+        "Août": "Août",
+        "Septembre": "Septembre",
+        "Octobre": "Octobre",
+        "Novembre": "Novembre",
+        "Décembre": "Décembre"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
