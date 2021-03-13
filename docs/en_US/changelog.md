@@ -7,6 +7,7 @@
 # 13/03/2021
 - Automatic removal of past specific dates
 - Fix on install/update function
+- Widget for a single bin improved (possibilty to show/hide the different elements)
 
 # 12/03/2021
 - Possibility to specify months

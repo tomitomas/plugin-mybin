@@ -7,6 +7,7 @@
 # 13/03/2021
 - Supression automatique des dates spécifiques passées
 - Correction sur la fonction install/update
+- Widget pour une poubelle amélioré (possibilité de cacher/afficher les différents éléments)
 
 # 12/03/2021
 - Possibilité de spécifier les mois
