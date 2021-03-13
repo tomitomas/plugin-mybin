@@ -7,7 +7,9 @@
         "Jours de ramassage": "Collect days",
         "Jours de notification": "Notification days",
         "Paramètres du widget global": "Parameters of global widget",
-        "Eléments à afficher sur le widget global": "Elements to display on the global widget"
+        "Eléments à afficher sur le widget global": "Elements to display on the global widget",
+        "Notifications": "Notifications",
+        "Calendrier": "Calendar"
     },
     "plugins\/mybin\/desktop\/php\/mybin.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",
