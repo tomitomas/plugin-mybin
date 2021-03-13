@@ -646,6 +646,7 @@ class mybin extends eqLogic {
         }
         if ($change) {
             $this->setConfiguration('specific_day', $specificDays);
+            $this->save(true);
         }
     }
 }
