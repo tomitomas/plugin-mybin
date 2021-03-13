@@ -475,6 +475,8 @@ class mybin extends eqLogic {
             if ($resetCmd->getIsVisible() == 1) {
                 $replace['#reset_id#'] = $resetCmd->getId();
                 $replace['#reset_uid#'] = $resetCmd->getId();
+            } else {
+                $replace['#reset_id#'] = '';
             }
             
             
