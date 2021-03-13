@@ -40,10 +40,6 @@
         }else{
             $('.eqLogic[data-eqLogic_uid=#uid#] .resetCounter').remove();
         }
-
-        $('.cmd[data-cmd_uid=#reset_uid#]:last .action').off('click').on('click', function () {
-            jeedom.cmd.execute({id: '#reset_id#'});
-        });
         
         jeedom.cmd.update['#counter_id#'] = function(_options) {
             $('.cmd[data-cmd_id=#counter_id#]').attr('title','{{Date de valeur}} : '+_options.valueDate+'<br/>{{Date de collecte}} : '+_options.collectDate)
