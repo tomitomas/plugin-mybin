@@ -1,11 +1,13 @@
 {
     "plugins\/mybin\/plugin_info\/configuration.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
-        "Afficher un widget global pour toutes les poubelles (avec calendrier) : ": "Afficher un widget global pour toutes les poubelles (avec calendrier) : ",
-        "Pièce pour le widget global : ": "Pièce pour le widget global : ",
-        "Jours que le calendrier doit utiliser : ": "Jours que le calendrier doit utiliser : ",
+        "Afficher un widget global pour toutes les poubelles": "Afficher un widget global pour toutes les poubelles",
+        "Pièce pour le widget global": "Pièce pour le widget global",
+        "Jours que le calendrier doit utiliser": "Jours que le calendrier doit utiliser",
         "Jours de ramassage": "Jours de ramassage",
-        "Jours de notification": "Jours de notification"
+        "Jours de notification": "Jours de notification",
+        "Paramètres du widget global": "Paramètres du widget global",
+        "Eléments à afficher sur le widget global": "Eléments à afficher sur le widget global"
     },
     "plugins\/mybin\/desktop\/php\/mybin.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
