@@ -472,8 +472,10 @@ class mybin extends eqLogic {
             
             
             $resetCmd = $this->getCmd(null, 'resetcounter');
-            $replace['#reset_id#'] = $resetCmd->getId();
-            $replace['#reset_uid#'] = $resetCmd->getId();
+            if ($resetCmd->getIsVisible() == 1) {
+                $replace['#reset_id#'] = $resetCmd->getId();
+                $replace['#reset_uid#'] = $resetCmd->getId();
+            }
             
             
             $html = template_replace($replace, getTemplate('core', $version, 'singlebin.template', __CLASS__));
