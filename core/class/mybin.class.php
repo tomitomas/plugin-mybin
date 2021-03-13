@@ -64,6 +64,7 @@ class mybin extends eqLogic {
         $minute = 1 * date('i');
         $change = $change + $this->checkNotifBin();
         $change = $change + $this->checkAckBin();
+        $this->cleanSpecificDates();
         if ($change > 0 || ($hour == 0 && $minute == 5)) {
             $this->refreshWhole();
         }
@@ -621,6 +622,27 @@ class mybin extends eqLogic {
             scenarioExpression::createAndExec('action', $action['cmd'], $options);
         } catch (Exception $e) {
             log::add(__CLASS__, 'error', $this->getHumanName() . ' Erreur lors de l\'execution de l\'action ' . $action['cmd'] . ': ' . $e->getMessage());
+        }
+    }
+
+    public function cleanSpecificDates() {
+        $change = false;
+        $specificDays = $this->getConfiguration('specific_day');
+        if (is_array($specificDays)) {
+            $dtNow = new DateTime("now");
+            foreach ($specificDays as $key => $specificDay) {
+                if (isset($specificDay['myday'])) {
+                    $dtSpec = DateTime::createFromFormat("Y-m-d", $specificDay['myday']);
+                    if ($dtSpec < $dtNow) {
+                        log::add(__CLASS__, 'debug', $this->getHumanName() . ' Removal of specific date ' . $specificDay['myday']);
+                        unset($specificDays[$key]);
+                        $change = true;
+                    }
+                }
+            }
+        }
+        if ($change) {
+            $this->setConfiguration('specific_day', $specificDays);
         }
     }
 }
