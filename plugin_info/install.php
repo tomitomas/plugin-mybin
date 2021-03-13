@@ -51,10 +51,10 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
             if ($eqLogic->getConfiguration('color') === 'braun') {
                 $eqLogic->setConfiguration('color', 'brown');
             }
-            if ($eqLogic->getConfiguration('notif_veille') == 1) {
+            if ($eqLogic->getConfiguration('notif_veille') === 1) {
                 $eqLogic->setConfiguration('notif_days', 1);
             } 
-            if ($eqLogic->getConfiguration('notif_veille') == 0) {
+            if ($eqLogic->getConfiguration('notif_veille') === 0) {
                 $eqLogic->setConfiguration('notif_days', 0);
             }
             $eqLogic->setConfiguration('notif_veille', 'unused');

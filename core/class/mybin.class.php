@@ -64,6 +64,7 @@ class mybin extends eqLogic {
         $minute = 1 * date('i');
         $change = $change + $this->checkNotifBin();
         $change = $change + $this->checkAckBin();
+        $this->cleanSpecificDates();
         if ($change > 0 || ($hour == 0 && $minute == 5)) {
             $this->refreshWhole();
         }
@@ -286,25 +287,25 @@ class mybin extends eqLogic {
             if ($this->getConfiguration('notif_days', '') <> '') {
                 $options = array('options' => array('min_range' => 0));
                 if (!filter_var($this->getConfiguration('notif_days'), FILTER_VALIDATE_INT, $options)) {
-                    throw new Exception(__('Le nombre de jours pour la notification doit être un entier positif ou être laissé vide',__FILE__));
+                    throw new Exception($this->getHumanName() . ": " . __('Le nombre de jours pour la notification doit être un entier positif ou être laissé vide',__FILE__));
                 }
             } else {
                 $this->setConfiguration('notif_days', 0);
             }
             if ($this->getConfiguration('notif_days', 0) == 0) {
                 if ($this->getConfiguration('notif_hour') > $this->getConfiguration('hour')) {
-                    throw new Exception(__('L\'heure de notification est après l\'heure de collecte',__FILE__));
+                    throw new Exception($this->getHumanName() . ": hour " . __('L\'heure de notification est après l\'heure de collecte',__FILE__));
                 }
                 if ($this->getConfiguration('notif_hour') == $this->getConfiguration('hour')) {
                     if ($this->getConfiguration('notif_minute') > $this->getConfiguration('minute')) {
-                        throw new Exception(__('L\'heure de notification est après l\'heure de collecte',__FILE__));
+                        throw new Exception($this->getHumanName() . ": minute " . __('L\'heure de notification est après l\'heure de collecte',__FILE__));
                     }
                 }
             }
             if ($this->getConfiguration('seuil', '') <> '') {
                 $options = array('options' => array('min_range' => 0));
                 if (!filter_var($this->getConfiguration('seuil'), FILTER_VALIDATE_INT, $options)) {
-                    throw new Exception(__('Le seuil doit être un entier positif ou être laissé vide',__FILE__));
+                    throw new Exception($this->getHumanName() . ": " . __('Le seuil doit être un entier positif ou être laissé vide',__FILE__));
                 }
             }
         }
@@ -621,6 +622,28 @@ class mybin extends eqLogic {
             scenarioExpression::createAndExec('action', $action['cmd'], $options);
         } catch (Exception $e) {
             log::add(__CLASS__, 'error', $this->getHumanName() . ' Erreur lors de l\'execution de l\'action ' . $action['cmd'] . ': ' . $e->getMessage());
+        }
+    }
+
+    public function cleanSpecificDates() {
+        $change = false;
+        $specificDays = $this->getConfiguration('specific_day');
+        if (is_array($specificDays)) {
+            $dtNow = new DateTime("now");
+            foreach ($specificDays as $key => $specificDay) {
+                if (isset($specificDay['myday'])) {
+                    $dtSpec = DateTime::createFromFormat("Y-m-d", $specificDay['myday']);
+                    if ($dtSpec < $dtNow) {
+                        log::add(__CLASS__, 'debug', $this->getHumanName() . ' Removal of specific date ' . $specificDay['myday']);
+                        unset($specificDays[$key]);
+                        $change = true;
+                    }
+                }
+            }
+        }
+        if ($change) {
+            $this->setConfiguration('specific_day', $specificDays);
+            $this->save(true);
         }
     }
 }
