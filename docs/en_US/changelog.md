@@ -4,6 +4,10 @@
 >
 >As a reminder if there is no information on the update, it means that it only concerns the updating of documentation, translation or text.
 
+# 13/03/2021
+- Automatic removal of past specific dates
+- Fix on install/update function
+
 # 12/03/2021
 - Possibility to specify months
 - Possibility to define the number of days before collect for notification

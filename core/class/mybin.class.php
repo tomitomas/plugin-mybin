@@ -640,9 +640,6 @@ class mybin extends eqLogic {
                     }
                 }
             }
-            foreach ($specificDays as $key => $specificDay) {
-                log::add(__CLASS__, 'debug', $this->getHumanName() . $key . ' ' . $specificDay['myday']);
-            }
         }
         if ($change) {
             $this->setConfiguration('specific_day', $specificDays);
