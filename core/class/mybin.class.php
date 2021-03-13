@@ -470,9 +470,11 @@ class mybin extends eqLogic {
             $replace['#counter_state#'] = $counterCmd->execCmd();
             $replace['#counter_unite#'] = $counterCmd->getUnite();
             
+            /*
             $resetCmd = $this->getCmd(null, 'resetcounter');
             $replace['#reset_id#'] = $resetCmd->getId();
             $replace['#reset_uid#'] = $resetCmd->getId();
+            */
             
             $html = template_replace($replace, getTemplate('core', $version, 'singlebin.template', __CLASS__));
             cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
