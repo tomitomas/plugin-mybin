@@ -446,33 +446,51 @@ class mybin extends eqLogic {
         
         // single bin widget 
         else {
-            $binnotifs = '<span class="cmd" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/none2.png" width="70px"></span>';
-            $binscript = "";
             $binCmd = $this->getCmd(null, 'bin');
-            $binStatus = $binCmd->execCmd();
-            if ($binStatus == 1) {
-                $binimg = $this->getConfiguration('color');
-                $ackCmd = $this->getCmd(null, 'ack');
-                $binnotifs = '<span class="cmd ack'.$ackCmd->getId().' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="70px"></span>';
-                $binscript = "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
+            $binnotifs = "";
+            $binscript = "";
+            if ($binCmd->getIsVisible() == 1) {
+                $binnotifs = '<span class="cmd" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/none2.png" width="70px"></span>';
+                $binscript = "";
+                $binStatus = $binCmd->execCmd();
+                if ($binStatus == 1 && $binCmd->getIsVisible() == 1) {
+                    $binimg = $this->getConfiguration('color');
+                    $ackCmd = $this->getCmd(null, 'ack');
+                    $binnotifs = '<span class="cmd ack';
+                    if ($ackCmd->getIsVisible() == 1) {
+                        $binnotifs = $binnotifs.$ackCmd->getId().' cursor';
+                        $binscript = "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
+                    }
+                    $binnotifs = $binnotifs.'" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="70px"></span>';
+                }
             }
             $replace['#binscript#'] = $binscript;
             $replace['#binnotifs#'] = $binnotifs;
             
             $counterCmd = $this->getCmd(null, 'counter');
-            $replace['#counter_id#'] = $counterCmd->getId();
-            $replace['#counter_uid#'] = $counterCmd->getId();
-            $replace['#counter_eqLogic_id#'] = $replace['#uid#'];
-            $replace['#counter_collectDate#'] = $counterCmd->getCollectDate();
-            $replace['#counter_valueDate#'] = $counterCmd->getValueDate();
-            $replace['#counter_minValue#'] = $counterCmd->getConfiguration('minValue', 0);
-            $replace['#counter_maxValue#'] = $counterCmd->getConfiguration('maxValue');
-            $replace['#counter_state#'] = $counterCmd->execCmd();
-            $replace['#counter_unite#'] = $counterCmd->getUnite();
+            if ($counterCmd->getIsVisible() == 1) {
+                $replace['#counter_id#'] = $counterCmd->getId();
+                $replace['#counter_uid#'] = $counterCmd->getId();
+                $replace['#counter_eqLogic_id#'] = $replace['#uid#'];
+                $replace['#counter_collectDate#'] = $counterCmd->getCollectDate();
+                $replace['#counter_valueDate#'] = $counterCmd->getValueDate();
+                $replace['#counter_minValue#'] = $counterCmd->getConfiguration('minValue', 0);
+                $replace['#counter_maxValue#'] = $counterCmd->getConfiguration('maxValue');
+                $replace['#counter_state#'] = $counterCmd->execCmd();
+                $replace['#counter_unite#'] = $counterCmd->getUnite();
+            } else {
+                $replace['#counter_id#'] = '';
+            }
+            
             
             $resetCmd = $this->getCmd(null, 'resetcounter');
-            $replace['#reset_id#'] = $resetCmd->getId();
-            $replace['#reset_uid#'] = $resetCmd->getId();
+            if ($resetCmd->getIsVisible() == 1) {
+                $replace['#reset_id#'] = $resetCmd->getId();
+                $replace['#reset_uid#'] = $resetCmd->getId();
+            } else {
+                $replace['#reset_id#'] = '';
+            }
+            
             
             $html = template_replace($replace, getTemplate('core', $version, 'singlebin.template', __CLASS__));
             cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
