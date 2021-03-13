@@ -287,25 +287,25 @@ class mybin extends eqLogic {
             if ($this->getConfiguration('notif_days', '') <> '') {
                 $options = array('options' => array('min_range' => 0));
                 if (!filter_var($this->getConfiguration('notif_days'), FILTER_VALIDATE_INT, $options)) {
-                    throw new Exception(__('Le nombre de jours pour la notification doit être un entier positif ou être laissé vide',__FILE__));
+                    throw new Exception($this->getHumanName() . ": " . __('Le nombre de jours pour la notification doit être un entier positif ou être laissé vide',__FILE__));
                 }
             } else {
                 $this->setConfiguration('notif_days', 0);
             }
             if ($this->getConfiguration('notif_days', 0) == 0) {
                 if ($this->getConfiguration('notif_hour') > $this->getConfiguration('hour')) {
-                    throw new Exception(__('L\'heure de notification est après l\'heure de collecte',__FILE__));
+                    throw new Exception($this->getHumanName() . ": hour " . __('L\'heure de notification est après l\'heure de collecte',__FILE__));
                 }
                 if ($this->getConfiguration('notif_hour') == $this->getConfiguration('hour')) {
                     if ($this->getConfiguration('notif_minute') > $this->getConfiguration('minute')) {
-                        throw new Exception(__('L\'heure de notification est après l\'heure de collecte',__FILE__));
+                        throw new Exception($this->getHumanName() . ": minute " . __('L\'heure de notification est après l\'heure de collecte',__FILE__));
                     }
                 }
             }
             if ($this->getConfiguration('seuil', '') <> '') {
                 $options = array('options' => array('min_range' => 0));
                 if (!filter_var($this->getConfiguration('seuil'), FILTER_VALIDATE_INT, $options)) {
-                    throw new Exception(__('Le seuil doit être un entier positif ou être laissé vide',__FILE__));
+                    throw new Exception($this->getHumanName() . ": " . __('Le seuil doit être un entier positif ou être laissé vide',__FILE__));
                 }
             }
         }
@@ -639,6 +639,9 @@ class mybin extends eqLogic {
                         $change = true;
                     }
                 }
+            }
+            foreach ($specificDays as $key => $specificDay) {
+                log::add(__CLASS__, 'debug', $this->getHumanName() . $key . ' ' . $specificDay['myday']);
             }
         }
         if ($change) {
