@@ -36,8 +36,8 @@ if (!isConnect('admin')) {
         <div class="form-group">
 			<label class="col-sm-4 control-label">{{Eléments à afficher sur le widget global}}</label>
 			<div class="col-lg-3">
-				<input type="checkbox" class="configKey form-control" data-l1key="notifs"/>&nbsp;{{Notifications}}&nbsp;&nbsp;
-				<input type="checkbox" class="configKey form-control" data-l1key="calendar"/>&nbsp;{{Calendrier}}
+				<input type="checkbox" class="configKey form-control" data-l1key="notifs"/>{{Notifications}}&nbsp;&nbsp;
+				<input type="checkbox" class="configKey form-control" data-l1key="calendar"/>{{Calendrier}}
 			</div>
 		</div>
         <div class="form-group">
