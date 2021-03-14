@@ -760,7 +760,7 @@ class mybin extends eqLogic {
 
         $nbDates = 0;
         $dtCheck = new DateTime("now");
-        $dtCheck->setTime($this->getConfiguration('hour'), $this->getConfiguration('minute'));
+        $dtCheck->setTime(intval($this->getConfiguration('hour')), intval($this->getConfiguration('minute')));
         for ($i = 0; $i <= 365; $i++) {
             $dtCheck->modify('+1 day');
             $month = 1 * $dtCheck->format('n');
@@ -770,7 +770,7 @@ class mybin extends eqLogic {
                 if ($dtCheck > $dtNow) {
                     $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $dtCheck->format("Y-m-d H:i"));
                     $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
-                    $dtNotif->setTime($this->getConfiguration('notif_hour'), $this->getConfiguration('notif_minute'));
+                    $dtNotif->setTime(intval($this->getConfiguration('notif_hour')), intval($this->getConfiguration('notif_minute')));
                     $datesArr[$dtCheck->format('Y-m-d H:i')] = $dtNotif->format('Y-m-d H:i');
                     log::add(__CLASS__, 'debug', $this->getHumanName() . ' add from dates ' . $dtCheck->format('Y-m-d H:i'));
                     $nbDates++;
@@ -794,7 +794,7 @@ class mybin extends eqLogic {
                         if ($nextrun > $dtNow) {
                             $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $nextrun->format("Y-m-d H:i"));
                             $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
-                            $dtNotif->setTime($this->getConfiguration('notif_hour'), $this->getConfiguration('notif_minute'));
+                            $dtNotif->setTime(intval($this->getConfiguration('notif_hour')), intval($this->getConfiguration('notif_minute')));
                             $datesArr[$nextrun->format('Y-m-d H:i')] = $dtNotif->format('Y-m-d H:i');
                             log::add(__CLASS__, 'debug', $this->getHumanName() . ' add from crons ' . $nextrun->format('Y-m-d H:i'));
                             $nbRuns++;
@@ -817,11 +817,11 @@ class mybin extends eqLogic {
             foreach ($specificDays as $specificDay) {
                 if (isset($specificDay['myday'])) {
                     $dtCheck = DateTime::createFromFormat("Y-m-d", $specificDay['myday']);
-                    $dtCheck->setTime($this->getConfiguration('hour'), $this->getConfiguration('minute'));
+                    $dtCheck->setTime(intval($this->getConfiguration('hour')), intval($this->getConfiguration('minute')));
                     if ($dtCheck > $dtNow) {
                         $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $dtCheck->format("Y-m-d H:i"));
                         $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
-                        $dtNotif->setTime($this->getConfiguration('notif_hour'), $this->getConfiguration('notif_minute'));
+                        $dtNotif->setTime(intval($this->getConfiguration('notif_hour')), intval($this->getConfiguration('notif_minute')));
                         $datesArr[$dtCheck->format('Y-m-d H:i')] = $dtNotif->format('Y-m-d H:i');
                         log::add(__CLASS__, 'debug', $this->getHumanName() . ' add from days ' . $dtCheck->format('Y-m-d H:i'));
                         $nbDays++;
