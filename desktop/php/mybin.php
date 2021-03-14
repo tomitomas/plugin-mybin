@@ -210,6 +210,13 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     </span>
 								</div>
 							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label help" data-help="{{Cron}}">{{Cron}}</label>
+							    <div class="col-sm-7">
+                                    <a class="btn btn-success btn-sm addCron" data-type="specific_cron" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter un cron}}</a>
+                                    <div id="div_specific_cron"></div>
+                                </div>
+							</div>
                             <br/>
 							<div class="form-group">
 								<label class="col-sm-3 control-label help" data-help="{{Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.}}">{{Notification}}</label>
@@ -273,17 +280,6 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 <div class="col-sm-4">
                                     tag <strong>#bin_threshold#</strong>
                                 </div>
-							</div>
-							<div class="input-group">
-								<label class="col-sm-3 control-label help" data-help="{{Cron}}">{{Cron}}</label>
-								<div class="col-sm-7">
-									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="customcron"/>
-									<span class="input-group-btn">
-										<a class="btn btn-default cursor jeeHelper" data-helper="cron">
-											<i class="fas fa-question-circle"></i>
-										</a>
-									</span>
-								</div>
 							</div>
 							<br>
 							<legend><i class="fas fa-truck"></i> {{Action(s) sur ramassage}}</legend><label><a class="btn btn-success btn-sm addAction" data-type="action_collect" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
