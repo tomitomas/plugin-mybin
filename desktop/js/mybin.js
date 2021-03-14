@@ -264,5 +264,5 @@ function printEqLogic(_eqLogic) {
   }
 	
   $('.allDates').hide();
-  $('.allDates .dates-' + _eqLogic.id).show();
+  $('.dates-' + _eqLogic.id).show();
 }
