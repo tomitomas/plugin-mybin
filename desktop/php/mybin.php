@@ -306,7 +306,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								<?php
 								foreach ($eqLogics as $eqLogic) {
 									echo $eqLogic->getId();
-									echo $_GET["id"];
+									echo 'get: '.$_GET["id"];
 									if($eqLogic->getId() == $_GET["id"]) {
 										$dates = $eqLogic->getNextCollectsAndNotifs();
 										foreach ($dates as $key => $value) {
