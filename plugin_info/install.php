@@ -22,6 +22,8 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
   function mybin_install() {
       mybin::createWhole();
       config::save('calendarType', 'collect', 'mybin');
+      config::save('notifs', 1, 'mybin');
+      config::save('calendar', 1, 'mybin');
   }
 
 // Fonction exécutée automatiquement après la mise à jour du plugin
@@ -30,6 +32,16 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
       $calendarType = config::byKey('calendarType','mybin','unset',true);
       if ($calendarType == 'unset') {
           config::save('calendarType', 'collect', 'mybin');
+      }
+
+      $notifs = config::byKey('notifs','mybin','unset',true);
+      if ($notifs == 'unset') {
+          config::save('notifs', 1, 'mybin');
+      }
+
+      $calendar = config::byKey('calendar','mybin','unset',true);
+      if ($calendar == 'unset') {
+          config::save('calendar', 1, 'mybin');
       }
       
       $wholeFound = false;

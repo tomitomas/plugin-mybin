@@ -390,55 +390,65 @@ class mybin extends eqLogic {
         if ($this->getConfiguration('type') == 'whole') {
             $eqLogics = self::byType(__CLASS__, true);
 
-            //Status
             $binnotifs = "";
             $binscript = "";
-            foreach ($eqLogics as $eqLogic) {
-                if ($eqLogic->getConfiguration('type') == 'whole') {
-                    continue;
-                }
-                $binCmd = $eqLogic->getCmd(null, 'bin');
-                $binStatus = $binCmd->execCmd();
-                if ($eqLogic->getIsEnable() == 1 && $binStatus == 1) {
-                    $binimg = $eqLogic->getConfiguration('color');
-                    $ackCmd = $eqLogic->getCmd(null, 'ack');
-                    $counterCmd = $eqLogic->getCmd(null, 'counter');
-                    $binnotifs = $binnotifs . '<div style="display: inline-block;" class="cmd ack'.$ackCmd->getId().' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="80px"/><br/><i class="fas fa-tachometer-alt"></i> ' . $counterCmd->execCmd() . '</div>';
-                    $binscript = $binscript . "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
-                }
-            }
-            $replace['#binscript#'] = $binscript;
-            if ($binnotifs == "") {
-                $binnotifs = '<span class="nobin"><br/><i>'.__('Il n\'y a (plus) aucune poubelle à sortir',__FILE__).'</i></span>';
-            }
-            $replace['#binnotifs#'] = $binnotifs;
-
-            // calendar
-            $dtDisplay = new DateTime("now");
-            $calendarType = config::byKey('calendarType','mybin','',true);
-            for ($i = 1; $i <= 7; $i++) {                         
-                $day = 1 * $dtDisplay->format('w');
-                $dateD = $dtDisplay->format('d');
-                $dateM = $dtDisplay->format('m');
-                $replace['#day'.$i.'#'] = $this->getDayLetter($day);
-                $replace['#date'.$i.'#'] = $dateD . '/' . $dateM;
-                $display = "";
+            $bincalendar = "";
+            //Status
+            if (config::byKey('notifs','mybin','',true) == 1) {
                 foreach ($eqLogics as $eqLogic) {
                     if ($eqLogic->getConfiguration('type') == 'whole') {
                         continue;
                     }
-                    $dtCheck = DateTime::createFromFormat("Y-m-d", $dtDisplay->format("Y-m-d"));
-                    if ($eqLogic->getConfiguration('notif_days', 0) > 0 && $calendarType == 'notif') {
-                        $dtCheck->modify('+'.$eqLogic->getConfiguration('notif_days').' day');
-                    }
-                    if ($eqLogic->checkIfBin($dtCheck)) {
-                        $color = $eqLogic->getConfiguration('color');
-                        $display = $display . '<img src="plugins/mybin/data/images/'.$color.'.png" width="20px">';
+                    $binCmd = $eqLogic->getCmd(null, 'bin');
+                    $binStatus = $binCmd->execCmd();
+                    if ($eqLogic->getIsEnable() == 1 && $binStatus == 1) {
+                        $binimg = $eqLogic->getConfiguration('color');
+                        $ackCmd = $eqLogic->getCmd(null, 'ack');
+                        $counterCmd = $eqLogic->getCmd(null, 'counter');
+                        $binnotifs = $binnotifs . '<div style="display: inline-block;" class="cmd ack'.$ackCmd->getId().' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="80px"/>';
+                        $binnotifs = $binnotifs . '<br/><i class="fas fa-tachometer-alt"></i> ' . $counterCmd->execCmd();
+                        $binnotifs = $binnotifs . '</div>';
+                        $binscript = $binscript . "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
                     }
                 }
-                $replace['#binimg_day'.$i.'#'] = $display;
-                $dtDisplay->modify('+1 day');
+
+                if ($binnotifs == "") {
+                    $binnotifs = '<span class="nobin"><br/><i>'.__('Il n\'y a (plus) aucune poubelle à sortir',__FILE__).'</i></span>';
+                }
             }
+            $replace['#binscript#'] = $binscript;
+            $replace['#binnotifs#'] = $binnotifs;
+
+            // calendar
+            if (config::byKey('calendar','mybin','',true) == 1) {
+                $bincalendar = "calendar";
+                $dtDisplay = new DateTime("now");
+                $calendarType = config::byKey('calendarType','mybin','',true);
+                for ($i = 1; $i <= 7; $i++) {                         
+                    $day = 1 * $dtDisplay->format('w');
+                    $dateD = $dtDisplay->format('d');
+                    $dateM = $dtDisplay->format('m');
+                    $replace['#day'.$i.'#'] = $this->getDayLetter($day);
+                    $replace['#date'.$i.'#'] = $dateD . '/' . $dateM;
+                    $display = "";
+                    foreach ($eqLogics as $eqLogic) {
+                        if ($eqLogic->getConfiguration('type') == 'whole') {
+                            continue;
+                        }
+                        $dtCheck = DateTime::createFromFormat("Y-m-d", $dtDisplay->format("Y-m-d"));
+                        if ($eqLogic->getConfiguration('notif_days', 0) > 0 && $calendarType == 'notif') {
+                            $dtCheck->modify('+'.$eqLogic->getConfiguration('notif_days').' day');
+                        }
+                        if ($eqLogic->checkIfBin($dtCheck)) {
+                            $color = $eqLogic->getConfiguration('color');
+                            $display = $display . '<img src="plugins/mybin/data/images/'.$color.'.png" width="20px">';
+                        }
+                    }
+                    $replace['#binimg_day'.$i.'#'] = $display;
+                    $dtDisplay->modify('+1 day');
+                }
+            }
+            $replace['#bincalendar#'] = $bincalendar;
 
             $html = template_replace($replace, getTemplate('core', $version, 'mybin.template', __CLASS__));
             cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
