@@ -440,11 +440,13 @@ class mybin extends eqLogic {
                         if ($eqLogic->getConfiguration('notif_days', 0) > 0 && $calendarType == 'notif') {
                             $dtCheck->modify('+'.$eqLogic->getConfiguration('notif_days').' day');
                         }
-                        $color = "nothing";
                         if ($eqLogic->checkIfBin($dtCheck)) {
                             $color = $eqLogic->getConfiguration('color');
+                            $display = $display . '<img src="plugins/mybin/data/images/'.$color.'.png" width="20px">';
                         }
-                        $display = $display . '<img src="plugins/mybin/data/images/'.$color.'.png" width="20px">';
+                    }
+                    if ($display == "") {
+                        $display = '<img src="plugins/mybin/data/images/nothing.png" width="20px">';
                     }
                     $replace['#binimg_day'.$i.'#'] = $display;
                     $dtDisplay->modify('+1 day');
