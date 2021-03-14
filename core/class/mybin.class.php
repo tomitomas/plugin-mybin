@@ -833,7 +833,7 @@ class mybin extends eqLogic {
         }
 
         ksort($datesArr);
-        array_splice($datesArr, 0, 10);
+        array_splice($datesArr, 10, count($datesArr));
 
         foreach ($datesArr as $key => $value) {
             log::add(__CLASS__, 'debug', $this->getHumanName() . ' after sort/splice ' . $key . ' : ' . $value);
