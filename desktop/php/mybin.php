@@ -313,10 +313,16 @@ foreach ($eqLogics as $eqLogic) {
 								foreach ($allDates as $key => $value) {
 									echo '<div class="allDates dates-'.$key.'" style="display: none;">';
 									foreach ($value as $collect => $notif) {
+										$color = 'primary';
+										if (substr($collect, -1) <> '0' && substr($collect, -1) <> '5') {
+											$color = 'warning';
+										}
+										$dtCollect = DateTime::createFromFormat("Y-m-d H:i", $collect);
+										$dtNotif = DateTime::createFromFormat("Y-m-d H:i", $notif);
 										echo '<label class="col-xs-3 control-label" >{{Ramassage}}</label>';
-										echo '<div class="col-xs-3" ><span class="label label-primary">'.$collect.'</span></div>';
+										echo '<div class="col-xs-3" ><span class="label label-'.$color.'">'.$dtCollect->format('l j F Y').' {{à}} '.$dtCollect->format('G:i').'</span></div>';
 										echo '<label class="col-xs-3 control-label" >{{Notification}}</label>';
-										echo '<div class="col-xs-3"><span class="label label-success">'.$notif.'</span></div>';
+										echo '<div class="col-xs-3"><span class="label label-success">'.$dtNotif->format('l j F Y').' {{à}} '.$dtNotif->format('G:i').'</span></div>';
 									}
 									echo '</div>';
 								}
