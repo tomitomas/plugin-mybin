@@ -300,6 +300,22 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
                         </div>
+						<div class="col-lg-5">
+							<legend><i class="icon jeedomapp-preset"></i> {{Informations}}</legend>
+							<div class="form-group">
+								<?php
+								foreach ($eqLogics as $eqLogic) {
+									if($eqLogic->getId() == $_GET["id"]) {
+										$dates = $eqLogic->getNextCollectsAndNotifs();
+										foreach ($dates as $key => $value) {
+											echo $key . '---' . $value;
+										}
+										break;
+									}
+								}
+								?>
+							</div>
+                        </div>
 					</fieldset>
 				</form>
 				<hr>
