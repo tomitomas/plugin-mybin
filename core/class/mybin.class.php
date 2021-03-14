@@ -763,9 +763,9 @@ class mybin extends eqLogic {
         $dtCheck->setTime($this->getConfiguration('hour'), $this->getConfiguration('minute'));
         for ($i = 0; $i <= 365; $i++) {
             $dtCheck->modify('+'.$i.' day');
-            $month = 1 * $dt->format('n');
-            $week = 1 * $dt->format('W');
-            $day = 1 * $dt->format('w');
+            $month = 1 * $dtCheck->format('n');
+            $week = 1 * $dtCheck->format('W');
+            $day = 1 * $dtCheck->format('w');
             if ($this->getConfiguration('month_'.$month) == 1 && (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) && $this->getConfiguration('day_'.$day) == 1) {
                 if ($dtCheck > $dtNow) {
                     $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $dtCheck->format("Y-m-d H:i"));
