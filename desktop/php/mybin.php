@@ -306,8 +306,9 @@ foreach ($eqLogics as $eqLogic) {
 							</div>
                         </div>
 						<div class="col-lg-5">
-							<legend><i class="icon jeedomapp-preset"></i> {{Informations}}</legend>
+							<legend><i class="fas fa-info-circle"></i> {{Informations}}</legend>
 							{{Avec votre configuration, voici les 10 prochaines dates de ramassage et de notification :}}
+							<br>
 							<div class="form-group">
 								<?php
 								foreach ($allDates as $key => $value) {
@@ -320,9 +321,9 @@ foreach ($eqLogics as $eqLogic) {
 										$dtCollect = DateTime::createFromFormat("Y-m-d H:i", $collect);
 										$dtNotif = DateTime::createFromFormat("Y-m-d H:i", $notif);
 										echo '<label class="col-xs-3 control-label" >{{Ramassage}}</label>';
-										echo '<div class="col-xs-3" ><span class="label label-'.$color.'">'.$dtCollect->format('l j F Y').' {{à}} '.$dtCollect->format('G:i').'</span></div>';
+										echo '<div class="col-xs-3" ><span class="label label-'.$color.'">'.date_fr($dtCollect->format('l j F Y')).' {{à}} '.$dtCollect->format('G:i').'</span></div>';
 										echo '<label class="col-xs-3 control-label" >{{Notification}}</label>';
-										echo '<div class="col-xs-3"><span class="label label-success">'.$dtNotif->format('l j F Y').' {{à}} '.$dtNotif->format('G:i').'</span></div>';
+										echo '<div class="col-xs-3"><span class="label label-success">'.date_fr($dtNotif->format('l j F Y')).' {{à}} '.$dtNotif->format('G:i').'</span></div>';
 									}
 									echo '</div>';
 								}
