@@ -7,6 +7,8 @@
 # 14/03/2021
 - Possibility to choose elements to display on the global widget
 - Transparent background for the calendar
+- Automatic sort of specific dates
+- Several fixes
 
 # 13/03/2021
 - Automatic removal of past specific dates
