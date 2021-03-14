@@ -196,7 +196,7 @@ function addCron(_cron) {
   div += '<span class="input-group-btn">';
   div += '<a class="btn btn-default bt_removeCron roundedLeft" data-l1key="specific_cron" data-type="specific_cron"><i class="fas fa-minus-circle"></i></a>';
   div += '</span>';
-  div += '<input type="text" class="eqLogicAttr form-control mycron" data-type="specific_cron" data-l1key="mycron"/>';
+  div += '<input type="text" class="form-control input-sm value execute eqLogicAttr mycron" data-type="specific_cron" data-l1key="mycron"/>';
   div += '<span class="input-group-btn">';
   div += '<a class="btn btn-default cursor jeeHelper" data-helper="cron">';
   div += '<i class="fas fa-question-circle"></i>';
@@ -227,7 +227,7 @@ function saveEqLogic(_eqLogic) {
 
   _eqLogic.configuration.specific_day = data;
 
-  _eqLogic.configuration.specific_cron = $('#div_specific_cron .specific_cron').getValues('.expressionAttr');
+  _eqLogic.configuration.specific_cron = $('#div_specific_cron .specific_cron').getValues('.mycron');
 
   return _eqLogic;
 }
