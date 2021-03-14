@@ -309,7 +309,6 @@ $eqLogics = eqLogic::byType($plugin->getId());
 										foreach ($dates as $key => $value) {
 											echo $key . '---' . $value . '<br>';
 										}
-										break;
 								}
 								?>
 							</div>
