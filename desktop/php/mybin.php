@@ -308,7 +308,6 @@ foreach ($eqLogics as $eqLogic) {
 						<div class="col-lg-5">
 							<legend><i class="icon jeedomapp-preset"></i> {{Informations}}</legend>
 							<div class="form-group">
-								<div
 								<?php
 								foreach ($allDates as $key => $value) {
 									echo '<div class="allDates dates-'.$key.'">';
