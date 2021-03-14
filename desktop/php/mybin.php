@@ -210,6 +210,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     </span>
 								</div>
 							</div>
+							<br>
 							<div class="form-group">
 								<label class="col-sm-3 control-label help" data-help="{{Cron}}">{{Cron}}</label>
 							    <div class="col-sm-7">
