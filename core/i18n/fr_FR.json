@@ -86,7 +86,9 @@
         "Mois de ramassage": "Mois de ramassage",
         "Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.": "Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.",
         "Avec votre configuration, voici les 10 prochaines dates de ramassage et de notification :": "Avec votre configuration, voici les 10 prochaines dates de ramassage et de notification :",
-        "Informations": "Informations"
+        "Informations": "Informations",
+        "Mode expert": "Mode expert",
+        "Vous pouvez ajouter des expressions cron pour gérer les dates de ramassage particulières": "Vous pouvez ajouter des expressions cron pour gérer les dates de ramassage particulières"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",

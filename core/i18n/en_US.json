@@ -86,7 +86,9 @@
         "Mois de ramassage": "Month(s) of collect",
         "Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.": "To be notified the very day of collect, keep the field empty. Be careful at the time in this case.",
         "Avec votre configuration, voici les 10 prochaines dates de ramassage et de notification :": "With your configuration, here are the next 10 dates of collect:",
-        "Informations": "Information"
+        "Informations": "Information",
+        "Mode expert": "Expert mode",
+        "Vous pouvez ajouter des expressions cron pour gérer les dates de ramassage particulières": "You can add cron expressions to manage specific collect dates"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
