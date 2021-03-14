@@ -310,7 +310,7 @@ foreach ($eqLogics as $eqLogic) {
 							<div class="form-group">
 								<?php
 								foreach ($allDates as $key => $value) {
-									echo '<div class="allDates dates-'.$key.'">';
+									echo '<div class="allDates dates-'.$key.'" style="display: none;">';
 									foreach ($value as $collect => $notif) {
 										echo $collect . '---' . $notif . '<br>';
 									}
