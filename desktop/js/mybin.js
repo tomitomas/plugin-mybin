@@ -191,7 +191,7 @@ function addDay(_day) {
 function addCron(_cron) {
   var div = '<div class="specific_cron">';
   div += '<div class="form-group">';
-  div += '<div class="col-sm-6">';
+  div += '<div class="col-sm-7">';
   div += '<div class="input-group">';
   div += '<span class="input-group-btn">';
   div += '<a class="btn btn-default bt_removeCron roundedLeft" data-l1key="specific_cron" data-type="specific_cron"><i class="fas fa-minus-circle"></i></a>';
@@ -208,7 +208,7 @@ function addCron(_cron) {
   div += '</div>';
 
   $('#div_specific_cron').append(div);
-  $('#div_specific_cron .specific_cron').last().setValues(_day, '.mycron');
+  $('#div_specific_cron .specific_cron').last().setValues(_cron, '.mycron');
 }
 
 // Fct core permettant de sauvegarder
