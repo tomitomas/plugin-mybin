@@ -309,6 +309,20 @@ class mybin extends eqLogic {
                 }
             }
         }
+        
+        $specificCrons = $this->getConfiguration('specific_cron');
+        if (is_array($specificCrons)) {
+            foreach ($specificCrons as $specificCron) {
+                if (isset($specificCron['mycron'])) {
+                    $cron = new cron();
+                    $cron->setSchedule($specificCron['mycron']);
+                    if (!$cron->getNextRunDate()) {
+                        throw new Exception($this->getHumanName() . ": " . __('L\'expression cron n\'est pas valide :',__FILE__) . $specificDay['myday']);
+                    }
+                }
+            }
+        }
+
         $this->setConfiguration('image',$this->getImage());
     }
 
