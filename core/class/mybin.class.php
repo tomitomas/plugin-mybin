@@ -91,11 +91,11 @@ class mybin extends eqLogic {
         if ($delay > 0) {
             $dt->modify('+'.$delay.' day');
         }
-        $month = 1 * date('n');
-        $week = 1 * date('W');
-        $day = 1 * date('w');
-        $hour = 1 * date('G');
-        $minute = 1 * date('i');
+        $month = 1 * $dt->format('n');
+        $week = 1 * $dt->format('W');
+        $day = 1 * $dt->format('w');
+        $hour = 1 * $dt->format('G');
+        $minute = 1 * $dt->format('i');
         
         $isSpecificDay = false;
         $isMonth = false;
@@ -150,11 +150,11 @@ class mybin extends eqLogic {
         
         $dt = new DateTime("now");
 
-        $month = 1 * date('n');
-        $week = 1 * date('W');
-        $day = 1 * date('w');
-        $hour = 1 * date('G');
-        $minute = 1 * date('i');
+        $month = 1 * $dt->format('n');
+        $week = 1 * $dt->format('W');
+        $day = 1 * $dt->format('w');
+        $hour = 1 * $dt->format('G');
+        $minute = 1 * $dt->format('i');
         
         $isSpecificDay = false;
         $ismonth = false;
@@ -413,9 +413,10 @@ class mybin extends eqLogic {
                 }
 
                 if ($binnotifs == "") {
-                    $binnotifs = '<span class="nobin"><br/><i>'.__('Il n\'y a (plus) aucune poubelle à sortir',__FILE__).'</i></span>';
+                    $binnotifs = 'none';
                 }
             }
+            $replace['#binmsg#'] = __('Il n\'y a (plus) aucune poubelle à sortir',__FILE__);
             $replace['#binscript#'] = $binscript;
             $replace['#binnotifs#'] = $binnotifs;
 
@@ -439,10 +440,11 @@ class mybin extends eqLogic {
                         if ($eqLogic->getConfiguration('notif_days', 0) > 0 && $calendarType == 'notif') {
                             $dtCheck->modify('+'.$eqLogic->getConfiguration('notif_days').' day');
                         }
+                        $color = "nothing";
                         if ($eqLogic->checkIfBin($dtCheck)) {
                             $color = $eqLogic->getConfiguration('color');
-                            $display = $display . '<img src="plugins/mybin/data/images/'.$color.'.png" width="20px">';
                         }
+                        $display = $display . '<img src="plugins/mybin/data/images/'.$color.'.png" width="20px">';
                     }
                     $replace['#binimg_day'.$i.'#'] = $display;
                     $dtDisplay->modify('+1 day');

@@ -7,7 +7,10 @@
 		<a href="/index.php?v=d&m=mybin&p=mybin" class="reportModeHidden">#name_display# <span class="object_name">#object_name#</span></a>
 	</center>   
     <div class="notifs">
-        <center>
+        <center class="binmsg">
+            <span><br/><i>#binmsg#</i></span>
+        </center>
+        <center class="binnotifs">
             #binnotifs#
         </center>
     </div>
@@ -39,6 +42,12 @@
         }
         if ('#binnotifs#' == ''){
             $('.eqLogic[data-eqLogic_uid=#uid#] .notifs').remove();
+        } else {
+            if ('#binnotifs#' != 'none') { 
+                $('.eqLogic[data-eqLogic_uid=#uid#] .binmsg').remove();
+            } else {
+                $('.eqLogic[data-eqLogic_uid=#uid#] .binnotifs').remove();
+            }
         }
     </script> 
 </div>

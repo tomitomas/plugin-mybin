@@ -7,6 +7,8 @@
 # 14/03/2021
 - Possibilité de choisir les éléments à afficher sur le widget global
 - Fond transparent pour le calendrier
+- Tri automatique des dates spécifiques
+- Plusieurs corrections
 
 # 13/03/2021
 - Supression automatique des dates spécifiques passées
