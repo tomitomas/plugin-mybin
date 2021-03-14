@@ -305,15 +305,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							<div class="form-group">
 								<?php
 								foreach ($eqLogics as $eqLogic) {
-									echo $eqLogic->getId();
-									echo 'get: '.$_GET["id"];
-									if($eqLogic->getId() == $_GET["id"]) {
 										$dates = $eqLogic->getNextCollectsAndNotifs();
 										foreach ($dates as $key => $value) {
-											echo $key . '---' . $value;
+											echo $key . '---' . $value . '<br>';
 										}
 										break;
-									}
 								}
 								?>
 							</div>
