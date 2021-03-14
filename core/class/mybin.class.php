@@ -772,7 +772,7 @@ class mybin extends eqLogic {
                     $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
                     $dtNotif->setTime($this->getConfiguration('notif_hour'), $this->getConfiguration('notif_minute'));
                     $datesArr[$dtCheck->format('Y-m-d H:i')] = $dtNotif->format('Y-m-d H:i');
-                    log::add(__CLASS__, 'debug', $this->getHumanName() . ' add ' . $dtCheck->format('Y-m-d H:i'));
+                    log::add(__CLASS__, 'debug', $this->getHumanName() . ' add from dates ' . $dtCheck->format('Y-m-d H:i'));
                     $nbDates++;
                     if ($nbDates == 10) {
                         break;
@@ -796,7 +796,7 @@ class mybin extends eqLogic {
                             $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
                             $dtNotif->setTime($this->getConfiguration('notif_hour'), $this->getConfiguration('notif_minute'));
                             $datesArr[$nextrun->format('Y-m-d H:i')] = $dtNotif->format('Y-m-d H:i');
-                            log::add(__CLASS__, 'debug', $this->getHumanName() . ' add ' . $nextrun->format('Y-m-d H:i'));
+                            log::add(__CLASS__, 'debug', $this->getHumanName() . ' add from crons ' . $nextrun->format('Y-m-d H:i'));
                             $nbRuns++;
                             if ($nbRuns == 10) {
                                 break;
@@ -822,7 +822,7 @@ class mybin extends eqLogic {
                         $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
                         $dtNotif->setTime($this->getConfiguration('notif_hour'), $this->getConfiguration('notif_minute'));
                         $datesArr[$dtCheck->format('Y-m-d H:i')] = $dtNotif->format('Y-m-d H:i');
-                        log::add(__CLASS__, 'debug', $this->getHumanName() . ' add ' . $dtCheck->format('Y-m-d H:i'));
+                        log::add(__CLASS__, 'debug', $this->getHumanName() . ' add from days ' . $dtCheck->format('Y-m-d H:i'));
                         $nbDays++;
                         if ($nbDays == 10) {
                             break;
@@ -834,10 +834,6 @@ class mybin extends eqLogic {
 
         ksort($datesArr);
         array_splice($datesArr, 10, count($datesArr));
-
-        foreach ($datesArr as $key => $value) {
-            log::add(__CLASS__, 'debug', $this->getHumanName() . ' after sort/splice ' . $key . ' : ' . $value);
-        }
 
         return $datesArr;
 
