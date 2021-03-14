@@ -817,6 +817,7 @@ class mybin extends eqLogic {
             foreach ($specificDays as $specificDay) {
                 if (isset($specificDay['myday'])) {
                     $dtCheck = DateTime::createFromFormat("Y-m-d", $specificDay['myday']);
+                    $dtCheck->setTime($this->getConfiguration('hour'), $this->getConfiguration('minute'));
                     if ($dtCheck > $dtNow) {
                         $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $dtCheck->format("Y-m-d H:i"));
                         $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');

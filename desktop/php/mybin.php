@@ -5,6 +5,11 @@ if (!isConnect('admin')) {
 $plugin = plugin::byId('mybin');
 sendVarToJS('eqType', $plugin->getId());
 $eqLogics = eqLogic::byType($plugin->getId());
+
+$allDates = array();
+foreach ($eqLogics as $eqLogic) {
+	$allDates[$eqLogic->getId()] = $eqLogic->getNextCollectsAndNotifs();
+}
 ?>
 
 <div class="row row-overflow">
@@ -303,12 +308,14 @@ $eqLogics = eqLogic::byType($plugin->getId());
 						<div class="col-lg-5">
 							<legend><i class="icon jeedomapp-preset"></i> {{Informations}}</legend>
 							<div class="form-group">
+								<div
 								<?php
-								foreach ($eqLogics as $eqLogic) {
-										$dates = $eqLogic->getNextCollectsAndNotifs();
-										foreach ($dates as $key => $value) {
-											echo $key . '---' . $value . '<br>';
-										}
+								foreach ($allDates as $key => $value) {
+									echo '<div class="allDates dates-'.$key.'">';
+									foreach ($value as $collect => $notif) {
+										echo $collect . '---' . $notif . '<br>';
+									}
+									echo '</div>';
 								}
 								?>
 							</div>
