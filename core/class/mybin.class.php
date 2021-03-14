@@ -390,10 +390,11 @@ class mybin extends eqLogic {
         if ($this->getConfiguration('type') == 'whole') {
             $eqLogics = self::byType(__CLASS__, true);
 
+            $binnotifs = "";
+            $binscript = "";
+            $bincalendar = "";
             //Status
             if (config::byKey('notifs','mybin','',true) == 1) {
-                $binnotifs = "";
-                $binscript = "";
                 foreach ($eqLogics as $eqLogic) {
                     if ($eqLogic->getConfiguration('type') == 'whole') {
                         continue;
@@ -412,15 +413,17 @@ class mybin extends eqLogic {
                         $binscript = $binscript . "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
                     }
                 }
-                $replace['#binscript#'] = $binscript;
+
                 if ($binnotifs == "") {
                     $binnotifs = '<span class="nobin"><br/><i>'.__('Il n\'y a (plus) aucune poubelle à sortir',__FILE__).'</i></span>';
                 }
-                $replace['#binnotifs#'] = $binnotifs;
             }
+            $replace['#binscript#'] = $binscript;
+            $replace['#binnotifs#'] = $binnotifs;
 
             // calendar
             if (config::byKey('calendar','mybin','',true) == 1) {
+                $bincalendar = "calendar";
                 $dtDisplay = new DateTime("now");
                 $calendarType = config::byKey('calendarType','mybin','',true);
                 for ($i = 1; $i <= 7; $i++) {                         
@@ -447,6 +450,7 @@ class mybin extends eqLogic {
                     $dtDisplay->modify('+1 day');
                 }
             }
+            $replace['#bincalendar#'] = $bincalendar;
 
             $html = template_replace($replace, getTemplate('core', $version, 'mybin.template', __CLASS__));
             cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);

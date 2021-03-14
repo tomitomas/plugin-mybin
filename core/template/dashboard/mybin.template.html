@@ -6,13 +6,12 @@
 		<span class="reportModeVisible">#name_display# <span class="object_name">#object_name#</span></span>
 		<a href="/index.php?v=d&m=mybin&p=mybin" class="reportModeHidden">#name_display# <span class="object_name">#object_name#</span></a>
 	</center>   
-    <div>
+    <div class="notifs">
         <center>
             #binnotifs#
         </center>
     </div>
-    <br/>
-    <div>
+    <div class="calendar">
         <center>
             <table style="width: 90%;">
                 <tr>
@@ -38,5 +37,12 @@
     </div>
     <script>
         #binscript#
+
+        if ('#bincalendar#' == ''){
+            $('.eqLogic[data-eqLogic_uid=#uid#] .calendar').remove();
+        }
+        if ('#binnotifs#' == ''){
+            $('.eqLogic[data-eqLogic_uid=#uid#] .notifs').remove();
+        }
     </script> 
 </div>
