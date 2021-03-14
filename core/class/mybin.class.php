@@ -413,9 +413,10 @@ class mybin extends eqLogic {
                 }
 
                 if ($binnotifs == "") {
-                    $binnotifs = '<span class="nobin"><br/><i>'.__('Il n\'y a (plus) aucune poubelle à sortir',__FILE__).'</i></span>';
+                    $binnotifs = 'none';
                 }
             }
+            $replace['#binmsg#'] = __('Il n\'y a (plus) aucune poubelle à sortir',__FILE__);
             $replace['#binscript#'] = $binscript;
             $replace['#binnotifs#'] = $binnotifs;
 

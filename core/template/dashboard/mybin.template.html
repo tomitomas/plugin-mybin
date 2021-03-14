@@ -8,6 +8,7 @@
 	</center>   
     <div class="notifs">
         <center>
+            <span class="nobin"><br/><i>#binmsg#</i></span>
             #binnotifs#
         </center>
     </div>
@@ -39,6 +40,10 @@
         }
         if ('#binnotifs#' == ''){
             $('.eqLogic[data-eqLogic_uid=#uid#] .notifs').remove();
+        } else {
+            if ('#binnotifs#' != 'none') { 
+                $('.eqLogic[data-eqLogic_uid=#uid#] .nobin').remove();
+            }
         }
     </script> 
 </div>
