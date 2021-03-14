@@ -321,11 +321,11 @@ foreach ($eqLogics as $eqLogic) {
 										$help = '';
 										if (substr($collect, -1) <> '0' && substr($collect, -1) <> '5') {
 											$color = 'warning';
-											$help = 'help" data-help="{{Vous pouvez ajouter des expressions cron pour gérer les dates de ramassage particulières}}"'
+											$help = 'help';
 										}
 										$dtCollect = DateTime::createFromFormat("Y-m-d H:i", $collect);
 										$dtNotif = DateTime::createFromFormat("Y-m-d H:i", $notif);
-										echo '<label class="col-xs-3 control-label'.$help.'" data-help="{{Le plugin ne fonctionne que toutes les 5min. Cette date de ramassage sera ignorée. Changez votre cron.}}">{{Ramassage}}</label>';
+										echo '<label class="col-xs-3 control-label '.$help.'" data-help="{{Le plugin ne fonctionne que toutes les 5min. Cette date de ramassage sera ignorée. Changez votre cron.}}">{{Ramassage}}</label>';
 										echo '<div class="col-xs-3" ><span class="label label-'.$color.'">'.date_fr($dtCollect->format('l')).' '.$dtCollect->format('j').' '.date_fr($dtCollect->format('F')).' '.$dtCollect->format('Y').' {{à}} '.$dtCollect->format('G:i').'</span></div>';
 										echo '<label class="col-xs-3 control-label" >{{Notification}}</label>';
 										echo '<div class="col-xs-3"><span class="label label-success">'.date_fr($dtNotif->format('l')).' '.$dtNotif->format('j').' '.date_fr($dtNotif->format('F')).' '.$dtNotif->format('Y').' {{à}} '.$dtNotif->format('G:i').'</span></div>';
