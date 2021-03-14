@@ -310,6 +310,7 @@ foreach ($eqLogics as $eqLogic) {
 							{{Avec votre configuration, voici les 10 prochaines dates de ramassage et de notification :}}
 							<br>
 							<div class="form-group">
+								<br>
 								<?php
 								foreach ($allDates as $key => $value) {
 									echo '<div class="allDates dates-'.$key.'" style="display: none;">';
@@ -321,9 +322,9 @@ foreach ($eqLogics as $eqLogic) {
 										$dtCollect = DateTime::createFromFormat("Y-m-d H:i", $collect);
 										$dtNotif = DateTime::createFromFormat("Y-m-d H:i", $notif);
 										echo '<label class="col-xs-3 control-label" >{{Ramassage}}</label>';
-										echo '<div class="col-xs-3" ><span class="label label-'.$color.'">'.date_fr($dtCollect->format('l j F Y')).' {{à}} '.$dtCollect->format('G:i').'</span></div>';
+										echo '<div class="col-xs-3" ><span class="label label-'.$color.'">'.date_fr($dtCollect->format('l')).' '.$dtCollect->format('j').' '.date_fr($dtCollect->format('F')).' '.$dtCollect->format('Y').' {{à}} '.$dtCollect->format('G:i').'</span></div>';
 										echo '<label class="col-xs-3 control-label" >{{Notification}}</label>';
-										echo '<div class="col-xs-3"><span class="label label-success">'.date_fr($dtNotif->format('l j F Y')).' {{à}} '.$dtNotif->format('G:i').'</span></div>';
+										echo '<div class="col-xs-3"><span class="label label-success">'.date_fr($dtNotif->format('l')).' '.$dtNotif->format('j').' '.date_fr($dtNotif->format('F')).' '.$dtNotif->format('Y').' {{à}} '.$dtNotif->format('G:i').'</span></div>';
 									}
 									echo '</div>';
 								}
