@@ -186,7 +186,14 @@ function saveEqLogic(_eqLogic) {
   }
   _eqLogic.configuration.action_collect = $('#div_action_collect .action_collect').getValues('.expressionAttr');
   _eqLogic.configuration.action_notif = $('#div_action_notif .action_notif').getValues('.expressionAttr');
-  _eqLogic.configuration.specific_day = $('#div_specific_day .specific_day').getValues('.myday');
+  data = $('#div_specific_day .specific_day').getValues('.myday');
+
+  data.sort(function(a, b) {
+    var x = a.myday, y = b.myday;
+    return x < y ? -1 : x > y ? 1 : 0;
+  });
+
+  _eqLogic.configuration.specific_day = data;
 
   return _eqLogic;
 }
