@@ -762,7 +762,7 @@ class mybin extends eqLogic {
         $dtCheck = new DateTime("now");
         $dtCheck->setTime($this->getConfiguration('hour'), $this->getConfiguration('minute'));
         for ($i = 0; $i <= 365; $i++) {
-            $dtCheck->modify('+'.$i.' day');
+            $dtCheck->modify('+1 day');
             $month = 1 * $dtCheck->format('n');
             $week = 1 * $dtCheck->format('W');
             $day = 1 * $dtCheck->format('w');
@@ -834,6 +834,10 @@ class mybin extends eqLogic {
 
         ksort($datesArr);
         array_splice($datesArr, 0, 10);
+
+        foreach ($datesArr as $key => $value) {
+            log::add(__CLASS__, 'debug', $this->getHumanName() . ' after sort/splice ' . $key . ' : ' . $value);
+        }
 
         return $datesArr;
 
