@@ -103,6 +103,6 @@
         "L\\'heure de notification est après l\\'heure de collecte": "L\\'heure de notification est après l\\'heure de collecte",
         "Il n\'y a (plus) aucune poubelle à sortir": "Il n\'y a (plus) aucune poubelle à sortir",
         "Le seuil doit être un entier positif ou être laissé vide": "Le seuil doit être un entier positif ou être laissé vide", 
-        "Le nombre de jours pour la notification doit être un entier positif ou être laissé vide": "Le nombre de jours pour la notification doit être un entier positif ou être laissé vide"
+        "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide": "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide"
     }
 }
