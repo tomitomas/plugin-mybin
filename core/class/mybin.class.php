@@ -217,7 +217,7 @@ class mybin extends eqLogic {
         }
         
         if ($this->getConfiguration('month_'.$month) == 1) {
-            $isMonth = true;
+            $ismonth = true;
         }
         if (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) {
             $isweek = true;
