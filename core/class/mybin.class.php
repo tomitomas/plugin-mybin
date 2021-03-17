@@ -587,7 +587,7 @@ class mybin extends eqLogic {
                     $cron->setSchedule($specificCron['mycron']);
                     $nextRunCron = $this->getNextRunDate($cron, $dt);
                     if ($nextRunCron != false) {
-                        $dtCheck = DateTime::createFromFormat("Y-m-d H:i:s", $nextRunCron);
+                        $dtCheck = DateTime::createFromFormat("Y-m-d H:i", $nextRunCron->format("Y-m-d H:i"));
                         if ($todayStr == $dtCheck->format("Y-m-d")) {
                             $isSpecificCron = true;
                             break;
