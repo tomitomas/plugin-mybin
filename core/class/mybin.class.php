@@ -60,13 +60,11 @@ class mybin extends eqLogic {
         $cmd->save();
         /****************************************************************************************************************/
 
-        $week = 1 * date('W');
-        $day = 1 * date('w');
         $hour = 1 * date('G');
         $minute = 1 * date('i');
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkbin: day ' . $day . ', hour ' . $hour . ', minute ' . $minute);
-        $change = $change + $this->checkNotifBin($week, $day, $hour, $minute);
-        $change = $change + $this->checkAckBin($week, $day, $hour, $minute);
+        $change = $change + $this->checkNotifBin();
+        $change = $change + $this->checkAckBin();
+        $this->cleanSpecificDates();
         if ($change > 0 || ($hour == 0 && $minute == 5)) {
             $this->refreshWhole();
         }
@@ -83,35 +81,29 @@ class mybin extends eqLogic {
         }
     }
     
-    public function checkNotifBin($week, $day, $hour, $minute) {
+    public function checkNotifBin() {
         if (!$this->getIsEnable()) {
             return 0;
         }
         
         $dt = new DateTime("now");
+        $delay = $this->getConfiguration('notif_days', 0);
+        if ($delay > 0) {
+            $dt->modify('+'.$delay.' day');
+        }
+        $month = 1 * $dt->format('n');
+        $week = 1 * $dt->format('W');
+        $day = 1 * $dt->format('w');
+        $hour = 1 * $dt->format('G');
+        $minute = 1 * $dt->format('i');
         
         $isSpecificDay = false;
+        $isMonth = false;
         $isweek = false;
         $isday = false;
         $ishour = false;
         $isminute = false;
-        $myday = $day;
-        $myweek = $week;
-        if ($this->getConfiguration('notif_veille') == 1) {
-            $myday = $myday + 1;
-            if ($myday == 7) {
-                $myday = 0;
-            }
-            // attention aux semaines paires/impaires
-            // si myday == 1, cad Lundi, ca veut dire qu'on est aujourd'hui dimanche, dernier jour de la semaine ==> week +1
-            if ($myday == 1) {
-                $myweek = $myweek + 1;
-                if ($myweek > $this->lastWeekNumberOfYear()) {
-                    $myweek = 1;
-                }
-            }
-            $dt->modify('+1 day');
-        }
+
         $specificDays = $this->getConfiguration('specific_day');
         if (is_array($specificDays)) {
             foreach ($specificDays as $specificDay) {
@@ -124,11 +116,14 @@ class mybin extends eqLogic {
                 }
             }
         }
-        if (($myweek%2 == 0 && $this->getConfiguration('paire') == 1) || ($myweek%2 != 0 && $this->getConfiguration('impaire') == 1)) {
+        if ($this->getConfiguration('month_'.$month) == 1) {
+            $isMonth = true;
+        }
+        if (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) {
             $isweek = true;
         }
         for ($i = 0; $i <= 6; $i++) {
-            if ($this->getConfiguration('day_'.$i) == 1 && $i == $myday) {
+            if ($this->getConfiguration('day_'.$i) == 1 && $i == $day) {
                 $isday = true;
                 break;
             }
@@ -139,8 +134,8 @@ class mybin extends eqLogic {
         if ($this->getConfiguration('notif_hour') == $hour) {
             $ishour = true;
         }
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin: week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
-        if ((($isweek && $isday) || $isSpecificDay) && $ishour && $isminute) {
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin: month ' . $isMonth . ', week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
+        if ((($isMonth && $isweek && $isday) || $isSpecificDay) && $ishour && $isminute) {
             $this->notifBin();
             return 1;
         } else {
@@ -148,14 +143,21 @@ class mybin extends eqLogic {
         }
     }
     
-    public function checkAckBin($week, $day, $hour, $minute) {
+    public function checkAckBin() {
         if (!$this->getIsEnable()) {
             return 0;
         }
         
         $dt = new DateTime("now");
+
+        $month = 1 * $dt->format('n');
+        $week = 1 * $dt->format('W');
+        $day = 1 * $dt->format('w');
+        $hour = 1 * $dt->format('G');
+        $minute = 1 * $dt->format('i');
         
         $isSpecificDay = false;
+        $ismonth = false;
         $isweek = false;
         $isday = false;
         $ishour = false;
@@ -174,6 +176,9 @@ class mybin extends eqLogic {
             }
         }
         
+        if ($this->getConfiguration('month_'.$month) == 1) {
+            $ismonth = true;
+        }
         if (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) {
             $isweek = true;
         }
@@ -189,8 +194,8 @@ class mybin extends eqLogic {
         if ($this->getConfiguration('hour') == $hour) {
             $ishour = true;
         }
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin: week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
-        if ((($isweek && $isday) || $isSpecificDay) && $ishour && $isminute) {
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin: month ' . $ismonth . ', week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
+        if ((($ismonth && $isweek && $isday) || $isSpecificDay) && $ishour && $isminute) {
             $this->ackBin(true);
             return 1;
         } else {
@@ -248,15 +253,6 @@ class mybin extends eqLogic {
         $this->refreshWidget();
     }
 
-    public function lastWeekNumberOfYear() {
-        $year = date('Y');
-        $week_count = date('W', strtotime($year . '-12-31'));
-        if ($week_count == '01'){
-            $week_count = date('W', strtotime($year . '-12-24'));
-        }
-        return intval($week_count);
-    }
-
     // Fonction exécutée automatiquement avant la création de l'équipement
     public function preInsert() {
         if ($this->getConfiguration('type','') == 'whole') {
@@ -269,13 +265,16 @@ class mybin extends eqLogic {
             $this->setDisplay('width', '260px');
             $this->setConfiguration('hour', 8);
             $this->setConfiguration('minute', 0);
-            $this->setConfiguration('notif_veille', 1);
+            $this->setConfiguration('notif_days', 1);
             $this->setConfiguration('notif_hour', 20);
             $this->setConfiguration('notif_minute', 0);
             $this->setConfiguration('paire', 1);
             $this->setConfiguration('impaire', 1);
             $this->setConfiguration('color', 'green');   
-            $this->setConfiguration('counter', 'auto');  
+            $this->setConfiguration('counter', 'auto');
+            for ($i = 1; $i <= 12; $i++) {
+                $this->setConfiguration('month_'.$i, 1);
+            } 
             $this->setIsEnable(1);
             $this->setIsVisible(0);
         }
@@ -285,20 +284,28 @@ class mybin extends eqLogic {
     //Fonction exécutée automatiquement avant la mise à jour de l'équipement
     public function preUpdate() {
         if ($this->getConfiguration('type','') <> 'whole') {
-            if ($this->getConfiguration('notif_veille') == 0) {
+            if ($this->getConfiguration('notif_days', '') <> '') {
+                $options = array('options' => array('min_range' => 0));
+                if (filter_var($this->getConfiguration('notif_days'), FILTER_VALIDATE_INT, $options) === false) {
+                    throw new Exception($this->getHumanName() . ": " . __('Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide',__FILE__));
+                }
+            } else {
+                $this->setConfiguration('notif_days', 0);
+            }
+            if ($this->getConfiguration('notif_days', 0) == 0) {
                 if ($this->getConfiguration('notif_hour') > $this->getConfiguration('hour')) {
-                    throw new Exception(__('L\'heure de notification est après l\'heure de collecte',__FILE__));
+                    throw new Exception($this->getHumanName() . ": hour " . __('L\'heure de notification est après l\'heure de collecte',__FILE__));
                 }
                 if ($this->getConfiguration('notif_hour') == $this->getConfiguration('hour')) {
                     if ($this->getConfiguration('notif_minute') > $this->getConfiguration('minute')) {
-                        throw new Exception(__('L\'heure de notification est après l\'heure de collecte',__FILE__));
+                        throw new Exception($this->getHumanName() . ": minute " . __('L\'heure de notification est après l\'heure de collecte',__FILE__));
                     }
                 }
             }
             if ($this->getConfiguration('seuil', '') <> '') {
                 $options = array('options' => array('min_range' => 0));
                 if (!filter_var($this->getConfiguration('seuil'), FILTER_VALIDATE_INT, $options)) {
-                    throw new Exception(__('Le seuil doit être un entier positif ou être laissé vide',__FILE__));
+                    throw new Exception($this->getHumanName() . ": " . __('Le seuil doit être un entier positif ou être laissé vide',__FILE__));
                 }
             }
         }
@@ -383,55 +390,69 @@ class mybin extends eqLogic {
         if ($this->getConfiguration('type') == 'whole') {
             $eqLogics = self::byType(__CLASS__, true);
 
-            //Status
             $binnotifs = "";
             $binscript = "";
-            foreach ($eqLogics as $eqLogic) {
-                if ($eqLogic->getConfiguration('type') == 'whole') {
-                    continue;
-                }
-                $binCmd = $eqLogic->getCmd(null, 'bin');
-                $binStatus = $binCmd->execCmd();
-                if ($eqLogic->getIsEnable() == 1 && $binStatus == 1) {
-                    $binimg = $eqLogic->getConfiguration('color');
-                    $ackCmd = $eqLogic->getCmd(null, 'ack');
-                    $counterCmd = $eqLogic->getCmd(null, 'counter');
-                    $binnotifs = $binnotifs . '<div style="display: inline-block;" class="cmd ack'.$ackCmd->getId().' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="80px"/><br/><i class="fas fa-tachometer-alt"></i> ' . $counterCmd->execCmd() . '</div>';
-                    $binscript = $binscript . "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
-                }
-            }
-            $replace['#binscript#'] = $binscript;
-            if ($binnotifs == "") {
-                $binnotifs = '<span class="nobin"><br/><i>'.__('Il n\'y a (plus) aucune poubelle à sortir',__FILE__).'</i></span>';
-            }
-            $replace['#binnotifs#'] = $binnotifs;
-
-            // calendar
-            $dtDisplay = new DateTime("now");
-            $calendarType = config::byKey('calendarType','mybin','',true);
-            for ($i = 1; $i <= 7; $i++) {                         
-                $day = 1 * $dtDisplay->format('w');
-                $dateD = $dtDisplay->format('d');
-                $dateM = $dtDisplay->format('m');
-                $replace['#day'.$i.'#'] = $this->getDayLetter($day);
-                $replace['#date'.$i.'#'] = $dateD . '/' . $dateM;
-                $display = "";
+            $bincalendar = "";
+            //Status
+            if (config::byKey('notifs','mybin','',true) == 1) {
                 foreach ($eqLogics as $eqLogic) {
                     if ($eqLogic->getConfiguration('type') == 'whole') {
                         continue;
                     }
-                    $dtCheck = DateTime::createFromFormat("Y-m-d", $dtDisplay->format("Y-m-d"));
-                    if ($eqLogic->getConfiguration('notif_veille') == 1 && $calendarType == 'notif') {
-                        $dtCheck->modify('+1 day');
-                    }
-                    if ($eqLogic->checkIfBin($dtCheck)) {
-                        $color = $eqLogic->getConfiguration('color');
-                        $display = $display . '<img src="plugins/mybin/data/images/'.$color.'.png" width="20px">';
+                    $binCmd = $eqLogic->getCmd(null, 'bin');
+                    $binStatus = $binCmd->execCmd();
+                    if ($eqLogic->getIsEnable() == 1 && $binStatus == 1) {
+                        $binimg = $eqLogic->getConfiguration('color');
+                        $ackCmd = $eqLogic->getCmd(null, 'ack');
+                        $counterCmd = $eqLogic->getCmd(null, 'counter');
+                        $binnotifs = $binnotifs . '<div style="display: inline-block;" class="cmd ack'.$ackCmd->getId().' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="80px"/>';
+                        $binnotifs = $binnotifs . '<br/><i class="fas fa-tachometer-alt"></i> ' . $counterCmd->execCmd();
+                        $binnotifs = $binnotifs . '</div>';
+                        $binscript = $binscript . "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
                     }
                 }
-                $replace['#binimg_day'.$i.'#'] = $display;
-                $dtDisplay->modify('+1 day');
+
+                if ($binnotifs == "") {
+                    $binnotifs = 'none';
+                }
             }
+            $replace['#binmsg#'] = __('Il n\'y a (plus) aucune poubelle à sortir',__FILE__);
+            $replace['#binscript#'] = $binscript;
+            $replace['#binnotifs#'] = $binnotifs;
+
+            // calendar
+            if (config::byKey('calendar','mybin','',true) == 1) {
+                $bincalendar = "calendar";
+                $dtDisplay = new DateTime("now");
+                $calendarType = config::byKey('calendarType','mybin','',true);
+                for ($i = 1; $i <= 7; $i++) {                         
+                    $day = 1 * $dtDisplay->format('w');
+                    $dateD = $dtDisplay->format('d');
+                    $dateM = $dtDisplay->format('m');
+                    $replace['#day'.$i.'#'] = $this->getDayLetter($day);
+                    $replace['#date'.$i.'#'] = $dateD . '/' . $dateM;
+                    $display = "";
+                    foreach ($eqLogics as $eqLogic) {
+                        if ($eqLogic->getConfiguration('type') == 'whole') {
+                            continue;
+                        }
+                        $dtCheck = DateTime::createFromFormat("Y-m-d", $dtDisplay->format("Y-m-d"));
+                        if ($eqLogic->getConfiguration('notif_days', 0) > 0 && $calendarType == 'notif') {
+                            $dtCheck->modify('+'.$eqLogic->getConfiguration('notif_days').' day');
+                        }
+                        if ($eqLogic->checkIfBin($dtCheck)) {
+                            $color = $eqLogic->getConfiguration('color');
+                            $display = $display . '<img src="plugins/mybin/data/images/'.$color.'.png" width="20px">';
+                        }
+                    }
+                    if ($display == "") {
+                        $display = '<img src="plugins/mybin/data/images/nothing.png" width="20px">';
+                    }
+                    $replace['#binimg_day'.$i.'#'] = $display;
+                    $dtDisplay->modify('+1 day');
+                }
+            }
+            $replace['#bincalendar#'] = $bincalendar;
 
             $html = template_replace($replace, getTemplate('core', $version, 'mybin.template', __CLASS__));
             cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
@@ -439,33 +460,51 @@ class mybin extends eqLogic {
         
         // single bin widget 
         else {
-            $binnotifs = '<span class="cmd" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/none2.png" width="70px"></span>';
-            $binscript = "";
             $binCmd = $this->getCmd(null, 'bin');
-            $binStatus = $binCmd->execCmd();
-            if ($binStatus == 1) {
-                $binimg = $this->getConfiguration('color');
-                $ackCmd = $this->getCmd(null, 'ack');
-                $binnotifs = '<span class="cmd ack'.$ackCmd->getId().' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="70px"></span>';
-                $binscript = "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
+            $binnotifs = "";
+            $binscript = "";
+            if ($binCmd->getIsVisible() == 1) {
+                $binnotifs = '<span class="cmd" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/none2.png" width="70px"></span>';
+                $binscript = "";
+                $binStatus = $binCmd->execCmd();
+                if ($binStatus == 1 && $binCmd->getIsVisible() == 1) {
+                    $binimg = $this->getConfiguration('color');
+                    $ackCmd = $this->getCmd(null, 'ack');
+                    $binnotifs = '<span class="cmd ack';
+                    if ($ackCmd->getIsVisible() == 1) {
+                        $binnotifs = $binnotifs.$ackCmd->getId().' cursor';
+                        $binscript = "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
+                    }
+                    $binnotifs = $binnotifs.'" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="70px"></span>';
+                }
             }
             $replace['#binscript#'] = $binscript;
             $replace['#binnotifs#'] = $binnotifs;
             
             $counterCmd = $this->getCmd(null, 'counter');
-            $replace['#counter_id#'] = $counterCmd->getId();
-            $replace['#counter_uid#'] = $counterCmd->getId();
-            $replace['#counter_eqLogic_id#'] = $replace['#uid#'];
-            $replace['#counter_collectDate#'] = $counterCmd->getCollectDate();
-            $replace['#counter_valueDate#'] = $counterCmd->getValueDate();
-            $replace['#counter_minValue#'] = $counterCmd->getConfiguration('minValue', 0);
-            $replace['#counter_maxValue#'] = $counterCmd->getConfiguration('maxValue');
-            $replace['#counter_state#'] = $counterCmd->execCmd();
-            $replace['#counter_unite#'] = $counterCmd->getUnite();
+            if ($counterCmd->getIsVisible() == 1) {
+                $replace['#counter_id#'] = $counterCmd->getId();
+                $replace['#counter_uid#'] = $counterCmd->getId();
+                $replace['#counter_eqLogic_id#'] = $replace['#uid#'];
+                $replace['#counter_collectDate#'] = $counterCmd->getCollectDate();
+                $replace['#counter_valueDate#'] = $counterCmd->getValueDate();
+                $replace['#counter_minValue#'] = $counterCmd->getConfiguration('minValue', 0);
+                $replace['#counter_maxValue#'] = $counterCmd->getConfiguration('maxValue');
+                $replace['#counter_state#'] = $counterCmd->execCmd();
+                $replace['#counter_unite#'] = $counterCmd->getUnite();
+            } else {
+                $replace['#counter_id#'] = '';
+            }
+            
             
             $resetCmd = $this->getCmd(null, 'resetcounter');
-            $replace['#reset_id#'] = $resetCmd->getId();
-            $replace['#reset_uid#'] = $resetCmd->getId();
+            if ($resetCmd->getIsVisible() == 1) {
+                $replace['#reset_id#'] = $resetCmd->getId();
+                $replace['#reset_uid#'] = $resetCmd->getId();
+            } else {
+                $replace['#reset_id#'] = '';
+            }
+            
             
             $html = template_replace($replace, getTemplate('core', $version, 'singlebin.template', __CLASS__));
             cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
@@ -480,6 +519,7 @@ class mybin extends eqLogic {
         }
         
         $isSpecificDay = false;
+        $ismonth = false;
         $isweek = false;
         $isday = false;
 
@@ -499,7 +539,11 @@ class mybin extends eqLogic {
         
         $day = 1 * $dt->format('w');
         $week = 1 * $dt->format('W');
+        $month = 1 * $dt->format('n');
         
+        if ($this->getConfiguration('month_'.$month) == 1) {
+            $isMonth = true;
+        }
         if (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) {
             $isweek = true;
         }
@@ -509,7 +553,7 @@ class mybin extends eqLogic {
                 break;
             }
         }
-        if ($isSpecificDay || ($isweek && $isday)) {
+        if ($isSpecificDay || ($isMonth && $isweek && $isday)) {
             return true;
         } else {
             return false;
@@ -610,6 +654,28 @@ class mybin extends eqLogic {
             scenarioExpression::createAndExec('action', $action['cmd'], $options);
         } catch (Exception $e) {
             log::add(__CLASS__, 'error', $this->getHumanName() . ' Erreur lors de l\'execution de l\'action ' . $action['cmd'] . ': ' . $e->getMessage());
+        }
+    }
+
+    public function cleanSpecificDates() {
+        $change = false;
+        $specificDays = $this->getConfiguration('specific_day');
+        if (is_array($specificDays)) {
+            $dtNow = new DateTime("now");
+            foreach ($specificDays as $key => $specificDay) {
+                if (isset($specificDay['myday'])) {
+                    $dtSpec = DateTime::createFromFormat("Y-m-d", $specificDay['myday']);
+                    if ($dtSpec < $dtNow) {
+                        log::add(__CLASS__, 'debug', $this->getHumanName() . ' Removal of specific date ' . $specificDay['myday']);
+                        unset($specificDays[$key]);
+                        $change = true;
+                    }
+                }
+            }
+        }
+        if ($change) {
+            $this->setConfiguration('specific_day', $specificDays);
+            $this->save(true);
         }
     }
 }

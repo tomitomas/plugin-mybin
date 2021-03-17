@@ -1,11 +1,15 @@
 {
     "plugins\/mybin\/plugin_info\/configuration.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",
-        "Afficher un widget global pour toutes les poubelles : ": "Display a global widget for all bins (with a calendar): ",
-        "Pièce pour le widget global : ": "Romm for global widget: ",
-        "Jours que le calendrier doit utiliser : ": "Days the calendar must use : ",
+        "Afficher un widget global pour toutes les poubelles": "Display a global widget for all bins",
+        "Pièce pour le widget global": "Romm for global widget",
+        "Jours que le calendrier doit utiliser": "Days the calendar must use",
         "Jours de ramassage": "Collect days",
-        "Jours de notification": "Notification days"
+        "Jours de notification": "Notification days",
+        "Paramètres du widget global": "Parameters of global widget",
+        "Eléments à afficher sur le widget global": "Elements to display on the global widget",
+        "Notifications": "Notifications",
+        "Calendrier": "Calendar"
     },
     "plugins\/mybin\/desktop\/php\/mybin.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",
@@ -62,11 +66,25 @@
         "Grise": "Grey",
         "Verte": "Green",
         "Jaune": "Yellow",
-        "Marron": "Braun",
+        "Marron": "Brown",
         "Bleue": "Blue",
         "Noire": "Black",
         "Jour(s) particulier(s) de ramassage": "Specific day(s) of collect",
-        "Ajouter un jour": "Add a day"
+        "Ajouter un jour": "Add a day",
+        "Janvier": "January",
+        "Février": "February",
+        "Mars": "March",
+        "Avril": "April", 
+        "Mai": "May", 
+        "Juin": "June",
+        "Juillet": "July",
+        "Août": "August",
+        "Septembre": "September",
+        "Octobre": "October",
+        "Novembre": "November",
+        "Décembre": "December",
+        "Mois de ramassage": "Month(s) of collect",
+        "Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.": "To be notified the very day of collect, keep the field empty. Be careful at the time in this case."
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
@@ -79,6 +97,7 @@
     "plugins\/mybin\/core\/class\/mybin.class.php": {
         "L\\'heure de notification est après l\\'heure de collecte": "The time of notification is after the time of collect",
         "Il n\'y a (plus) aucune poubelle à sortir": "There\'s no more bin to put out",
-        "Le seuil doit être un entier positif ou être laissé vide": "The threshold must be a positive integer or must be left empty"
+        "Le seuil doit être un entier positif ou être laissé vide": "The threshold must be a positive integer or must be left empty",
+        "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide": "The number of days for the notification must be a positive integer or 0 or must be left empty"
     }
 }

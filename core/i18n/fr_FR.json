@@ -1,11 +1,15 @@
 {
     "plugins\/mybin\/plugin_info\/configuration.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
-        "Afficher un widget global pour toutes les poubelles (avec calendrier) : ": "Afficher un widget global pour toutes les poubelles (avec calendrier) : ",
-        "Pièce pour le widget global : ": "Pièce pour le widget global : ",
-        "Jours que le calendrier doit utiliser : ": "Jours que le calendrier doit utiliser : ",
+        "Afficher un widget global pour toutes les poubelles": "Afficher un widget global pour toutes les poubelles",
+        "Pièce pour le widget global": "Pièce pour le widget global",
+        "Jours que le calendrier doit utiliser": "Jours que le calendrier doit utiliser",
         "Jours de ramassage": "Jours de ramassage",
-        "Jours de notification": "Jours de notification"
+        "Jours de notification": "Jours de notification",
+        "Paramètres du widget global": "Paramètres du widget global",
+        "Eléments à afficher sur le widget global": "Eléments à afficher sur le widget global",
+        "Notifications": "Notifications",
+        "Calendrier": "Calendrier"
     },
     "plugins\/mybin\/desktop\/php\/mybin.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
@@ -66,7 +70,21 @@
         "Bleue": "Bleue",
         "Noire": "Noire",
         "Jour(s) particulier(s) de ramassage": "Jour(s) particulier(s) de ramassage",
-        "Ajouter un jour": "Ajouter un jour"
+        "Ajouter un jour": "Ajouter un jour",
+        "Janvier": "Janvier",
+        "Février": "Février",
+        "Mars": "Mars",
+        "Avril": "Avril", 
+        "Mai": "Mai", 
+        "Juin": "Juin",
+        "Juillet": "Juillet",
+        "Août": "Août",
+        "Septembre": "Septembre",
+        "Octobre": "Octobre",
+        "Novembre": "Novembre",
+        "Décembre": "Décembre", 
+        "Mois de ramassage": "Mois de ramassage",
+        "Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.": "Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas."
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
@@ -79,6 +97,7 @@
     "plugins\/mybin\/core\/class\/mybin.class.php": {
         "L\\'heure de notification est après l\\'heure de collecte": "L\\'heure de notification est après l\\'heure de collecte",
         "Il n\'y a (plus) aucune poubelle à sortir": "Il n\'y a (plus) aucune poubelle à sortir",
-        "Le seuil doit être un entier positif ou être laissé vide": "Le seuil doit être un entier positif ou être laissé vide"
+        "Le seuil doit être un entier positif ou être laissé vide": "Le seuil doit être un entier positif ou être laissé vide", 
+        "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide": "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide"
     }
 }
