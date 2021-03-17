@@ -867,7 +867,7 @@ class mybin extends eqLogic {
     public function getNextRunDate($cron, $start) {
 		try {
 			$c = new Cron\CronExpression(checkAndFixCron($cron->getSchedule()), new Cron\FieldFactory);
-			return $c->getNextRunDate($start);
+			return $c->getNextRunDate($start, 0, true);
 		} catch (Exception $e) {
 			
 		} catch (Error $e) {
