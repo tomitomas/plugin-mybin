@@ -191,7 +191,7 @@ class mybin extends eqLogic {
                 if (isset($specificCron['mycron'])) {
                     $cron = new cron();
                     $cron->setSchedule($specificCron['mycron']);
-                    $nextRunCron = $cron->getPreviousRunDate();
+                    $nextRunCron = $this->getPreviousRunDate($cron);
                     if ($nextRunCron != false) {
                         $dtCheck = DateTime::createFromFormat("Y-m-d H:i:s", $nextRunCron);
                         if ($todayStr == $dtCheck->format("Y-m-d H:i")) {
@@ -585,7 +585,7 @@ class mybin extends eqLogic {
                 if (isset($specificCron['mycron'])) {
                     $cron = new cron();
                     $cron->setSchedule($specificCron['mycron']);
-                    $nextRunCron = $cron->getNextRunDate();
+                    $nextRunCron = $cron->getNextRunDate($dt);
                     if ($nextRunCron != false) {
                         $dtCheck = DateTime::createFromFormat("Y-m-d H:i:s", $nextRunCron);
                         if ($todayStr == $dtCheck->format("Y-m-d")) {
@@ -863,6 +863,18 @@ class mybin extends eqLogic {
 		}
 		return false;
     }
+
+    public function getNextRunDate($cron, $start) {
+		try {
+			$c = new Cron\CronExpression(checkAndFixCron($cron->getSchedule()), new Cron\FieldFactory);
+			return $c->getNextRunDate($start);
+		} catch (Exception $e) {
+			
+		} catch (Error $e) {
+			
+		}
+		return false;
+	}
 }
 
 class mybinCmd extends cmd {
