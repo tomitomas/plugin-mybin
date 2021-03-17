@@ -584,7 +584,7 @@ class mybin extends eqLogic {
                 if (isset($specificCron['mycron'])) {
                     $cron = new cron();
                     $cron->setSchedule($specificCron['mycron']);
-                    $nextRunCron = $this->getNextRunDate($cron, $dt);
+                    $nextRunCron = $this->getNextRunDate($cron, $todayStr);
                     log::add(__CLASS__, 'debug', $this->getHumanName() . ' $todayStr: ' . $todayStr);
                     log::add(__CLASS__, 'debug', $this->getHumanName() . ' $nextRunCron: ' . $nextRunCron->format("Y-m-d"));
                     if ($nextRunCron != false) {
