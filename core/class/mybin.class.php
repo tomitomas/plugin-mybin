@@ -177,7 +177,7 @@ class mybin extends eqLogic {
         }
         
         if ($this->getConfiguration('month_'.$month) == 1) {
-            $isMonth = true;
+            $ismonth = true;
         }
         if (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) {
             $isweek = true;
@@ -286,8 +286,8 @@ class mybin extends eqLogic {
         if ($this->getConfiguration('type','') <> 'whole') {
             if ($this->getConfiguration('notif_days', '') <> '') {
                 $options = array('options' => array('min_range' => 0));
-                if (!filter_var($this->getConfiguration('notif_days'), FILTER_VALIDATE_INT, $options)) {
-                    throw new Exception($this->getHumanName() . ": " . __('Le nombre de jours pour la notification doit être un entier positif ou être laissé vide',__FILE__));
+                if (filter_var($this->getConfiguration('notif_days'), FILTER_VALIDATE_INT, $options) === false) {
+                    throw new Exception($this->getHumanName() . ": " . __('Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide',__FILE__));
                 }
             } else {
                 $this->setConfiguration('notif_days', 0);
