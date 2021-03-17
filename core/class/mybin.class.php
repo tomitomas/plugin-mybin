@@ -191,10 +191,9 @@ class mybin extends eqLogic {
                 if (isset($specificCron['mycron'])) {
                     $cron = new cron();
                     $cron->setSchedule($specificCron['mycron']);
-                    $nextRunCron = $this->getPreviousRunDate($cron);
-                    if ($nextRunCron != false) {
-                        $dtCheck = DateTime::createFromFormat("Y-m-d H:i:s", $nextRunCron);
-                        if ($todayStr == $dtCheck->format("Y-m-d H:i")) {
+                    $lastRunCron = $this->getPreviousRunDate($cron);
+                    if ($lastRunCron != false) {
+                        if ($todayStr == $lastRunCron->format("Y-m-d H:i")) {
                             $isSpecificCron = true;
                             break;
                         }
@@ -587,8 +586,7 @@ class mybin extends eqLogic {
                     $cron->setSchedule($specificCron['mycron']);
                     $nextRunCron = $this->getNextRunDate($cron, $dt);
                     if ($nextRunCron != false) {
-                        $dtCheck = DateTime::createFromFormat("Y-m-d H:i", $nextRunCron->format("Y-m-d H:i"));
-                        if ($todayStr == $dtCheck->format("Y-m-d")) {
+                        if ($todayStr == $nextRunCron->format("Y-m-d")) {
                             $isSpecificCron = true;
                             break;
                         }
