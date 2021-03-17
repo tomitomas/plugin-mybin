@@ -176,7 +176,7 @@ class mybin extends eqLogic {
         $hour = 1 * $dt->format('G');
         $minute = 1 * $dt->format('i');
         
-        $isSpecificCron = true;
+        $isSpecificCron = false;
         $isSpecificDay = false;
         $ismonth = false;
         $isweek = false;
