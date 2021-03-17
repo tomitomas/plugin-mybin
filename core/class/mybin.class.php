@@ -192,6 +192,7 @@ class mybin extends eqLogic {
                     $cron = new cron();
                     $cron->setSchedule($specificCron['mycron']);
                     $lastRunCron = $this->getPreviousRunDate($cron);
+                    log::add(__CLASS__, 'debug', $this->getHumanName() . ' lastRunCron: ' . $lastRunCron->format("Y-m-d H:i"));
                     if ($lastRunCron != false) {
                         if ($todayStr == $lastRunCron->format("Y-m-d H:i")) {
                             $isSpecificCron = true;
