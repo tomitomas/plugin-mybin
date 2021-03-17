@@ -154,7 +154,7 @@ class mybin extends eqLogic {
         if ($this->getConfiguration('notif_hour') == $hour) {
             $ishour = true;
         }
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin: month ' . $isMonth . ', week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin: month ' . $ismonth . ', week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute . ', specificday ' . $isSpecificDay . ', specificron ' . $isSpecificCron);
         if ((($ismonth && $isweek && $isday) || $isSpecificDay || $isSpecificCron) && $ishour && $isminute) {    
             $this->notifBin();
             return 1;
@@ -191,7 +191,7 @@ class mybin extends eqLogic {
                 if (isset($specificCron['mycron'])) {
                     $cron = new cron();
                     $cron->setSchedule($specificCron['mycron']);
-                    $lastRunCron = $this->getPreviousRunDate($cron);
+                    $lastRunCron = $this->getNextRunDate($cron, $todayStr);
                     log::add(__CLASS__, 'debug', $this->getHumanName() . ' lastRunCron: ' . $lastRunCron->format("Y-m-d H:i"));
                     if ($lastRunCron != false) {
                         if ($todayStr == $lastRunCron->format("Y-m-d H:i")) {
@@ -234,7 +234,7 @@ class mybin extends eqLogic {
         if ($this->getConfiguration('hour') == $hour) {
             $ishour = true;
         }
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin: month ' . $ismonth . ', week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin: month ' . $ismonth . ', week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute . ', specificday ' . $isSpecificDay . ', specificron ' . $isSpecificCron);
         if (((($isMonth && $isweek && $isday) || $isSpecificDay) && $ishour && $isminute) || $isSpecificCron) {
             $this->ackBin(true);
             return 1;
