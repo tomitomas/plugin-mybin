@@ -19,6 +19,7 @@ $("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder:
 $("#div_action_collect").sortable({axis: "y", cursor: "move", items: ".action_collect", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 $("#div_action_notif").sortable({axis: "y", cursor: "move", items: ".action_notif", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 $("#div_specific_day").sortable({axis: "y", cursor: "move", items: ".specific_day", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
+$("#div_specific_cron").sortable({axis: "y", cursor: "move", items: ".specific_cron", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
 
 // tous les boutons d'action regroupés !
 $('.addAction').off('click').on('click', function () {
@@ -30,6 +31,10 @@ $('.addDay').off('click').on('click', function () {
   addDay({});
 });
 
+// tous les boutons de cron spécifiques regroupés !
+$('.addCron').off('click').on('click', function () {
+  addCron({});
+});
 
 // permet d'afficher la liste des cmd Jeedom pour choisir sa commande de type "action"
 $("body").off('click','.listCmdAction').on('click','.listCmdAction', function () {
@@ -70,6 +75,10 @@ $('body').off('focusout','.cmdAction.expressionAttr[data-l1key=cmd]').on('focuso
 
 $("body").off('click','.bt_removeDay').on('click','.bt_removeDay',function () {
   $(this).closest('.specific_day').remove();
+});
+
+$("body").off('click','.bt_removeCron').on('click','.bt_removeCron',function () {
+  $(this).closest('.specific_cron').remove();
 });
 
 // tous les - qui permettent de supprimer la ligne
@@ -179,6 +188,29 @@ function addDay(_day) {
   $('#div_specific_day .specific_day').last().setValues(_day, '.myday');
 }
 
+function addCron(_cron) {
+  var div = '<div class="specific_cron">';
+  div += '<div class="form-group">';
+  div += '<div class="col-sm-7">';
+  div += '<div class="input-group">';
+  div += '<span class="input-group-btn">';
+  div += '<a class="btn btn-default bt_removeCron roundedLeft" data-l1key="specific_cron" data-type="specific_cron"><i class="fas fa-minus-circle"></i></a>';
+  div += '</span>';
+  div += '<input type="text" class="form-control input-sm value execute eqLogicAttr mycron" data-type="specific_cron" data-l1key="mycron"/>';
+  div += '<span class="input-group-btn">';
+  div += '<a class="btn btn-default cursor jeeHelper" data-helper="cron">';
+  div += '<i class="fas fa-question-circle"></i>';
+  div += '</a>';
+  div += '</span>';
+  div += '</div>';
+  div += '</div>';
+  div += '</div>';
+  div += '</div>';
+
+  $('#div_specific_cron').append(div);
+  $('#div_specific_cron .specific_cron').last().setValues(_cron, '.mycron');
+}
+
 // Fct core permettant de sauvegarder
 function saveEqLogic(_eqLogic) {
   if (!isset(_eqLogic.configuration)) {
@@ -195,6 +227,8 @@ function saveEqLogic(_eqLogic) {
 
   _eqLogic.configuration.specific_day = data;
 
+  _eqLogic.configuration.specific_cron = $('#div_specific_cron .specific_cron').getValues('.mycron');
+
   return _eqLogic;
 }
 
@@ -204,6 +238,7 @@ function printEqLogic(_eqLogic) {
   $('#div_action_collect').empty();
   $('#div_action_notif').empty();
   $('#div_specific_day').empty();
+  $('#div_specific_cron').empty();
 
   if (isset(_eqLogic.configuration)) {
     if (isset(_eqLogic.configuration.action_collect)) {
@@ -221,5 +256,13 @@ function printEqLogic(_eqLogic) {
         addDay(_eqLogic.configuration.specific_day[i]);
       }
     }
+    if (isset(_eqLogic.configuration.specific_cron)) {
+      for (var i in _eqLogic.configuration.specific_cron) {
+        addCron(_eqLogic.configuration.specific_cron[i]);
+      }
+    }
   }
+	
+  $('.allDates').hide();
+  $('.dates-' + _eqLogic.id).show();
 }
