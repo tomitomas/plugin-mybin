@@ -108,14 +108,14 @@ class mybin extends eqLogic {
         $specificCrons = $this->getConfiguration('specific_cron');
         if (is_array($specificCrons)) {
             foreach ($specificCrons as $specificCron) {
-                $todayStr = $dt->format("Y-m-d H:i");
+                $todayStr = $dt->format("Y-m-d");
                 if (isset($specificCron['mycron'])) {
                     $cron = new cron();
                     $cron->setSchedule($specificCron['mycron']);
                     $nextRunCron = $cron->getNextRunDate();
                     if ($nextRunCron != false) {
                         $dtCheck = DateTime::createFromFormat("Y-m-d H:i:s", $nextRunCron);
-                        if ($todayStr == $dtCheck->format("Y-m-d H:i")) {
+                        if ($todayStr == $dtCheck->format("Y-m-d")) {
                             $isSpecificCron = true;
                             break;
                         }
@@ -155,7 +155,7 @@ class mybin extends eqLogic {
             $ishour = true;
         }
         log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin: month ' . $isMonth . ', week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
-        if (((($isMonth && $isweek && $isday) || $isSpecificDay) && $ishour && $isminute) || $isSpecificCron) {
+        if ((($ismonth && $isweek && $isday) || $isSpecificDay || $isSpecificCron) && $ishour && $isminute) {    
             $this->notifBin();
             return 1;
         } else {
@@ -187,14 +187,14 @@ class mybin extends eqLogic {
         $specificCrons = $this->getConfiguration('specific_cron');
         if (is_array($specificCrons)) {
             foreach ($specificCrons as $specificCron) {
-                $todayStr = $dt->format("Y-m-d");
+                $todayStr = $dt->format("Y-m-d H:i");
                 if (isset($specificCron['mycron'])) {
                     $cron = new cron();
                     $cron->setSchedule($specificCron['mycron']);
-                    $nextRunCron = $cron->getNextRunDate();
+                    $nextRunCron = $cron->getPreviousRunDate();
                     if ($nextRunCron != false) {
                         $dtCheck = DateTime::createFromFormat("Y-m-d H:i:s", $nextRunCron);
-                        if ($todayStr == $dtCheck->format("Y-m-d")) {
+                        if ($todayStr == $dtCheck->format("Y-m-d H:i")) {
                             $isSpecificCron = true;
                             break;
                         }
@@ -235,7 +235,7 @@ class mybin extends eqLogic {
             $ishour = true;
         }
         log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin: month ' . $ismonth . ', week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
-        if ((($ismonth && $isweek && $isday) || $isSpecificDay || $isSpecificCron) && $ishour && $isminute) {
+        if (((($isMonth && $isweek && $isday) || $isSpecificDay) && $ishour && $isminute) || $isSpecificCron) {
             $this->ackBin(true);
             return 1;
         } else {
@@ -851,6 +851,18 @@ class mybin extends eqLogic {
 		}
 		return false;
 	}
+
+    public function getPreviousRunDate($cron) {
+        try {
+			$c = new Cron\CronExpression(checkAndFixCron($cron->getSchedule()), new Cron\FieldFactory);
+			return $c->getPreviousRunDate();
+		} catch (Exception $e) {
+			
+		} catch (Error $e) {
+			
+		}
+		return false;
+    }
 }
 
 class mybinCmd extends cmd {
