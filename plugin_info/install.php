@@ -103,6 +103,21 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
                 $cmd->setEventOnly(1);
                 $cmd->save();
             }
+            $cmd = $eqLogic->getCmd(null, 'nextcollect');
+            if (!is_object($cmd))
+            {
+                $cmd = new mybinCmd();
+                $cmd->setLogicalId('nextcollect');
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->setName('Prochain ramassage');
+                $cmd->setType('info');
+                $cmd->setSubType('other');
+                $cmd->setEventOnly(1);
+                $cmd->setIsHistorized(0);
+                $cmd->setTemplate('mobile', 'line');
+                $cmd->setTemplate('dashboard', 'line');       
+                $cmd->save();
+            }
             $eqLogic->save();
         }
       }
