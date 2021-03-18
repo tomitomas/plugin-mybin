@@ -8,6 +8,7 @@
 - Cron expressions support
 - New command to get next collect date
 - New bin color: violet
+- Reorganization of configuration page
 
 # Stable - 14/03/2021
 - Possibility to choose elements to display on the global widget
