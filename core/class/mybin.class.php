@@ -473,6 +473,17 @@ class mybin extends eqLogic {
         }
         $this->emptyCacheWidget();
 
+        $dtNow = new DateTime("now");
+        $nextOne = $this->getNextCollectsAndNotifs(1);
+        if (is_array($nextOne)) {
+            foreach ($nextOne as $collect => $notif) {
+                if (DateTime::createFromFormat("Y-m-d H:i", $collect) > $dtNow) {
+                    $cmd = $this->getCmd(null, 'nextcollect');
+                    $cmd->event($collect);
+                }
+            }
+        }
+
     }
     
     public function toHtml($_version = 'dashboard') {
