@@ -118,6 +118,30 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
                 $cmd->setTemplate('dashboard', 'line');       
                 $cmd->save();
             }
+
+            // transform specific dates in crons
+            $specificDays = $eqLogic->getConfiguration('specific_day');
+            $specificCrons = $eqLogic->getConfiguration('specific_cron');
+            if (is_array($specificDays)) {
+                if (count($specificDays) > 0) {
+                    if (!is_array($specificCrons)) {
+                        $specificCrons = array();
+                    }
+                    foreach ($specificDays as $key => $specificDay) {
+                        if (isset($specificDay['myday'])) {
+                            $dtCheck = DateTime::createFromFormat("Y-m-d", $specificDay['myday']);
+                            $dtCheck->setTime(intval($eqLogic->getConfiguration('hour')), intval($eqLogic->getConfiguration('minute')));
+                            $cron = $dtCheck->format('i H d m N Y');
+                            $specificCron['mycron'] = $cron;
+                            array_push($specificCrons, $specificCron);
+                            unset($specificDays[$key]);
+                        }
+                    }
+                    $eqLogic->setConfiguration('specific_day', $specificDays);
+                    $eqLogic->setConfiguration('specific_cron', $specificCrons);
+                }
+            }           
+
             $eqLogic->save();
         }
       }
