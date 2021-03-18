@@ -8,7 +8,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 
 $allDates = array();
 foreach ($eqLogics as $eqLogic) {
-	$allDates[$eqLogic->getId()] = $eqLogic->getNextCollectsAndNotifs();
+	$allDates[$eqLogic->getId()] = $eqLogic->getNextCollectsAndNotifs(10);
 }
 ?>
 
@@ -71,7 +71,7 @@ foreach ($eqLogics as $eqLogic) {
 				<form class="form-horizontal">
 					<fieldset>
 						<div class="col-lg-6">
-							<legend><i class="fas fa-wrench"></i> {{Général}}</legend>
+							<legend><i class="icon divers-slightly"></i> {{Général}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Nom de l'équipement My Bin}}</label>
 								<div class="col-sm-5">
@@ -116,8 +116,6 @@ foreach ($eqLogics as $eqLogic) {
 								</div>
 							</div>
 							<br>
-
-							<legend><i class="icon divers-slightly"></i> {{Détails de la poubelle}}</legend>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">{{Couleur de la poubelle}}</label>
                                 <div class="col-sm-7">
@@ -129,6 +127,7 @@ foreach ($eqLogics as $eqLogic) {
                                             <option value="blue">{{Bleue}}</option>
                                             <option value="grey">{{Grise}}</option>
 											<option value="black">{{Noire}}</option>
+											<option value="violet">{{Violette}}</option>
                                         </select>
                                     </span>
                                     <span class="col-sm-3">
@@ -136,7 +135,9 @@ foreach ($eqLogics as $eqLogic) {
                                     </span>
                                 </div>
                             </div>
-                            <br/>
+							<br>
+
+							<legend><i class="fas fa-truck"></i> {{Ramassage de la poubelle}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Mois de ramassage}}</label>
 								<div class="col-sm-7">
@@ -174,9 +175,9 @@ foreach ($eqLogics as $eqLogic) {
 								</div>
 							</div>
                             <div class="form-group">
-								<label class="col-sm-3 control-label">{{Jour(s) particulier(s) de ramassage}}</label>
+								<label class="col-sm-3 control-label">{{Date(s) particulièr(s) de ramassage}}</label>
 							    <div class="col-sm-7">
-                                    <a class="btn btn-success btn-sm addDay" data-type="specific_day" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter un jour}}</a>
+                                    <a class="btn btn-success btn-sm addDay" data-type="specific_day" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une date}}</a>
                                     <div id="div_specific_day"></div>
                                 </div>
 							</div>
@@ -217,6 +218,15 @@ foreach ($eqLogics as $eqLogic) {
 							</div>
                             <br/>
 							<div class="form-group">
+								<label class="col-sm-3 control-label help" data-help="{{Vous pouvez ajouter des expressions cron pour gérer des fréquences de ramassage particulières}}">{{Mode expert}}</label>
+							    <div class="col-sm-7">
+                                    <a class="btn btn-success btn-sm addCron" data-type="specific_cron" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter un cron}}</a>
+                                    <div id="div_specific_cron"></div>
+                                </div>
+							</div>
+                            <br>
+							<legend><i class="icon jeedom-alerte2"></i> {{Notification}}</legend>
+							<div class="form-group">
 								<label class="col-sm-3 control-label help" data-help="{{Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.}}">{{Notification}}</label>
 								<div class="col-sm-7">
 									<span class="col-sm-2">
@@ -256,8 +266,7 @@ foreach ($eqLogics as $eqLogic) {
                                     </span>
 								</div>
 							</div>
-                            <br>
-
+							<br>
 							<legend><i class="fas fa-tachometer-alt"></i> {{Compteur}}</legend>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label help" data-help="{{En automatique, le compteur s'incrémentera à chaque ramassage ou lorsque la commande 'ack' est exécutée. En manuel, il ne s'incrémentera que si la commande 'ack' est exécutée.}}">{{Type}}</label>
@@ -279,12 +288,6 @@ foreach ($eqLogics as $eqLogic) {
                                     tag <strong>#bin_threshold#</strong>
                                 </div>
 							</div>
-							<br>
-							<legend><i class="fas fa-truck"></i> {{Action(s) sur ramassage}}</legend><label><a class="btn btn-success btn-sm addAction" data-type="action_collect" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
-                            <div id="div_action_collect"></div>
-                            <br>
-							<legend><i class="icon jeedom-alerte2"></i> {{Action(s) sur notification}}</legend><label><a class="btn btn-success btn-sm addAction" data-type="action_notif" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
-                            <div id="div_action_notif"></div>
 						</div>
                         <div class="col-lg-5">
 							<legend><i class="icon jeedomapp-preset"></i> {{Options}}</legend>
@@ -297,15 +300,15 @@ foreach ($eqLogics as $eqLogic) {
 								</div>
 							</div>
                         </div>
+						<br/>
 						<div class="col-lg-5">
-						<legend><i class="fas fa-terminal"></i> {{Mode expert}}</legend>
-							<div class="form-group">
-								<label class="col-sm-4 control-label help" data-help="{{Vous pouvez ajouter des expressions cron pour gérer les dates de ramassage particulières}}">{{Cron}}</label>
-							    <div class="col-sm-7">
-                                    <a class="btn btn-success btn-sm addCron" data-type="specific_cron" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter un cron}}</a>
-                                    <div id="div_specific_cron"></div>
-                                </div>
-							</div>
+							<legend><i class="fas fa-sign-out-alt"></i> {{Action(s) sur ramassage}}</legend><label><a class="btn btn-success btn-sm addAction" data-type="action_collect" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
+							<div id="div_action_collect"></div>
+						</div>
+						<br>
+						<div class="col-lg-5">
+							<legend><i class="fas fa-sign-in-alt"></i> {{Action(s) sur notification}}</legend><label><a class="btn btn-success btn-sm addAction" data-type="action_notif" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
+							<div id="div_action_notif"></div>
 						</div>
 						<div class="col-lg-5">
 							<legend><i class="fas fa-info-circle"></i> {{Informations}}</legend>

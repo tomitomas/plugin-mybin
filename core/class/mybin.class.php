@@ -44,8 +44,12 @@ class mybin extends eqLogic {
         if ($this->getConfiguration('type', '') == 'whole') {
             return;
         }
+        if (!$this->getIsEnable()) {
+            return;
+        }
 
-        $change = 0;
+        $change = false;
+        $nextRunRecorded = false;
 
         /************************************ Hack degueu ***************************************************************/
         // Devrait etre fait dans le postUpdate mais, pour une raison que j'ignore, la DB ne se met pas à jour
@@ -55,17 +59,41 @@ class mybin extends eqLogic {
         $cmd->setConfiguration('maxValue', $threshold);
         log::add(__CLASS__, 'debug', $this->getHumanName() . ' threshold change: ' . $cmd->getChanged());
         if ($cmd->getChanged()) {
-            $change = $change + 1;
+            $change = true;
         }
         $cmd->save();
         /****************************************************************************************************************/
 
+        $dtNow = new DateTime("now");
+        $todayStr = $dtNow->format("Y-m-d H:i");
         $hour = 1 * date('G');
         $minute = 1 * date('i');
-        $change = $change + $this->checkNotifBin();
-        $change = $change + $this->checkAckBin();
+
+        $nextOne = $this->getNextCollectsAndNotifs(2);
+        if (is_array($nextOne)) {
+            foreach ($nextOne as $collect => $notif) {
+                if ($notif == $todayStr) {
+                    log::add(__CLASS__, 'debug', $this->getHumanName() . ' Notif: ' . $notif . ' true');
+                    $this->notifBin();
+                    $change = true;
+                }
+                if ($collect == $todayStr) {
+                    log::add(__CLASS__, 'debug', $this->getHumanName() . ' Ack: ' . $collect . ' true');
+                    $this->ackBin(true);
+                    $change = true;
+                }
+                if ($nextRunRecorded == false && DateTime::createFromFormat("Y-m-d H:i", $collect) > $dtNow) {
+                    $cmd = $this->getCmd(null, 'nextcollect');
+                    $cmd->event($collect);
+                    $nextRunRecorded = true;
+                }
+            }
+        }
+
+        //$change = $change + $this->checkNotifBin();
+        //$change = $change + $this->checkAckBin();
         $this->cleanSpecificDates();
-        if ($change > 0 || ($hour == 0 && $minute == 5)) {
+        if ($change || ($hour == 0 && $minute == 5)) {
             $this->refreshWhole();
         }
     }
@@ -81,6 +109,7 @@ class mybin extends eqLogic {
         }
     }
     
+    /*
     public function checkNotifBin() {
         if (!$this->getIsEnable()) {
             return 0;
@@ -242,7 +271,8 @@ class mybin extends eqLogic {
             return 0;
         }
     }
-    
+    */
+
     public function notifBin() {
         $seuil = $this->getConfiguration('seuil', '');
         if ($seuil <> '') {
@@ -425,8 +455,34 @@ class mybin extends eqLogic {
                 $cmd->setEventOnly(1);
                 $cmd->save();
             }
+            $cmd = $this->getCmd(null, 'nextcollect');
+            if (!is_object($cmd))
+            {
+                $cmd = new mybinCmd();
+                $cmd->setLogicalId('nextcollect');
+                $cmd->setEqLogic_id($this->getId());
+                $cmd->setName('Prochain ramassage');
+                $cmd->setType('info');
+                $cmd->setSubType('string');
+                $cmd->setEventOnly(1);
+                $cmd->setIsHistorized(0);
+                $cmd->setTemplate('mobile', 'line');
+                $cmd->setTemplate('dashboard', 'line');       
+                $cmd->save();
+            }
         }
         $this->emptyCacheWidget();
+
+        $dtNow = new DateTime("now");
+        $nextOne = $this->getNextCollectsAndNotifs(1);
+        if (is_array($nextOne)) {
+            foreach ($nextOne as $collect => $notif) {
+                if (DateTime::createFromFormat("Y-m-d H:i", $collect) > $dtNow) {
+                    $cmd = $this->getCmd(null, 'nextcollect');
+                    $cmd->event($collect);
+                }
+            }
+        }
 
     }
     
@@ -754,8 +810,9 @@ class mybin extends eqLogic {
         }
     }
 
-    public function getNextCollectsAndNotifs() {
+    public function getNextCollectsAndNotifs($max) {
         $dtNow = new DateTime("now");
+        $dtNow->setTime(1 * date('G'), 1 * date('i'), 0, 0);
 
         $datesArr = array();
 
@@ -768,14 +825,14 @@ class mybin extends eqLogic {
             $week = 1 * $dtCheck->format('W');
             $day = 1 * $dtCheck->format('w');
             if ($this->getConfiguration('month_'.$month) == 1 && (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) && $this->getConfiguration('day_'.$day) == 1) {
-                if ($dtCheck > $dtNow) {
+                if ($dtCheck >= $dtNow) {
                     $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $dtCheck->format("Y-m-d H:i"));
                     $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
                     $dtNotif->setTime(intval($this->getConfiguration('notif_hour')), intval($this->getConfiguration('notif_minute')));
                     $datesArr[$dtCheck->format('Y-m-d H:i')] = $dtNotif->format('Y-m-d H:i');
                     log::add(__CLASS__, 'debug', $this->getHumanName() . ' add from dates ' . $dtCheck->format('Y-m-d H:i'));
                     $nbDates++;
-                    if ($nbDates == 10) {
+                    if ($nbDates == $max) {
                         break;
                     }
                 }
@@ -790,16 +847,16 @@ class mybin extends eqLogic {
                     $nbRuns = 0;
                     $cron = new cron();
                     $cron->setSchedule($specificCron['mycron']);
-                    $nextRunCrons = $this->getNextRunDates($cron);
+                    $nextRunCrons = $this->getNextRunDates($cron, $dtNow);
                     foreach ($nextRunCrons as $nextrun) {
-                        if ($nextrun > $dtNow) {
+                        if ($nextrun >= $dtNow) {
                             $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $nextrun->format("Y-m-d H:i"));
                             $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
                             $dtNotif->setTime(intval($this->getConfiguration('notif_hour')), intval($this->getConfiguration('notif_minute')));
                             $datesArr[$nextrun->format('Y-m-d H:i')] = $dtNotif->format('Y-m-d H:i');
                             log::add(__CLASS__, 'debug', $this->getHumanName() . ' add from crons ' . $nextrun->format('Y-m-d H:i'));
                             $nbRuns++;
-                            if ($nbRuns == 10) {
+                            if ($nbRuns == $max) {
                                 break;
                             }
                         }
@@ -819,14 +876,14 @@ class mybin extends eqLogic {
                 if (isset($specificDay['myday'])) {
                     $dtCheck = DateTime::createFromFormat("Y-m-d", $specificDay['myday']);
                     $dtCheck->setTime(intval($this->getConfiguration('hour')), intval($this->getConfiguration('minute')));
-                    if ($dtCheck > $dtNow) {
+                    if ($dtCheck >= $dtNow) {
                         $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $dtCheck->format("Y-m-d H:i"));
                         $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
                         $dtNotif->setTime(intval($this->getConfiguration('notif_hour')), intval($this->getConfiguration('notif_minute')));
                         $datesArr[$dtCheck->format('Y-m-d H:i')] = $dtNotif->format('Y-m-d H:i');
                         log::add(__CLASS__, 'debug', $this->getHumanName() . ' add from days ' . $dtCheck->format('Y-m-d H:i'));
                         $nbDays++;
-                        if ($nbDays == 10) {
+                        if ($nbDays == $max) {
                             break;
                         }
                     }
@@ -835,16 +892,16 @@ class mybin extends eqLogic {
         }
 
         ksort($datesArr);
-        array_splice($datesArr, 10, count($datesArr));
+        array_splice($datesArr, $max, count($datesArr));
 
         return $datesArr;
 
     }
 
-    public function getNextRunDates($cron) {
+    public function getNextRunDates($cron, $start) {
 		try {
 			$c = new Cron\CronExpression(checkAndFixCron($cron->getSchedule()), new Cron\FieldFactory);
-			return $c->getMultipleRunDates(10);
+			return $c->getMultipleRunDates(10, $start, false, true);
 		} catch (Exception $e) {
 			
 		} catch (Error $e) {
@@ -852,18 +909,6 @@ class mybin extends eqLogic {
 		}
 		return false;
 	}
-
-    public function getPreviousRunDate($cron) {
-        try {
-			$c = new Cron\CronExpression(checkAndFixCron($cron->getSchedule()), new Cron\FieldFactory);
-			return $c->getPreviousRunDate();
-		} catch (Exception $e) {
-			
-		} catch (Error $e) {
-			
-		}
-		return false;
-    }
 
     public function getNextRunDate($cron, $start) {
 		try {

@@ -69,8 +69,9 @@
         "Marron": "Marron",
         "Bleue": "Bleue",
         "Noire": "Noire",
-        "Jour(s) particulier(s) de ramassage": "Jour(s) particulier(s) de ramassage",
-        "Ajouter un jour": "Ajouter un jour",
+        "Violette": "Violette",
+        "Date(s) particulièr(s) de ramassage": "Date(s) particulièr(s) de ramassage",
+        "Ajouter une date": "Ajouter une date",
         "Janvier": "Janvier",
         "Février": "Février",
         "Mars": "Mars",
@@ -88,8 +89,9 @@
         "Avec votre configuration, voici les 10 prochaines dates de ramassage et de notification :": "Avec votre configuration, voici les 10 prochaines dates de ramassage et de notification :",
         "Informations": "Informations",
         "Mode expert": "Mode expert",
-        "Vous pouvez ajouter des expressions cron pour gérer les dates de ramassage particulières": "Vous pouvez ajouter des expressions cron pour gérer les dates de ramassage particulières",
-        "Le plugin ne fonctionne que toutes les 5min. Cette date de ramassage sera ignorée. Changez votre cron.": "Le plugin ne fonctionne que toutes les 5min. Cette date de ramassage sera ignorée. Changez votre cron."
+        "Vous pouvez ajouter des expressions cron pour gérer des fréquences de ramassage particulières": "Vous pouvez ajouter des expressions cron pour gérer des fréquences de ramassage particulières",
+        "Le plugin ne fonctionne que toutes les 5min. Cette date de ramassage sera ignorée. Changez votre cron.": "Le plugin ne fonctionne que toutes les 5min. Cette date de ramassage sera ignorée. Changez votre cron.",
+        "Ramassage de la poubelle": "Ramassage de la poubelle"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",

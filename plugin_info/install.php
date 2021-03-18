@@ -103,6 +103,47 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
                 $cmd->setEventOnly(1);
                 $cmd->save();
             }
+            $cmd = $eqLogic->getCmd(null, 'nextcollect');
+            if (!is_object($cmd))
+            {
+                $cmd = new mybinCmd();
+                $cmd->setLogicalId('nextcollect');
+                $cmd->setEqLogic_id($eqLogic->getId());
+                $cmd->setName('Prochain ramassage');
+                $cmd->setType('info');
+                $cmd->setSubType('string');
+                $cmd->setEventOnly(1);
+                $cmd->setIsHistorized(0);
+                $cmd->setTemplate('mobile', 'line');
+                $cmd->setTemplate('dashboard', 'line');       
+                $cmd->save();
+            }
+
+            /*
+            // transform specific dates in crons
+            $specificDays = $eqLogic->getConfiguration('specific_day');
+            $specificCrons = $eqLogic->getConfiguration('specific_cron');
+            if (is_array($specificDays)) {
+                if (count($specificDays) > 0) {
+                    if (!is_array($specificCrons)) {
+                        $specificCrons = array();
+                    }
+                    foreach ($specificDays as $key => $specificDay) {
+                        if (isset($specificDay['myday'])) {
+                            $dtCheck = DateTime::createFromFormat("Y-m-d", $specificDay['myday']);
+                            $dtCheck->setTime(intval($eqLogic->getConfiguration('hour')), intval($eqLogic->getConfiguration('minute')));
+                            $cron = $dtCheck->format('i H d m N Y');
+                            $specificCron['mycron'] = $cron;
+                            array_push($specificCrons, $specificCron);
+                            unset($specificDays[$key]);
+                        }
+                    }
+                    $eqLogic->setConfiguration('specific_day', $specificDays);
+                    $eqLogic->setConfiguration('specific_cron', $specificCrons);
+                }
+            }
+            */           
+
             $eqLogic->save();
         }
       }
