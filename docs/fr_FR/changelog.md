@@ -7,6 +7,7 @@
 # BETA en cours
 - Support des expressions cron
 - Nouvelle commande pour récupérer la prochaine date de ramassage
+- Nouvelle couleur de poubelle : violette
 
 # Stable - 14/03/2021
 - Possibilité de choisir les éléments à afficher sur le widget global

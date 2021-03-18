@@ -129,6 +129,7 @@ foreach ($eqLogics as $eqLogic) {
                                             <option value="blue">{{Bleue}}</option>
                                             <option value="grey">{{Grise}}</option>
 											<option value="black">{{Noire}}</option>
+											<option value="violet">{{Violette}}</option>
                                         </select>
                                     </span>
                                     <span class="col-sm-3">
