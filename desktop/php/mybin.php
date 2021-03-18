@@ -8,7 +8,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 
 $allDates = array();
 foreach ($eqLogics as $eqLogic) {
-	$allDates[$eqLogic->getId()] = $eqLogic->getNextCollectsAndNotifs();
+	$allDates[$eqLogic->getId()] = $eqLogic->getNextCollectsAndNotifs(10);
 }
 ?>
 
