@@ -175,9 +175,9 @@ foreach ($eqLogics as $eqLogic) {
 								</div>
 							</div>
                             <div class="form-group">
-								<label class="col-sm-3 control-label">{{Jour(s) particulier(s) de ramassage}}</label>
+								<label class="col-sm-3 control-label">{{Date(s) particulièr(s) de ramassage}}</label>
 							    <div class="col-sm-7">
-                                    <a class="btn btn-success btn-sm addDay" data-type="specific_day" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter un jour}}</a>
+                                    <a class="btn btn-success btn-sm addDay" data-type="specific_day" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une date}}</a>
                                     <div id="div_specific_day"></div>
                                 </div>
 							</div>
@@ -217,6 +217,13 @@ foreach ($eqLogics as $eqLogic) {
 								</div>
 							</div>
                             <br/>
+							<div class="form-group">
+								<label class="col-sm-4 control-label help" data-help="{{Vous pouvez ajouter des expressions cron pour gérer des fréquences de ramassage particulières}}">{{Mode expert}}</label>
+							    <div class="col-sm-7">
+                                    <a class="btn btn-success btn-sm addCron" data-type="specific_cron" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter un cron}}</a>
+                                    <div id="div_specific_cron"></div>
+                                </div>
+							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label help" data-help="{{Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.}}">{{Notification}}</label>
 								<div class="col-sm-7">
@@ -298,16 +305,6 @@ foreach ($eqLogics as $eqLogic) {
 								</div>
 							</div>
                         </div>
-						<div class="col-lg-5">
-						<legend><i class="fas fa-terminal"></i> {{Mode expert}}</legend>
-							<div class="form-group">
-								<label class="col-sm-4 control-label help" data-help="{{Vous pouvez ajouter des expressions cron pour gérer les dates de ramassage particulières}}">{{Cron}}</label>
-							    <div class="col-sm-7">
-                                    <a class="btn btn-success btn-sm addCron" data-type="specific_cron" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter un cron}}</a>
-                                    <div id="div_specific_cron"></div>
-                                </div>
-							</div>
-						</div>
 						<div class="col-lg-5">
 							<legend><i class="fas fa-info-circle"></i> {{Informations}}</legend>
 							{{Avec votre configuration, voici les 10 prochaines dates de ramassage et de notification :}}

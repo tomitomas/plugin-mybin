@@ -70,8 +70,8 @@
         "Bleue": "Blue",
         "Noire": "Black",
         "Violette": "Violet",
-        "Jour(s) particulier(s) de ramassage": "Specific day(s) of collect",
-        "Ajouter un jour": "Add a day",
+        "Date(s) particulièr(s) de ramassage": "Specific date(s) of collect",
+        "Ajouter une date": "Add a date",
         "Janvier": "January",
         "Février": "February",
         "Mars": "March",
@@ -89,7 +89,7 @@
         "Avec votre configuration, voici les 10 prochaines dates de ramassage et de notification :": "With your configuration, here are the next 10 dates of collect:",
         "Informations": "Information",
         "Mode expert": "Expert mode",
-        "Vous pouvez ajouter des expressions cron pour gérer les dates de ramassage particulières": "You can add cron expressions to manage specific collect dates",
+        "Vous pouvez ajouter des expressions cron pour gérer des fréquences de ramassage particulières": "You can add cron expressions to manage specific collect frequencies",
         "Le plugin ne fonctionne que toutes les 5min. Cette date de ramassage sera ignorée. Changez votre cron.": "The plugin works only every 5 minutes. This collect date will be ignored. Change your cron expression."
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {

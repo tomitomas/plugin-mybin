@@ -119,6 +119,7 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
                 $cmd->save();
             }
 
+            /*
             // transform specific dates in crons
             $specificDays = $eqLogic->getConfiguration('specific_day');
             $specificCrons = $eqLogic->getConfiguration('specific_cron');
@@ -140,7 +141,8 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
                     $eqLogic->setConfiguration('specific_day', $specificDays);
                     $eqLogic->setConfiguration('specific_cron', $specificCrons);
                 }
-            }           
+            }
+            */           
 
             $eqLogic->save();
         }
