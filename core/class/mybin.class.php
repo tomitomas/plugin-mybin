@@ -847,7 +847,7 @@ class mybin extends eqLogic {
                     $nbRuns = 0;
                     $cron = new cron();
                     $cron->setSchedule($specificCron['mycron']);
-                    $nextRunCrons = $this->getNextRunDates($cron);
+                    $nextRunCrons = $this->getNextRunDates($cron, $dtNow);
                     foreach ($nextRunCrons as $nextrun) {
                         if ($nextrun >= $dtNow) {
                             $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $nextrun->format("Y-m-d H:i"));
@@ -898,10 +898,10 @@ class mybin extends eqLogic {
 
     }
 
-    public function getNextRunDates($cron) {
+    public function getNextRunDates($cron, $start) {
 		try {
 			$c = new Cron\CronExpression(checkAndFixCron($cron->getSchedule()), new Cron\FieldFactory);
-			return $c->getMultipleRunDates(10);
+			return $c->getMultipleRunDates(10, $start, false, true);
 		} catch (Exception $e) {
 			
 		} catch (Error $e) {
