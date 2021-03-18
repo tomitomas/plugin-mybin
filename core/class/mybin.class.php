@@ -65,7 +65,7 @@ class mybin extends eqLogic {
         /****************************************************************************************************************/
 
         $dtNow = new DateTime("now");
-        $todayStr = $dtow->format("Y-m-d H:i");
+        $todayStr = $dtNow->format("Y-m-d H:i");
         $hour = 1 * date('G');
         $minute = 1 * date('i');
 
