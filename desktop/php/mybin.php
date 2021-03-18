@@ -137,7 +137,7 @@ foreach ($eqLogics as $eqLogic) {
                             </div>
 							<br>
 
-							<legend><i class="icon divers-slightly"></i> {{Détails de la poubelle}}</legend>
+							<legend><i class="icon divers-slightly"></i> {{Ramassage de la poubelle}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Mois de ramassage}}</label>
 								<div class="col-sm-7">
@@ -224,7 +224,8 @@ foreach ($eqLogics as $eqLogic) {
                                     <div id="div_specific_cron"></div>
                                 </div>
 							</div>
-							<br/>
+                            <br>
+							<legend><i class="icon divers-slightly"></i> {{Notification}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label help" data-help="{{Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.}}">{{Notification}}</label>
 								<div class="col-sm-7">
@@ -265,8 +266,7 @@ foreach ($eqLogics as $eqLogic) {
                                     </span>
 								</div>
 							</div>
-                            <br>
-
+							<br>
 							<legend><i class="fas fa-tachometer-alt"></i> {{Compteur}}</legend>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label help" data-help="{{En automatique, le compteur s'incrémentera à chaque ramassage ou lorsque la commande 'ack' est exécutée. En manuel, il ne s'incrémentera que si la commande 'ack' est exécutée.}}">{{Type}}</label>
@@ -306,6 +306,7 @@ foreach ($eqLogics as $eqLogic) {
 								</div>
 							</div>
                         </div>
+						<br/>
 						<div class="col-lg-5">
 							<legend><i class="fas fa-info-circle"></i> {{Informations}}</legend>
 							{{Avec votre configuration, voici les 10 prochaines dates de ramassage et de notification :}}
