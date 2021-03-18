@@ -801,6 +801,7 @@ class mybin extends eqLogic {
 
     public function getNextCollectsAndNotifs($max) {
         $dtNow = new DateTime("now");
+        $dtNow->setTime(1 * date('G'), 1 * date('i'), 0, 0);
 
         $datesArr = array();
 
@@ -813,7 +814,7 @@ class mybin extends eqLogic {
             $week = 1 * $dtCheck->format('W');
             $day = 1 * $dtCheck->format('w');
             if ($this->getConfiguration('month_'.$month) == 1 && (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) && $this->getConfiguration('day_'.$day) == 1) {
-                if ($dtCheck > $dtNow) {
+                if ($dtCheck >= $dtNow) {
                     $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $dtCheck->format("Y-m-d H:i"));
                     $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
                     $dtNotif->setTime(intval($this->getConfiguration('notif_hour')), intval($this->getConfiguration('notif_minute')));
@@ -837,7 +838,7 @@ class mybin extends eqLogic {
                     $cron->setSchedule($specificCron['mycron']);
                     $nextRunCrons = $this->getNextRunDates($cron);
                     foreach ($nextRunCrons as $nextrun) {
-                        if ($nextrun > $dtNow) {
+                        if ($nextrun >= $dtNow) {
                             $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $nextrun->format("Y-m-d H:i"));
                             $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
                             $dtNotif->setTime(intval($this->getConfiguration('notif_hour')), intval($this->getConfiguration('notif_minute')));
@@ -864,7 +865,7 @@ class mybin extends eqLogic {
                 if (isset($specificDay['myday'])) {
                     $dtCheck = DateTime::createFromFormat("Y-m-d", $specificDay['myday']);
                     $dtCheck->setTime(intval($this->getConfiguration('hour')), intval($this->getConfiguration('minute')));
-                    if ($dtCheck > $dtNow) {
+                    if ($dtCheck >= $dtNow) {
                         $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $dtCheck->format("Y-m-d H:i"));
                         $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
                         $dtNotif->setTime(intval($this->getConfiguration('notif_hour')), intval($this->getConfiguration('notif_minute')));
