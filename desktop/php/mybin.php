@@ -301,11 +301,15 @@ foreach ($eqLogics as $eqLogic) {
 							</div>
                         </div>
 						<br/>
-						<legend><i class="fas fa-sign-out-alt"></i> {{Action(s) sur ramassage}}</legend><label><a class="btn btn-success btn-sm addAction" data-type="action_collect" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
-						<div id="div_action_collect"></div>
+						<div class="col-lg-5">
+							<legend><i class="fas fa-sign-out-alt"></i> {{Action(s) sur ramassage}}</legend><label><a class="btn btn-success btn-sm addAction" data-type="action_collect" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
+							<div id="div_action_collect"></div>
+						</div>
 						<br>
-						<legend><i class="fas fa-sign-in-alt"></i> {{Action(s) sur notification}}</legend><label><a class="btn btn-success btn-sm addAction" data-type="action_notif" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
-						<div id="div_action_notif"></div>
+						<div class="col-lg-5">
+							<legend><i class="fas fa-sign-in-alt"></i> {{Action(s) sur notification}}</legend><label><a class="btn btn-success btn-sm addAction" data-type="action_notif" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
+							<div id="div_action_notif"></div>
+						</div>
 						<div class="col-lg-5">
 							<legend><i class="fas fa-info-circle"></i> {{Informations}}</legend>
 							{{Avec votre configuration, voici les 10 prochaines dates de ramassage et de notification :}}
