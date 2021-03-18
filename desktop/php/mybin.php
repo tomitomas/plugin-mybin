@@ -115,6 +115,7 @@ foreach ($eqLogics as $eqLogic) {
 									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
 								</div>
 							</div>
+							<br>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">{{Couleur de la poubelle}}</label>
                                 <div class="col-sm-7">
@@ -135,6 +136,8 @@ foreach ($eqLogics as $eqLogic) {
                                 </div>
                             </div>
 							<br>
+
+							<legend><i class="icon divers-slightly"></i> {{Détails de la poubelle}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Mois de ramassage}}</label>
 								<div class="col-sm-7">
