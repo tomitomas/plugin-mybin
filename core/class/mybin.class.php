@@ -617,6 +617,13 @@ class mybin extends eqLogic {
                 $replace['#reset_id#'] = '';
             }
             
+            $nextCollectCmd = $this->getCmd(null, 'nextcollect');
+            if ($resetCmd->getIsVisible() == 1) {
+                $replace['#nextcollectname#'] = $nextCollectCmd->getName();
+                $replace['#nextcollectdate#'] = $nextCollectCmd->execCmd();
+            } else {
+                $replace['#nextcollectname#'] = '';
+            }
             
             $html = template_replace($replace, getTemplate('core', $version, 'singlebin.template', __CLASS__));
             cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
