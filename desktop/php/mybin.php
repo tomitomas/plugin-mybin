@@ -334,9 +334,9 @@ foreach ($eqLogics as $eqLogic) {
 											$colorNotif = 'warning';
 											$helpNotif = 'help';
 										}
-										echo '<label class="col-sm-3 control-label '.$helpCollect.'" data-help="{{Le plugin ne fonctionne que toutes les 5min. Cette date de ramassage sera ignorée. Changez votre cron.}}">{{Ramassage}}</label>';
+										echo '<label class="col-sm-2 control-label '.$helpCollect.'" data-help="{{Le plugin ne fonctionne que toutes les 5min. Cette date de ramassage sera ignorée. Changez votre cron.}}">{{Ramassage}}</label>';
 										echo '<div class="col-sm-4" ><span class="label label-'.$colorCollect.'">'.date_fr($dtCollect->format('l')).' '.$dtCollect->format('j').' '.date_fr($dtCollect->format('F')).' '.$dtCollect->format('Y').' {{à}} '.$dtCollect->format('G:i').'</span></div>';
-										echo '<label class="col-sm-3 control-label '.$helpNotif.'" data-help="{{Cette date de notification est après la date de ramassage. Vérifiez vos paramètres.}}">{{Notification}}</label>';
+										echo '<label class="col-sm-2 control-label '.$helpNotif.'" data-help="{{Cette date de notification est après la date de ramassage. Vérifiez vos paramètres.}}">{{Notification}}</label>';
 										echo '<div class="col-sm-4"><span class="label label-'.$colorNotif.'">'.date_fr($dtNotif->format('l')).' '.$dtNotif->format('j').' '.date_fr($dtNotif->format('F')).' '.$dtNotif->format('Y').' {{à}} '.$dtNotif->format('G:i').'</span></div>';
 									}
 									echo '</div>';
