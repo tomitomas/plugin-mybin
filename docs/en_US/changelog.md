@@ -11,6 +11,7 @@
 - Reorganization of configuration page
 - Error conrol
 - Next collect date display on single bin widget
+- New bin "color?": bulky waste
 
 # Stable - 14/03/2021
 - Possibility to choose elements to display on the global widget

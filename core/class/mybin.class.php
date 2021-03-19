@@ -90,8 +90,6 @@ class mybin extends eqLogic {
             }
         }
 
-        //$change = $change + $this->checkNotifBin();
-        //$change = $change + $this->checkAckBin();
         $this->cleanSpecificDates();
         if ($change || ($hour == 0 && $minute == 5)) {
             $this->refreshWhole();
@@ -108,170 +106,6 @@ class mybin extends eqLogic {
             }
         }
     }
-    
-    /*
-    public function checkNotifBin() {
-        if (!$this->getIsEnable()) {
-            return 0;
-        }
-        
-        $dt = new DateTime("now");
-        $delay = $this->getConfiguration('notif_days', 0);
-        if ($delay > 0) {
-            $dt->modify('+'.$delay.' day');
-        }
-        $month = 1 * $dt->format('n');
-        $week = 1 * $dt->format('W');
-        $day = 1 * $dt->format('w');
-        $hour = 1 * $dt->format('G');
-        $minute = 1 * $dt->format('i');
-        
-        $isSpecificCron = false;
-        $isSpecificDay = false;
-        $isMonth = false;
-        $isweek = false;
-        $isday = false;
-        $ishour = false;
-        $isminute = false;
-
-        $specificCrons = $this->getConfiguration('specific_cron');
-        if (is_array($specificCrons)) {
-            foreach ($specificCrons as $specificCron) {
-                $todayStr = $dt->format("Y-m-d");
-                if (isset($specificCron['mycron'])) {
-                    $cron = new cron();
-                    $cron->setSchedule($specificCron['mycron']);
-                    $nextRunCron = $cron->getNextRunDate();
-                    if ($nextRunCron != false) {
-                        $dtCheck = DateTime::createFromFormat("Y-m-d H:i:s", $nextRunCron);
-                        if ($todayStr == $dtCheck->format("Y-m-d")) {
-                            $isSpecificCron = true;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        $specificDays = $this->getConfiguration('specific_day');
-        if (is_array($specificDays)) {
-            foreach ($specificDays as $specificDay) {
-                $todayStr = $dt->format("Y-m-d");
-                if (isset($specificDay['myday'])) {
-                    if ($todayStr == $specificDay['myday']) {
-                        $isSpecificDay = true;
-                        break;
-                    }
-                }
-            }
-        }
-        if ($this->getConfiguration('month_'.$month) == 1) {
-            $isMonth = true;
-        }
-        if (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) {
-            $isweek = true;
-        }
-        for ($i = 0; $i <= 6; $i++) {
-            if ($this->getConfiguration('day_'.$i) == 1 && $i == $day) {
-                $isday = true;
-                break;
-            }
-        }
-        if ($this->getConfiguration('notif_minute') == $minute) {
-            $isminute = true;
-        }
-        if ($this->getConfiguration('notif_hour') == $hour) {
-            $ishour = true;
-        }
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin: month ' . $ismonth . ', week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute . ', specificday ' . $isSpecificDay . ', specificron ' . $isSpecificCron);
-        if ((($ismonth && $isweek && $isday) || $isSpecificDay || $isSpecificCron) && $ishour && $isminute) {    
-            $this->notifBin();
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-    
-    public function checkAckBin() {
-        if (!$this->getIsEnable()) {
-            return 0;
-        }
-        
-        $dt = new DateTime("now");
-
-        $month = 1 * $dt->format('n');
-        $week = 1 * $dt->format('W');
-        $day = 1 * $dt->format('w');
-        $hour = 1 * $dt->format('G');
-        $minute = 1 * $dt->format('i');
-        
-        $isSpecificCron = false;
-        $isSpecificDay = false;
-        $ismonth = false;
-        $isweek = false;
-        $isday = false;
-        $ishour = false;
-        $isminute = false;
-        
-        $specificCrons = $this->getConfiguration('specific_cron');
-        if (is_array($specificCrons)) {
-            foreach ($specificCrons as $specificCron) {
-                $todayStr = $dt->format("Y-m-d H:i");
-                if (isset($specificCron['mycron'])) {
-                    $cron = new cron();
-                    $cron->setSchedule($specificCron['mycron']);
-                    $lastRunCron = $this->getNextRunDate($cron, $todayStr);
-                    log::add(__CLASS__, 'debug', $this->getHumanName() . ' lastRunCron: ' . $lastRunCron->format("Y-m-d H:i"));
-                    if ($lastRunCron != false) {
-                        if ($todayStr == $lastRunCron->format("Y-m-d H:i")) {
-                            $isSpecificCron = true;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        $specificDays = $this->getConfiguration('specific_day');
-        if (is_array($specificDays)) {
-            foreach ($specificDays as $specificDay) {
-                $todayStr = $dt->format("Y-m-d");
-                if (isset($specificDay['myday'])) {
-                    if ($todayStr == $specificDay['myday']) {
-                        $isSpecificDay = true;
-                        break;
-                    }
-                }
-            }
-        }
-        
-        if ($this->getConfiguration('month_'.$month) == 1) {
-            $ismonth = true;
-        }
-        if (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) {
-            $isweek = true;
-        }
-        for ($i = 0; $i <= 6; $i++) {
-            if ($this->getConfiguration('day_'.$i) == 1 && $i == $day) {
-                $isday = true;
-                break;
-            }
-        }
-        if ($this->getConfiguration('minute') == $minute) {
-            $isminute = true;
-        }
-        if ($this->getConfiguration('hour') == $hour) {
-            $ishour = true;
-        }
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin: month ' . $ismonth . ', week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute . ', specificday ' . $isSpecificDay . ', specificron ' . $isSpecificCron);
-        if (((($isMonth && $isweek && $isday) || $isSpecificDay) && $ishour && $isminute) || $isSpecificCron) {
-            $this->ackBin(true);
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-    */
 
     public function notifBin() {
         $seuil = $this->getConfiguration('seuil', '');
@@ -362,18 +196,6 @@ class mybin extends eqLogic {
             } else {
                 $this->setConfiguration('notif_days', 0);
             }
-            /*
-            if ($this->getConfiguration('notif_days', 0) == 0) {
-                if ($this->getConfiguration('notif_hour') > $this->getConfiguration('hour')) {
-                    throw new Exception($this->getHumanName() . ": hour " . __('L\'heure de notification est après l\'heure de collecte',__FILE__));
-                }
-                if ($this->getConfiguration('notif_hour') == $this->getConfiguration('hour')) {
-                    if ($this->getConfiguration('notif_minute') > $this->getConfiguration('minute')) {
-                        throw new Exception($this->getHumanName() . ": minute " . __('L\'heure de notification est après l\'heure de collecte',__FILE__));
-                    }
-                }
-            }
-            */
             if ($this->getConfiguration('seuil', '') <> '') {
                 $options = array('options' => array('min_range' => 0));
                 if (!filter_var($this->getConfiguration('seuil'), FILTER_VALIDATE_INT, $options)) {
