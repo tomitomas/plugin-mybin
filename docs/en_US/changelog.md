@@ -10,6 +10,7 @@
 - New bin color: violet
 - Reorganization of configuration page
 - Error conrol
+- Next collect date display on single bin widget
 
 # Stable - 14/03/2021
 - Possibility to choose elements to display on the global widget

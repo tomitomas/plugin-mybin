@@ -10,6 +10,7 @@
 - Nouvelle couleur de poubelle : violette
 - Réorganisation de la page de configuration
 - Contrôle d'erreurs
+- Prochaine date de ramassage affichée sur le widget pour une poubelle
 
 # Stable - 14/03/2021
 - Possibilité de choisir les éléments à afficher sur le widget global
