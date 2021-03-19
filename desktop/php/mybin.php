@@ -8,7 +8,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 
 $allDates = array();
 foreach ($eqLogics as $eqLogic) {
-	$allDates[$eqLogic->getId()] = $eqLogic->getNextCollectsAndNotifs(10);
+	$allDates[$eqLogic->getId()] = $eqLogic->getNextCollectsAndNotifs(10, true);
 }
 ?>
 
@@ -128,6 +128,7 @@ foreach ($eqLogics as $eqLogic) {
                                             <option value="grey">{{Grise}}</option>
 											<option value="black">{{Noire}}</option>
 											<option value="violet">{{Violette}}</option>
+											<option value="bulky">{{Encombrants}}</option>
                                         </select>
                                     </span>
                                     <span class="col-sm-3">
@@ -320,18 +321,26 @@ foreach ($eqLogics as $eqLogic) {
 								foreach ($allDates as $key => $value) {
 									echo '<div class="allDates dates-'.$key.'" style="display: none;">';
 									foreach ($value as $collect => $notif) {
-										$color = 'primary';
-										$help = '';
+										$colorCollect = 'primary';
+										$helpCollect = '';
 										if (substr($collect, -1) <> '0' && substr($collect, -1) <> '5') {
-											$color = 'warning';
-											$help = 'help';
+											$colorCollect = 'warning';
+											$helpCollect = 'help';
 										}
 										$dtCollect = DateTime::createFromFormat("Y-m-d H:i", $collect);
 										$dtNotif = DateTime::createFromFormat("Y-m-d H:i", $notif);
-										echo '<label class="col-xs-3 control-label '.$help.'" data-help="{{Le plugin ne fonctionne que toutes les 5min. Cette date de ramassage sera ignorée. Changez votre cron.}}">{{Ramassage}}</label>';
-										echo '<div class="col-xs-3" ><span class="label label-'.$color.'">'.date_fr($dtCollect->format('l')).' '.$dtCollect->format('j').' '.date_fr($dtCollect->format('F')).' '.$dtCollect->format('Y').' {{à}} '.$dtCollect->format('G:i').'</span></div>';
-										echo '<label class="col-xs-3 control-label" >{{Notification}}</label>';
-										echo '<div class="col-xs-3"><span class="label label-success">'.date_fr($dtNotif->format('l')).' '.$dtNotif->format('j').' '.date_fr($dtNotif->format('F')).' '.$dtNotif->format('Y').' {{à}} '.$dtNotif->format('G:i').'</span></div>';
+										$colorNotif = 'info';
+										$helpNotif = '';
+										if ($dtNotif > $dtCollect) {
+											$colorNotif = 'warning';
+											$helpNotif = 'help';
+										}
+										echo '<div class="col-sm-12">';
+										echo '<label class="col-sm-2 control-label '.$helpCollect.'" data-help="{{Le plugin ne fonctionne que toutes les 5min. Cette date de ramassage sera ignorée. Changez votre cron.}}">{{Ramassage}}</label>';
+										echo '<div class="col-sm-4" ><span class="label label-'.$colorCollect.'">'.date_fr($dtCollect->format('l')).' '.$dtCollect->format('j').' '.date_fr($dtCollect->format('F')).' '.$dtCollect->format('Y').' {{à}} '.$dtCollect->format('G:i').'</span></div>';
+										echo '<label class="col-sm-2 control-label '.$helpNotif.'" data-help="{{Cette date de notification est après la date de ramassage. Vérifiez vos paramètres.}}">{{Notification}}</label>';
+										echo '<div class="col-sm-4"><span class="label label-'.$colorNotif.'">'.date_fr($dtNotif->format('l')).' '.$dtNotif->format('j').' '.date_fr($dtNotif->format('F')).' '.$dtNotif->format('Y').' {{à}} '.$dtNotif->format('G:i').'</span></div>';
+										echo '</div>';
 									}
 									echo '</div>';
 								}

@@ -10,6 +10,12 @@
         <div style="width: 50%; display:inline-block;">
             <center>
                 #binnotifs#
+                <br/>
+                <div class="nextCollect">
+                  <span class="cmdName">#nextcollectname#</span>
+                  <br/>
+                  <span class="cmdName">#nextcollectdate#</span>
+                </div>
             </center>
         </div>
         <div style="width: 50%; float: right;">
@@ -41,6 +47,10 @@
             $('.eqLogic[data-eqLogic_uid=#uid#] .resetCounter').remove();
         }
         
+        if ('#nextcollectname#' == '') {
+          $('.eqLogic[data-eqLogic_uid=#uid#] .nextCollect').remove();
+        }
+
         if ('#counter_id#' != '') {
           jeedom.cmd.update['#counter_id#'] = function(_options) {
               $('.cmd[data-cmd_id=#counter_id#]').attr('title','{{Date de valeur}} : '+_options.valueDate+'<br/>{{Date de collecte}} : '+_options.collectDate)

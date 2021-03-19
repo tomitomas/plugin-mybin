@@ -9,6 +9,9 @@
 - Nouvelle commande pour récupérer la prochaine date de ramassage
 - Nouvelle couleur de poubelle : violette
 - Réorganisation de la page de configuration
+- Contrôle d'erreurs
+- Prochaine date de ramassage affichée sur le widget pour une poubelle
+- Nouvelle "couleur ?" de poubelle : encombrants
 
 # Stable - 14/03/2021
 - Possibilité de choisir les éléments à afficher sur le widget global
