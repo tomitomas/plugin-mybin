@@ -812,7 +812,7 @@ class mybin extends eqLogic {
         }
     }
 
-    public function getNextCollectsAndNotifs($max) {
+    public function getNextCollectsAndNotifs($max, $displayOnly = false) {
         $dtNow = new DateTime("now");
         $dtNow->setTime(1 * date('G'), 1 * date('i'), 0, 0);
 
@@ -843,6 +843,7 @@ class mybin extends eqLogic {
         
         $nbCrons = 0;
         $specificCrons = $this->getConfiguration('specific_cron');
+        $skipped = 0;
         if (is_array($specificCrons)) {
             foreach ($specificCrons as $specificCron) {
                 if (isset($specificCron['mycron'])) {
@@ -851,6 +852,14 @@ class mybin extends eqLogic {
                     $cron->setSchedule($specificCron['mycron']);
                     $nextRunCrons = $this->getNextRunDates($cron, $dtNow);
                     foreach ($nextRunCrons as $nextrun) {
+                        if ($skipped == 20) {
+                            break;
+                        }
+                        if (substr($nextrun->format('Y-m-d H:i'), -1) <> '0' && substr($nextrun->format('Y-m-d H:i'), -1) <> '5' && !$displayOnly) {
+                            log::add(__CLASS__, 'warning', $this->getHumanName() . ' Date from cron skipped because invalid: ' . $nextrun->format('Y-m-d H:i'));
+                            $skipped++;
+                            continue;
+                        }
                         if ($nextrun >= $dtNow) {
                             $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $nextrun->format("Y-m-d H:i"));
                             $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
