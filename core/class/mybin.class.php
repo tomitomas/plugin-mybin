@@ -576,7 +576,11 @@ class mybin extends eqLogic {
             $binnotifs = "";
             $binscript = "";
             if ($binCmd->getIsVisible() == 1) {
-                $binnotifs = '<span class="cmd" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/none2.png" width="70px"></span>';
+                $suffix = "";
+                if ($this->getConfiguration('color') == "bulky") {
+                    $suffix = "_bulky";
+                }
+                $binnotifs = '<span class="cmd" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/none2'.$suffix.'.png" width="70px"></span>';
                 $binscript = "";
                 $binStatus = $binCmd->execCmd();
                 if ($binStatus == 1 && $binCmd->getIsVisible() == 1) {
