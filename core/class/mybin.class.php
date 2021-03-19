@@ -362,6 +362,7 @@ class mybin extends eqLogic {
             } else {
                 $this->setConfiguration('notif_days', 0);
             }
+            /*
             if ($this->getConfiguration('notif_days', 0) == 0) {
                 if ($this->getConfiguration('notif_hour') > $this->getConfiguration('hour')) {
                     throw new Exception($this->getHumanName() . ": hour " . __('L\'heure de notification est après l\'heure de collecte',__FILE__));
@@ -372,6 +373,7 @@ class mybin extends eqLogic {
                     }
                 }
             }
+            */
             if ($this->getConfiguration('seuil', '') <> '') {
                 $options = array('options' => array('min_range' => 0));
                 if (!filter_var($this->getConfiguration('seuil'), FILTER_VALIDATE_INT, $options)) {
