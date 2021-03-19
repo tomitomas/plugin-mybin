@@ -618,7 +618,7 @@ class mybin extends eqLogic {
             }
             
             $nextCollectCmd = $this->getCmd(null, 'nextcollect');
-            if ($resetCmd->getIsVisible() == 1) {
+            if ($nextCollectCmd->getIsVisible() == 1) {
                 $replace['#nextcollectname#'] = $nextCollectCmd->getName();
                 $replace['#nextcollectdate#'] = $nextCollectCmd->execCmd();
             } else {
