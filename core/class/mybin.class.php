@@ -674,7 +674,6 @@ class mybin extends eqLogic {
         $dtCheck = new DateTime("now");
         $dtCheck->setTime(intval($this->getConfiguration('hour')), intval($this->getConfiguration('minute')));
         for ($i = 0; $i <= 365; $i++) {
-            $dtCheck->modify('+1 day');
             $month = 1 * $dtCheck->format('n');
             $week = 1 * $dtCheck->format('W');
             $day = 1 * $dtCheck->format('w');
@@ -691,6 +690,7 @@ class mybin extends eqLogic {
                     }
                 }
             }
+            $dtCheck->modify('+1 day');
         }
         
         $nbCrons = 0;
