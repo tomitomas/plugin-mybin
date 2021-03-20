@@ -49,6 +49,16 @@ $("body").off('click','.listCmdAction').on('click','.listCmdAction', function ()
   });
 });
 
+// permet d'afficher la liste des cmd Jeedom pour choisir sa commande de type "info"
+$("body").off('click','.listCmdInfo').on('click','.listCmdInfo', function () {
+  //var type = $(this).attr('data-type');
+  //var el = $(this).closest('.' + type).find('.expressionAttr[data-l2key=notifCondition]');
+  var el = $("body").find('.expressionAttr[data-l2key=notifCondition]');
+  jeedom.cmd.getSelectModal({cmd: {type: 'info'}}, function (result) {
+    el.value(el.value() + result.human);
+  });
+});
+
 // copier/coller du core (cmd.configure.php), permet de choisir la liste des actions (scenario, attendre, ...)
 $("body").undelegate(".listAction", 'click').delegate(".listAction", 'click', function () {
   var type = $(this).attr('data-type');

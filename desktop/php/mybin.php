@@ -267,6 +267,15 @@ foreach ($eqLogics as $eqLogic) {
                                     </span>
 								</div>
 							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label help" data-help="{{Cette expression binaire sera évaluée au moment de la notification}}">{{Condition de notification}}</label>
+								<div class="col-sm-6 input-group">
+									<input class="eqLogicAttr expressionAttr form-control roundedLeft ui-autocomplete-input notifCondition" data-l1key="configuration" data-l2key="notifCondition">
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default cursor listCmdInfo tooltipstered" tooltip="Rechercher une commande"><i class="fas fa-list-alt"></i></button>
+									</span>
+								</div>
+							</div>
 							<br>
 							<legend><i class="fas fa-tachometer-alt"></i> {{Compteur}}</legend>
                             <div class="form-group">

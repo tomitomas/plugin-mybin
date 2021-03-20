@@ -73,9 +73,31 @@ class mybin extends eqLogic {
         if (is_array($nextOne)) {
             foreach ($nextOne as $collect => $notif) {
                 if ($notif == $todayStr) {
-                    log::add(__CLASS__, 'debug', $this->getHumanName() . ' Notif: ' . $notif . ' true');
-                    $this->notifBin();
-                    $change = true;
+                    $notifCondition = $this->getConfiguration('notifCondition');
+                    $condition = true; 
+                    if ($notifCondition <> '') {
+                        log::add(__CLASS__, 'debug', $this->getHumanName() . ' condition raw: ' . $notifCondition);
+                        $notifCondition = scenarioExpression::setTags($notifCondition);
+                        log::add(__CLASS__, 'debug', $this->getHumanName() . ' condition after tags: ' . $notifCondition);
+                        $expression = jeedom::fromHumanReadable($notifCondition);
+                        log::add(__CLASS__, 'debug', $this->getHumanName() . ' condition from readable: ' . $notifCondition);
+                        $return = evaluate($expression);
+                        if ($return === true) {
+                            log::add(__CLASS__, 'debug', $this->getHumanName() . ' Condition returned TRUE, notification triggered');
+                            $condition = true;
+                        } else if ($return === false) {
+                            log::add(__CLASS__, 'debug', $this->getHumanName() . ' Condition returned FALSE, notification skipped');
+                            $condition = false;
+                        } else {
+                            log::add(__CLASS__, 'warning', $this->getHumanName() . ' Condition failed to be evaluated, notiication skipped');
+                            $condition = false;
+                        }
+                    }
+                    if ($condition) {
+                        log::add(__CLASS__, 'debug', $this->getHumanName() . ' Notif: ' . $notif . ' true');
+                        $this->notifBin();
+                        $change = true;
+                    }
                 }
                 if ($collect == $todayStr) {
                     log::add(__CLASS__, 'debug', $this->getHumanName() . ' Ack: ' . $collect . ' true');
@@ -655,7 +677,6 @@ class mybin extends eqLogic {
         $dtCheck = new DateTime("now");
         $dtCheck->setTime(intval($this->getConfiguration('hour')), intval($this->getConfiguration('minute')));
         for ($i = 0; $i <= 365; $i++) {
-            $dtCheck->modify('+1 day');
             $month = 1 * $dtCheck->format('n');
             $week = 1 * $dtCheck->format('W');
             $day = 1 * $dtCheck->format('w');
@@ -672,6 +693,7 @@ class mybin extends eqLogic {
                     }
                 }
             }
+            $dtCheck->modify('+1 day');
         }
         
         $nbCrons = 0;

@@ -93,7 +93,9 @@
         "Vous pouvez ajouter des expressions cron pour gérer des fréquences de ramassage particulières": "Vous pouvez ajouter des expressions cron pour gérer des fréquences de ramassage particulières",
         "Le plugin ne fonctionne que toutes les 5min. Cette date de ramassage sera ignorée. Changez votre cron.": "Le plugin ne fonctionne que toutes les 5min. Cette date de ramassage sera ignorée. Changez votre cron.",
         "Ramassage de la poubelle": "Ramassage de la poubelle",
-        "Cette date de notification est après la date de ramassage. Vérifiez vos paramètres.": "Cette date de notification est après la date de ramassage. Vérifiez vos paramètres."
+        "Cette date de notification est après la date de ramassage. Vérifiez vos paramètres.": "Cette date de notification est après la date de ramassage. Vérifiez vos paramètres.",
+        "Condition de notification": "Condition de notification",
+        "Cette expression binaire sera évaluée au moment de la notification": "Cette expression binaire sera évaluée au moment de la notification"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",

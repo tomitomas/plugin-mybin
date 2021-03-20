@@ -12,6 +12,7 @@
 - Error conrol
 - Next collect date display on single bin widget
 - New bin "color?": bulky waste
+- Ability to define a notification's condition
 
 # Stable - 14/03/2021
 - Possibility to choose elements to display on the global widget
