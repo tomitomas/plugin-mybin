@@ -73,9 +73,28 @@ class mybin extends eqLogic {
         if (is_array($nextOne)) {
             foreach ($nextOne as $collect => $notif) {
                 if ($notif == $todayStr) {
-                    log::add(__CLASS__, 'debug', $this->getHumanName() . ' Notif: ' . $notif . ' true');
-                    $this->notifBin();
-                    $change = true;
+                    $notifCondition = $this->getConfiguration('notifCondition');
+                    $condition = true; 
+                    if ($notifCondition <> '') {
+                        $notifCondition = scenarioExpression::setTags($notifCondition);
+                        $expression = jeedom::fromHumanReadable($notifCondition);
+                        $return = evaluate($expression);
+                        if ($return === true) {
+                            log::add(__CLASS__, 'debug', $this->getHumanName() . ' Condition returned TRUE, notification triggered');
+                            $condition = true;
+                        } else if ($return === false) {
+                            log::add(__CLASS__, 'debug', $this->getHumanName() . ' Condition returned FALSE, notification skipped');
+                            $condition = false;
+                        } else {
+                            log::add(__CLASS__, 'warning', $this->getHumanName() . ' Condition failed to be evaluated, notiication skipped');
+                            $condition = false;
+                        }
+                    }
+                    if ($condition) {
+                        log::add(__CLASS__, 'debug', $this->getHumanName() . ' Notif: ' . $notif . ' true');
+                        $this->notifBin();
+                        $change = true;
+                    }
                 }
                 if ($collect == $todayStr) {
                     log::add(__CLASS__, 'debug', $this->getHumanName() . ' Ack: ' . $collect . ' true');

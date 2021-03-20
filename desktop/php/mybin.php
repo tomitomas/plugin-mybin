@@ -268,7 +268,7 @@ foreach ($eqLogics as $eqLogic) {
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label help" data-help="{{Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.}}">{{Condition de notification}}</label>
+								<label class="col-sm-3 control-label help" data-help="{{Cette expression binaire sera évaluée au moment de la notification}}">{{Condition de notification}}</label>
 								<div class="col-sm-6 input-group">
 									<input class="eqLogicAttr expressionAttr form-control roundedLeft ui-autocomplete-input notifCondition" data-l1key="configuration" data-l2key="notifCondition">
 									<span class="input-group-btn">
