@@ -77,8 +77,8 @@ class mybin extends eqLogic {
                     $condition = true; 
                     if ($notifCondition <> '') {
                         log::add(__CLASS__, 'debug', $this->getHumanName() . ' condition raw: ' . $notifCondition);
-                        $notifCondition = scenarioExpression::setTags($notifCondition);
-                        log::add(__CLASS__, 'debug', $this->getHumanName() . ' condition after tags: ' . $notifCondition);
+                        //$notifCondition = scenarioExpression::setTags($notifCondition);
+                        //log::add(__CLASS__, 'debug', $this->getHumanName() . ' condition after tags: ' . $notifCondition);
                         $expression = jeedom::fromHumanReadable($notifCondition);
                         log::add(__CLASS__, 'debug', $this->getHumanName() . ' condition from readable: ' . $notifCondition);
                         $return = evaluate($expression);
