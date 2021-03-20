@@ -55,7 +55,7 @@ $("body").off('click','.listCmdInfo').on('click','.listCmdInfo', function () {
   //var el = $(this).closest('.' + type).find('.expressionAttr[data-l2key=notifCondition]');
   var el = $("body").find('.expressionAttr[data-l2key=notifCondition]');
   jeedom.cmd.getSelectModal({cmd: {type: 'info'}}, function (result) {
-    el.value(result.human);
+    el.value(el.value() + result.human);
   });
 });
 
