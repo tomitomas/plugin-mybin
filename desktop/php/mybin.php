@@ -269,7 +269,7 @@ foreach ($eqLogics as $eqLogic) {
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label help" data-help="{{Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.}}">{{Condition de notification}}</label>
-								<div class="col-sm-6">
+								<div class="col-sm-6 input-group">
 									<input class="expressionAttr form-control roundedLeft ui-autocomplete-input notifCondition" data-l1key="configuration" data-l2key="notifCondition">
 									<span class="input-group-btn">
 										<button type="button" class="btn btn-default cursor listCmdInfo tooltipstered" tooltip="Rechercher une commande"><i class="fas fa-list-alt"></i></button>
