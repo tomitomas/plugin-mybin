@@ -4,7 +4,7 @@ Petit plugin pour Jeedom facilitant la gestion des poubelles domestiques.
 
 Ce plugin vous plait ? Vous pouvez, si vous le souhaitez, encourager son développeur :
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HS63QBMJNQYRW)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?business=HS63QBMJNQYRW&currency_code=EUR)
 
 # Configuration
 
