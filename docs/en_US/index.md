@@ -4,7 +4,7 @@ Very simple plugin for Jeedom easing the management of your home bins.
 
 You like this plugin? You can, if you wish, encourage its developer:
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?business=HS63QBMJNQYRW&currency_code=EUR)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/paypalme/hugoKs3)
 
 # Configuration
 
