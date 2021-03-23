@@ -1,0 +1,55 @@
+<div class="eqLogic eqLogic-widget #eqType# allowResize" style="width:#width#;#style#" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#" data-eqType="#eqType#" data-translate-category="#translate_category#" data-category="#category#" data-tags="#tags#" >
+	<center class="widget-name">
+		<span class="warning" title="#alert_name#">
+			<i class='#alert_icon#'></i>
+		</span>
+		<span class="reportModeVisible">#name_display# <span class="object_name">#object_name#</span></span>
+	</center>   
+    <div class="notifs" style="height: 95px;">
+        <center class="binmsg">
+            <span><br/><i>#binmsg#</i></span>
+        </center>
+        <center class="binnotifs">
+            #binnotifs#
+        </center>
+    </div>
+    <center class="calendar">
+        <div style="width: 100%;">
+            <div style="width: 50%; float:left;">#day1# #date1#</div><div style="width: 50%; display:inline-block;">#binimg_day1#</div>
+        </div>
+        <div style="width: 100%;">
+            <div style="width: 50%; float:left;">#day2# #date2#</div><div style="width: 50%; display:inline-block;">#binimg_day2#</div>
+        </div>
+        <div style="width: 100%;">
+            <div style="width: 50%; float:left;">#day3# #date3#</div><div style="width: 50%; display:inline-block;">#binimg_day3#</div>
+        </div>
+        <div style="width: 100%;">
+            <div style="width: 50%; float:left;">#day4# #date4#</div><div style="width: 50%; display:inline-block;">#binimg_day4#</div>
+        </div>
+        <div style="width: 100%;">
+            <div style="width: 50%; float:left;">#day5# #date5#</div><div style="width: 50%; display:inline-block;">#binimg_day5#</div>
+        </div>
+        <div style="width: 100%;">
+            <div style="width: 50%; float:left;">#day6# #date6#</div><div style="width: 50%; display:inline-block;">#binimg_day6#</div>
+        </div>
+        <div style="width: 100%;">
+            <div style="width: 50%; float:left;">#day7# #date7#</div><div style="width: 50%; display:inline-block;">#binimg_day7#</div>
+        </div>
+    </center>
+    <script>
+        #binscript#
+
+        if ('#bincalendar#' == ''){
+            $('.eqLogic[data-eqLogic_uid=#uid#] .calendar').remove();
+        }
+        if ('#binnotifs#' == ''){
+            $('.eqLogic[data-eqLogic_uid=#uid#] .notifs').remove();
+        } else {
+            if ('#binnotifs#' != 'none') { 
+                $('.eqLogic[data-eqLogic_uid=#uid#] .binmsg').remove();
+            } else {
+                $('.eqLogic[data-eqLogic_uid=#uid#] .binnotifs').remove();
+            }
+        }
+    </script> 
+</div>
