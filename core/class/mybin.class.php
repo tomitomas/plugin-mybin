@@ -51,19 +51,6 @@ class mybin extends eqLogic {
         $change = false;
         $nextRunRecorded = false;
 
-        /************************************ Hack degueu ***************************************************************/
-        // Devrait etre fait dans le postUpdate mais, pour une raison que j'ignore, la DB ne se met pas à jour
-        $threshold = $this->getConfiguration('seuil','');
-        $cmd = $this->getCmd(null, 'counter');
-        $cmd->setConfiguration('minValue', 0); 
-        $cmd->setConfiguration('maxValue', $threshold);
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' threshold change: ' . $cmd->getChanged());
-        if ($cmd->getChanged()) {
-            $change = true;
-        }
-        $cmd->save();
-        /****************************************************************************************************************/
-
         $dtNow = new DateTime("now");
         $todayStr = $dtNow->format("Y-m-d H:i");
         $hour = 1 * date('G');
@@ -790,6 +777,16 @@ class mybin extends eqLogic {
 }
 
 class mybinCmd extends cmd {
+
+    public function preSave(){
+        if ($this->getLogicalId() == 'counter') {
+            $eqLogic = $this->getEqLogic();
+            $threshold = $eqLogic->getConfiguration('seuil','');
+            $this->setConfiguration('minValue', 0); 
+            $this->setConfiguration('maxValue', $threshold);
+            log::add('mybin', 'debug', 'Threshold changed to ' . $threshold . ' : ' . $this->getChanged());
+        }
+    }
     
     public function dontRemoveCmd() {
 		return true;
