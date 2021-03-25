@@ -636,7 +636,7 @@ class mybin extends eqLogic {
         $change = false;
         $specificDays = $this->getConfiguration('specific_day');
         if (is_array($specificDays)) {
-            $dtNow = new DateTime("now");
+            $dtNow = new DateTime("today");
             foreach ($specificDays as $key => $specificDay) {
                 if (isset($specificDay['myday'])) {
                     $dtSpec = DateTime::createFromFormat("Y-m-d", $specificDay['myday']);
