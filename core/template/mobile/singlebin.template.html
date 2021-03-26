@@ -1,13 +1,12 @@
-<div class="eqLogic eqLogic-widget #eqType# allowResize" style="width:#width#;height:#height#;#style#" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#" data-eqType="#eqType#" data-translate-category="#translate_category#" data-category="#category#" data-tags="#tags#" >
+<div class="eqLogic eqLogic-widget #eqType# allowResize" style="width:#width#;#style#" data-eqLogic_id="#id#" data-eqLogic_uid="#uid#" data-version="#version#" data-eqType="#eqType#" data-translate-category="#translate_category#" data-category="#category#" data-tags="#tags#" >
 	<center class="widget-name">
 		<span class="warning" title="#alert_name#">
 			<i class='#alert_icon#'></i>
 		</span>
 		<span class="reportModeVisible">#name_display# <span class="object_name">#object_name#</span></span>
-		<a href="#eqLink#" class="reportModeHidden">#name_display# <span class="object_name">#object_name#</span></a>
 	</center>
     <div>
-        <div style="width: 50%; display:inline-block;">
+        <div>
             <center>
                 #binnotifs#
                 <br/>
@@ -18,7 +17,8 @@
                 </div>
             </center>
         </div>
-        <div style="width: 50%; float: right;">
+        <br/>
+        <div>
             <center>
                 <div class="cmd cmd-widget arcgauge" data-type="info" data-subtype="numeric" data-template="default" data-cmd_id="#counter_id#" data-cmd_uid="#counter_uid#" data-version="#version#" data-eqLogic_id="#counter_eqLogic_id#" title="Date de valeur : #counter_valueDate#<br/>Date de collecte : #counter_collectDate#" >
                     <div class="title">
@@ -28,10 +28,8 @@
                       <div class="gauge cursor" data-cmd_id="#counter_id#"></div>
                     </div>
                 </div>
-                <div class="cmd cmd-widget reportModeHidden resetCounter" data-type="action" data-subtype="other" data-template="default" data-cmd_id="#reset_id#" data-cmd_uid="#reset_uid#" data-version="#version#" data-eqLogic_id="#reset_eqLogic_id#">
-                    <div class="content-xs">
-                        <a class="btn btn-sm btn-default action tooltips">Reset compteur</a>
-                    </div>
+                <div class="cmd cmd-widget resetCounter" data-type="action" data-subtype="other" data-template="default" data-version="#version#" data-eqLogic_id="#reset_eqLogic_id#" data-cmd_id="#reset_id#" data-cmd_uid="#reset_uid#">
+                  <a class="action ui-btn ui-mini ui-btn-inline ui-btn-raised">Reset compteur</a>
                 </div>
             </center>
         </div>

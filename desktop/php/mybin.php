@@ -5,6 +5,11 @@ if (!isConnect('admin')) {
 $plugin = plugin::byId('mybin');
 sendVarToJS('eqType', $plugin->getId());
 $eqLogics = eqLogic::byType($plugin->getId());
+
+$allDates = array();
+foreach ($eqLogics as $eqLogic) {
+	$allDates[$eqLogic->getId()] = $eqLogic->getNextCollectsAndNotifs(10, true);
+}
 ?>
 
 <div class="row row-overflow">
@@ -66,7 +71,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				<form class="form-horizontal">
 					<fieldset>
 						<div class="col-lg-6">
-							<legend><i class="fas fa-wrench"></i> {{Général}}</legend>
+							<legend><i class="icon divers-slightly"></i> {{Général}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Nom de l'équipement My Bin}}</label>
 								<div class="col-sm-5">
@@ -111,8 +116,6 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
 							<br>
-
-							<legend><i class="icon divers-slightly"></i> {{Détails de la poubelle}}</legend>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">{{Couleur de la poubelle}}</label>
                                 <div class="col-sm-7">
@@ -124,6 +127,8 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                             <option value="blue">{{Bleue}}</option>
                                             <option value="grey">{{Grise}}</option>
 											<option value="black">{{Noire}}</option>
+											<option value="violet">{{Violette}}</option>
+											<option value="bulky">{{Encombrants}}</option>
                                         </select>
                                     </span>
                                     <span class="col-sm-3">
@@ -131,7 +136,9 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     </span>
                                 </div>
                             </div>
-                            <br/>
+							<br>
+
+							<legend><i class="fas fa-truck"></i> {{Ramassage de la poubelle}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Mois de ramassage}}</label>
 								<div class="col-sm-7">
@@ -169,9 +176,9 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								</div>
 							</div>
                             <div class="form-group">
-								<label class="col-sm-3 control-label">{{Jour(s) particulier(s) de ramassage}}</label>
+								<label class="col-sm-3 control-label">{{Date(s) particulièr(s) de ramassage}}</label>
 							    <div class="col-sm-7">
-                                    <a class="btn btn-success btn-sm addDay" data-type="specific_day" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter un jour}}</a>
+                                    <a class="btn btn-success btn-sm addDay" data-type="specific_day" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une date}}</a>
                                     <div id="div_specific_day"></div>
                                 </div>
 							</div>
@@ -212,6 +219,15 @@ $eqLogics = eqLogic::byType($plugin->getId());
 							</div>
                             <br/>
 							<div class="form-group">
+								<label class="col-sm-3 control-label help" data-help="{{Vous pouvez ajouter des expressions cron pour gérer des fréquences de ramassage particulières}}">{{Mode expert}}</label>
+							    <div class="col-sm-7">
+                                    <a class="btn btn-success btn-sm addCron" data-type="specific_cron" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter un cron}}</a>
+                                    <div id="div_specific_cron"></div>
+                                </div>
+							</div>
+                            <br>
+							<legend><i class="icon jeedom-alerte2"></i> {{Notification}}</legend>
+							<div class="form-group">
 								<label class="col-sm-3 control-label help" data-help="{{Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.}}">{{Notification}}</label>
 								<div class="col-sm-7">
 									<span class="col-sm-2">
@@ -251,8 +267,16 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     </span>
 								</div>
 							</div>
-                            <br>
-
+							<div class="form-group">
+								<label class="col-sm-3 control-label help" data-help="{{Cette expression binaire sera évaluée au moment de la notification}}">{{Condition de notification}}</label>
+								<div class="col-sm-6 input-group">
+									<input class="eqLogicAttr expressionAttr form-control roundedLeft ui-autocomplete-input notifCondition" data-l1key="configuration" data-l2key="notifCondition">
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default cursor listCmdInfo tooltipstered" tooltip="Rechercher une commande"><i class="fas fa-list-alt"></i></button>
+									</span>
+								</div>
+							</div>
+							<br>
 							<legend><i class="fas fa-tachometer-alt"></i> {{Compteur}}</legend>
                             <div class="form-group">
                                 <label class="col-sm-3 control-label help" data-help="{{En automatique, le compteur s'incrémentera à chaque ramassage ou lorsque la commande 'ack' est exécutée. En manuel, il ne s'incrémentera que si la commande 'ack' est exécutée.}}">{{Type}}</label>
@@ -274,12 +298,6 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     tag <strong>#bin_threshold#</strong>
                                 </div>
 							</div>
-							<br>
-							<legend><i class="fas fa-truck"></i> {{Action(s) sur ramassage}}</legend><label><a class="btn btn-success btn-sm addAction" data-type="action_collect" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
-                            <div id="div_action_collect"></div>
-                            <br>
-							<legend><i class="icon jeedom-alerte2"></i> {{Action(s) sur notification}}</legend><label><a class="btn btn-success btn-sm addAction" data-type="action_notif" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
-                            <div id="div_action_notif"></div>
 						</div>
                         <div class="col-lg-5">
 							<legend><i class="icon jeedomapp-preset"></i> {{Options}}</legend>
@@ -290,6 +308,52 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								<div class="col-sm-1">
 									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="widgetTemplate"/>
 								</div>
+							</div>
+                        </div>
+						<br/>
+						<div class="col-lg-5">
+							<legend><i class="fas fa-sign-out-alt"></i> {{Action(s) sur ramassage}}</legend><label><a class="btn btn-success btn-sm addAction" data-type="action_collect" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
+							<div id="div_action_collect"></div>
+						</div>
+						<br>
+						<div class="col-lg-5">
+							<legend><i class="fas fa-sign-in-alt"></i> {{Action(s) sur notification}}</legend><label><a class="btn btn-success btn-sm addAction" data-type="action_notif" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
+							<div id="div_action_notif"></div>
+						</div>
+						<div class="col-lg-5">
+							<legend><i class="fas fa-info-circle"></i> {{Informations}}</legend>
+							{{Avec votre configuration, voici les 10 prochaines dates de ramassage et de notification :}}
+							<br>
+							<div class="form-group">
+								<br>
+								<?php
+								foreach ($allDates as $key => $value) {
+									echo '<div class="allDates dates-'.$key.'" style="display: none;">';
+									foreach ($value as $collect => $notif) {
+										$colorCollect = 'primary';
+										$helpCollect = '';
+										if (substr($collect, -1) <> '0' && substr($collect, -1) <> '5') {
+											$colorCollect = 'warning';
+											$helpCollect = 'help';
+										}
+										$dtCollect = DateTime::createFromFormat("Y-m-d H:i", $collect);
+										$dtNotif = DateTime::createFromFormat("Y-m-d H:i", $notif);
+										$colorNotif = 'info';
+										$helpNotif = '';
+										if ($dtNotif > $dtCollect) {
+											$colorNotif = 'warning';
+											$helpNotif = 'help';
+										}
+										echo '<div class="col-sm-12">';
+										echo '<label class="col-sm-2 control-label '.$helpCollect.'" data-help="{{Le plugin ne fonctionne que toutes les 5min. Cette date de ramassage sera ignorée. Changez votre cron.}}">{{Ramassage}}</label>';
+										echo '<div class="col-sm-4" ><span class="label label-'.$colorCollect.'">'.date_fr($dtCollect->format('l')).' '.$dtCollect->format('j').' '.date_fr($dtCollect->format('F')).' '.$dtCollect->format('Y').' {{à}} '.$dtCollect->format('G:i').'</span></div>';
+										echo '<label class="col-sm-2 control-label '.$helpNotif.'" data-help="{{Cette date de notification est après la date de ramassage. Vérifiez vos paramètres.}}">{{Notification}}</label>';
+										echo '<div class="col-sm-4"><span class="label label-'.$colorNotif.'">'.date_fr($dtNotif->format('l')).' '.$dtNotif->format('j').' '.date_fr($dtNotif->format('F')).' '.$dtNotif->format('Y').' {{à}} '.$dtNotif->format('G:i').'</span></div>';
+										echo '</div>';
+									}
+									echo '</div>';
+								}
+								?>
 							</div>
                         </div>
 					</fieldset>

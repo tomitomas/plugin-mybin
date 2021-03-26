@@ -44,28 +44,63 @@ class mybin extends eqLogic {
         if ($this->getConfiguration('type', '') == 'whole') {
             return;
         }
-
-        $change = 0;
-
-        /************************************ Hack degueu ***************************************************************/
-        // Devrait etre fait dans le postUpdate mais, pour une raison que j'ignore, la DB ne se met pas à jour
-        $threshold = $this->getConfiguration('seuil','');
-        $cmd = $this->getCmd(null, 'counter');
-        $cmd->setConfiguration('minValue', 0); 
-        $cmd->setConfiguration('maxValue', $threshold);
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' threshold change: ' . $cmd->getChanged());
-        if ($cmd->getChanged()) {
-            $change = $change + 1;
+        if (!$this->getIsEnable()) {
+            return;
         }
-        $cmd->save();
-        /****************************************************************************************************************/
 
+        $change = false;
+        $nextRunRecorded = false;
+
+        $dtNow = new DateTime("now");
+        $todayStr = $dtNow->format("Y-m-d H:i");
         $hour = 1 * date('G');
         $minute = 1 * date('i');
-        $change = $change + $this->checkNotifBin();
-        $change = $change + $this->checkAckBin();
+
+        $nextOne = $this->getNextCollectsAndNotifs(2);
+        if (is_array($nextOne)) {
+            foreach ($nextOne as $collect => $notif) {
+                if ($notif == $todayStr) {
+                    $notifCondition = $this->getConfiguration('notifCondition');
+                    $condition = true; 
+                    if ($notifCondition <> '') {
+                        log::add(__CLASS__, 'debug', $this->getHumanName() . ' condition raw: ' . $notifCondition);
+                        $notifCondition = scenarioExpression::setTags($notifCondition);
+                        log::add(__CLASS__, 'debug', $this->getHumanName() . ' condition after tags: ' . $notifCondition);
+                        $expression = jeedom::fromHumanReadable($notifCondition);
+                        log::add(__CLASS__, 'debug', $this->getHumanName() . ' condition from readable: ' . $notifCondition);
+                        $return = evaluate($expression);
+                        if ($return === true) {
+                            log::add(__CLASS__, 'debug', $this->getHumanName() . ' Condition returned TRUE, notification triggered');
+                            $condition = true;
+                        } else if ($return === false) {
+                            log::add(__CLASS__, 'debug', $this->getHumanName() . ' Condition returned FALSE, notification skipped');
+                            $condition = false;
+                        } else {
+                            log::add(__CLASS__, 'warning', $this->getHumanName() . ' Condition failed to be evaluated, notiication skipped');
+                            $condition = false;
+                        }
+                    }
+                    if ($condition) {
+                        log::add(__CLASS__, 'debug', $this->getHumanName() . ' Notif: ' . $notif . ' true');
+                        $this->notifBin();
+                        $change = true;
+                    }
+                }
+                if ($collect == $todayStr) {
+                    log::add(__CLASS__, 'debug', $this->getHumanName() . ' Ack: ' . $collect . ' true');
+                    $this->ackBin(true);
+                    $change = true;
+                }
+                if ($nextRunRecorded == false && DateTime::createFromFormat("Y-m-d H:i", $collect) > $dtNow) {
+                    $cmd = $this->getCmd(null, 'nextcollect');
+                    $cmd->event($collect);
+                    $nextRunRecorded = true;
+                }
+            }
+        }
+
         $this->cleanSpecificDates();
-        if ($change > 0 || ($hour == 0 && $minute == 5)) {
+        if ($change || ($hour == 0 && $minute == 5)) {
             $this->refreshWhole();
         }
     }
@@ -80,129 +115,7 @@ class mybin extends eqLogic {
             }
         }
     }
-    
-    public function checkNotifBin() {
-        if (!$this->getIsEnable()) {
-            return 0;
-        }
-        
-        $dt = new DateTime("now");
-        $delay = $this->getConfiguration('notif_days', 0);
-        if ($delay > 0) {
-            $dt->modify('+'.$delay.' day');
-        }
-        $month = 1 * $dt->format('n');
-        $week = 1 * $dt->format('W');
-        $day = 1 * $dt->format('w');
-        $hour = 1 * $dt->format('G');
-        $minute = 1 * $dt->format('i');
-        
-        $isSpecificDay = false;
-        $isMonth = false;
-        $isweek = false;
-        $isday = false;
-        $ishour = false;
-        $isminute = false;
 
-        $specificDays = $this->getConfiguration('specific_day');
-        if (is_array($specificDays)) {
-            foreach ($specificDays as $specificDay) {
-                $todayStr = $dt->format("Y-m-d");
-                if (isset($specificDay['myday'])) {
-                    if ($todayStr == $specificDay['myday']) {
-                        $isSpecificDay = true;
-                        break;
-                    }
-                }
-            }
-        }
-        if ($this->getConfiguration('month_'.$month) == 1) {
-            $isMonth = true;
-        }
-        if (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) {
-            $isweek = true;
-        }
-        for ($i = 0; $i <= 6; $i++) {
-            if ($this->getConfiguration('day_'.$i) == 1 && $i == $day) {
-                $isday = true;
-                break;
-            }
-        }
-        if ($this->getConfiguration('notif_minute') == $minute) {
-            $isminute = true;
-        }
-        if ($this->getConfiguration('notif_hour') == $hour) {
-            $ishour = true;
-        }
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkNotifBin: month ' . $isMonth . ', week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
-        if ((($isMonth && $isweek && $isday) || $isSpecificDay) && $ishour && $isminute) {
-            $this->notifBin();
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-    
-    public function checkAckBin() {
-        if (!$this->getIsEnable()) {
-            return 0;
-        }
-        
-        $dt = new DateTime("now");
-
-        $month = 1 * $dt->format('n');
-        $week = 1 * $dt->format('W');
-        $day = 1 * $dt->format('w');
-        $hour = 1 * $dt->format('G');
-        $minute = 1 * $dt->format('i');
-        
-        $isSpecificDay = false;
-        $ismonth = false;
-        $isweek = false;
-        $isday = false;
-        $ishour = false;
-        $isminute = false;
-        
-        $specificDays = $this->getConfiguration('specific_day');
-        if (is_array($specificDays)) {
-            foreach ($specificDays as $specificDay) {
-                $todayStr = $dt->format("Y-m-d");
-                if (isset($specificDay['myday'])) {
-                    if ($todayStr == $specificDay['myday']) {
-                        $isSpecificDay = true;
-                        break;
-                    }
-                }
-            }
-        }
-        
-        if ($this->getConfiguration('month_'.$month) == 1) {
-            $ismonth = true;
-        }
-        if (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) {
-            $isweek = true;
-        }
-        for ($i = 0; $i <= 6; $i++) {
-            if ($this->getConfiguration('day_'.$i) == 1 && $i == $day) {
-                $isday = true;
-                break;
-            }
-        }
-        if ($this->getConfiguration('minute') == $minute) {
-            $isminute = true;
-        }
-        if ($this->getConfiguration('hour') == $hour) {
-            $ishour = true;
-        }
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' checkAckBin: month ' . $ismonth . ', week '. $isweek . ', day ' . $isday . ', hour ' . $ishour . ', minute ' . $isminute);
-        if ((($ismonth && $isweek && $isday) || $isSpecificDay) && $ishour && $isminute) {
-            $this->ackBin(true);
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-    
     public function notifBin() {
         $seuil = $this->getConfiguration('seuil', '');
         if ($seuil <> '') {
@@ -292,16 +205,6 @@ class mybin extends eqLogic {
             } else {
                 $this->setConfiguration('notif_days', 0);
             }
-            if ($this->getConfiguration('notif_days', 0) == 0) {
-                if ($this->getConfiguration('notif_hour') > $this->getConfiguration('hour')) {
-                    throw new Exception($this->getHumanName() . ": hour " . __('L\'heure de notification est après l\'heure de collecte',__FILE__));
-                }
-                if ($this->getConfiguration('notif_hour') == $this->getConfiguration('hour')) {
-                    if ($this->getConfiguration('notif_minute') > $this->getConfiguration('minute')) {
-                        throw new Exception($this->getHumanName() . ": minute " . __('L\'heure de notification est après l\'heure de collecte',__FILE__));
-                    }
-                }
-            }
             if ($this->getConfiguration('seuil', '') <> '') {
                 $options = array('options' => array('min_range' => 0));
                 if (!filter_var($this->getConfiguration('seuil'), FILTER_VALIDATE_INT, $options)) {
@@ -309,6 +212,20 @@ class mybin extends eqLogic {
                 }
             }
         }
+        
+        $specificCrons = $this->getConfiguration('specific_cron');
+        if (is_array($specificCrons)) {
+            foreach ($specificCrons as $specificCron) {
+                if (isset($specificCron['mycron'])) {
+                    $cron = new cron();
+                    $cron->setSchedule($specificCron['mycron']);
+                    if (!$cron->getNextRunDate()) {
+                        throw new Exception($this->getHumanName() . ": " . __('L\'expression cron n\'est pas valide :',__FILE__) . $specificCron['mycron']);
+                    }
+                }
+            }
+        }
+
         $this->setConfiguration('image',$this->getImage());
     }
 
@@ -371,8 +288,34 @@ class mybin extends eqLogic {
                 $cmd->setEventOnly(1);
                 $cmd->save();
             }
+            $cmd = $this->getCmd(null, 'nextcollect');
+            if (!is_object($cmd))
+            {
+                $cmd = new mybinCmd();
+                $cmd->setLogicalId('nextcollect');
+                $cmd->setEqLogic_id($this->getId());
+                $cmd->setName('Prochain ramassage');
+                $cmd->setType('info');
+                $cmd->setSubType('string');
+                $cmd->setEventOnly(1);
+                $cmd->setIsHistorized(0);
+                $cmd->setTemplate('mobile', 'line');
+                $cmd->setTemplate('dashboard', 'line');       
+                $cmd->save();
+            }
         }
         $this->emptyCacheWidget();
+
+        $dtNow = new DateTime("now");
+        $nextOne = $this->getNextCollectsAndNotifs(1);
+        if (is_array($nextOne)) {
+            foreach ($nextOne as $collect => $notif) {
+                if (DateTime::createFromFormat("Y-m-d H:i", $collect) > $dtNow) {
+                    $cmd = $this->getCmd(null, 'nextcollect');
+                    $cmd->event($collect);
+                }
+            }
+        }
 
     }
     
@@ -464,7 +407,11 @@ class mybin extends eqLogic {
             $binnotifs = "";
             $binscript = "";
             if ($binCmd->getIsVisible() == 1) {
-                $binnotifs = '<span class="cmd" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/none2.png" width="70px"></span>';
+                $suffix = "";
+                if ($this->getConfiguration('color') == "bulky") {
+                    $suffix = "_bulky";
+                }
+                $binnotifs = '<span class="cmd" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/none2'.$suffix.'.png" width="70px"></span>';
                 $binscript = "";
                 $binStatus = $binCmd->execCmd();
                 if ($binStatus == 1 && $binCmd->getIsVisible() == 1) {
@@ -505,6 +452,13 @@ class mybin extends eqLogic {
                 $replace['#reset_id#'] = '';
             }
             
+            $nextCollectCmd = $this->getCmd(null, 'nextcollect');
+            if ($nextCollectCmd->getIsVisible() == 1) {
+                $replace['#nextcollectname#'] = $nextCollectCmd->getName();
+                $replace['#nextcollectdate#'] = $nextCollectCmd->execCmd();
+            } else {
+                $replace['#nextcollectname#'] = '';
+            }
             
             $html = template_replace($replace, getTemplate('core', $version, 'singlebin.template', __CLASS__));
             cache::set('widgetHtml' . $_version . $this->getId(), $html, 0);
@@ -518,10 +472,31 @@ class mybin extends eqLogic {
             return false;
         }
         
+        $isSpecificCron = false;
         $isSpecificDay = false;
         $ismonth = false;
         $isweek = false;
         $isday = false;
+
+        $specificCrons = $this->getConfiguration('specific_cron');
+        if (is_array($specificCrons)) {
+            foreach ($specificCrons as $specificCron) {
+                $todayStr = $dt->format("Y-m-d");
+                if (isset($specificCron['mycron'])) {
+                    $cron = new cron();
+                    $cron->setSchedule($specificCron['mycron']);
+                    $nextRunCron = $this->getNextRunDate($cron, $todayStr);
+                    log::add(__CLASS__, 'debug', $this->getHumanName() . ' $todayStr: ' . $todayStr);
+                    log::add(__CLASS__, 'debug', $this->getHumanName() . ' $nextRunCron: ' . $nextRunCron->format("Y-m-d"));
+                    if ($nextRunCron != false) {
+                        if ($todayStr == $nextRunCron->format("Y-m-d")) {
+                            $isSpecificCron = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
 
         $specificDays = $this->getConfiguration('specific_day');
         if (is_array($specificDays)) {
@@ -553,7 +528,7 @@ class mybin extends eqLogic {
                 break;
             }
         }
-        if ($isSpecificDay || ($isMonth && $isweek && $isday)) {
+        if ($isSpecificCron || $isSpecificDay || ($isMonth && $isweek && $isday)) {
             return true;
         } else {
             return false;
@@ -661,7 +636,7 @@ class mybin extends eqLogic {
         $change = false;
         $specificDays = $this->getConfiguration('specific_day');
         if (is_array($specificDays)) {
-            $dtNow = new DateTime("now");
+            $dtNow = new DateTime("today");
             foreach ($specificDays as $key => $specificDay) {
                 if (isset($specificDay['myday'])) {
                     $dtSpec = DateTime::createFromFormat("Y-m-d", $specificDay['myday']);
@@ -678,9 +653,140 @@ class mybin extends eqLogic {
             $this->save(true);
         }
     }
+
+    public function getNextCollectsAndNotifs($max, $displayOnly = false) {
+        $dtNow = new DateTime("now");
+        $dtNow->setTime(1 * date('G'), 1 * date('i'), 0, 0);
+
+        $datesArr = array();
+
+        $nbDates = 0;
+        $dtCheck = new DateTime("now");
+        $dtCheck->setTime(intval($this->getConfiguration('hour')), intval($this->getConfiguration('minute')));
+        for ($i = 0; $i <= 365; $i++) {
+            $month = 1 * $dtCheck->format('n');
+            $week = 1 * $dtCheck->format('W');
+            $day = 1 * $dtCheck->format('w');
+            if ($this->getConfiguration('month_'.$month) == 1 && (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) && $this->getConfiguration('day_'.$day) == 1) {
+                if ($dtCheck >= $dtNow) {
+                    $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $dtCheck->format("Y-m-d H:i"));
+                    $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
+                    $dtNotif->setTime(intval($this->getConfiguration('notif_hour')), intval($this->getConfiguration('notif_minute')));
+                    $datesArr[$dtCheck->format('Y-m-d H:i')] = $dtNotif->format('Y-m-d H:i');
+                    log::add(__CLASS__, 'debug', $this->getHumanName() . ' add from dates ' . $dtCheck->format('Y-m-d H:i'));
+                    $nbDates++;
+                    if ($nbDates == $max) {
+                        break;
+                    }
+                }
+            }
+            $dtCheck->modify('+1 day');
+        }
+        
+        $nbCrons = 0;
+        $specificCrons = $this->getConfiguration('specific_cron');
+        $skipped = 0;
+        if (is_array($specificCrons)) {
+            foreach ($specificCrons as $specificCron) {
+                if (isset($specificCron['mycron'])) {
+                    $nbRuns = 0;
+                    $cron = new cron();
+                    $cron->setSchedule($specificCron['mycron']);
+                    $nextRunCrons = $this->getNextRunDates($cron, $dtNow);
+                    foreach ($nextRunCrons as $nextrun) {
+                        if ($skipped == 20) {
+                            break;
+                        }
+                        if (substr($nextrun->format('Y-m-d H:i'), -1) <> '0' && substr($nextrun->format('Y-m-d H:i'), -1) <> '5' && !$displayOnly) {
+                            log::add(__CLASS__, 'warning', $this->getHumanName() . ' Date from cron skipped because invalid: ' . $nextrun->format('Y-m-d H:i'));
+                            $skipped++;
+                            continue;
+                        }
+                        if ($nextrun >= $dtNow) {
+                            $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $nextrun->format("Y-m-d H:i"));
+                            $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
+                            $dtNotif->setTime(intval($this->getConfiguration('notif_hour')), intval($this->getConfiguration('notif_minute')));
+                            $datesArr[$nextrun->format('Y-m-d H:i')] = $dtNotif->format('Y-m-d H:i');
+                            log::add(__CLASS__, 'debug', $this->getHumanName() . ' add from crons ' . $nextrun->format('Y-m-d H:i'));
+                            $nbRuns++;
+                            if ($nbRuns == $max) {
+                                break;
+                            }
+                        }
+                    }
+                }
+                $nbCrons++;
+                if ($nbCrons == 10) {
+                    break;
+                }
+            }
+        }
+
+        $nbDays = 0;
+        $specificDays = $this->getConfiguration('specific_day');
+        if (is_array($specificDays)) {
+            foreach ($specificDays as $specificDay) {
+                if (isset($specificDay['myday'])) {
+                    $dtCheck = DateTime::createFromFormat("Y-m-d", $specificDay['myday']);
+                    $dtCheck->setTime(intval($this->getConfiguration('hour')), intval($this->getConfiguration('minute')));
+                    if ($dtCheck >= $dtNow) {
+                        $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $dtCheck->format("Y-m-d H:i"));
+                        $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
+                        $dtNotif->setTime(intval($this->getConfiguration('notif_hour')), intval($this->getConfiguration('notif_minute')));
+                        $datesArr[$dtCheck->format('Y-m-d H:i')] = $dtNotif->format('Y-m-d H:i');
+                        log::add(__CLASS__, 'debug', $this->getHumanName() . ' add from days ' . $dtCheck->format('Y-m-d H:i'));
+                        $nbDays++;
+                        if ($nbDays == $max) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        ksort($datesArr);
+        array_splice($datesArr, $max, count($datesArr));
+
+        return $datesArr;
+
+    }
+
+    public function getNextRunDates($cron, $start) {
+		try {
+			$c = new Cron\CronExpression(checkAndFixCron($cron->getSchedule()), new Cron\FieldFactory);
+			return $c->getMultipleRunDates(10, $start, false, true);
+		} catch (Exception $e) {
+			
+		} catch (Error $e) {
+			
+		}
+		return false;
+	}
+
+    public function getNextRunDate($cron, $start) {
+		try {
+			$c = new Cron\CronExpression(checkAndFixCron($cron->getSchedule()), new Cron\FieldFactory);
+			return $c->getNextRunDate($start, 0, true);
+		} catch (Exception $e) {
+			
+		} catch (Error $e) {
+			
+		}
+		return false;
+	}
 }
 
 class mybinCmd extends cmd {
+
+    public function preSave(){
+        if ($this->getLogicalId() == 'counter') {
+            $eqLogic = $this->getEqLogic();
+            $threshold = $eqLogic->getConfiguration('seuil','');
+            $this->setConfiguration('minValue', 0); 
+            $this->setConfiguration('maxValue', $threshold);
+            log::add('mybin', 'debug', 'Threshold changed to ' . $threshold . ' : ' . $this->getChanged());
+        }
+    }
     
     public function dontRemoveCmd() {
 		return true;

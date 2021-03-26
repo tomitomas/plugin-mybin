@@ -1,6 +1,10 @@
 # Plugin My Bin
 
-Petit plugin pour Jeedom facilitant la gestion des poubelles domestiques
+Petit plugin pour Jeedom facilitant la gestion des poubelles domestiques.
+
+Ce plugin vous plait ? Vous pouvez, si vous le souhaitez, encourager son développeur :
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/paypalme/hugoKs3)
 
 # Configuration
 
@@ -8,7 +12,7 @@ Petit plugin pour Jeedom facilitant la gestion des poubelles domestiques
 
 Sur la page de configuration du plugin, vous pouvez choisir d'utiliser un widget global qui affichera un calendrier de ramassage de vos différentes poubelles ainsi qu'une icône pour chaque poubelle devant être sortie.
 
-Vous pouvez également spécifier l'objet parent pour ce widget.
+Vous pouvez également spécifier l'objet parent pour ce widget, les éléments à afficher, et les dates à utiliser pour le calendrier (ramassage ou notification)
 
 Les données sont vérifiées toutes les 5 minutes.
 
@@ -16,19 +20,39 @@ Les données sont vérifiées toutes les 5 minutes.
 
 Pour accéder aux différents équipements **My Bin**, dirigez-vous vers le menu **Plugins → Organisation → My Bin**.
 
-Sur la page de l'équipement, renseignez les jours et heures de collecte de votre poubelle, sa couleur, ainsi que le moment pour être notifié.
+### Ramassage
 
-Vous pouvez également spécifier des actions qui seront exécutées au ramassage et à la notification.
+Définissez les jours et heures de ramassage de votre poubelle. Plusieurs options qui peuvent se cumuler :
+- En cochant les mois/semains/jours
+- En spécifiant des dates précises
+- En utilisant une ou plusieurs expressions cron
+
+### Notification
+
+Définisez combien de jours avant chaque ramassage et à quelle heure l'etat de la commande "Poubeele à sortir" doit passer à 1.
+Vous pouvez également définir une expression binaire qui sera évaluée au moment de la notification. Si vérifiée, la commande passera à 1.
+
+### Compteur
 
 Un compteur est également disponible (manuel ou automatique) ainsi qu'un seuil : une fois que le compteur atteint la valeur spécifiée dans ce paramètre, les notifications seront désactivées. 
 
+### Actions
+
+Vous pouvez définir une ou plusieurs actions à exécuter après ramassage et/ou notification.
+
+### Informations
+
+Vous pouvez visualiser, en fonction de votre configuration, les 10 prochains dates de ramassage et de notification. 
+Si il y a une erreur dans votre configration, le problème sera spécifier en orange avec une information vous expliquant le problème.
+
 # Utilisation
 
-Chaque équipement crée 4 commandes :
+Chaque équipement crée 5 commandes :
 - une indiquant si il faut sortir la poubelle (à 1 dans ce cas)
 - une commande 'ack' remettant le statut à 0. Cette commande est automatiquement appelée à l'heure de ramassage
 - une commande 'compteur' qui s'incrémente à chaque ack (en fonction de la configuration du compteur)
 - une commande 'reset' pour réinitialiser le compteur
+- Une commande 'Prochain ramassage' vous indiquant la date et l'heure du prochain ramassage
 
 # Contributions
 
