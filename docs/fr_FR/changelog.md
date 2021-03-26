@@ -4,7 +4,7 @@
 >
 >Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
-# BETA en cours
+# Stable - 26/03/2021
 - Support des expressions cron
 - Nouvelle commande pour récupérer la prochaine date de ramassage
 - Nouvelle couleur de poubelle : violette
