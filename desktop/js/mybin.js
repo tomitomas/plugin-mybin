@@ -206,7 +206,7 @@ function addDay(_day) {
           div += '<span class="input-group-btn">';
             div += '<a class="btn btn-default bt_removeDay roundedLeft" data-l1key="specific_day" data-type="specific_day"><i class="fas fa-minus-circle"></i></a>';
           div += '</span>';
-          div +=  '<input class="form-control value execute eqLogicAttr myday datetimepicker" type="text" data-type="specific_day" data-l1key="myday">'
+          div +=  '<input class="eqLogicAttr form-control datetimepicker myday" type="text" data-type="specific_day" data-l1key="myday">'
         div += '</div>';
       div += '</div>';  
     
