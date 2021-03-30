@@ -183,13 +183,7 @@ foreach ($eqLogics as $eqLogic) {
                                     <div id="div_specific_day"></div>
                                 </div>
 							</div>
-                            <br/>
-							<div class="form-group">
-								<label class="col-sm-3 control-label">{{Début}}</label>
-								<div class="col-sm-7">
-									<input type="text" class="eqLogicAttr form-control datetimepicker" data-l1key="configuration" data-l2key="startDate"/>
-								</div>
-							</div>		
+                            <br/>	
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Heure de ramassage}}</label>
 								<div class="col-sm-7">

@@ -97,26 +97,6 @@ $("body").off('click','.bt_removeAction').on('click','.bt_removeAction',function
   $(this).closest('.' + type).remove();
 });
 
-$('.datetimepicker').datetimepicker({
-  lang: 'fr',
-  dayOfWeekStart : 1,
-  i18n: {
-    fr: {
-      months: [
-        'Janvier', 'Février', 'Mars', 'Avril',
-        'Mai', 'Juin', 'Juillet', 'Aout',
-        'Septembre', 'Octobre', 'Novembre', 'Décembre',
-      ],
-      dayOfWeek: [
-        "Di", "Lu", "Ma", "Me",
-        "Je", "Ve", "Sa",
-      ]
-    }
-  },
-  format: 'Y-m-d H:i:00',
-  step: 15
-});
-
 /*
  * Fonction permettant l'affichage des commandes dans l'équipement
  */
@@ -215,6 +195,27 @@ function addDay(_day) {
   div += '</div>';
 
   $('#div_specific_day').append(div);
+
+  $('.datetimepicker').datetimepicker({
+    lang: 'fr',
+    dayOfWeekStart : 1,
+    i18n: {
+      fr: {
+        months: [
+          'Janvier', 'Février', 'Mars', 'Avril',
+          'Mai', 'Juin', 'Juillet', 'Aout',
+          'Septembre', 'Octobre', 'Novembre', 'Décembre',
+        ],
+        dayOfWeek: [
+          "Di", "Lu", "Ma", "Me",
+          "Je", "Ve", "Sa",
+        ]
+      }
+    },
+    format: 'Y-m-d H:i:00',
+    step: 15
+  });
+
   $('#div_specific_day .specific_day').last().setValues(_day, '.myday');
 }
 
