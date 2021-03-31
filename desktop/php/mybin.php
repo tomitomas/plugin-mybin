@@ -183,6 +183,12 @@ foreach ($eqLogics as $eqLogic) {
                                     <div id="div_specific_day"></div>
                                 </div>
 							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{{Heure de ramassage}}</label>
+							    <div class="col-sm-3">
+									<input class="eqLogicAttr timepicker" type="text" data-l1key="configuration" data-l2key="collect_time">	
+                                </div>
+							</div>
                             <br/>	
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Heure de ramassage}}</label>

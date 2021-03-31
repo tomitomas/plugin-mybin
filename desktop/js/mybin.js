@@ -97,6 +97,12 @@ $("body").off('click','.bt_removeAction').on('click','.bt_removeAction',function
   $(this).closest('.' + type).remove();
 });
 
+$('.timepicker').datetimepicker({
+  datepicker:false,
+  step:5,
+  format: 'H:i'
+});
+
 /*
  * Fonction permettant l'affichage des commandes dans l'équipement
  */
