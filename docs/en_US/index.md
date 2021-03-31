@@ -20,7 +20,7 @@ To access the different equipment **My Bin**, go to the menu **Plugins → Organ
 
 Deine days and time of collect for your bin. Several options that are cumulative:
 - By checking months/weeks/days
-- By specifying precise dates
+- By specifying precise dates (Y-m-d format)
 - By using one or several cron expressions
 
 ### Notification

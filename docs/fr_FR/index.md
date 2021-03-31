@@ -20,7 +20,7 @@ Pour accéder aux différents équipements **My Bin**, dirigez-vous vers le menu
 
 Définissez les jours et heures de ramassage de votre poubelle. Plusieurs options qui peuvent se cumuler :
 - En cochant les mois/semains/jours
-- En spécifiant des dates précises
+- En spécifiant des dates précises (format Y-m-d)
 - En utilisant une ou plusieurs expressions cron
 
 ### Notification
