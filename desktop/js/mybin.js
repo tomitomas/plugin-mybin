@@ -212,8 +212,7 @@ function addDay(_day) {
         ]
       }
     },
-    format: 'Y-m-d H:i:00',
-    step: 15
+    format: 'Y-m-d'
   });
 
   $('#div_specific_day .specific_day').last().setValues(_day, '.myday');
