@@ -212,6 +212,7 @@ function addDay(_day) {
         ]
       }
     },
+    timepicker:false,
     format: 'Y-m-d'
   });
 
