@@ -2,6 +2,7 @@
 if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
+include_file('3rdparty', 'datetimepicker/jquery.datetimepicker', 'css', 'mybin');
 $plugin = plugin::byId('mybin');
 sendVarToJS('eqType', $plugin->getId());
 $eqLogics = eqLogic::byType($plugin->getId());
@@ -182,7 +183,7 @@ foreach ($eqLogics as $eqLogic) {
                                     <div id="div_specific_day"></div>
                                 </div>
 							</div>
-                            <br/>
+                            <br/>	
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Heure de ramassage}}</label>
 								<div class="col-sm-7">
@@ -384,6 +385,7 @@ foreach ($eqLogics as $eqLogic) {
 	</div>
 </div>
 
+<?php include_file('3rdparty', 'datetimepicker/jquery.datetimepicker', 'js', 'mybin');?>
 <!-- Inclusion du fichier javascript du plugin (dossier, nom_du_fichier, extension_du_fichier, nom_du_plugin) -->
 <?php include_file('desktop', 'mybin', 'js', 'mybin');?>
 <!-- Inclusion du fichier javascript du core - NE PAS MODIFIER NI SUPPRIMER -->

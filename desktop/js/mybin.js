@@ -186,7 +186,7 @@ function addDay(_day) {
           div += '<span class="input-group-btn">';
             div += '<a class="btn btn-default bt_removeDay roundedLeft" data-l1key="specific_day" data-type="specific_day"><i class="fas fa-minus-circle"></i></a>';
           div += '</span>';
-          div +=  '<input class="form-control input-sm value execute eqLogicAttr myday" data-type="specific_day" type="date" class="eqLogicAttr" data-l1key="myday">'
+          div +=  '<input class="eqLogicAttr form-control datetimepicker myday" type="text" data-type="specific_day" data-l1key="myday">'
         div += '</div>';
       div += '</div>';  
     
@@ -195,6 +195,27 @@ function addDay(_day) {
   div += '</div>';
 
   $('#div_specific_day').append(div);
+
+  $('.datetimepicker').datetimepicker({
+    lang: 'fr',
+    dayOfWeekStart : 1,
+    i18n: {
+      fr: {
+        months: [
+          'Janvier', 'Février', 'Mars', 'Avril',
+          'Mai', 'Juin', 'Juillet', 'Aout',
+          'Septembre', 'Octobre', 'Novembre', 'Décembre',
+        ],
+        dayOfWeek: [
+          "Di", "Lu", "Ma", "Me",
+          "Je", "Ve", "Sa",
+        ]
+      }
+    },
+    timepicker:false,
+    format: 'Y-m-d'
+  });
+
   $('#div_specific_day .specific_day').last().setValues(_day, '.myday');
 }
 
@@ -206,7 +227,7 @@ function addCron(_cron) {
   div += '<span class="input-group-btn">';
   div += '<a class="btn btn-default bt_removeCron roundedLeft" data-l1key="specific_cron" data-type="specific_cron"><i class="fas fa-minus-circle"></i></a>';
   div += '</span>';
-  div += '<input type="text" class="form-control input-sm value execute eqLogicAttr mycron" data-type="specific_cron" data-l1key="mycron"/>';
+  div += '<input type="text" class="form-control value execute eqLogicAttr mycron" data-type="specific_cron" data-l1key="mycron"/>';
   div += '<span class="input-group-btn">';
   div += '<a class="btn btn-default cursor jeeHelper" data-helper="cron">';
   div += '<i class="fas fa-question-circle"></i>';
