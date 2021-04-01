@@ -6,6 +6,7 @@
 
 # Current BETA
 - Utilisation du 3rdparty datetimepicker
+- Nouvelle "couleur ?" de poubelle : végétaux
 
 # Stable - 26/03/2021
 - Support des expressions cron
