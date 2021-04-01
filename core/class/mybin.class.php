@@ -176,12 +176,8 @@ class mybin extends eqLogic {
         } else {
             $this->setDisplay('height','140px');
             $this->setDisplay('width', '260px');
-            //$this->setConfiguration('hour', 8);
-            //$this->setConfiguration('minute', 0);
             $this->setConfiguration('collect_time', '08:00');
             $this->setConfiguration('notif_days', 1);
-            //$this->setConfiguration('notif_hour', 20);
-            //$this->setConfiguration('notif_minute', 0);
             $this->setConfiguration('notif_time', '20:00');
             $this->setConfiguration('paire', 1);
             $this->setConfiguration('impaire', 1);
@@ -739,7 +735,8 @@ class mybin extends eqLogic {
             foreach ($specificDays as $specificDay) {
                 if (isset($specificDay['myday'])) {
                     $dtCheck = DateTime::createFromFormat("Y-m-d", $specificDay['myday']);
-                    $dtCheck->setTime(intval($this->getConfiguration('hour')), intval($this->getConfiguration('minute')));
+                    $pieces = explode(":", $this->getConfiguration('collect_time'));
+                    $dtCheck->setTime(intval($pieces[0]), intval($pieces[1]));
                     if ($dtCheck >= $dtNow) {
                         $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $dtCheck->format("Y-m-d H:i"));
                         $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
