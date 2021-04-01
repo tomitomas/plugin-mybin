@@ -130,6 +130,7 @@ foreach ($eqLogics as $eqLogic) {
 											<option value="black">{{Noire}}</option>
 											<option value="violet">{{Violette}}</option>
 											<option value="bulky">{{Encombrants}}</option>
+											<option value="plants">{{Végétaux}}</option>
                                         </select>
                                     </span>
                                     <span class="col-sm-3">
@@ -183,40 +184,12 @@ foreach ($eqLogics as $eqLogic) {
                                     <div id="div_specific_day"></div>
                                 </div>
 							</div>
-                            <br/>	
+							<br/>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Heure de ramassage}}</label>
-								<div class="col-sm-7">
-                                    <span class="col-sm-2">
-                                        <select id="sel_hour" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="hour">
-                                        <?php
-                                        for ($i = 0; $i <= 23; $i++) {
-                                            echo '<option value="'.$i.'">';
-                                            if ($i < 10) {
-                                                echo '0';
-                                            }
-                                            echo $i.'</option>';
-                                        }
-                                        ?>
-                                        </select>
-                                    </span>
-                                    <span class="col-sm-1">
-                                        <label>h</label>
-                                    </span>
-                                    <span class="col-sm-2">
-                                        <select id="sel_minute" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="minute">
-                                        <?php
-                                        for ($i = 0; $i <= 55; $i = $i + 5) {
-                                            echo '<option value="'.$i.'">';
-                                            if ($i < 10) {
-                                                echo '0';
-                                            }
-                                            echo $i.'</option>';
-                                        }
-                                        ?>
-                                        </select>
-                                    </span>
-								</div>
+							    <div class="col-sm-3">
+									<input class="eqLogicAttr timepicker" type="text" data-l1key="configuration" data-l2key="collect_time">	
+                                </div>
 							</div>
                             <br/>
 							<div class="form-group">
@@ -237,35 +210,9 @@ foreach ($eqLogics as $eqLogic) {
 									<span class="col-sm-3">
                                         <label>{{jour(s) avant à}}</label>
                                     </span>
-                                    <span class="col-sm-2">
-                                        <select id="sel_notif_hour" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_hour">
-                                        <?php
-                                        for ($i = 0; $i <= 23; $i++) {
-                                            echo '<option value="'.$i.'">';
-                                            if ($i < 10) {
-                                                echo '0';
-                                            }
-                                            echo $i.'</option>';
-                                        }
-                                        ?>
-                                        </select>
-                                    </span>
-                                    <span class="col-sm-1">
-                                        <label>h</label>
-                                    </span>
-                                    <span class="col-sm-2">
-                                        <select id="sel_notif_minute" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_minute">
-                                        <?php
-                                        for ($i = 0; $i <= 55; $i = $i + 5) {
-                                            echo '<option value="'.$i.'">';
-                                            if ($i < 10) {
-                                                echo '0';
-                                            }
-                                            echo $i.'</option>';
-                                        }
-                                        ?>
-                                        </select>
-                                    </span>
+									<span class="col-sm-3">
+										<input class="eqLogicAttr timepicker" type="text" data-l1key="configuration" data-l2key="notif_time">	
+									</span>
 								</div>
 							</div>
 							<div class="form-group">

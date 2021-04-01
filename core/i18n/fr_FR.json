@@ -71,6 +71,7 @@
         "Noire": "Noire",
         "Violette": "Violette",
         "Encombrants": "Encombrants",
+        "Végétaux": "Végétaux",
         "Date(s) particulièr(s) de ramassage": "Date(s) particulièr(s) de ramassage",
         "Ajouter une date": "Ajouter une date",
         "Janvier": "Janvier",
@@ -109,6 +110,8 @@
         "L\\'heure de notification est après l\\'heure de collecte": "L\\'heure de notification est après l\\'heure de collecte",
         "Il n\'y a (plus) aucune poubelle à sortir": "Il n\'y a (plus) aucune poubelle à sortir",
         "Le seuil doit être un entier positif ou être laissé vide": "Le seuil doit être un entier positif ou être laissé vide", 
-        "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide": "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide"
+        "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide": "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide",
+        "L\'heure de notification ne peut pas être vide": "L\'heure de notification ne peut pas être vide",
+        "L\'heure de ramassage ne peut pas être vide": "L\'heure de ramassage ne peut pas être vide"
     }
 }
