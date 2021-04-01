@@ -72,6 +72,30 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
                 $eqLogic->setConfiguration('notif_days', 0);
             }
             $eqLogic->setConfiguration('notif_veille', 'unused');
+
+            if ($eqLogic->getConfiguration('collect_time', 'unset') === 'unset') {
+                $hour = $eqLogic->getConfiguration('hour');
+                if (intval($hour) < 10) {
+                    $hour = '0' . $hour;
+                }
+                $minute = $eqLogic->getConfiguration('minute');
+                if (intval($minute) < 10) {
+                    $minute = '0' . $minute;
+                }
+                $eqLogic->setConfiguration('collect_time', $hour . ':' . $minute);
+            }
+
+            if ($eqLogic->getConfiguration('notif_time', 'unset') === 'unset') {
+                $hour = $eqLogic->getConfiguration('notif_hour');
+                if (intval($hour) < 10) {
+                    $hour = '0' . $hour;
+                }
+                $minute = $eqLogic->getConfiguration('notif_minute');
+                if (intval($minute) < 10) {
+                    $minute = '0' . $minute;
+                }
+                $eqLogic->setConfiguration('notif_time', $hour . ':' . $minute);
+            }
             
             $cmd = $eqLogic->getCmd(null, 'counter');
             if (!is_object($cmd)) {
