@@ -415,6 +415,9 @@ class mybin extends eqLogic {
                 if ($this->getConfiguration('color') == "bulky") {
                     $suffix = "_bulky";
                 }
+                if ($this->getConfiguration('color') == "plants") {
+                    $suffix = "_plants";
+                }
                 $binnotifs = '<span class="cmd" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/none2'.$suffix.'.png" width="70px"></span>';
                 $binscript = "";
                 $binStatus = $binCmd->execCmd();
