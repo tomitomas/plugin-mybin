@@ -213,6 +213,12 @@ class mybin extends eqLogic {
                     throw new Exception($this->getHumanName() . ": " . __('Le seuil doit être un entier positif ou être laissé vide',__FILE__));
                 }
             }
+            if ($this->getConfiguration('notif_time') == '') {
+                throw new Exception($this->getHumanName() . ": " . __('L\'heure de notification ne peut pas être vide',__FILE__));
+            }
+            if ($this->getConfiguration('collect_time') == '') {
+                throw new Exception($this->getHumanName() . ": " . __('L\'heure de ramassage ne peut pas être vide',__FILE__));
+            }
         }
         
         $specificCrons = $this->getConfiguration('specific_cron');
