@@ -794,6 +794,28 @@ class mybin extends eqLogic {
         }
         return $value;
     }
+
+    public static function setCustomIcon($id, $type, $file) {
+        $colors = config::byKey('colors','mybin',array(),true);
+        foreach ($colors as $color) {
+            if ($color["id"] == $id) {
+                $color["icon_".$type] = $file;
+                break;
+            }
+        }
+        config::save('colors', $colors, 'mybin');
+    }
+
+    public static function setDefaultIcon($id, $type) {
+        $colors = config::byKey('colors','mybin',array(),true);
+        foreach ($colors as $color) {
+            if ($color["id"] == $id) {
+                $color["icon_".$type] = $color["default_".$type];
+                break;
+            }
+        }
+        config::save('colors', $colors, 'mybin');
+    }
 }
 
 class mybinCmd extends cmd {
