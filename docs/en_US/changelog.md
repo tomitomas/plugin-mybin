@@ -7,6 +7,7 @@
 # Current BETA
 - Use of datetimepicker 3rdparty 
 - New bin "color?": plants
+- Fix on notification condition evaluation
 
 # Stable - 26/03/2021
 - Cron expressions support
