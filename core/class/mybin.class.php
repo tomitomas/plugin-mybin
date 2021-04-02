@@ -797,7 +797,7 @@ class mybin extends eqLogic {
 
     public static function setCustomIcon($id, $type, $file) {
         $colors = config::byKey('colors','mybin',array(),true);
-        foreach ($colors as $color) {
+        foreach ($colors as &$color) {
             if ($color["id"] == $id) {
                 $color["icon_".$type] = $file;
                 break;
@@ -808,7 +808,7 @@ class mybin extends eqLogic {
 
     public static function setDefaultIcon($id, $type) {
         $colors = config::byKey('colors','mybin',array(),true);
-        foreach ($colors as $color) {
+        foreach ($colors as &$color) {
             if ($color["id"] == $id) {
                 $color["icon_".$type] = $color["default_".$type];
                 break;
