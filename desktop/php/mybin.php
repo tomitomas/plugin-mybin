@@ -127,15 +127,11 @@ foreach ($eqLogics as $eqLogic) {
                                 <div class="col-sm-7">
                                     <span class="col-sm-4">
                                         <select id="sel_color" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="color">
-                                            <option value="green">{{Verte}}</option>
-                                            <option value="yellow">{{Jaune}}</option>
-                                            <option value="brown">{{Marron}}</option>
-                                            <option value="blue">{{Bleue}}</option>
-                                            <option value="grey">{{Grise}}</option>
-											<option value="black">{{Noire}}</option>
-											<option value="violet">{{Violette}}</option>
-											<option value="bulky">{{Encombrants}}</option>
-											<option value="plants">{{Végétaux}}</option>
+										<?php
+											foreach (config::byKey('colors','mybin',array(),true) as $color) {
+												echo '<option value="'.$color["id"].'">{{'.$color["name"].'}}</option>';
+											}
+										?>
                                         </select>
                                     </span>
                                     <span class="col-sm-3">
