@@ -103,6 +103,11 @@ $('.timepicker').datetimepicker({
   format: 'H:i'
 });
 
+$('#bt_configImages').on('click', function () {
+  $('#md_modal').dialog({title: "{{Personnalisation des images}}"});
+  $('#md_modal').load('index.php?v=d&plugin=mybin&modal=custom').dialog('open');
+});
+
 /*
  * Fonction permettant l'affichage des commandes dans l'équipement
  */

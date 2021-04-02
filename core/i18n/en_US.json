@@ -73,7 +73,7 @@
         "Violette": "Violet",
         "Encombrants": "Bulky waste",
         "Végétaux": "Plants",
-        "Date(s) particulièr(s) de ramassage": "Specific date(s) of collect",
+        "Date(s) particulière(s) de ramassage": "Specific date(s) of collect",
         "Ajouter une date": "Add a date",
         "Janvier": "January",
         "Février": "February",
@@ -105,7 +105,8 @@
         "Unité": "Unit",
         "Afficher": "Show",
         "Historiser": "Historize",
-        "Tester": "Test"
+        "Tester": "Test",
+        "Personnalisation des images": "Pictures customization"
     },
     "plugins\/mybin\/core\/class\/mybin.class.php": {
         "L\\'heure de notification est après l\\'heure de collecte": "The time of notification is after the time of collect",

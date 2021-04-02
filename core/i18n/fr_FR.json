@@ -73,7 +73,7 @@
         "Violette": "Violette",
         "Encombrants": "Encombrants",
         "Végétaux": "Végétaux",
-        "Date(s) particulièr(s) de ramassage": "Date(s) particulièr(s) de ramassage",
+        "Date(s) particulière(s) de ramassage": "Date(s) particulière(s) de ramassage",
         "Ajouter une date": "Ajouter une date",
         "Janvier": "Janvier",
         "Février": "Février",
@@ -105,7 +105,8 @@
         "Unité": "Unité",
         "Afficher": "Afficher",
         "Historiser": "Historiser",
-        "Tester": "Tester"
+        "Tester": "Tester",
+        "Personnalisation des images": "Personnalisation des images"
     },
     "plugins\/mybin\/core\/class\/mybin.class.php": {
         "L\\'heure de notification est après l\\'heure de collecte": "L\\'heure de notification est après l\\'heure de collecte",
