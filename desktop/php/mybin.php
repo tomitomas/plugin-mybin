@@ -33,7 +33,6 @@ foreach ($eqLogics as $eqLogic) {
 				<span>{{Personnalisation}}</span>
             </div>
         </div>
-		</div>
 		<legend><i class="icon divers-slightly"></i> {{Mes poubelles}}</legend>
 		<div class="input-group" style="margin:5px;">
 			<input class="form-control roundedLeft" placeholder="{{Rechercher}}" id="in_searchEqlogic"/>
