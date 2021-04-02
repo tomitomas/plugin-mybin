@@ -24,7 +24,7 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
       config::save('calendarType', 'collect', 'mybin');
       config::save('notifs', 1, 'mybin');
       config::save('calendar', 1, 'mybin');
-      config::save('colors', $this->mybin_createColors(), 'mybin');
+      config::save('colors', mybin_createColors(), 'mybin');
   }
 
 // Fonction exécutée automatiquement après la mise à jour du plugin
@@ -32,7 +32,7 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
       
       $colors = config::byKey('colors','mybin','unset',true);
       if ($colors == 'unset') {
-        config::save('colors', $this->mybin_createColors(), 'mybin');
+        config::save('colors', mybin_createColors(), 'mybin');
       }
 
       $calendarType = config::byKey('calendarType','mybin','unset',true);
