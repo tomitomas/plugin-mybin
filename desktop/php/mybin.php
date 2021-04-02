@@ -27,6 +27,12 @@ foreach ($eqLogics as $eqLogic) {
 				<br>
 				<span>{{Configuration}}</span>
 			</div>
+			<div class="cursor eqLogicAction logoSecondary" id="bt_configImages">
+            	<i class="fas fa-images"></i>
+				<br>
+				<span>{{Personnalisation}}</span>
+            </div>
+        </div>
 		</div>
 		<legend><i class="icon divers-slightly"></i> {{Mes poubelles}}</legend>
 		<div class="input-group" style="margin:5px;">
