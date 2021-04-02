@@ -33,7 +33,7 @@ if (!isConnect('admin')) {
                     echo('<td style="text-align: center; vertical-align:middle; font-weight: bold;">'.__($color["name"], __FILE__).'</td>');
                     echo('<td align="center">');
                     echo('<div class="col-xs-9">');
-                    echo('<img src="plugins/mybin/data/images/core/'.$color["icon_on"].'" class="img-responsive" style="max-height : 120px;" >');
+                    echo('<img src="plugins/mybin/data/images/'.$color["icon_on"].'" class="img-responsive" style="max-height : 120px;" >');
                     echo('</div>');
                     echo('<div class="col-xs-3">');
                     echo('<span class="btn btn-default btn-file" style="margin-bottom:10px;">');
@@ -44,7 +44,7 @@ if (!isConnect('admin')) {
                     echo('</td>');
                     echo('<td align="center">');
                     echo('<div class="col-xs-9">');
-                    echo('<img src="plugins/mybin/data/images/core/'.$color["icon_off"].'" class="img-responsive" style="max-height : 120px;" >');
+                    echo('<img src="plugins/mybin/data/images/'.$color["icon_off"].'" class="img-responsive" style="max-height : 120px;" >');
                     echo('</div>');
                     echo('<div class="col-xs-3">');
                     echo('<span class="btn btn-default btn-file" style="margin-bottom:10px;">');
