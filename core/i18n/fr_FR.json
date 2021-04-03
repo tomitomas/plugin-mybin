@@ -120,7 +120,9 @@
         "Noire": "Noire",
         "Violette": "Violette",
         "Encombrants": "Encombrants",
-        "Végétaux": "Végétaux"
+        "Végétaux": "Végétaux",
+        "Nouvelle image": "Nouvelle image",
+        "Réinitialiser": "Réinitialiser"
     },
     "plugins\/mybin\/core\/class\/mybin.class.php": {
         "L\\'heure de notification est après l\\'heure de collecte": "L\\'heure de notification est après l\\'heure de collecte",

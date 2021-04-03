@@ -27,9 +27,9 @@ if (!isConnect('admin')) {
                     echo('</div>');
                     echo('<div class="col-xs-3">');
                     echo('<span class="btn btn-default btn-file" style="margin-bottom:10px;">');
-                    echo('<i class="fas fa-cloud-upload-alt"></i> {{Envoyer}}<input class="pluginAction" data-action="uploadImage" color-id="'.$color["id"].'" color-type="on" type="file" name="file" style="display: inline-block;">');
+                    echo('<i class="fas fa-cloud-upload-alt"></i> {{Nouvelle image}}<input class="pluginAction" data-action="uploadImage" color-id="'.$color["id"].'" color-type="on" type="file" name="file" style="display: inline-block;">');
                     echo('</span>');
-                    echo('<a class="btn btn-danger pluginAction" data-action="deleteImage" color-id="'.$color["id"].'" color-type="on"><i class="fas fa-undo"></i> {{Défaut}}</a>');
+                    echo('<a class="btn btn-danger pluginAction" data-action="deleteImage" color-id="'.$color["id"].'" color-type="on"><i class="fas fa-undo"></i> {{Réinitialiser}}</a>');
                     echo('</div>');
                     echo('</td>');
                     echo('<td align="center">');
@@ -38,9 +38,9 @@ if (!isConnect('admin')) {
                     echo('</div>');
                     echo('<div class="col-xs-3">');
                     echo('<span class="btn btn-default btn-file" style="margin-bottom:10px;">');
-                    echo('<i class="fas fa-cloud-upload-alt"></i> {{Envoyer}}<input class="pluginAction" data-action="uploadImage" color-id="'.$color["id"].'" color-type="off" type="file" name="file" style="display: inline-block;">');
+                    echo('<i class="fas fa-cloud-upload-alt"></i> {{Nouvelle image}}<input class="pluginAction" data-action="uploadImage" color-id="'.$color["id"].'" color-type="off" type="file" name="file" style="display: inline-block;">');
                     echo('</span>');
-                    echo('<a class="btn btn-danger pluginAction" data-action="deleteImage" color-id="'.$color["id"].'" color-type="off"><i class="fas fa-undo"></i> {{Défaut}}</a>');
+                    echo('<a class="btn btn-danger pluginAction" data-action="deleteImage" color-id="'.$color["id"].'" color-type="off"><i class="fas fa-undo"></i> {{Réinitialiser}}</a>');
                     echo('</div>');
                     echo('</td>');
                     echo('</tr>');
