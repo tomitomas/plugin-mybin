@@ -41,7 +41,7 @@ $('.pluginAction[data-action=deleteImage]').on('click', function () {
             console.log(data.result.icon);
             console.log(data.result.url);
             console.log($('.img-responsive[color-id="'+data.result.id+'"][color-type="'+data.result.icon+'"]'));
-            $('.img-responsive[color-id="'+data.result.id+'"][color-type="'+data.result.result.icon+'"]').attr('src', data.result.url);
+            $('.img-responsive[color-id="'+data.result.id+'"][color-type="'+data.result.icon+'"]').attr('src', data.result.url);
         }
     });
 });
