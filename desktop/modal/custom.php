@@ -27,7 +27,7 @@ if (!isConnect('admin')) {
             </div>
             <div class="col-sm-3">
                 <center>
-                    <label><a class="btn btn-success btn-sm addAction" data-type="action_collect" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter un type}}</a></label>
+                    <label><a class="btn btn-success btn-sm pluginAction" data-action="saveNewType" style="margin:5px;"><i class="fas fa-save"></i> {{Sauvegarder}}</a></label>
                 </center>
             </div>
         </div>
