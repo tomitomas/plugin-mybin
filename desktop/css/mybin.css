@@ -8,12 +8,12 @@
 }
 
 #customBinImg {
-    min-height: 70px !important;
-    max-height: 70px;
+    min-height: 67px !important;
+    max-height: 67px;
     width: auto !important;
-    max-width: 70px !important;
+    max-width: 67px !important;
     overflow: hidden;
     vertical-align: baseline;
     padding-top: 0px !important;
-    margin-bottom: 15px !important;
+    margin-bottom: 18px !important;
 }
