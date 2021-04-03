@@ -9,9 +9,21 @@ if (!isConnect('admin')) {
 <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
     <div role="tabpanel" class="tab-pane active">
         <legend><i class="fas fa-plus-circle"></i> {{Créer un nouveau type de poubelle}}</legend>
-        <div>
-            <input class="pluginAction" data-action="uploadImage" color-type="on" type="file" name="file" style="display: inline-block;">
+        <div class="row">
+            <div class="col-sm-3">
+                <label>{{Nom}} : </label><input type="text" name="name"/>
+            </div>
+            <div class="col-sm-3">
+                <label>{{Icône ON}} : </label><input color-type="on" type="file" name="fileon" style="display: inline-block;">
+            </div>
+            <div class="col-sm-3">
+                <label>{{Icône OFF}} : </label><input color-type="off" type="file" name="fileoff" style="display: inline-block;">
+            </div>
+            <div class="col-sm-3">
+                <label><a class="btn btn-success btn-sm addAction" data-type="action_collect" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter un type}}</a></label>
+            </div>
         </div>
+        <br>
         <legend><i class="icon divers-slightly"></i> {{Mes types de poubelle}}</legend>
         <div>
             <table class="table table-bordered table-condensed">
