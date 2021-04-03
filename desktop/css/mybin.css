@@ -1,15 +1,13 @@
 #customBin {
     background: no-repeat url("../../core/assets/icon_bkg.png") !important;
-    /*background-image:url("../../core/assets/icon_bkg.png") !important;*/
 	background-size: 60% !important;
-	/*background-repeat: no-repeat !important;*/
 	background-position: center 0% !important;
     margin-top: 15px !important;
 }
 
 #customBinImg {
     min-height: 67px !important;
-    max-height: 67px;
+    max-height: 67px !important;
     width: auto !important;
     max-width: 67px !important;
     overflow: hidden;
