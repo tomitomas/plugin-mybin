@@ -10,7 +10,7 @@ if (!isConnect('admin')) {
     <div role="tabpanel" class="tab-pane active">
         <legend><i class="fas fa-plus-circle"></i> {{Créer un nouveau type de poubelle}}</legend>
         <div>
-            
+            <input class="pluginAction" data-action="uploadImage" color-type="on" type="file" name="file" style="display: inline-block;">
         </div>
         <legend><i class="icon divers-slightly"></i> {{Mes types de poubelle}}</legend>
         <div>
