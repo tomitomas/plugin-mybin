@@ -1,6 +1,3 @@
 .customBin {
-    background-image:url("../../core/assets/icon_bkg.png") !important;
-	background-size: 90% !important;
-	background-repeat: no-repeat !important;
-	background-position: center 0% !important;
+    background: url("../../core/assets/icon_bkg.png") 90% no-repeat center 0% !important;
 }
