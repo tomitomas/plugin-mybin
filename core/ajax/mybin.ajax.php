@@ -75,7 +75,7 @@ try {
         $return = array(
             'id' => $id,
             'icon' => $icon,
-            'url' => 'plugins/mybin/data/images/'.$filename.'.png'
+            'url' => 'plugins/mybin/data/images/'.$filename
             );
         ajax::success($return);
     }
