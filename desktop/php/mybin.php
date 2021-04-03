@@ -2,6 +2,7 @@
 if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
+include_file('desktop', 'mybin', 'css', 'mybin');
 include_file('3rdparty', 'datetimepicker/jquery.datetimepicker', 'css', 'mybin');
 $plugin = plugin::byId('mybin');
 sendVarToJS('eqType', $plugin->getId());
