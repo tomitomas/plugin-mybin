@@ -14,7 +14,7 @@ $('.pluginAction[data-action=uploadImage]').each(function () {
             console.log(data.result.result.icon);
             console.log(data.result.result.url);
             console.log($('.img-responsive[color-id="'+data.result.result.id+'"][color-type="'+data.result.result.icon+'"]'));
-            $('.img-responsive[color-id="'+data.result.result.id+'"][color-type="'+data.result.result.icon+'"]').attr('src', data.result.result.url);
+            $('.img-responsive[color-id="'+data.result.result.id+'"][color-type="'+data.result.result.icon+'"]').attr('src', data.result.result.url+'?'+new Date().getTime());
         }
     });
 });
