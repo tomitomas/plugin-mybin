@@ -610,7 +610,7 @@ class mybin extends eqLogic {
         if ($color == '') {
             return 'plugins/mybin/plugin_info/mybin_icon.png';
         } else {
-            return 'plugins/mybin/core/assets/'.$color.'_icon.png';
+            return $this->getColorAttr($color, 'icon_on');
         }
 	}
     
