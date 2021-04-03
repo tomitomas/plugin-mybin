@@ -47,10 +47,9 @@ foreach ($eqLogics as $eqLogic) {
                     continue;
                 }
 				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-				echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
-				echo '<div style="background-image:url(\'..\/..\/core\/assets\/icon_bkg.png\'); background-size: 90%; background-repeat: no-repeat; background-position: center 0%;">';
+				$bakground = "background-image:url('plugins/mybin/core/assets/icon_bkg.png') !important;background-size: 90% !important;background-repeat: no-repeat !important;background-position: center 0% !important;";
+				echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '" style="' . $background . '">';
 				echo '<img src="' . $eqLogic->getImage() . '"/>';
-				echo '</div>';
 				echo '<br>';
 				echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
 				echo '</div>';
