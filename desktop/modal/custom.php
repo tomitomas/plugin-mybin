@@ -8,6 +8,7 @@ if (!isConnect('admin')) {
 
 <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
     <div role="tabpanel" class="tab-pane active" id="weatherTab">
+        <legend><i class="icon divers-slightly"></i> {{Mes types de poubelle}}</legend>
         <table class="table table-bordered table-condensed">
             <thead>
                 <tr>
