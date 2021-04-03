@@ -42,18 +42,18 @@ try {
 			throw new Exception(__('Le fichier est trop gros (maximum 5Mo)', __FILE__));
         }
 
-        $filepath = __DIR__ . "/../../data/images/custom/{$id}{$extension}";
+        $filepath = __DIR__ . "/../../data/images/custom/{$id}_{$icon}{$extension}";
         log::add('mybin', 'debug', "filepath: {$filepath}");
 		file_put_contents($filepath,file_get_contents($_FILES['file']['tmp_name']));
 		if(!file_exists($filepath)){
 			throw new \Exception(__('Impossible de sauvegarder l\'image',__FILE__));
 		}
 
-        mybin::setCustomIcon($id, $icon, "custom/{$id}{$extension}");
+        mybin::setCustomIcon($id, $icon, "custom/{$id}_{$icon}{$extension}");
         $return = array(
             'id' => $id,
             'icon' => $icon,
-            'url' => 'plugins/mybin/data/images/custom/'.$id.$extension
+            'url' => 'plugins/mybin/data/images/custom/'.$id.'_'.$icon.$extension
             );
         ajax::success($return);
     }
@@ -61,9 +61,9 @@ try {
     if (init('action') == 'deleteCustomImg') {
         $id = init('id');
         $icon = init('icon');
-        log::add('mybin', 'debug', "deleteImage weather: {$id} | period: {$icon}");
+        log::add('mybin', 'debug', "deleteImage id: {$id} | icon: {$icon}");
 
-		$files = ls(__DIR__ . '/../../data/images/custom/', "{$iconpath}*");
+		$files = ls(__DIR__ . '/../../data/images/custom/', "{$id}_{$icon}*");
 		if(count($files)  > 0){
 			foreach ($files as $file) {
                 log::add('mybin', 'debug', "delete file : {$file}");
@@ -71,11 +71,11 @@ try {
 			}
         }
 
-        mybin::setDefaultIcon($id, $icon);
+        $filename = mybin::setDefaultIcon($id, $icon);
         $return = array(
             'id' => $id,
             'icon' => $icon,
-            'url' => 'plugins/mybin/data/images/'.$id.'.png'
+            'url' => 'plugins/mybin/data/images/'.$filename.'.png'
             );
         ajax::success($return);
     }

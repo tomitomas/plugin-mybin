@@ -10,8 +10,8 @@ $('.pluginAction[data-action=uploadImage]').each(function () {
                 return;
             }
             console.log(data);
-            console.log(data.result.result.period);
-            console.log(data.result.result.weather);
+            console.log(data.result.result.id);
+            console.log(data.result.result.icon);
             console.log(data.result.result.url);
             console.log($('.img-responsive[weather-condition="'+data.result.result.weather+'"][period-condition="'+data.result.result.period+'"]'));
             $('.img-responsive[color-id="'+data.result.result.id+'"][color-type="'+data.result.result.icon+'"]').attr('src', data.result.result.url);
@@ -37,8 +37,8 @@ $('.pluginAction[data-action=deleteImage]').on('click', function () {
                 $('#modal_alert').showAlert({message: data.result, level: 'danger'});
                 return;
             }
-            console.log(data.result.period);
-            console.log(data.result.weather);
+            console.log(data.result.id);
+            console.log(data.result.icon);
             console.log(data.result.url);
             console.log($('.img-responsive[weather-condition="'+data.result.weather+'"][period-condition="'+data.result.period+'"]'));
             $('.img-responsive[color-id="'+data.result.result.id+'"][color-type="'+data.result.result.icon+'"]').attr('src', data.result.result.url);

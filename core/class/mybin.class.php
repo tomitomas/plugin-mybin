@@ -808,13 +808,16 @@ class mybin extends eqLogic {
 
     public static function setDefaultIcon($id, $type) {
         $colors = config::byKey('colors','mybin',array(),true);
+        $name = "";
         foreach ($colors as &$color) {
             if ($color["id"] == $id) {
                 $color["icon_".$type] = $color["default_".$type];
+                $name = $color["icon_".$type];
                 break;
             }
         }
         config::save('colors', $colors, 'mybin');
+        return $name;
     }
 }
 
