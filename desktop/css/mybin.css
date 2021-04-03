@@ -5,3 +5,12 @@
 	/*background-repeat: no-repeat !important;*/
 	background-position: center 0% !important;
 }
+
+#customBinImg {
+    min-height: 70px !important;
+    max-height: 970px;
+    width: auto !important;
+    max-width: 70px !important;
+    overflow: hidden;
+    vertical-align: baseline;
+}
