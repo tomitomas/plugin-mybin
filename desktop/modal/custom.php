@@ -11,16 +11,24 @@ if (!isConnect('admin')) {
         <legend><i class="fas fa-plus-circle"></i> {{Créer un nouveau type de poubelle}}</legend>
         <div class="row">
             <div class="col-sm-3">
-                <label>{{Nom}} : </label><input type="text" name="name"/>
+                <center>
+                    <label>{{Nom}} : </label><input type="text" name="name"/>
+                </center>
             </div>
             <div class="col-sm-3">
-                <label>{{Icône ON}} : </label><input color-type="on" type="file" name="fileon" style="display: inline-block;">
+                <center>
+                    <label>{{Icône ON}} : </label><input color-type="on" type="file" name="fileon" style="display: inline-block;">
+                </center>
             </div>
             <div class="col-sm-3">
-                <label>{{Icône OFF}} : </label><input color-type="off" type="file" name="fileoff" style="display: inline-block;">
+                <center>
+                    <label>{{Icône OFF}} : </label><input color-type="off" type="file" name="fileoff" style="display: inline-block;">
+                </center>
             </div>
             <div class="col-sm-3">
-                <label><a class="btn btn-success btn-sm addAction" data-type="action_collect" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter un type}}</a></label>
+                <center>
+                    <label><a class="btn btn-success btn-sm addAction" data-type="action_collect" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter un type}}</a></label>
+                </center>
             </div>
         </div>
         <br>
