@@ -16,6 +16,7 @@
         "Gestion": "Gestion",
         "Ajouter": "Ajouter",
         "Configuration": "Configuration",
+        "Personnalisation": "Personnalisation",
         "Mes poubelles": "Mes poubelles",
         "Rechercher": "Rechercher",
         "Configuration avancée": "Configuration avancée",
@@ -72,7 +73,7 @@
         "Violette": "Violette",
         "Encombrants": "Encombrants",
         "Végétaux": "Végétaux",
-        "Date(s) particulièr(s) de ramassage": "Date(s) particulièr(s) de ramassage",
+        "Date(s) particulière(s) de ramassage": "Date(s) particulière(s) de ramassage",
         "Ajouter une date": "Ajouter une date",
         "Janvier": "Janvier",
         "Février": "Février",
@@ -104,7 +105,24 @@
         "Unité": "Unité",
         "Afficher": "Afficher",
         "Historiser": "Historiser",
-        "Tester": "Tester"
+        "Tester": "Tester",
+        "Personnalisation des images": "Personnalisation des images"
+    },
+    "plugins\/mybin\/desktop\/modal\/custom.php": {
+        "Nom": "Nom",
+        "Icône ON": "Icône ON",
+        "Icône OFF": "Icône OFF",
+        "Grise": "Grise",
+        "Verte": "Verte",
+        "Jaune": "Jaune",
+        "Marron": "Marron",
+        "Bleue": "Bleue",
+        "Noire": "Noire",
+        "Violette": "Violette",
+        "Encombrants": "Encombrants",
+        "Végétaux": "Végétaux",
+        "Nouvelle image": "Nouvelle image",
+        "Réinitialiser": "Réinitialiser"
     },
     "plugins\/mybin\/core\/class\/mybin.class.php": {
         "L\\'heure de notification est après l\\'heure de collecte": "L\\'heure de notification est après l\\'heure de collecte",
@@ -113,5 +131,13 @@
         "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide": "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide",
         "L\'heure de notification ne peut pas être vide": "L\'heure de notification ne peut pas être vide",
         "L\'heure de ramassage ne peut pas être vide": "L\'heure de ramassage ne peut pas être vide"
+    },
+    "plugins\/mybin\/core\/ajax\/mybin.ajax.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Aucun fichier trouvé. Vérifiez le paramètre PHP (post size limit)": "Aucun fichier trouvé. Vérifiez le paramètre PHP (post size limit)",
+        "Extension du fichier non valide (autorisé .jpg .png)": "Extension du fichier non valide (autorisé .jpg .png)",
+        "Le fichier est trop gros (maximum 5Mo)": "Le fichier est trop gros (maximum 5Mo)",
+        "Impossible de sauvegarder l\'image": "Impossible de sauvegarder l\'image",
+        "Aucune méthode correspondante à : ": "Aucune méthode correspondante à : "
     }
 }

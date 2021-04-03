@@ -350,10 +350,10 @@ class mybin extends eqLogic {
                     $binCmd = $eqLogic->getCmd(null, 'bin');
                     $binStatus = $binCmd->execCmd();
                     if ($eqLogic->getIsEnable() == 1 && $binStatus == 1) {
-                        $binimg = $eqLogic->getConfiguration('color');
+                        $binimg = $this->getColorAttr($eqLogic->getConfiguration('color'), 'icon_on');
                         $ackCmd = $eqLogic->getCmd(null, 'ack');
                         $counterCmd = $eqLogic->getCmd(null, 'counter');
-                        $binnotifs = $binnotifs . '<div style="display: inline-block;" class="cmd ack'.$ackCmd->getId().' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="80px"/>';
+                        $binnotifs = $binnotifs . '<div style="display: inline-block;" class="cmd ack'.$ackCmd->getId().' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'" width="80px"/>';
                         $binnotifs = $binnotifs . '<br/><i class="fas fa-tachometer-alt"></i> ' . $counterCmd->execCmd();
                         $binnotifs = $binnotifs . '</div>';
                         $binscript = $binscript . "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
@@ -389,8 +389,8 @@ class mybin extends eqLogic {
                             $dtCheck->modify('+'.$eqLogic->getConfiguration('notif_days').' day');
                         }
                         if ($eqLogic->checkIfBin($dtCheck)) {
-                            $color = $eqLogic->getConfiguration('color');
-                            $display = $display . '<img src="plugins/mybin/data/images/'.$color.'.png" width="20px">';
+                            $color = $this->getColorAttr($eqLogic->getConfiguration('color'), 'icon_on');
+                            $display = $display . '<img src="plugins/mybin/data/images/'.$color.'" width="20px">';
                         }
                     }
                     if ($display == "") {
@@ -412,25 +412,19 @@ class mybin extends eqLogic {
             $binnotifs = "";
             $binscript = "";
             if ($binCmd->getIsVisible() == 1) {
-                $suffix = "";
-                if ($this->getConfiguration('color') == "bulky") {
-                    $suffix = "_bulky";
-                }
-                if ($this->getConfiguration('color') == "plants") {
-                    $suffix = "_plants";
-                }
-                $binnotifs = '<span class="cmd" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/none2'.$suffix.'.png" width="70px"></span>';
+                $iconOff = $this->getColorAttr($this->getConfiguration('color'), 'icon_off');
+                $binnotifs = '<span class="cmd" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$iconOff.'" width="70px"></span>';
                 $binscript = "";
                 $binStatus = $binCmd->execCmd();
                 if ($binStatus == 1 && $binCmd->getIsVisible() == 1) {
-                    $binimg = $this->getConfiguration('color');
+                    $bining = $this->getColorAttr($this->getConfiguration('color'), 'icon_on');
                     $ackCmd = $this->getCmd(null, 'ack');
                     $binnotifs = '<span class="cmd ack';
                     if ($ackCmd->getIsVisible() == 1) {
                         $binnotifs = $binnotifs.$ackCmd->getId().' cursor';
                         $binscript = "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
                     }
-                    $binnotifs = $binnotifs.'" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="70px"></span>';
+                    $binnotifs = $binnotifs.'" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'" width="70px"></span>';
                 }
             }
             $replace['#binscript#'] = $binscript;
@@ -617,7 +611,7 @@ class mybin extends eqLogic {
         if ($color == '') {
             return 'plugins/mybin/plugin_info/mybin_icon.png';
         } else {
-            return 'plugins/mybin/core/assets/'.$color.'_icon.png';
+            return 'plugins/mybin/data/images/'.$this->getColorAttr($color, 'icon_on');
         }
 	}
     
@@ -787,6 +781,45 @@ class mybin extends eqLogic {
 		}
 		return false;
 	}
+
+    public function getColorAttr($id, $attr) {
+        $value = "";
+        foreach (config::byKey('colors','mybin',array(),true) as $color) {
+            if ($color["id"] == $id) {
+                $value =  $color[$attr];
+                break;
+            }
+        }
+        if ($value == "") {
+            log::add('mybin', 'warning', 'Unable to find color attribute ' . $attr . ' for id ' . $id);
+        }
+        return $value;
+    }
+
+    public static function setCustomIcon($id, $type, $file) {
+        $colors = config::byKey('colors','mybin',array(),true);
+        foreach ($colors as &$color) {
+            if ($color["id"] == $id) {
+                $color["icon_".$type] = $file;
+                break;
+            }
+        }
+        config::save('colors', $colors, 'mybin');
+    }
+
+    public static function setDefaultIcon($id, $type) {
+        $colors = config::byKey('colors','mybin',array(),true);
+        $name = "";
+        foreach ($colors as &$color) {
+            if ($color["id"] == $id) {
+                $color["icon_".$type] = $color["default_".$type];
+                $name = $color["icon_".$type];
+                break;
+            }
+        }
+        config::save('colors', $colors, 'mybin');
+        return $name;
+    }
 }
 
 class mybinCmd extends cmd {
