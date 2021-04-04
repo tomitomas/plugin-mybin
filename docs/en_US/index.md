@@ -41,6 +41,13 @@ You can define one of several actions that will be executed after notification a
 You can visualize, according to your configuration, the 10 next collect and notification dates.
 If there is an error in your configuration, the proble, will be highlighted in orange with an information explaining the issue.
 
+## Customization
+
+By clicking on the **Customization** icon on the equipments page, you can:
+- change icons of existing bin types
+- reset to the default icon
+- create your own bin types 
+
 # Utilisation
 
 Each equipment creates 5 comamnds:
