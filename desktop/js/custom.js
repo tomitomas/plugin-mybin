@@ -18,6 +18,33 @@ $('.pluginAction[data-action=saveNewType]').on('click', function () {
             }
             $('.newTypeName').val("");
             $('#modal_alert').showAlert({message: 'Type "'+data.result.name+'" créé', level: 'success'});
+            tr = '<tr>';
+            tr += '<td style="text-align: center; vertical-align:middle; font-weight: bold;">' + data.result.name;
+            tr += '<br>';
+            tr += '<a class="btn btn-danger pluginAction" data-action="deleteType" color-id="' + data.result.id + '"><i class="icon divers-slightly"></i> {{Supprimer}}</a>';
+            tr += '</td>';
+            tr += '<td align="center">';
+            tr += '<div class="col-xs-9">';
+            tr += '<img src="plugins/mybin/data/images/grey.png" class="img-responsive" color-id="' + data.result.id + '" color-type="on" style="max-height : 80px;" >';
+            tr += '</div>';
+            tr += '<div class="col-xs-3">';
+            tr += '<span class="btn btn-default btn-file" style="margin-bottom:10px;">';
+            tr += '<i class="fas fa-cloud-upload-alt"></i> {{Nouvelle image}}<input class="pluginAction" data-action="uploadImage" color-id="' + data.result.id + '" color-type="on" type="file" name="file" style="display: inline-block;">';
+            tr += '</span>';
+            tr += '</div>';
+            tr += '</td>';
+            tr += '<td align="center">';
+            tr += '<div class="col-xs-9">';
+            tr += '<img src="plugins/mybin/data/images/none2.png" class="img-responsive" color-id="' + data.result.id + '" color-type="off" style="max-height : 80px;" >';
+            tr += '</div>';
+            tr += '<div class="col-xs-3">';
+            tr += '<span class="btn btn-default btn-file" style="margin-bottom:10px;">';
+            tr += '<i class="fas fa-cloud-upload-alt"></i> {{Nouvelle image}}<input class="pluginAction" data-action="uploadImage" color-id="' + data.result.id + '" color-type="off" type="file" name="file" style="display: inline-block;">';
+            tr += '</span>';
+            tr += '</div>';
+            tr += '</td>';
+            tr += '</tr>';
+            $('#myTable tr:first').before(tr);
         }
     });
 });

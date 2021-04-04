@@ -22,7 +22,7 @@ if (!isConnect('admin')) {
         <br>
         <legend><i class="icon divers-slightly"></i> {{Mes types de poubelle}}</legend>
         <div>
-            <table class="table table-bordered table-condensed">
+            <table class="table table-bordered table-condensed" id="myColors">
                 <thead>
                     <tr>
                         <th style="text-align: center;" class="col-sm-2">{{Nom}}</th>

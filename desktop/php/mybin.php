@@ -129,7 +129,11 @@ foreach ($eqLogics as $eqLogic) {
                                     <span class="col-sm-4">
                                         <select id="sel_color" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="color">
 										<?php
-											foreach (config::byKey('colors','mybin',array(),true) as $color) {
+											$colors = config::byKey('colors','mybin',array(),true);
+											usort($colors, function ($a, $b) {
+												return $a['name'] <=> $b['name'];
+											});
+											foreach (colors as $color) {
 												echo '<option value="'.$color["id"].'">{{'.$color["name"].'}}</option>';
 											}
 										?>
