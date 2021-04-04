@@ -142,6 +142,7 @@
         "Aucune méthode correspondante à : ": "Aucune méthode correspondante à : ",
         "Impossible de supprimer le type": "Impossible de supprimer le type",
         "Le nom ne peut pas être vide": "Le nom ne peut pas être vide",
-        "Ce nom existe déjà": "Ce nom existe déjà"
+        "Ce nom existe déjà": "Ce nom existe déjà",
+        "Le nom contient des caractères interdits. Caractères autorisés : ": "Le nom contient des caractères interdits. Caractères autorisés : "
     }
 }

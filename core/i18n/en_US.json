@@ -140,6 +140,7 @@
         "Aucune méthode correspondante à : ": "No method corresponding to: ",
         "Impossible de supprimer le type": "Unable to delete type",
         "Le nom ne peut pas être vide": "The name can't be empty",
-        "Ce nom existe déjà": "This name already exists"
+        "Ce nom existe déjà": "This name already exists",
+        "Le nom contient des caractères interdits. Caractères autorisés : ": "The name contains forbidden characters. Authorized characters: "
     }
 }

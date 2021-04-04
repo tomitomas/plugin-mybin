@@ -824,7 +824,7 @@ class mybin extends eqLogic {
         $exist = false;
         $colors = config::byKey('colors','mybin',array(),true);
         foreach ($colors as $color) {
-            if ($color["name"] == $name) {
+            if (strtolower($color["name"]) == strtolower($name)) {
                 $exist = true;
                 break;
             }

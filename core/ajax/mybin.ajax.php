@@ -85,6 +85,10 @@ try {
         if (trim($name) == "") {
             throw new Exception(__('Le nom ne peut pas être vide', __FILE__));
         }
+        $options = array('options' => array('regexp'=>'/^[a-zA-Z0-9_\s]*$/'));
+        if (filter_var($name, FILTER_VALIDATE_REGEXP, $options) === false) {
+            throw new Exception(__('Le nom contient des caractères interdits. Caractères autorisés : ',__FILE__) . '[a-zA-Z0-9_\s]');
+        }
         if (mybin::doesColorNameExist($name)) {
             throw new Exception(__('Ce nom existe déjà', __FILE__));
         }
