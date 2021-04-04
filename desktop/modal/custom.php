@@ -10,10 +10,10 @@ if (!isConnect('admin')) {
     <div role="tabpanel" class="tab-pane active">
         <legend><i class="fas fa-plus-circle"></i> {{Créer un nouveau type de poubelle}}</legend>
         <div class="form-group">
-            <label class="col-xs-1 control-label newTypeName">{{Nom}}</label>
+            <label class="col-xs-1 control-label">{{Nom}}</label>
             <div class="col-xs-11">
                 <span class="col-xs-3">
-                    <input type="text" class="eqLogicAttr form-control" name="name"/>
+                    <input type="text" class="eqLogicAttr form-control newTypeName" name="name"/>
                 </span>
                 <span class="col-xs-3">
                     <label><a class="btn btn-success btn-sm pluginAction" data-action="saveNewType" style="margin:5px;"><i class="fas fa-save"></i> {{Sauvegarder}}</a></label>
