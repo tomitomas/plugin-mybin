@@ -9,14 +9,15 @@ if (!isConnect('admin')) {
 <div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
     <div role="tabpanel" class="tab-pane active">
         <legend><i class="fas fa-plus-circle"></i> {{Créer un nouveau type de poubelle}}</legend>
-        <div class="row">
-            <div class="col-sm-3">
-                <center>
-                    <label>{{Nom}} : </label><input class="newTypeName form-control" type="text" name="name"/>
-                </center>
-            </div>
-            <div class="col-sm-">
-                <label><a class="btn btn-success btn-sm pluginAction" data-action="saveNewType" style="margin:5px;"><i class="fas fa-save"></i> {{Sauvegarder}}</a></label>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">{{Nom}}</label>
+            <div class="col-sm-7">
+                <span class="col-sm-4">
+                    <input type="text" class="eqLogicAttr form-control" name="name"/>
+                </span>
+                <span class="col-sm-3">
+                    <label><a class="btn btn-success btn-sm pluginAction" data-action="saveNewType" style="margin:5px;"><i class="fas fa-save"></i> {{Sauvegarder}}</a></label>
+                </span>
             </div>
         </div>
         <br>
