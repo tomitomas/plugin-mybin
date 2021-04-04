@@ -9,6 +9,7 @@
 - Nouvelle "couleur ?" de poubelle : végétaux
 - Correction sur l'évaluation de la condition de notification
 - Possibilité de personnaliser les icônes des poubelles
+- Possibilité de créer ses propres types de poubelle
 
 # Stable - 26/03/2021
 - Support des expressions cron

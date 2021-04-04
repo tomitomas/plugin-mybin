@@ -41,6 +41,13 @@ Vous pouvez définir une ou plusieurs actions à exécuter après ramassage et/o
 Vous pouvez visualiser, en fonction de votre configuration, les 10 prochains dates de ramassage et de notification. 
 Si il y a une erreur dans votre configration, le problème sera spécifier en orange avec une information vous expliquant le problème.
 
+## Personnalisation
+
+En cliquant sur l'icône **Personnalisation** sur la page des équipements, vous pouvez :
+- changer les icônes des types de poubelle existants
+- revenir à l'icône par défaut
+- créer vos propres types de poubelle
+
 # Utilisation
 
 Chaque équipement crée 5 commandes :

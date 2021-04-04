@@ -46,7 +46,7 @@ try {
         log::add('mybin', 'debug', "filepath: {$filepath}");
 		file_put_contents($filepath,file_get_contents($_FILES['file']['tmp_name']));
 		if(!file_exists($filepath)){
-			throw new \Exception(__('Impossible de sauvegarder l\'image',__FILE__));
+			throw new Exception(__('Impossible de sauvegarder l\'image',__FILE__));
 		}
 
         mybin::setCustomIcon($id, $icon, "custom/{$id}_{$icon}{$extension}");
@@ -76,6 +76,45 @@ try {
             'id' => $id,
             'icon' => $icon,
             'url' => 'plugins/mybin/data/images/'.$filename
+            );
+        ajax::success($return);
+    }
+
+    if (init('action') == 'saveNewType') {
+        $name = init('name');
+        if (trim($name) == "") {
+            throw new Exception(__('Le nom ne peut pas être vide', __FILE__));
+        }
+        $options = array('options' => array('regexp'=>'/^[a-zA-Z0-9_\s]*$/'));
+        if (filter_var($name, FILTER_VALIDATE_REGEXP, $options) === false) {
+            throw new Exception(__('Le nom contient des caractères interdits. Caractères autorisés : ',__FILE__) . '[a-zA-Z0-9_\s]');
+        }
+        if (mybin::doesColorNameExist($name)) {
+            throw new Exception(__('Ce nom existe déjà', __FILE__));
+        }
+        $id = mybin::setNewType($name);
+        $return = array(
+            'id' => $id,
+            'name' => $name
+            );
+        ajax::success($return);
+    }
+
+    if (init('action') == 'deleteType') {
+        $id = init('id');
+        $deleted = mybin::deleteType($id);
+        if (!$deleted) {
+            throw new Exception(__('Impossible de supprimer le type', __FILE__) . ' ' . $id);
+        }
+        $files = ls(__DIR__ . '/../../data/images/custom/', "{$id}_*");
+		if(count($files)  > 0){
+			foreach ($files as $file) {
+                log::add('mybin', 'debug', "delete file : {$file}");
+				unlink(__DIR__ . '/../../data/images/custom/'.$file);
+			}
+        }
+        $return = array(
+            'id' => $id
             );
         ajax::success($return);
     }

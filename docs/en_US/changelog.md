@@ -9,6 +9,7 @@
 - New bin "color?": plants
 - Fix on notification condition evaluation
 - Possibility to customize icons for each bin type
+- Possibility to create its own bin types
 
 # Stable - 26/03/2021
 - Cron expressions support

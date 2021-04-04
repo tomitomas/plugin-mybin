@@ -122,7 +122,8 @@
         "Encombrants": "Bulky waste",
         "Végétaux": "Plants",
         "Nouvelle image": "New picture",
-        "Réinitialiser": "Reset"
+        "Réinitialiser": "Reset",
+        "Supprimer": "Delete"
     },
     "plugins\/mybin\/core\/class\/mybin.class.php": {
         "L\\'heure de notification est après l\\'heure de collecte": "The time of notification is after the time of collect",
@@ -136,6 +137,10 @@
         "Extension du fichier non valide (autorisé .jpg .png)": "Invalid file extension (allowed: .jpg .png)",
         "Le fichier est trop gros (maximum 5Mo)": "The file is too large (limit 5MB)",
         "Impossible de sauvegarder l\'image": "Unable fo find the picture",
-        "Aucune méthode correspondante à : ": "No method corresponding to: "
+        "Aucune méthode correspondante à : ": "No method corresponding to: ",
+        "Impossible de supprimer le type": "Unable to delete type",
+        "Le nom ne peut pas être vide": "The name can't be empty",
+        "Ce nom existe déjà": "This name already exists",
+        "Le nom contient des caractères interdits. Caractères autorisés : ": "The name contains forbidden characters. Authorized characters: "
     }
 }
