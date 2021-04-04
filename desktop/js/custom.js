@@ -1,4 +1,26 @@
 
+$('.pluginAction[data-action=saveNewType]').on('click', function () {
+    $.ajax({
+        type: "POST",
+        url: "plugins/mybin/core/ajax/mybin.ajax.php",
+        data: {
+            action: "saveNewType",
+            name: $('.newTypeName').value()
+        },
+        dataType: 'json',
+        error: function (request, status, error) {
+            handleAjaxError(request, status, error);
+        },
+        success: function (data) {
+            if (data.state != 'ok') {
+                $('#modal_alert').showAlert({message: data.result, level: 'danger'});
+                return;
+            }
+            $('.newTypeName').val("");
+        }
+    });
+});
+
 $('.pluginAction[data-action=uploadImage]').each(function () {
     $(this).fileupload({
         replaceFileInput: false,

@@ -12,23 +12,11 @@ if (!isConnect('admin')) {
         <div class="row">
             <div class="col-sm-3">
                 <center>
-                    <label>{{Nom}} : </label><input type="text" name="name"/>
+                    <label>{{Nom}} : </label><input class="newTypeName" type="text" name="name"/>
                 </center>
             </div>
-            <div class="col-sm-3">
-                <center>
-                    <label>{{Icône ON}} : </label><input color-type="on" type="file" name="fileon" style="display: inline-block;">
-                </center>
-            </div>
-            <div class="col-sm-3">
-                <center>
-                    <label>{{Icône OFF}} : </label><input color-type="off" type="file" name="fileoff" style="display: inline-block;">
-                </center>
-            </div>
-            <div class="col-sm-3">
-                <center>
-                    <label><a class="btn btn-success btn-sm pluginAction" data-action="saveNewType" style="margin:5px;"><i class="fas fa-save"></i> {{Sauvegarder}}</a></label>
-                </center>
+            <div class="col-sm-">
+                <label><a class="btn btn-success btn-sm pluginAction" data-action="saveNewType" style="margin:5px;"><i class="fas fa-save"></i> {{Sauvegarder}}</a></label>
             </div>
         </div>
         <br>

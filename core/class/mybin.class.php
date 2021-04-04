@@ -819,6 +819,30 @@ class mybin extends eqLogic {
         config::save('colors', $colors, 'mybin');
         return $name;
     }
+
+    public static function doesColorNameExist($name) {
+        $exist = false;
+        $colors = config::byKey('colors','mybin',array(),true);
+        foreach ($colors as $color) {
+            if ($color["name"] == $name) {
+                $exist = true;
+                break;
+            }
+        }
+        return $exist;
+    }
+
+    public static function setNewType($name) {
+        $colors = config::byKey('colors','mybin',array(),true);
+        $color['id'] = str_replace(" ", "_", strtolower($name));
+        $color['name'] = $name;
+        $color['builtin'] = false;
+        $color['icon_on'] = "grey.png";
+        $color['icon_off'] = "none2.png";
+        array_push($colors, $color);
+        config::save('colors', $colors, 'mybin');
+        return $color['id'];
+    }
 }
 
 class mybinCmd extends cmd {

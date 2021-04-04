@@ -46,7 +46,7 @@ try {
         log::add('mybin', 'debug', "filepath: {$filepath}");
 		file_put_contents($filepath,file_get_contents($_FILES['file']['tmp_name']));
 		if(!file_exists($filepath)){
-			throw new \Exception(__('Impossible de sauvegarder l\'image',__FILE__));
+			throw new Exception(__('Impossible de sauvegarder l\'image',__FILE__));
 		}
 
         mybin::setCustomIcon($id, $icon, "custom/{$id}_{$icon}{$extension}");
@@ -79,6 +79,22 @@ try {
             );
         ajax::success($return);
     }
+
+    if (init('action') == 'saveNewType') {
+        $name = init('name');
+        if (trim($name) == "") {
+            throw new Exception(__('Le nom ne peut pas être vide', __FILE__));
+        }
+        if (mybin::doesColorNameExist($name)) {
+            throw new Exception(__('Ce nom existe déjà', __FILE__));
+        }
+        $id = mybin::setNewType($name);
+        $return = array(
+            'id' => $id,
+            'name' => $name
+            );
+        ajax::success($return);
+     }
 
     throw new Exception(__('Aucune méthode correspondante à : ', __FILE__) . init('action'));
     /*     * *********Catch exeption*************** */
