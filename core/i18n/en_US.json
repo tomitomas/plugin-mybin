@@ -122,7 +122,8 @@
         "Encombrants": "Bulky waste",
         "Végétaux": "Plants",
         "Nouvelle image": "New picture",
-        "Réinitialiser": "Reset"
+        "Réinitialiser": "Reset",
+        "Supprimer": "Delete"
     },
     "plugins\/mybin\/core\/class\/mybin.class.php": {
         "L\\'heure de notification est après l\\'heure de collecte": "The time of notification is after the time of collect",

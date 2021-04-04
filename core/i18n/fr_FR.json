@@ -122,7 +122,8 @@
         "Encombrants": "Encombrants",
         "Végétaux": "Végétaux",
         "Nouvelle image": "Nouvelle image",
-        "Réinitialiser": "Réinitialiser"
+        "Réinitialiser": "Réinitialiser",
+        "Supprimer": "Supprimer"
     },
     "plugins\/mybin\/core\/class\/mybin.class.php": {
         "L\\'heure de notification est après l\\'heure de collecte": "L\\'heure de notification est après l\\'heure de collecte",
