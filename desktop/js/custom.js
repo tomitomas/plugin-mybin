@@ -49,7 +49,7 @@ $('.pluginAction[data-action=saveNewType]').on('click', function () {
     });
 });
 
-$('.pluginAction[data-action=deleteType]').on('click', function () {
+$('#myColors').on('click', '.pluginAction[data-action=deleteType]', function () {
     $.ajax({
         type: "POST",
         url: "plugins/mybin/core/ajax/mybin.ajax.php",
