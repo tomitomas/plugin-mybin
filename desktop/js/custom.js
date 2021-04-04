@@ -44,7 +44,7 @@ $('.pluginAction[data-action=saveNewType]').on('click', function () {
             tr += '</div>';
             tr += '</td>';
             tr += '</tr>';
-            $('#myTable tr:first').before(tr);
+            $('#myColors tr:first').before(tr);
         }
     });
 });
