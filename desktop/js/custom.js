@@ -17,7 +17,7 @@ $('.pluginAction[data-action=saveNewType]').on('click', function () {
                 return;
             }
             $('.newTypeName').val("");
-            $('#modal_alert').showAlert({message: 'Type "'+data.result.name+'" créé', level: 'info'});
+            $('#modal_alert').showAlert({message: 'Type "'+data.result.name+'" créé', level: 'success'});
         }
     });
 });
@@ -40,7 +40,7 @@ $('.pluginAction[data-action=deleteType]').on('click', function () {
                 return;
             }
             $('.newTypeName').val("");
-            $('#modal_alert').showAlert({message: 'Type "'+data.result.name+'" supprimé', level: 'info'});
+            $('#modal_alert').showAlert({message: 'Type "'+data.result.id+'" supprimé', level: 'success'});
         }
     });
 });
