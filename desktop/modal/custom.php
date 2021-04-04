@@ -37,7 +37,7 @@ if (!isConnect('admin')) {
                         return strtolower($a['name']) <=> strtolower($b['name']);
                     });
                     foreach ($colors as $color) {
-                        echo('<tr>');
+                        echo('<tr id="myColors_' . $color["id"] . '">');
                         echo('<td style="text-align: center; vertical-align:middle; font-weight: bold;">'.__($color["name"], __FILE__));
                         if ($color["builtin"] == false) {
                             echo('<br>');

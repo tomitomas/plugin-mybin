@@ -18,7 +18,7 @@ $('.pluginAction[data-action=saveNewType]').on('click', function () {
             }
             $('.newTypeName').val("");
             $('#modal_alert').showAlert({message: 'Type "'+data.result.name+'" créé', level: 'success'});
-            tr = '<tr>';
+            tr = '<tr id="myColors_' + data.result.id + '" style="background-color: red !important>';
             tr += '<td style="text-align: center; vertical-align:middle; font-weight: bold;">' + data.result.name;
             tr += '<br>';
             tr += '<a class="btn btn-danger pluginAction" data-action="deleteType" color-id="' + data.result.id + '"><i class="icon divers-slightly"></i> {{Supprimer}}</a>';
@@ -66,8 +66,8 @@ $('.pluginAction[data-action=deleteType]').on('click', function () {
                 $('#modal_alert').showAlert({message: data.result, level: 'danger'});
                 return;
             }
-            $('.newTypeName').val("");
             $('#modal_alert').showAlert({message: 'Type "'+data.result.id+'" supprimé', level: 'success'});
+            $('#myColors_' + data.result.id).remove();
         }
     });
 });
