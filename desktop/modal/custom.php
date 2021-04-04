@@ -12,7 +12,7 @@ if (!isConnect('admin')) {
         <div class="row">
             <div class="col-sm-3">
                 <center>
-                    <label>{{Nom}} : </label><input class="newTypeName" type="text" name="name"/>
+                    <label>{{Nom}} : </label><input class="newTypeName eqLogicAttr form-control" type="text" name="name"/>
                 </center>
             </div>
             <div class="col-sm-">
