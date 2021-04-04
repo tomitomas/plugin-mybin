@@ -1,4 +1,6 @@
 
+configureUploads();
+
 $('.pluginAction[data-action=saveNewType]').on('click', function () {
     $.ajax({
         type: "POST",
@@ -45,6 +47,7 @@ $('.pluginAction[data-action=saveNewType]').on('click', function () {
             tr += '</td>';
             tr += '</tr>';
             $('#myColors tr:first').before(tr);
+            configureUploads();
         }
     });
 });
@@ -72,25 +75,27 @@ $('#myColors').on('click', '.pluginAction[data-action=deleteType]', function () 
     });
 });
 
-$('.pluginAction[data-action=uploadImage]').each(function () {
-    $(this).fileupload({
-        replaceFileInput: false,
-        url: 'plugins/mybin/core/ajax/mybin.ajax.php?action=uploadCustomImg&id='+$(this).attr("color-id")+'&icon='+$(this).attr("color-type")+'&jeedom_token='+JEEDOM_AJAX_TOKEN,
-        dataType: 'json',
-        done: function (e, data) {
-            if (data.result.state != 'ok') {
-                $('#modal_alert').showAlert({message: data.result.result, level: 'danger'});
-                return;
+function configureUploads() {
+    $('.pluginAction[data-action=uploadImage]').each(function () {
+        $(this).fileupload({
+            replaceFileInput: false,
+            url: 'plugins/mybin/core/ajax/mybin.ajax.php?action=uploadCustomImg&id='+$(this).attr("color-id")+'&icon='+$(this).attr("color-type")+'&jeedom_token='+JEEDOM_AJAX_TOKEN,
+            dataType: 'json',
+            done: function (e, data) {
+                if (data.result.state != 'ok') {
+                    $('#modal_alert').showAlert({message: data.result.result, level: 'danger'});
+                    return;
+                }
+                console.log(data);
+                console.log(data.result.result.id);
+                console.log(data.result.result.icon);
+                console.log(data.result.result.url);
+                console.log($('.img-responsive[color-id="'+data.result.result.id+'"][color-type="'+data.result.result.icon+'"]'));
+                $('.img-responsive[color-id="'+data.result.result.id+'"][color-type="'+data.result.result.icon+'"]').attr('src', data.result.result.url+'?'+new Date().getTime());
             }
-            console.log(data);
-            console.log(data.result.result.id);
-            console.log(data.result.result.icon);
-            console.log(data.result.result.url);
-            console.log($('.img-responsive[color-id="'+data.result.result.id+'"][color-type="'+data.result.result.icon+'"]'));
-            $('.img-responsive[color-id="'+data.result.result.id+'"][color-type="'+data.result.result.icon+'"]').attr('src', data.result.result.url+'?'+new Date().getTime());
-        }
+        });
     });
-});
+}
 
 $('.pluginAction[data-action=deleteImage]').on('click', function () {
     $.ajax({
