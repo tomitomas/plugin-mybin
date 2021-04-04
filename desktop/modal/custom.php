@@ -34,7 +34,7 @@ if (!isConnect('admin')) {
                 <?php
                     $colors = config::byKey('colors','mybin',array(),true);
                     usort($colors, function ($a, $b) {
-                        return $a['name'] <=> $b['name'];
+                        return strtolower($a['name']) <=> strtolower($b['name']);
                     });
                     foreach ($colors as $color) {
                         echo('<tr>');
