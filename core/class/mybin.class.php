@@ -843,6 +843,20 @@ class mybin extends eqLogic {
         config::save('colors', $colors, 'mybin');
         return $color['id'];
     }
+
+    public static function deleteType($id) {
+        $deleted = false;
+        $colors = config::byKey('colors','mybin',array(),true);
+        foreach ($colors as $key => $color) {
+            if ($color["id"] == $id) {
+                unset($colors[$key]);
+                $deleted = true;
+                break;
+            }
+        }
+        config::save('colors', $colors, 'mybin');
+        return $deleted;
+    }
 }
 
 class mybinCmd extends cmd {

@@ -17,6 +17,30 @@ $('.pluginAction[data-action=saveNewType]').on('click', function () {
                 return;
             }
             $('.newTypeName').val("");
+            $('#modal_alert').showAlert({message: 'Type "'+data.result.name+'" créé', level: 'info'});
+        }
+    });
+});
+
+$('.pluginAction[data-action=deleteType]').on('click', function () {
+    $.ajax({
+        type: "POST",
+        url: "plugins/mybin/core/ajax/mybin.ajax.php",
+        data: {
+            action: "deleteType",
+            id: $(this).attr("color-id")
+        },
+        dataType: 'json',
+        error: function (request, status, error) {
+            handleAjaxError(request, status, error);
+        },
+        success: function (data) {
+            if (data.state != 'ok') {
+                $('#modal_alert').showAlert({message: data.result, level: 'danger'});
+                return;
+            }
+            $('.newTypeName').val("");
+            $('#modal_alert').showAlert({message: 'Type "'+data.result.name+'" supprimé', level: 'info'});
         }
     });
 });

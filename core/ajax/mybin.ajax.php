@@ -94,7 +94,26 @@ try {
             'name' => $name
             );
         ajax::success($return);
-     }
+    }
+
+    if (init('action') == 'deleteType') {
+        $id = init('id');
+        $deleted = mybin::deleteType($id);
+        if (!$deleted) {
+            throw new Exception(__('Impossible de supprimer le type', __FILE__) . ' ' . $id);
+        }
+        $files = ls(__DIR__ . '/../../data/images/custom/', "{$id}_*");
+		if(count($files)  > 0){
+			foreach ($files as $file) {
+                log::add('mybin', 'debug', "delete file : {$file}");
+				unlink(__DIR__ . '/../../data/images/custom/'.$file);
+			}
+        }
+        $return = array(
+            'id' => $id
+            );
+        ajax::success($return);
+    }
 
     throw new Exception(__('Aucune méthode correspondante à : ', __FILE__) . init('action'));
     /*     * *********Catch exeption*************** */

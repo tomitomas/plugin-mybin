@@ -139,6 +139,9 @@
         "Extension du fichier non valide (autorisé .jpg .png)": "Extension du fichier non valide (autorisé .jpg .png)",
         "Le fichier est trop gros (maximum 5Mo)": "Le fichier est trop gros (maximum 5Mo)",
         "Impossible de sauvegarder l\'image": "Impossible de sauvegarder l\'image",
-        "Aucune méthode correspondante à : ": "Aucune méthode correspondante à : "
+        "Aucune méthode correspondante à : ": "Aucune méthode correspondante à : ",
+        "Impossible de supprimer le type": "Impossible de supprimer le type",
+        "Le nom ne peut pas être vide": "Le nom ne peut pas être vide",
+        "Ce nom existe déjà": "Ce nom existe déjà"
     }
 }
