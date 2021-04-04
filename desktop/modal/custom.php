@@ -32,7 +32,11 @@ if (!isConnect('admin')) {
                 </thead>
                 <tbody>
                 <?php
-                    foreach (config::byKey('colors','mybin',array(),true) as $color) {
+                    $colors = config::byKey('colors','mybin',array(),true);
+                    usort($colors, function ($a, $b) {
+                        return $a['name'] <=> $b['name'];
+                    });
+                    foreach ($colors as $color) {
                         echo('<tr>');
                         echo('<td style="text-align: center; vertical-align:middle; font-weight: bold;">'.__($color["name"], __FILE__));
                         if ($color["builtin"] == false) {
