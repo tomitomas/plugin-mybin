@@ -22,7 +22,7 @@ if (!isConnect('admin')) {
         <br>
         <legend><i class="icon divers-slightly"></i> {{Mes types de poubelle}}</legend>
         <div>
-            <table class="table table-bordered table-condensed" id="myColors">
+            <table class="table table-bordered table-condensed">
                 <thead>
                     <tr>
                         <th style="text-align: center;" class="col-sm-2">{{Nom}}</th>
@@ -30,7 +30,7 @@ if (!isConnect('admin')) {
                         <th style="text-align: center;" class="col-sm-4">{{Icône OFF}}</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="myColors">
                 <?php
                     $colors = config::byKey('colors','mybin',array(),true);
                     usort($colors, function ($a, $b) {
