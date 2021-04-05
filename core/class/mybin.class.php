@@ -236,7 +236,6 @@ class mybin extends eqLogic {
     // Fonction exécutée automatiquement après la mise à jour de l'équipement
 
     public function postUpdate() {
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' type: ' . $this->getConfiguration('type'));
         if ($this->getConfiguration('type','') <> 'whole') {
             $cmd = $this->getCmd(null, 'bin');
             if (!is_object($cmd))
@@ -309,6 +308,7 @@ class mybin extends eqLogic {
                 $cmd->save();
             }
             $dtNow = new DateTime("now");
+            log::add(__CLASS__, 'debug', $this->getHumanName() . ' type: ' . $this->getConfiguration('type'));
             $nextOne = $this->getNextCollectsAndNotifs(1);
             if (is_array($nextOne)) {
                 foreach ($nextOne as $collect => $notif) {
