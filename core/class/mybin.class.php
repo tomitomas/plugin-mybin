@@ -308,19 +308,18 @@ class mybin extends eqLogic {
                 $cmd->setTemplate('dashboard', 'line');       
                 $cmd->save();
             }
-        }
-        $this->emptyCacheWidget();
-
-        $dtNow = new DateTime("now");
-        $nextOne = $this->getNextCollectsAndNotifs(1);
-        if (is_array($nextOne)) {
-            foreach ($nextOne as $collect => $notif) {
-                if (DateTime::createFromFormat("Y-m-d H:i", $collect) > $dtNow) {
-                    $cmd = $this->getCmd(null, 'nextcollect');
-                    $cmd->event($collect);
+            $dtNow = new DateTime("now");
+            $nextOne = $this->getNextCollectsAndNotifs(1);
+            if (is_array($nextOne)) {
+                foreach ($nextOne as $collect => $notif) {
+                    if (DateTime::createFromFormat("Y-m-d H:i", $collect) > $dtNow) {
+                        $cmd = $this->getCmd(null, 'nextcollect');
+                        $cmd->event($collect);
+                    }
                 }
             }
         }
+        $this->emptyCacheWidget();
 
     }
     
