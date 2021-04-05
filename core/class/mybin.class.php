@@ -662,6 +662,7 @@ class mybin extends eqLogic {
 
         $nbDates = 0;
         $dtCheck = new DateTime("now");
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' collect_time value: ' . $this->getConfiguration('collect_time'));
         $pieces = explode(":", $this->getConfiguration('collect_time'));
         $dtCheck->setTime(intval($pieces[0]), intval($pieces[1]));
         for ($i = 0; $i <= 365; $i++) {
