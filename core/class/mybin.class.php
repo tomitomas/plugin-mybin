@@ -236,6 +236,7 @@ class mybin extends eqLogic {
     // Fonction exécutée automatiquement après la mise à jour de l'équipement
 
     public function postUpdate() {
+        log::add(__CLASS__, 'debug', $this->getHumanName() . ' type: ' . $this->getConfiguration('type'));
         if ($this->getConfiguration('type','') <> 'whole') {
             $cmd = $this->getCmd(null, 'bin');
             if (!is_object($cmd))
