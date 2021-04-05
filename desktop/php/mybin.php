@@ -10,7 +10,9 @@ $eqLogics = eqLogic::byType($plugin->getId());
 
 $allDates = array();
 foreach ($eqLogics as $eqLogic) {
-	$allDates[$eqLogic->getId()] = $eqLogic->getNextCollectsAndNotifs(10, true);
+	if ($eqLogic->getConfiguration('type','') <> 'whole') {
+		$allDates[$eqLogic->getId()] = $eqLogic->getNextCollectsAndNotifs(10, true);
+	}
 }
 ?>
 

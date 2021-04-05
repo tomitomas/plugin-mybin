@@ -308,7 +308,6 @@ class mybin extends eqLogic {
                 $cmd->save();
             }
             $dtNow = new DateTime("now");
-            log::add(__CLASS__, 'debug', $this->getHumanName() . ' type: ' . $this->getConfiguration('type'));
             $nextOne = $this->getNextCollectsAndNotifs(1);
             if (is_array($nextOne)) {
                 foreach ($nextOne as $collect => $notif) {
@@ -663,7 +662,6 @@ class mybin extends eqLogic {
 
         $nbDates = 0;
         $dtCheck = new DateTime("now");
-        log::add(__CLASS__, 'debug', $this->getHumanName() . ' collect_time value: ' . $this->getConfiguration('collect_time'));
         $pieces = explode(":", $this->getConfiguration('collect_time'));
         $dtCheck->setTime(intval($pieces[0]), intval($pieces[1]));
         for ($i = 0; $i <= 365; $i++) {
