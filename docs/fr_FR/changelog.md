@@ -4,7 +4,7 @@
 >
 >Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
-# Current BETA
+# Stable - 07/04/2021
 - Utilisation du 3rdparty datetimepicker
 - Nouvelle "couleur ?" de poubelle : végétaux
 - Correction sur l'évaluation de la condition de notification
