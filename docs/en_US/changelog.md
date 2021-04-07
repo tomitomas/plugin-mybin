@@ -4,7 +4,7 @@
 >
 >As a reminder if there is no information on the update, it means that it only concerns the updating of documentation, translation or text.
 
-# Current BETA
+# Stable - 07/04/2021
 - Use of datetimepicker 3rdparty 
 - New bin "color?": plants
 - Fix on notification condition evaluation
