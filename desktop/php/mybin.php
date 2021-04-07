@@ -2,13 +2,17 @@
 if (!isConnect('admin')) {
 	throw new Exception('{{401 - Accès non autorisé}}');
 }
+include_file('desktop', 'mybin', 'css', 'mybin');
+include_file('3rdparty', 'datetimepicker/jquery.datetimepicker', 'css', 'mybin');
 $plugin = plugin::byId('mybin');
 sendVarToJS('eqType', $plugin->getId());
 $eqLogics = eqLogic::byType($plugin->getId());
 
 $allDates = array();
 foreach ($eqLogics as $eqLogic) {
-	$allDates[$eqLogic->getId()] = $eqLogic->getNextCollectsAndNotifs(10, true);
+	if ($eqLogic->getConfiguration('type','') <> 'whole') {
+		$allDates[$eqLogic->getId()] = $eqLogic->getNextCollectsAndNotifs(10, true);
+	}
 }
 ?>
 
@@ -26,7 +30,12 @@ foreach ($eqLogics as $eqLogic) {
 				<br>
 				<span>{{Configuration}}</span>
 			</div>
-		</div>
+			<div class="cursor eqLogicAction logoSecondary" id="bt_configImages">
+            	<i class="fas fa-images"></i>
+				<br>
+				<span>{{Personnalisation}}</span>
+            </div>
+        </div>
 		<legend><i class="icon divers-slightly"></i> {{Mes poubelles}}</legend>
 		<div class="input-group" style="margin:5px;">
 			<input class="form-control roundedLeft" placeholder="{{Rechercher}}" id="in_searchEqlogic"/>
@@ -41,8 +50,8 @@ foreach ($eqLogics as $eqLogic) {
                     continue;
                 }
 				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-				echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
-				echo '<img src="' . $eqLogic->getImage() . '"/>';
+				echo '<div id="customBin" class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
+				echo '<img id="customBinImg" src="' . $eqLogic->getImage() . '"/>';
 				echo '<br>';
 				echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
 				echo '</div>';
@@ -121,14 +130,15 @@ foreach ($eqLogics as $eqLogic) {
                                 <div class="col-sm-7">
                                     <span class="col-sm-4">
                                         <select id="sel_color" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="color">
-                                            <option value="green">{{Verte}}</option>
-                                            <option value="yellow">{{Jaune}}</option>
-                                            <option value="brown">{{Marron}}</option>
-                                            <option value="blue">{{Bleue}}</option>
-                                            <option value="grey">{{Grise}}</option>
-											<option value="black">{{Noire}}</option>
-											<option value="violet">{{Violette}}</option>
-											<option value="bulky">{{Encombrants}}</option>
+										<?php
+											$colors = config::byKey('colors','mybin',array(),true);
+											usort($colors, function ($a, $b) {
+												return strtolower($a['name']) <=> strtolower($b['name']);
+											});
+											foreach ($colors as $color) {
+												echo '<option value="'.$color["id"].'">{{'.$color["name"].'}}</option>';
+											}
+										?>
                                         </select>
                                     </span>
                                     <span class="col-sm-3">
@@ -176,46 +186,18 @@ foreach ($eqLogics as $eqLogic) {
 								</div>
 							</div>
                             <div class="form-group">
-								<label class="col-sm-3 control-label">{{Date(s) particulièr(s) de ramassage}}</label>
+								<label class="col-sm-3 control-label">{{Date(s) particulière(s) de ramassage}}</label>
 							    <div class="col-sm-7">
                                     <a class="btn btn-success btn-sm addDay" data-type="specific_day" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une date}}</a>
                                     <div id="div_specific_day"></div>
                                 </div>
 							</div>
-                            <br/>
+							<br/>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Heure de ramassage}}</label>
-								<div class="col-sm-7">
-                                    <span class="col-sm-2">
-                                        <select id="sel_hour" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="hour">
-                                        <?php
-                                        for ($i = 0; $i <= 23; $i++) {
-                                            echo '<option value="'.$i.'">';
-                                            if ($i < 10) {
-                                                echo '0';
-                                            }
-                                            echo $i.'</option>';
-                                        }
-                                        ?>
-                                        </select>
-                                    </span>
-                                    <span class="col-sm-1">
-                                        <label>h</label>
-                                    </span>
-                                    <span class="col-sm-2">
-                                        <select id="sel_minute" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="minute">
-                                        <?php
-                                        for ($i = 0; $i <= 55; $i = $i + 5) {
-                                            echo '<option value="'.$i.'">';
-                                            if ($i < 10) {
-                                                echo '0';
-                                            }
-                                            echo $i.'</option>';
-                                        }
-                                        ?>
-                                        </select>
-                                    </span>
-								</div>
+							    <div class="col-sm-3">
+									<input class="eqLogicAttr timepicker" type="text" data-l1key="configuration" data-l2key="collect_time">	
+                                </div>
 							</div>
                             <br/>
 							<div class="form-group">
@@ -236,35 +218,9 @@ foreach ($eqLogics as $eqLogic) {
 									<span class="col-sm-3">
                                         <label>{{jour(s) avant à}}</label>
                                     </span>
-                                    <span class="col-sm-2">
-                                        <select id="sel_notif_hour" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_hour">
-                                        <?php
-                                        for ($i = 0; $i <= 23; $i++) {
-                                            echo '<option value="'.$i.'">';
-                                            if ($i < 10) {
-                                                echo '0';
-                                            }
-                                            echo $i.'</option>';
-                                        }
-                                        ?>
-                                        </select>
-                                    </span>
-                                    <span class="col-sm-1">
-                                        <label>h</label>
-                                    </span>
-                                    <span class="col-sm-2">
-                                        <select id="sel_notif_minute" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_minute">
-                                        <?php
-                                        for ($i = 0; $i <= 55; $i = $i + 5) {
-                                            echo '<option value="'.$i.'">';
-                                            if ($i < 10) {
-                                                echo '0';
-                                            }
-                                            echo $i.'</option>';
-                                        }
-                                        ?>
-                                        </select>
-                                    </span>
+									<span class="col-sm-3">
+										<input class="eqLogicAttr timepicker" type="text" data-l1key="configuration" data-l2key="notif_time">	
+									</span>
 								</div>
 							</div>
 							<div class="form-group">
@@ -384,6 +340,7 @@ foreach ($eqLogics as $eqLogic) {
 	</div>
 </div>
 
+<?php include_file('3rdparty', 'datetimepicker/jquery.datetimepicker', 'js', 'mybin');?>
 <!-- Inclusion du fichier javascript du plugin (dossier, nom_du_fichier, extension_du_fichier, nom_du_plugin) -->
 <?php include_file('desktop', 'mybin', 'js', 'mybin');?>
 <!-- Inclusion du fichier javascript du core - NE PAS MODIFIER NI SUPPRIMER -->

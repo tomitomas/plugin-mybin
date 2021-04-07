@@ -4,6 +4,13 @@
 >
 >Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
+# Stable - 07/04/2021
+- Utilisation du 3rdparty datetimepicker
+- Nouvelle "couleur ?" de poubelle : végétaux
+- Correction sur l'évaluation de la condition de notification
+- Possibilité de personnaliser les icônes des poubelles
+- Possibilité de créer ses propres types de poubelle
+
 # Stable - 26/03/2021
 - Support des expressions cron
 - Nouvelle commande pour récupérer la prochaine date de ramassage

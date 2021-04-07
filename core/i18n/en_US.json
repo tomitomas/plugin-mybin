@@ -16,6 +16,7 @@
         "Gestion": "Management",
         "Ajouter": "Add",
         "Configuration": "Configuration",
+        "Personnalisation": "Customization",
         "Mes poubelles": "My Bins",
         "Rechercher": "Search",
         "Configuration avancée": "Advanced configuration",
@@ -71,7 +72,8 @@
         "Noire": "Black",
         "Violette": "Violet",
         "Encombrants": "Bulky waste",
-        "Date(s) particulièr(s) de ramassage": "Specific date(s) of collect",
+        "Végétaux": "Plants",
+        "Date(s) particulière(s) de ramassage": "Specific date(s) of collect",
         "Ajouter une date": "Add a date",
         "Janvier": "January",
         "Février": "February",
@@ -103,12 +105,42 @@
         "Unité": "Unit",
         "Afficher": "Show",
         "Historiser": "Historize",
-        "Tester": "Test"
+        "Tester": "Test",
+        "Personnalisation des images": "Pictures customization"
+    },
+    "plugins\/mybin\/desktop\/modal\/custom.php": {
+        "Nom": "Name",
+        "Icône ON": "Icon ON",
+        "Icône OFF": "Icon OFF",
+        "Grise": "Grey",
+        "Verte": "Green",
+        "Jaune": "Yellow",
+        "Marron": "Brown",
+        "Bleue": "Blue",
+        "Noire": "Black",
+        "Violette": "Violet",
+        "Encombrants": "Bulky waste",
+        "Végétaux": "Plants",
+        "Nouvelle image": "New picture",
+        "Réinitialiser": "Reset",
+        "Supprimer": "Delete"
     },
     "plugins\/mybin\/core\/class\/mybin.class.php": {
         "L\\'heure de notification est après l\\'heure de collecte": "The time of notification is after the time of collect",
         "Il n\'y a (plus) aucune poubelle à sortir": "There\'s no more bin to put out",
         "Le seuil doit être un entier positif ou être laissé vide": "The threshold must be a positive integer or must be left empty",
         "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide": "The number of days for the notification must be a positive integer or 0 or must be left empty"
+    },
+    "plugins\/mybin\/core\/ajax\/mybin.ajax.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized access",
+        "Aucun fichier trouvé. Vérifiez le paramètre PHP (post size limit)": "No file found. Check PHP parameter (post size limit)",
+        "Extension du fichier non valide (autorisé .jpg .png)": "Invalid file extension (allowed: .jpg .png)",
+        "Le fichier est trop gros (maximum 5Mo)": "The file is too large (limit 5MB)",
+        "Impossible de sauvegarder l\'image": "Unable fo find the picture",
+        "Aucune méthode correspondante à : ": "No method corresponding to: ",
+        "Impossible de supprimer le type": "Unable to delete type",
+        "Le nom ne peut pas être vide": "The name can't be empty",
+        "Ce nom existe déjà": "This name already exists",
+        "Le nom contient des caractères interdits. Caractères autorisés : ": "The name contains forbidden characters. Authorized characters: "
     }
 }

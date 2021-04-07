@@ -20,7 +20,7 @@ To access the different equipment **My Bin**, go to the menu **Plugins → Organ
 
 Deine days and time of collect for your bin. Several options that are cumulative:
 - By checking months/weeks/days
-- By specifying precise dates
+- By specifying precise dates (Y-m-d format)
 - By using one or several cron expressions
 
 ### Notification
@@ -40,6 +40,13 @@ You can define one of several actions that will be executed after notification a
 
 You can visualize, according to your configuration, the 10 next collect and notification dates.
 If there is an error in your configuration, the proble, will be highlighted in orange with an information explaining the issue.
+
+## Customization
+
+By clicking on the **Customization** icon on the equipments page, you can:
+- change icons of existing bin types
+- reset to the default icon
+- create your own bin types 
 
 # Utilisation
 

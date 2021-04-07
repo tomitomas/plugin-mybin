@@ -64,7 +64,8 @@ class mybin extends eqLogic {
                     $condition = true; 
                     if ($notifCondition <> '') {
                         log::add(__CLASS__, 'debug', $this->getHumanName() . ' condition raw: ' . $notifCondition);
-                        $notifCondition = scenarioExpression::setTags($notifCondition);
+                        $scenario = null;
+                        $notifCondition = scenarioExpression::setTags($notifCondition, $scenario, true);
                         log::add(__CLASS__, 'debug', $this->getHumanName() . ' condition after tags: ' . $notifCondition);
                         $expression = jeedom::fromHumanReadable($notifCondition);
                         log::add(__CLASS__, 'debug', $this->getHumanName() . ' condition from readable: ' . $notifCondition);
@@ -76,7 +77,7 @@ class mybin extends eqLogic {
                             log::add(__CLASS__, 'debug', $this->getHumanName() . ' Condition returned FALSE, notification skipped');
                             $condition = false;
                         } else {
-                            log::add(__CLASS__, 'warning', $this->getHumanName() . ' Condition failed to be evaluated, notiication skipped');
+                            log::add(__CLASS__, 'warning', $this->getHumanName() . ' Condition failed to be evaluated, notification skipped');
                             $condition = false;
                         }
                     }
@@ -176,11 +177,9 @@ class mybin extends eqLogic {
         } else {
             $this->setDisplay('height','140px');
             $this->setDisplay('width', '260px');
-            $this->setConfiguration('hour', 8);
-            $this->setConfiguration('minute', 0);
+            $this->setConfiguration('collect_time', '08:00');
             $this->setConfiguration('notif_days', 1);
-            $this->setConfiguration('notif_hour', 20);
-            $this->setConfiguration('notif_minute', 0);
+            $this->setConfiguration('notif_time', '20:00');
             $this->setConfiguration('paire', 1);
             $this->setConfiguration('impaire', 1);
             $this->setConfiguration('color', 'green');   
@@ -210,6 +209,12 @@ class mybin extends eqLogic {
                 if (!filter_var($this->getConfiguration('seuil'), FILTER_VALIDATE_INT, $options)) {
                     throw new Exception($this->getHumanName() . ": " . __('Le seuil doit être un entier positif ou être laissé vide',__FILE__));
                 }
+            }
+            if ($this->getConfiguration('notif_time') == '') {
+                throw new Exception($this->getHumanName() . ": " . __('L\'heure de notification ne peut pas être vide',__FILE__));
+            }
+            if ($this->getConfiguration('collect_time') == '') {
+                throw new Exception($this->getHumanName() . ": " . __('L\'heure de ramassage ne peut pas être vide',__FILE__));
             }
         }
         
@@ -303,19 +308,18 @@ class mybin extends eqLogic {
                 $cmd->setTemplate('dashboard', 'line');       
                 $cmd->save();
             }
-        }
-        $this->emptyCacheWidget();
-
-        $dtNow = new DateTime("now");
-        $nextOne = $this->getNextCollectsAndNotifs(1);
-        if (is_array($nextOne)) {
-            foreach ($nextOne as $collect => $notif) {
-                if (DateTime::createFromFormat("Y-m-d H:i", $collect) > $dtNow) {
-                    $cmd = $this->getCmd(null, 'nextcollect');
-                    $cmd->event($collect);
+            $dtNow = new DateTime("now");
+            $nextOne = $this->getNextCollectsAndNotifs(1);
+            if (is_array($nextOne)) {
+                foreach ($nextOne as $collect => $notif) {
+                    if (DateTime::createFromFormat("Y-m-d H:i", $collect) > $dtNow) {
+                        $cmd = $this->getCmd(null, 'nextcollect');
+                        $cmd->event($collect);
+                    }
                 }
             }
         }
+        $this->emptyCacheWidget();
 
     }
     
@@ -345,10 +349,10 @@ class mybin extends eqLogic {
                     $binCmd = $eqLogic->getCmd(null, 'bin');
                     $binStatus = $binCmd->execCmd();
                     if ($eqLogic->getIsEnable() == 1 && $binStatus == 1) {
-                        $binimg = $eqLogic->getConfiguration('color');
+                        $binimg = $this->getColorAttr($eqLogic->getConfiguration('color'), 'icon_on');
                         $ackCmd = $eqLogic->getCmd(null, 'ack');
                         $counterCmd = $eqLogic->getCmd(null, 'counter');
-                        $binnotifs = $binnotifs . '<div style="display: inline-block;" class="cmd ack'.$ackCmd->getId().' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="80px"/>';
+                        $binnotifs = $binnotifs . '<div style="display: inline-block;" class="cmd ack'.$ackCmd->getId().' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'" width="80px"/>';
                         $binnotifs = $binnotifs . '<br/><i class="fas fa-tachometer-alt"></i> ' . $counterCmd->execCmd();
                         $binnotifs = $binnotifs . '</div>';
                         $binscript = $binscript . "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
@@ -384,8 +388,8 @@ class mybin extends eqLogic {
                             $dtCheck->modify('+'.$eqLogic->getConfiguration('notif_days').' day');
                         }
                         if ($eqLogic->checkIfBin($dtCheck)) {
-                            $color = $eqLogic->getConfiguration('color');
-                            $display = $display . '<img src="plugins/mybin/data/images/'.$color.'.png" width="20px">';
+                            $color = $this->getColorAttr($eqLogic->getConfiguration('color'), 'icon_on');
+                            $display = $display . '<img src="plugins/mybin/data/images/'.$color.'" width="20px">';
                         }
                     }
                     if ($display == "") {
@@ -407,22 +411,19 @@ class mybin extends eqLogic {
             $binnotifs = "";
             $binscript = "";
             if ($binCmd->getIsVisible() == 1) {
-                $suffix = "";
-                if ($this->getConfiguration('color') == "bulky") {
-                    $suffix = "_bulky";
-                }
-                $binnotifs = '<span class="cmd" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/none2'.$suffix.'.png" width="70px"></span>';
+                $iconOff = $this->getColorAttr($this->getConfiguration('color'), 'icon_off');
+                $binnotifs = '<span class="cmd" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$iconOff.'" width="70px"></span>';
                 $binscript = "";
                 $binStatus = $binCmd->execCmd();
                 if ($binStatus == 1 && $binCmd->getIsVisible() == 1) {
-                    $binimg = $this->getConfiguration('color');
+                    $bining = $this->getColorAttr($this->getConfiguration('color'), 'icon_on');
                     $ackCmd = $this->getCmd(null, 'ack');
                     $binnotifs = '<span class="cmd ack';
                     if ($ackCmd->getIsVisible() == 1) {
                         $binnotifs = $binnotifs.$ackCmd->getId().' cursor';
                         $binscript = "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
                     }
-                    $binnotifs = $binnotifs.'" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'.png" width="70px"></span>';
+                    $binnotifs = $binnotifs.'" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'" width="70px"></span>';
                 }
             }
             $replace['#binscript#'] = $binscript;
@@ -609,7 +610,7 @@ class mybin extends eqLogic {
         if ($color == '') {
             return 'plugins/mybin/plugin_info/mybin_icon.png';
         } else {
-            return 'plugins/mybin/core/assets/'.$color.'_icon.png';
+            return 'plugins/mybin/data/images/'.$this->getColorAttr($color, 'icon_on');
         }
 	}
     
@@ -662,7 +663,8 @@ class mybin extends eqLogic {
 
         $nbDates = 0;
         $dtCheck = new DateTime("now");
-        $dtCheck->setTime(intval($this->getConfiguration('hour')), intval($this->getConfiguration('minute')));
+        $pieces = explode(":", $this->getConfiguration('collect_time'));
+        $dtCheck->setTime(intval($pieces[0]), intval($pieces[1]));
         for ($i = 0; $i <= 365; $i++) {
             $month = 1 * $dtCheck->format('n');
             $week = 1 * $dtCheck->format('W');
@@ -671,7 +673,8 @@ class mybin extends eqLogic {
                 if ($dtCheck >= $dtNow) {
                     $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $dtCheck->format("Y-m-d H:i"));
                     $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
-                    $dtNotif->setTime(intval($this->getConfiguration('notif_hour')), intval($this->getConfiguration('notif_minute')));
+                    $pieces = explode(":", $this->getConfiguration('notif_time'));
+                    $dtNotif->setTime(intval($pieces[0]), intval($pieces[1]));
                     $datesArr[$dtCheck->format('Y-m-d H:i')] = $dtNotif->format('Y-m-d H:i');
                     log::add(__CLASS__, 'debug', $this->getHumanName() . ' add from dates ' . $dtCheck->format('Y-m-d H:i'));
                     $nbDates++;
@@ -705,7 +708,8 @@ class mybin extends eqLogic {
                         if ($nextrun >= $dtNow) {
                             $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $nextrun->format("Y-m-d H:i"));
                             $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
-                            $dtNotif->setTime(intval($this->getConfiguration('notif_hour')), intval($this->getConfiguration('notif_minute')));
+                            $pieces = explode(":", $this->getConfiguration('notif_time'));
+                            $dtNotif->setTime(intval($pieces[0]), intval($pieces[1]));
                             $datesArr[$nextrun->format('Y-m-d H:i')] = $dtNotif->format('Y-m-d H:i');
                             log::add(__CLASS__, 'debug', $this->getHumanName() . ' add from crons ' . $nextrun->format('Y-m-d H:i'));
                             $nbRuns++;
@@ -728,11 +732,13 @@ class mybin extends eqLogic {
             foreach ($specificDays as $specificDay) {
                 if (isset($specificDay['myday'])) {
                     $dtCheck = DateTime::createFromFormat("Y-m-d", $specificDay['myday']);
-                    $dtCheck->setTime(intval($this->getConfiguration('hour')), intval($this->getConfiguration('minute')));
+                    $pieces = explode(":", $this->getConfiguration('collect_time'));
+                    $dtCheck->setTime(intval($pieces[0]), intval($pieces[1]));
                     if ($dtCheck >= $dtNow) {
                         $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $dtCheck->format("Y-m-d H:i"));
                         $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');
-                        $dtNotif->setTime(intval($this->getConfiguration('notif_hour')), intval($this->getConfiguration('notif_minute')));
+                        $pieces = explode(":", $this->getConfiguration('notif_time'));
+                        $dtNotif->setTime(intval($pieces[0]), intval($pieces[1]));
                         $datesArr[$dtCheck->format('Y-m-d H:i')] = $dtNotif->format('Y-m-d H:i');
                         log::add(__CLASS__, 'debug', $this->getHumanName() . ' add from days ' . $dtCheck->format('Y-m-d H:i'));
                         $nbDays++;
@@ -774,6 +780,83 @@ class mybin extends eqLogic {
 		}
 		return false;
 	}
+
+    public function getColorAttr($id, $attr) {
+        $value = "";
+        foreach (config::byKey('colors','mybin',array(),true) as $color) {
+            if ($color["id"] == $id) {
+                $value =  $color[$attr];
+                break;
+            }
+        }
+        if ($value == "") {
+            log::add('mybin', 'warning', 'Unable to find color attribute ' . $attr . ' for id ' . $id);
+        }
+        return $value;
+    }
+
+    public static function setCustomIcon($id, $type, $file) {
+        $colors = config::byKey('colors','mybin',array(),true);
+        foreach ($colors as &$color) {
+            if ($color["id"] == $id) {
+                $color["icon_".$type] = $file;
+                break;
+            }
+        }
+        config::save('colors', $colors, 'mybin');
+    }
+
+    public static function setDefaultIcon($id, $type) {
+        $colors = config::byKey('colors','mybin',array(),true);
+        $name = "";
+        foreach ($colors as &$color) {
+            if ($color["id"] == $id) {
+                $color["icon_".$type] = $color["default_".$type];
+                $name = $color["icon_".$type];
+                break;
+            }
+        }
+        config::save('colors', $colors, 'mybin');
+        return $name;
+    }
+
+    public static function doesColorNameExist($name) {
+        $exist = false;
+        $colors = config::byKey('colors','mybin',array(),true);
+        foreach ($colors as $color) {
+            if (strtolower($color["name"]) == strtolower($name)) {
+                $exist = true;
+                break;
+            }
+        }
+        return $exist;
+    }
+
+    public static function setNewType($name) {
+        $colors = config::byKey('colors','mybin',array(),true);
+        $color['id'] = str_replace(" ", "_", strtolower($name));
+        $color['name'] = $name;
+        $color['builtin'] = false;
+        $color['icon_on'] = "grey.png";
+        $color['icon_off'] = "none2.png";
+        array_push($colors, $color);
+        config::save('colors', $colors, 'mybin');
+        return $color['id'];
+    }
+
+    public static function deleteType($id) {
+        $deleted = false;
+        $colors = config::byKey('colors','mybin',array(),true);
+        foreach ($colors as $key => $color) {
+            if ($color["id"] == $id) {
+                unset($colors[$key]);
+                $deleted = true;
+                break;
+            }
+        }
+        config::save('colors', $colors, 'mybin');
+        return $deleted;
+    }
 }
 
 class mybinCmd extends cmd {

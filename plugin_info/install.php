@@ -24,11 +24,17 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
       config::save('calendarType', 'collect', 'mybin');
       config::save('notifs', 1, 'mybin');
       config::save('calendar', 1, 'mybin');
+      config::save('colors', mybin_createColors(), 'mybin');
   }
 
 // Fonction exécutée automatiquement après la mise à jour du plugin
   function mybin_update() {
       
+      $colors = config::byKey('colors','mybin','unset',true);
+      if ($colors == 'unset') {
+        config::save('colors', mybin_createColors(), 'mybin');
+      }
+
       $calendarType = config::byKey('calendarType','mybin','unset',true);
       if ($calendarType == 'unset') {
           config::save('calendarType', 'collect', 'mybin');
@@ -72,6 +78,30 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
                 $eqLogic->setConfiguration('notif_days', 0);
             }
             $eqLogic->setConfiguration('notif_veille', 'unused');
+
+            if ($eqLogic->getConfiguration('collect_time', 'unset') === 'unset') {
+                $hour = $eqLogic->getConfiguration('hour');
+                if (intval($hour) < 10) {
+                    $hour = '0' . $hour;
+                }
+                $minute = $eqLogic->getConfiguration('minute');
+                if (intval($minute) < 10) {
+                    $minute = '0' . $minute;
+                }
+                $eqLogic->setConfiguration('collect_time', $hour . ':' . $minute);
+            }
+
+            if ($eqLogic->getConfiguration('notif_time', 'unset') === 'unset') {
+                $hour = $eqLogic->getConfiguration('notif_hour');
+                if (intval($hour) < 10) {
+                    $hour = '0' . $hour;
+                }
+                $minute = $eqLogic->getConfiguration('notif_minute');
+                if (intval($minute) < 10) {
+                    $minute = '0' . $minute;
+                }
+                $eqLogic->setConfiguration('notif_time', $hour . ':' . $minute);
+            }
             
             $cmd = $eqLogic->getCmd(null, 'counter');
             if (!is_object($cmd)) {
@@ -150,6 +180,102 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
       if (!wholeFound) {
           mybin::createWhole();
       }
+  }
+
+  function mybin_createColors() {
+    $colors = array();
+
+    $color1['id'] = "black";
+    $color1['name'] = "Noire";
+    $color1['builtin'] = true;
+    $color1['icon_on'] = "black.png";
+    $color1['icon_off'] = "none2.png";
+    $color1['default_on'] = "black.png";
+    $color1['default_off'] = "none2.png";
+
+    array_push($colors, $color1);
+
+    $color2['id'] = "blue";
+    $color2['name'] = "Bleue";
+    $color2['builtin'] = true;
+    $color2['icon_on'] = "blue.png";
+    $color2['icon_off'] = "none2.png";
+    $color2['default_on'] = "blue.png";
+    $color2['default_off'] = "none2.png";
+
+    array_push($colors, $color2);
+
+    $color3['id'] = "brown";
+    $color3['name'] = "Marron";
+    $color3['builtin'] = true;
+    $color3['icon_on'] = "brown.png";
+    $color3['icon_off'] = "none2.png";
+    $color3['default_on'] = "brown.png";
+    $color3['default_off'] = "none2.png";
+
+    array_push($colors, $color3);
+
+    $color4['id'] = "bulky";
+    $color4['name'] = "Encombrants";
+    $color4['builtin'] = true;
+    $color4['icon_on'] = "bulky.png";
+    $color4['icon_off'] = "none2_bulky.png";
+    $color4['default_on'] = "bulky.png";
+    $color4['default_off'] = "none2_bulky.png";
+
+    array_push($colors, $color4);
+
+    $color5['id'] = "green";
+    $color5['name'] = "Verte";
+    $color5['builtin'] = true;
+    $color5['icon_on'] = "green.png";
+    $color5['icon_off'] = "none2.png";
+    $color5['default_on'] = "green.png";
+    $color5['default_off'] = "none2.png";
+
+    array_push($colors, $color5);
+
+    $color6['id'] = "grey";
+    $color6['name'] = "Grise";
+    $color6['builtin'] = true;
+    $color6['icon_on'] = "grey.png";
+    $color6['icon_off'] = "none2.png";
+    $color6['default_on'] = "grey.png";
+    $color6['default_off'] = "none2.png";
+
+    array_push($colors, $color6);
+
+    $color7['id'] = "plants";
+    $color7['name'] = "Végétaux";
+    $color7['builtin'] = true;
+    $color7['icon_on'] = "plants.png";
+    $color7['icon_off'] = "none2_plants.png";
+    $color7['default_on'] = "plants.png";
+    $color7['default_off'] = "none2_plants.png";
+
+    array_push($colors, $color7);
+
+    $color8['id'] = "violet";
+    $color8['name'] = "Violette";
+    $color8['builtin'] = true;
+    $color8['icon_on'] = "violet.png";
+    $color8['icon_off'] = "none2.png";
+    $color8['default_on'] = "violet.png";
+    $color8['default_off'] = "none2.png";
+
+    array_push($colors, $color8);
+
+    $color9['id'] = "yellow";
+    $color9['name'] = "Jaune";
+    $color9['builtin'] = true;
+    $color9['icon_on'] = "yellow.png";
+    $color9['icon_off'] = "none2.png";
+    $color9['default_on'] = "yellow.png";
+    $color9['default_off'] = "none2.png";
+
+    array_push($colors, $color9);
+
+    return $colors;
   }
 
 // Fonction exécutée automatiquement après la suppression du plugin

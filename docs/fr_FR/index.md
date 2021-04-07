@@ -20,7 +20,7 @@ Pour accéder aux différents équipements **My Bin**, dirigez-vous vers le menu
 
 Définissez les jours et heures de ramassage de votre poubelle. Plusieurs options qui peuvent se cumuler :
 - En cochant les mois/semains/jours
-- En spécifiant des dates précises
+- En spécifiant des dates précises (format Y-m-d)
 - En utilisant une ou plusieurs expressions cron
 
 ### Notification
@@ -40,6 +40,13 @@ Vous pouvez définir une ou plusieurs actions à exécuter après ramassage et/o
 
 Vous pouvez visualiser, en fonction de votre configuration, les 10 prochains dates de ramassage et de notification. 
 Si il y a une erreur dans votre configration, le problème sera spécifier en orange avec une information vous expliquant le problème.
+
+## Personnalisation
+
+En cliquant sur l'icône **Personnalisation** sur la page des équipements, vous pouvez :
+- changer les icônes des types de poubelle existants
+- revenir à l'icône par défaut
+- créer vos propres types de poubelle
 
 # Utilisation
 
