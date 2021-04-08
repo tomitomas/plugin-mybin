@@ -411,6 +411,7 @@ class mybin extends eqLogic {
             $binnotifs = "";
             $binscript = "";
             if ($binCmd->getIsVisible() == 1) {
+                $iconOn = $this->getColorAttr($this->getConfiguration('color'), 'icon_on');
                 $iconOff = $this->getColorAttr($this->getConfiguration('color'), 'icon_off');
                 $binnotifs = '<span class="cmd" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$iconOff.'" width="70px"></span>';
                 $binscript = "";
@@ -423,7 +424,7 @@ class mybin extends eqLogic {
                         $binnotifs = $binnotifs.$ackCmd->getId().' cursor';
                         $binscript = "$('.eqLogic[data-eqLogic_uid=".$replace['#uid#']."] .ack".$ackCmd->getId()."').on('click', function () {jeedom.cmd.execute({id: '".$ackCmd->getId()."'});});";
                     }
-                    $binnotifs = $binnotifs.'" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$binimg.'" width="70px"></span>';
+                    $binnotifs = $binnotifs.'" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/'.$iconOn.'" width="70px"></span>';
                 }
             }
             $replace['#binscript#'] = $binscript;
