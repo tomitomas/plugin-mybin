@@ -4,6 +4,9 @@
 >
 >As a reminder if there is no information on the update, it means that it only concerns the updating of documentation, translation or text.
 
+# Stable - 08/04/2021
+- Fix on single bin widget
+
 # Stable - 07/04/2021
 - Use of datetimepicker 3rdparty 
 - New bin "color?": plants
