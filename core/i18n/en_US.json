@@ -97,7 +97,14 @@
         "Ramassage de la poubelle": "Bin collection",
         "Cette date de notification est après la date de ramassage. Vérifiez vos paramètres.": "This notification date is after the collect date. Check your parameters.",
         "Condition de notification": "Notificationùs condition",
-        "Cette expression binaire sera évaluée au moment de la notification": "This binary expression will be evaluated at notification's time"
+        "Cette expression binaire sera évaluée au moment de la notification": "This binary expression will be evaluated at notification's time",
+        "Tous": "All",
+        "1er du mois": "1st of the month",
+        "2ème": "2nd", 
+        "3ème": "3rd",
+        "4ème": "4th",
+        "Dernier du mois": "Last of the month",
+        "Occurrence(s) du mois": "Month occurence(s)"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
