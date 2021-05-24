@@ -80,6 +80,7 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
             $eqLogic->setConfiguration('notif_veille', 'unused');
 
             if ($eqLogic->getConfiguration('Occm_0' 'unset') === 'unset') {
+                log::add('mybin', 'debug', $eqLogic->getHumanName() . ' occm_0 unset');
                 $eqLogic->setConfiguration('Occm_0', 1);
             } 
 
