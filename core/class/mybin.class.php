@@ -184,6 +184,7 @@ class mybin extends eqLogic {
             $this->setConfiguration('impaire', 1);
             $this->setConfiguration('color', 'green');   
             $this->setConfiguration('counter', 'auto');
+            $this->setConfiguration('Occm_0', 1);
             for ($i = 1; $i <= 12; $i++) {
                 $this->setConfiguration('month_'.$i, 1);
             } 
@@ -518,6 +519,7 @@ class mybin extends eqLogic {
         $day = 1 * $dt->format('w');
         $week = 1 * $dt->format('W');
         $month = 1 * $dt->format('n');
+        $year = 1 * $dt->format('Y');
         
         if ($this->getConfiguration('month_'.$month) == 1) {
             $isMonth = true;
@@ -531,7 +533,35 @@ class mybin extends eqLogic {
                 break;
             }
         }
-        if ($isSpecificCron || $isSpecificDay || ($isMonth && $isweek && $isday)) {
+
+        if ($this->getConfiguration('Occm_0') == 1) {
+            $isocc = true;
+        } else {
+            if ($isday) {
+               $dayj = 1 * $dt->format('j');
+               $dtTemp = new DateTime($year . '-' . $month . '-01');
+               $Occdate = 0;
+               for ($i = 1; $i <= $dayj; $i++) {
+                  $daysem = 1 * $dtTemp->format('w');
+                  if ($daysem == $day) {
+                     $Occdate++;
+                  }
+                  $dtTemp->modify('+1 day');
+               }
+               if ($Occdate >= 1 && $Occdate <= 4) {
+                  if ($this->getConfiguration('Occm_'.$Occdate) == 1) {
+                     $isocc = true;
+                  }
+               }
+               $dtTemp->modify('+6 day');
+               $moisCheck = 1 * $dtTemp->format('n');
+               if ($moisCheck != $month && $this->getConfiguration('Occm_5') == 1) {
+                  $isocc = true;
+               }
+            }
+        }
+
+        if ($isSpecificCron || $isSpecificDay || ($isMonth && $isweek && $isday && $isocc)) {
             return true;
         } else {
             return false;
@@ -671,7 +701,35 @@ class mybin extends eqLogic {
             $month = 1 * $dtCheck->format('n');
             $week = 1 * $dtCheck->format('W');
             $day = 1 * $dtCheck->format('w');
-            if ($this->getConfiguration('month_'.$month) == 1 && (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) && $this->getConfiguration('day_'.$day) == 1) {
+            $year = 1 * $dtCheck->format('Y');
+            $occOK = false;
+            if ($this->getConfiguration('Occm_0') == 1) {
+               $occOK = true;
+            } else {
+               if ($this->getConfiguration('day_'.$day) == 1) {
+                  $dayj = 1 * $dtCheck->format('j');
+                  $dtTemp = new DateTime($year . '-' . $month . '-01');
+                  $Occdate = 0;
+                  for ($cpt = 1; $cpt <= $dayj; $cpt++) {
+                     $daysem = 1 * $dtTemp->format('w');
+                     if ($daysem == $day) {
+                        $Occdate++;
+                     }
+                     $dtTemp->modify('+1 day');
+                  }
+                  if ($Occdate >= 1 && $Occdate <= 4) {
+                     if ($this->getConfiguration('Occm_'.$Occdate) == 1) {
+                        $occOK = true;
+                     }
+                  }
+                  $dtTemp->modify('+6 day');
+                  $moisCheck = 1 * $dtTemp->format('n');
+                  if ($moisCheck != $month && $this->getConfiguration('Occm_5') == 1) {
+                     $occOK = true;
+                  }
+               }
+            }
+            if ($this->getConfiguration('month_'.$month) == 1 && (($week%2 == 0 && $this->getConfiguration('paire') == 1) || ($week%2 != 0 && $this->getConfiguration('impaire') == 1)) && $this->getConfiguration('day_'.$day) == 1 && $occOK) {
                 if ($dtCheck >= $dtNow) {
                     $dtNotif = DateTime::createFromFormat("Y-m-d H:i", $dtCheck->format("Y-m-d H:i"));
                     $dtNotif->modify('-'.$this->getConfiguration('notif_days', 0).' day');

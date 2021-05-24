@@ -79,6 +79,10 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
             }
             $eqLogic->setConfiguration('notif_veille', 'unused');
 
+            if ($eqLogic->getConfiguration('Occm_0' 'unset') === 'unset') {
+                $eqLogic->setConfiguration('Occm_0', 1);
+            }
+
             if ($eqLogic->getConfiguration('collect_time', 'unset') === 'unset') {
                 $hour = $eqLogic->getConfiguration('hour');
                 if (intval($hour) < 10) {

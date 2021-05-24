@@ -6,6 +6,7 @@
 
 # Current BETA
 - Widget global rafraichi après chaque mise à jour d'un équipement 
+- Possibilité de choisir l'occurence dans le mois (contribution de @zos93/@kabalagi)
 
 # Stable - 08/04/2021
 - Correction sur widget pour une poubelle
