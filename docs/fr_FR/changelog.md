@@ -4,6 +4,9 @@
 >
 >Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
+# Current BETA
+- Widget global rafraichi après chaque mise à jour d'un équipement 
+
 # Stable - 08/04/2021
 - Correction sur widget pour une poubelle
 

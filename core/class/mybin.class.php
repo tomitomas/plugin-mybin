@@ -320,6 +320,7 @@ class mybin extends eqLogic {
             }
         }
         $this->emptyCacheWidget();
+        $this->refreshWhole();
 
     }
     
