@@ -97,7 +97,14 @@
         "Ramassage de la poubelle": "Ramassage de la poubelle",
         "Cette date de notification est après la date de ramassage. Vérifiez vos paramètres.": "Cette date de notification est après la date de ramassage. Vérifiez vos paramètres.",
         "Condition de notification": "Condition de notification",
-        "Cette expression binaire sera évaluée au moment de la notification": "Cette expression binaire sera évaluée au moment de la notification"
+        "Cette expression binaire sera évaluée au moment de la notification": "Cette expression binaire sera évaluée au moment de la notification",
+        "Tous": "Tous",
+        "1er du mois": "1er du mois",
+        "2ème": "2ème", 
+        "3ème": "3ème",
+        "4ème": "4ème",
+        "Dernier du mois": "Dernier du mois",
+        "Occurrence(s) du mois": "Occurrence(s) du mois"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",

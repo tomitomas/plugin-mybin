@@ -185,6 +185,17 @@ foreach ($eqLogics as $eqLogic) {
                                     <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="day_0" />{{Dimanche}}</label>
 								</div>
 							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{{Occurrence(s) du mois}}</label>
+								<div class="col-sm-7">
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="Occm_0" />{{Tous}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="Occm_1" />{{1er du mois}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="Occm_2" />{{2ème}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="Occm_3" />{{3ème}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="Occm_4" />{{4ème}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="Occm_5" />{{Dernier du mois}}</label>
+								</div>
+							</div>
                             <div class="form-group">
 								<label class="col-sm-3 control-label">{{Date(s) particulière(s) de ramassage}}</label>
 							    <div class="col-sm-7">
