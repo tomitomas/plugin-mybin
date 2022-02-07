@@ -4,6 +4,9 @@
 >
 >As a reminder if there is no information on the update, it means that it only concerns the updating of documentation, translation or text.
 
+# Stable - 07/02/2022
+- Compatibility 4.2
+
 # Stable - 28/05/2021
 - Refresh global widget after each equipment update
 - Possibility to select month occurences (contribution from @zos93/@kabalagi)

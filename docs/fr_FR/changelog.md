@@ -4,6 +4,9 @@
 >
 >Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte.
 
+# Stable - 07/02/2022
+- Compatibilité 4.2
+
 # Stable - 28/05/2021
 - Widget global rafraichi après chaque mise à jour d'un équipement 
 - Possibilité de choisir l'occurence dans le mois (contribution de @zos93/@kabalagi)
