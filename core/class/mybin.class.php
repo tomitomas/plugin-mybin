@@ -248,7 +248,6 @@ class mybin extends eqLogic {
                 $cmd->setName('Poubelle à sortir');
                 $cmd->setType('info');
                 $cmd->setSubType('binary');
-                $cmd->setEventOnly(1);
                 $cmd->setIsHistorized(0);
                 $cmd->setTemplate('mobile', 'line');
                 $cmd->setTemplate('dashboard', 'line');
@@ -263,7 +262,6 @@ class mybin extends eqLogic {
                 $cmd->setName('Ack');
                 $cmd->setType('action');
                 $cmd->setSubType('other');
-                $cmd->setEventOnly(1);
                 $cmd->save();
             }
             $cmd = $this->getCmd(null, 'counter');
@@ -275,7 +273,6 @@ class mybin extends eqLogic {
                 $cmd->setName('Compteur');
                 $cmd->setType('info');
                 $cmd->setSubType('numeric');
-                $cmd->setEventOnly(1);
                 $cmd->setIsHistorized(1);
                 $cmd->setTemplate('mobile', 'line');
                 $cmd->setTemplate('dashboard', 'line');       
@@ -291,7 +288,6 @@ class mybin extends eqLogic {
                 $cmd->setName('Reset Compteur');
                 $cmd->setType('action');
                 $cmd->setSubType('other');
-                $cmd->setEventOnly(1);
                 $cmd->save();
             }
             $cmd = $this->getCmd(null, 'nextcollect');
@@ -303,7 +299,6 @@ class mybin extends eqLogic {
                 $cmd->setName('Prochain ramassage');
                 $cmd->setType('info');
                 $cmd->setSubType('string');
-                $cmd->setEventOnly(1);
                 $cmd->setIsHistorized(0);
                 $cmd->setTemplate('mobile', 'line');
                 $cmd->setTemplate('dashboard', 'line');       
