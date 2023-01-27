@@ -1,3 +1,6 @@
+> **Warning**
+> This plugin is no longer maintained
+
 # plugin-mybin
 This is a plugin for Jeedom aimed at easing management of domestic bins.
 
