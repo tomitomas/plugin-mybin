@@ -5,19 +5,21 @@
         "fr_FR": "Poubelle verte ? Poubelle jaune ? Laquelle faut-il sortir ce soir ? Utilisez ce petit plugin pour ne plus avoir à vous en rappeler ! ",
         "en_US": "Green bin? Yellow bin? Which one needs to be put out tonight? Use this simple plugin for not having to remember it anymore!"
     },
-    "utilization": "Créez un équipement et définissez vos critères de ramassage et notification de vos poubelles.",
+    "utilization": "Créez un équipement et définissez vos critères de ramassage et notification de vos poubelles. (Auteur original @hugoKs3)",
     "licence": "AGPL",
-    "author": "hugoKs3",
+    "author": "tomitomas",
     "require": "4.0.61",
     "category": "organization",
     "hasDependency": false,
     "hasOwnDeamon": false,
     "maxDependancyInstallTime": 0,
-    "changelog": "https:\/\/hugoks3.github.io\/plugin-mybin\/#language#\/changelog",
-    "documentation": "https:\/\/hugoks3.github.io\/plugin-mybin\/#language#\/",
-    "link" : {
-		"forum":"https://community.jeedom.com/t/nouveau-plugin-my-bin/54481"
-	},
+    "changelog": "https://tomitomas.github.io/jeedom_doc/MyBin/#language#/changelog",
+    "changelog_beta": "https://tomitomas.github.io/jeedom_doc/MyBin/#language#/changelog_beta",
+    "documentation": "https://tomitomas.github.io/jeedom_doc/MyBin/#language#/",
+    "documentation_beta": "https://tomitomas.github.io/jeedom_doc/MyBin/#language#/",
+    "link": {
+        "forum": "https://community.jeedom.com/t/plugin-mybin-actualties/61993"
+    },
     "language": [
         "fr_FR",
         "en_US"
