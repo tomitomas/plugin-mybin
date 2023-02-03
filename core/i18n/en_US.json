@@ -104,7 +104,12 @@
         "3ème": "3rd",
         "4ème": "4th",
         "Dernier du mois": "Last of the month",
-        "Occurrence(s) du mois": "Month occurence(s)"
+        "Occurrence(s) du mois": "Month occurence(s)",
+        "Décalage si jour férié": "Offset if public holiday",
+        "Non": "No",
+        "Jour suivant": "Next day",
+        "Jour suivant sauf dimanche": "Next day except sunday",
+        "Jour suivant sauf weekend": "Next weekday"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",

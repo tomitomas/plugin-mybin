@@ -200,10 +200,10 @@ foreach ($eqLogics as $eqLogic) {
 								<label class="col-sm-3 control-label">{{Décalage si jour férié}}</label>
 								<div class="col-sm-7">
 									<select id="sel_ferie_action" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="public_holiday_action">
-										<option value="nothing">{{non}}</option>
-										<option value="nextDay">{{jour suivant}}</option>
-										<option value="nextDayWithoutSunday">{{jour suivant sauf dimanche}}</option>
-										<option value="nextDayWithoutWeekEnd">{{jour suivant sauf weekend}}</option>
+										<option value="nothing">{{Non}}</option>
+										<option value="nextDay">{{Jour suivant}}</option>
+										<option value="nextDayWithoutSunday">{{Jour suivant sauf dimanche}}</option>
+										<option value="nextDayWithoutWeekEnd">{{Jour suivant sauf weekend}}</option>
 									</select>
 								</div>
 							</div>
