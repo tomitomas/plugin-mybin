@@ -19,6 +19,7 @@ To access the different equipment **My Bin**, go to the menu **Plugins → Organ
 ### Ramassage
 
 Deine days and time of collect for your bin. Several options that are cumulative:
+
 - By checking months/weeks/days
 - By specifying precise dates (Y-m-d format)
 - By using one or several cron expressions
@@ -44,13 +45,15 @@ If there is an error in your configuration, the proble, will be highlighted in o
 ## Customization
 
 By clicking on the **Customization** icon on the equipments page, you can:
+
 - change icons of existing bin types
 - reset to the default icon
-- create your own bin types 
+- create your own bin types
 
 # Utilisation
 
 Each equipment creates 5 comamnds:
+
 - one indicating if the bin needs to be put out
 - one to acknowledge it. This command will be automatically called at collect time
 - one counter which increments itself at each ack (depending on the counter configuration)
@@ -59,12 +62,13 @@ Each equipment creates 5 comamnds:
 
 # Contributions
 
-This plugin is opened for contributions and even encouraged! Please submit your pull requests for improvements/fixes on <a href="https://github.com/hugoKs3/plugin-mybin" target="_blank">Github</a>
+This plugin is opened for contributions and even encouraged! Please submit your pull requests for improvements/fixes on <a href="https://github.com/tomitomas/plugin-mybin" target="_blank">Github</a>
 
 # Disclaimer
 
--   This code does not pretend to be bug-free
--   Although it should not harm your Jeedom system, it is provided without any warranty or liability
+- This code does not pretend to be bug-free
+- Although it should not harm your Jeedom system, it is provided without any warranty or liability
 
 # ChangeLog
+
 Available [here](./changelog.html).
