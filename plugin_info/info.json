@@ -13,8 +13,10 @@
     "hasDependency": false,
     "hasOwnDeamon": false,
     "maxDependancyInstallTime": 0,
-    "changelog": "https:\/\/tomitomas.github.io\/plugin-mybin\/#language#\/changelog",
-    "documentation": "https:\/\/tomitomas.github.io\/plugin-mybin\/#language#\/",
+    "changelog": "https://tomitomas.github.io/jeedom_doc/MyBin/#language#/changelog",
+    "changelog_beta": "https://tomitomas.github.io/jeedom_doc/MyBin/#language#/changelog_beta",
+    "documentation": "https://tomitomas.github.io/jeedom_doc/MyBin/#language#/",
+    "documentation_beta": "https://tomitomas.github.io/jeedom_doc/MyBin/#language#/",
     "link": {
         "forum": "https://community.jeedom.com/t/plugin-mybin-actualties/61993"
     },
