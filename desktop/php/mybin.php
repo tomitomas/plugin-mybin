@@ -10,7 +10,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 
 $allDates = array();
 foreach ($eqLogics as $eqLogic) {
-	if ($eqLogic->getConfiguration('type','') <> 'whole') {
+	if ($eqLogic->getConfiguration('type', '') <> 'whole') {
 		$allDates[$eqLogic->getId()] = $eqLogic->getNextCollectsAndNotifs(10, true);
 	}
 }
@@ -18,7 +18,7 @@ foreach ($eqLogics as $eqLogic) {
 
 <div class="row row-overflow">
 	<div class="col-xs-12 eqLogicThumbnailDisplay">
-		<legend><i class="fas fa-cog"></i>  {{Gestion}}</legend>
+		<legend><i class="fas fa-cog"></i> {{Gestion}}</legend>
 		<div class="eqLogicThumbnailContainer">
 			<div class="cursor eqLogicAction logoPrimary" data-action="add">
 				<i class="fas fa-plus-circle"></i>
@@ -31,14 +31,14 @@ foreach ($eqLogics as $eqLogic) {
 				<span>{{Configuration}}</span>
 			</div>
 			<div class="cursor eqLogicAction logoSecondary" id="bt_configImages">
-            	<i class="fas fa-images"></i>
+				<i class="fas fa-images"></i>
 				<br>
 				<span>{{Personnalisation}}</span>
-            </div>
-        </div>
+			</div>
+		</div>
 		<legend><i class="icon divers-slightly"></i> {{Mes poubelles}}</legend>
 		<div class="input-group" style="margin:5px;">
-			<input class="form-control roundedLeft" placeholder="{{Rechercher}}" id="in_searchEqlogic"/>
+			<input class="form-control roundedLeft" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
 			<div class="input-group-btn">
 				<a id="bt_resetSearch" class="btn roundedRight" style="width:30px"><i class="fas fa-times"></i></a>
 			</div>
@@ -46,11 +46,11 @@ foreach ($eqLogics as $eqLogic) {
 		<div class="eqLogicThumbnailContainer">
 			<?php
 			foreach ($eqLogics as $eqLogic) {
-                if($eqLogic->getConfiguration('type','') == 'whole') {
-                    continue;
-                }
+				if ($eqLogic->getConfiguration('type', '') == 'whole') {
+					continue;
+				}
 				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-				echo '<div id="customBin" class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
+				echo '<div id="customBin" class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
 				echo '<img id="customBinImg" src="' . $eqLogic->getImage() . '"/>';
 				echo '<br>';
 				echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
@@ -76,7 +76,7 @@ foreach ($eqLogics as $eqLogic) {
 		</ul>
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane active" id="eqlogictab">
-				<br/>
+				<br />
 				<form class="form-horizontal">
 					<fieldset>
 						<div class="col-lg-6">
@@ -85,18 +85,18 @@ foreach ($eqLogics as $eqLogic) {
 								<label class="col-sm-3 control-label">{{Nom de l'équipement My Bin}}</label>
 								<div class="col-sm-5">
 									<input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
-									<input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement My Bin}}"/>
+									<input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement My Bin}}" />
 								</div>
-                                <div class="col-sm-2">
-                                    tag <strong>#bin_name#</strong>
-                                </div>
+								<div class="col-sm-2">
+									tag <strong>#bin_name#</strong>
+								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label" >{{Objet parent}}</label>
+								<label class="col-sm-3 control-label">{{Objet parent}}</label>
 								<div class="col-sm-7">
 									<select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
 										<option value="">{{Aucun}}</option>
-										<?php	$options = '';
+										<?php $options = '';
 										foreach ((jeeObject::buildTree(null, false)) as $object) {
 											$options .= '<option value="' . $object->getId() . '">' . str_repeat('&nbsp;&nbsp;', $object->getConfiguration('parentNumber')) . $object->getName() . '</option>';
 										}
@@ -120,40 +120,40 @@ foreach ($eqLogics as $eqLogic) {
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Options}}</label>
 								<div class="col-sm-7">
-									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
-									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked />{{Activer}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked />{{Visible}}</label>
 								</div>
 							</div>
 							<br>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">{{Couleur de la poubelle}}</label>
-                                <div class="col-sm-7">
-                                    <span class="col-sm-4">
-                                        <select id="sel_color" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="color">
-										<?php
-											$colors = config::byKey('colors','mybin',array(),true);
+							<div class="form-group">
+								<label class="col-sm-3 control-label">{{Couleur de la poubelle}}</label>
+								<div class="col-sm-7">
+									<span class="col-sm-4">
+										<select id="sel_color" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="color">
+											<?php
+											$colors = config::byKey('colors', 'mybin', array(), true);
 											usort($colors, function ($a, $b) {
 												return strtolower($a['name']) <=> strtolower($b['name']);
 											});
 											foreach ($colors as $color) {
-												echo '<option value="'.$color["id"].'">{{'.$color["name"].'}}</option>';
+												echo '<option value="' . $color["id"] . '">{{' . $color["name"] . '}}</option>';
 											}
-										?>
-                                        </select>
-                                    </span>
-                                    <span class="col-sm-3">
-                                        tag <strong>#bin_color#</strong>
-                                    </span>
-                                </div>
-                            </div>
+											?>
+										</select>
+									</span>
+									<span class="col-sm-3">
+										tag <strong>#bin_color#</strong>
+									</span>
+								</div>
+							</div>
 							<br>
 
 							<legend><i class="fas fa-truck"></i> {{Ramassage de la poubelle}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Mois de ramassage}}</label>
 								<div class="col-sm-7">
-								    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_1" />{{Janvier}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_2" />{{Février}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_1" />{{Janvier}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_2" />{{Février}}</label>
 									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_3" />{{Mars}}</label>
 									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_4" />{{Avril}}</label>
 									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="month_5" />{{Mai}}</label>
@@ -169,20 +169,20 @@ foreach ($eqLogics as $eqLogic) {
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Semaine(s) de ramassage}}</label>
 								<div class="col-sm-7">
-								    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="paire" />{{Semaines paires}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="impaire" />{{Semaines impaires}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="paire" />{{Semaines paires}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="impaire" />{{Semaines impaires}}</label>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Jour(s) de ramassage}}</label>
 								<div class="col-sm-7">
-								    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="day_1" />{{Lundi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="day_2" />{{Mardi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="day_3" />{{Mercredi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="day_4" />{{Jeudi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="day_5" />{{Vendredi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="day_6" />{{Samedi}}</label>
-                                    <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="day_0" />{{Dimanche}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="day_1" />{{Lundi}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="day_2" />{{Mardi}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="day_3" />{{Mercredi}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="day_4" />{{Jeudi}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="day_5" />{{Vendredi}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="day_6" />{{Samedi}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="day_0" />{{Dimanche}}</label>
 								</div>
 							</div>
 							<div class="form-group">
@@ -196,41 +196,41 @@ foreach ($eqLogics as $eqLogic) {
 									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="Occm_5" />{{Dernier du mois}}</label>
 								</div>
 							</div>
-                            <div class="form-group">
+							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Date(s) particulière(s) de ramassage}}</label>
-							    <div class="col-sm-7">
-                                    <a class="btn btn-success btn-sm addDay" data-type="specific_day" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une date}}</a>
-                                    <div id="div_specific_day"></div>
-                                </div>
+								<div class="col-sm-7">
+									<a class="btn btn-success btn-sm addDay" data-type="specific_day" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une date}}</a>
+									<div id="div_specific_day"></div>
+								</div>
 							</div>
-							<br/>
+							<br />
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Heure de ramassage}}</label>
-							    <div class="col-sm-3">
-									<input class="eqLogicAttr timepicker" type="text" data-l1key="configuration" data-l2key="collect_time">	
-                                </div>
+								<div class="col-sm-3">
+									<input class="eqLogicAttr timepicker" type="text" data-l1key="configuration" data-l2key="collect_time">
+								</div>
 							</div>
-                            <br/>
+							<br />
 							<div class="form-group">
 								<label class="col-sm-3 control-label help" data-help="{{Vous pouvez ajouter des expressions cron pour gérer des fréquences de ramassage particulières}}">{{Mode expert}}</label>
-							    <div class="col-sm-7">
-                                    <a class="btn btn-success btn-sm addCron" data-type="specific_cron" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter un cron}}</a>
-                                    <div id="div_specific_cron"></div>
-                                </div>
+								<div class="col-sm-7">
+									<a class="btn btn-success btn-sm addCron" data-type="specific_cron" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter un cron}}</a>
+									<div id="div_specific_cron"></div>
+								</div>
 							</div>
-                            <br>
+							<br>
 							<legend><i class="icon jeedom-alerte2"></i> {{Notification}}</legend>
 							<div class="form-group">
 								<label class="col-sm-3 control-label help" data-help="{{Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.}}">{{Notification}}</label>
 								<div class="col-sm-7">
 									<span class="col-sm-2">
-                                    	<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_days"/>
+										<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_days" />
 									</span>
 									<span class="col-sm-3">
-                                        <label>{{jour(s) avant à}}</label>
-                                    </span>
+										<label>{{jour(s) avant à}}</label>
+									</span>
 									<span class="col-sm-3">
-										<input class="eqLogicAttr timepicker" type="text" data-l1key="configuration" data-l2key="notif_time">	
+										<input class="eqLogicAttr timepicker" type="text" data-l1key="configuration" data-l2key="notif_time">
 									</span>
 								</div>
 							</div>
@@ -245,39 +245,39 @@ foreach ($eqLogics as $eqLogic) {
 							</div>
 							<br>
 							<legend><i class="fas fa-tachometer-alt"></i> {{Compteur}}</legend>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label help" data-help="{{En automatique, le compteur s'incrémentera à chaque ramassage ou lorsque la commande 'ack' est exécutée. En manuel, il ne s'incrémentera que si la commande 'ack' est exécutée.}}">{{Type}}</label>
-                                <div class="col-sm-7">
-                                    <span class="col-sm-4">
-                                        <select id="sel_counter" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="counter">
-                                            <option value="auto">{{Automatique}}</option>
-                                            <option value="manu">{{Manuel}}</option>
-                                        </select>
-                                    </span>
-                                </div>
-                            </div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label help" data-help="{{En automatique, le compteur s'incrémentera à chaque ramassage ou lorsque la commande 'ack' est exécutée. En manuel, il ne s'incrémentera que si la commande 'ack' est exécutée.}}">{{Type}}</label>
+								<div class="col-sm-7">
+									<span class="col-sm-4">
+										<select id="sel_counter" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="counter">
+											<option value="auto">{{Automatique}}</option>
+											<option value="manu">{{Manuel}}</option>
+										</select>
+									</span>
+								</div>
+							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label help" data-help="{{Seuil au-delà duquel les notifications seront suspendues. Laissez le champ vide pour aucun seuil.}}">{{Seuil}}</label>
 								<div class="col-sm-3">
-                                    <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="seuil"/>
+									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="seuil" />
 								</div>
-                                <div class="col-sm-4">
-                                    tag <strong>#bin_threshold#</strong>
-                                </div>
+								<div class="col-sm-4">
+									tag <strong>#bin_threshold#</strong>
+								</div>
 							</div>
 						</div>
-                        <div class="col-lg-5">
+						<div class="col-lg-5">
 							<legend><i class="icon jeedomapp-preset"></i> {{Options}}</legend>
 							<div class="form-group">
 								<label class="col-sm-4 control-label">{{Template de widget}}
 									<sup><i class="fas fa-question-circle tooltips" title="{{Cocher la case pour utiliser le template de widget}}"></i></sup>
 								</label>
 								<div class="col-sm-1">
-									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="widgetTemplate"/>
+									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="widgetTemplate" />
 								</div>
 							</div>
-                        </div>
-						<br/>
+						</div>
+						<br />
 						<div class="col-lg-5">
 							<legend><i class="fas fa-sign-out-alt"></i> {{Action(s) sur ramassage}}</legend><label><a class="btn btn-success btn-sm addAction" data-type="action_collect" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une action}}</a></label>
 							<div id="div_action_collect"></div>
@@ -295,7 +295,7 @@ foreach ($eqLogics as $eqLogic) {
 								<br>
 								<?php
 								foreach ($allDates as $key => $value) {
-									echo '<div class="allDates dates-'.$key.'" style="display: none;">';
+									echo '<div class="allDates dates-' . $key . '" style="display: none;">';
 									foreach ($value as $collect => $notif) {
 										$colorCollect = 'primary';
 										$helpCollect = '';
@@ -312,17 +312,17 @@ foreach ($eqLogics as $eqLogic) {
 											$helpNotif = 'help';
 										}
 										echo '<div class="col-sm-12">';
-										echo '<label class="col-sm-2 control-label '.$helpCollect.'" data-help="{{Le plugin ne fonctionne que toutes les 5min. Cette date de ramassage sera ignorée. Changez votre cron.}}">{{Ramassage}}</label>';
-										echo '<div class="col-sm-4" ><span class="label label-'.$colorCollect.'">'.date_fr($dtCollect->format('l')).' '.$dtCollect->format('j').' '.date_fr($dtCollect->format('F')).' '.$dtCollect->format('Y').' {{à}} '.$dtCollect->format('G:i').'</span></div>';
-										echo '<label class="col-sm-2 control-label '.$helpNotif.'" data-help="{{Cette date de notification est après la date de ramassage. Vérifiez vos paramètres.}}">{{Notification}}</label>';
-										echo '<div class="col-sm-4"><span class="label label-'.$colorNotif.'">'.date_fr($dtNotif->format('l')).' '.$dtNotif->format('j').' '.date_fr($dtNotif->format('F')).' '.$dtNotif->format('Y').' {{à}} '.$dtNotif->format('G:i').'</span></div>';
+										echo '<label class="col-sm-2 control-label ' . $helpCollect . '" data-help="{{Le plugin ne fonctionne que toutes les 5min. Cette date de ramassage sera ignorée. Changez votre cron.}}">{{Ramassage}}</label>';
+										echo '<div class="col-sm-4" ><span class="label label-' . $colorCollect . '">' . date_fr($dtCollect->format('l')) . ' ' . $dtCollect->format('j') . ' ' . date_fr($dtCollect->format('F')) . ' ' . $dtCollect->format('Y') . ' {{à}} ' . $dtCollect->format('G:i') . '</span></div>';
+										echo '<label class="col-sm-2 control-label ' . $helpNotif . '" data-help="{{Cette date de notification est après la date de ramassage. Vérifiez vos paramètres.}}">{{Notification}}</label>';
+										echo '<div class="col-sm-4"><span class="label label-' . $colorNotif . '">' . date_fr($dtNotif->format('l')) . ' ' . $dtNotif->format('j') . ' ' . date_fr($dtNotif->format('F')) . ' ' . $dtNotif->format('Y') . ' {{à}} ' . $dtNotif->format('G:i') . '</span></div>';
 										echo '</div>';
 									}
 									echo '</div>';
 								}
 								?>
 							</div>
-                        </div>
+						</div>
 					</fieldset>
 				</form>
 				<hr>
@@ -331,28 +331,28 @@ foreach ($eqLogics as $eqLogic) {
 			<div role="tabpanel" class="tab-pane" id="commandtab">
 				<!--<a class="btn btn-success btn-sm cmdAction pull-right" data-action="add" style="margin-top:5px;">
 				<i class="fa fa-plus-circle"></i> {{Commandes}}</a><br/> -->
-				<br/>
-                <table id="table_cmd" class="table table-bordered table-condensed">
-                    <thead>
-                        <tr>
-                            <th style="width:50px;">{{Id}}</th>
-                            <th style="width:300px;">{{Nom}}</th>
-                            <th>{{Type}}</th>
-                            <th class="col-xs-3">{{Options}}</th>
-                            <th class="col-xs-2">{{Action}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+				<br />
+				<table id="table_cmd" class="table table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th style="width:50px;">{{Id}}</th>
+							<th style="width:300px;">{{Nom}}</th>
+							<th>{{Type}}</th>
+							<th class="col-xs-3">{{Options}}</th>
+							<th class="col-xs-2">{{Action}}</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
 			</div>
 		</div>
 
 	</div>
 </div>
 
-<?php include_file('3rdparty', 'datetimepicker/jquery.datetimepicker', 'js', 'mybin');?>
+<?php include_file('3rdparty', 'datetimepicker/jquery.datetimepicker', 'js', 'mybin'); ?>
 <!-- Inclusion du fichier javascript du plugin (dossier, nom_du_fichier, extension_du_fichier, nom_du_plugin) -->
-<?php include_file('desktop', 'mybin', 'js', 'mybin');?>
+<?php include_file('desktop', 'mybin', 'js', 'mybin'); ?>
 <!-- Inclusion du fichier javascript du core - NE PAS MODIFIER NI SUPPRIMER -->
-<?php include_file('core', 'plugin.template', 'js');?>
+<?php include_file('core', 'plugin.template', 'js'); ?>

@@ -19,39 +19,39 @@
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 // Fonction exécutée automatiquement après l'installation du plugin
-  function mybin_install() {
-      mybin::createWhole();
-      config::save('calendarType', 'collect', 'mybin');
-      config::save('notifs', 1, 'mybin');
-      config::save('calendar', 1, 'mybin');
-      config::save('colors', mybin_createColors(), 'mybin');
-  }
+function mybin_install() {
+    mybin::createWhole();
+    config::save('calendarType', 'collect', 'mybin');
+    config::save('notifs', 1, 'mybin');
+    config::save('calendar', 1, 'mybin');
+    config::save('colors', mybin_createColors(), 'mybin');
+}
 
 // Fonction exécutée automatiquement après la mise à jour du plugin
-  function mybin_update() {
-      
-      $colors = config::byKey('colors','mybin','unset',true);
-      if ($colors == 'unset') {
+function mybin_update() {
+
+    $colors = config::byKey('colors', 'mybin', 'unset', true);
+    if ($colors == 'unset') {
         config::save('colors', mybin_createColors(), 'mybin');
-      }
+    }
 
-      $calendarType = config::byKey('calendarType','mybin','unset',true);
-      if ($calendarType == 'unset') {
-          config::save('calendarType', 'collect', 'mybin');
-      }
+    $calendarType = config::byKey('calendarType', 'mybin', 'unset', true);
+    if ($calendarType == 'unset') {
+        config::save('calendarType', 'collect', 'mybin');
+    }
 
-      $notifs = config::byKey('notifs','mybin','unset',true);
-      if ($notifs == 'unset') {
-          config::save('notifs', 1, 'mybin');
-      }
+    $notifs = config::byKey('notifs', 'mybin', 'unset', true);
+    if ($notifs == 'unset') {
+        config::save('notifs', 1, 'mybin');
+    }
 
-      $calendar = config::byKey('calendar','mybin','unset',true);
-      if ($calendar == 'unset') {
-          config::save('calendar', 1, 'mybin');
-      }
-      
-      $wholeFound = false;
-      foreach (eqLogic::byType('mybin') as $eqLogic) {
+    $calendar = config::byKey('calendar', 'mybin', 'unset', true);
+    if ($calendar == 'unset') {
+        config::save('calendar', 1, 'mybin');
+    }
+
+    $wholeFound = false;
+    foreach (eqLogic::byType('mybin') as $eqLogic) {
         if ($eqLogic->getConfiguration('type') == 'whole') {
             $wholeFound = true;
         } else {
@@ -62,8 +62,8 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
                 $eqLogic->setConfiguration('counter', 'auto');
             }
             for ($i = 1; $i <= 12; $i++) {
-                if ($eqLogic->getConfiguration('month_'.$i, 'unset') === 'unset') {
-                    $eqLogic->setConfiguration('month_'.$i, 1);
+                if ($eqLogic->getConfiguration('month_' . $i, 'unset') === 'unset') {
+                    $eqLogic->setConfiguration('month_' . $i, 1);
                 }
             }
             if ($eqLogic->getConfiguration('color') === 'braun') {
@@ -72,7 +72,7 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
             if ($eqLogic->getConfiguration('notif_veille') === "1") {
                 log::add('mybin', 'debug', $eqLogic->getHumanName() . ' notif veille 1');
                 $eqLogic->setConfiguration('notif_days', 1);
-            } 
+            }
             if ($eqLogic->getConfiguration('notif_veille') === "0") {
                 log::add('mybin', 'debug', $eqLogic->getHumanName() . ' notif veille 0');
                 $eqLogic->setConfiguration('notif_days', 0);
@@ -82,7 +82,7 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
             if ($eqLogic->getConfiguration('Occm_0', 'unset') === 'unset') {
                 log::add('mybin', 'debug', $eqLogic->getHumanName() . ' occm_0 unset');
                 $eqLogic->setConfiguration('Occm_0', 1);
-            } 
+            }
 
             if ($eqLogic->getConfiguration('collect_time', 'unset') === 'unset') {
                 $hour = $eqLogic->getConfiguration('hour');
@@ -107,7 +107,7 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
                 }
                 $eqLogic->setConfiguration('notif_time', $hour . ':' . $minute);
             }
-            
+
             $cmd = $eqLogic->getCmd(null, 'counter');
             if (!is_object($cmd)) {
                 $cmd = new mybinCmd();
@@ -123,11 +123,10 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
             }
             $value = $cmd->execCmd();
             if ($value == '') {
-               $cmd->event(0); 
+                $cmd->event(0);
             }
             $cmd = $eqLogic->getCmd(null, 'resetcounter');
-            if (!is_object($cmd))
-            {
+            if (!is_object($cmd)) {
                 $cmd = new mybinCmd();
                 $cmd->setLogicalId('resetcounter');
                 $cmd->setEqLogic_id($eqLogic->getId());
@@ -137,8 +136,7 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
                 $cmd->save();
             }
             $cmd = $eqLogic->getCmd(null, 'nextcollect');
-            if (!is_object($cmd))
-            {
+            if (!is_object($cmd)) {
                 $cmd = new mybinCmd();
                 $cmd->setLogicalId('nextcollect');
                 $cmd->setEqLogic_id($eqLogic->getId());
@@ -147,7 +145,7 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
                 $cmd->setSubType('string');
                 $cmd->setIsHistorized(0);
                 $cmd->setTemplate('mobile', 'line');
-                $cmd->setTemplate('dashboard', 'line');       
+                $cmd->setTemplate('dashboard', 'line');
                 $cmd->save();
             }
 
@@ -174,17 +172,17 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
                     $eqLogic->setConfiguration('specific_cron', $specificCrons);
                 }
             }
-            */           
+            */
 
             $eqLogic->save();
         }
-      }
-      if (!wholeFound) {
-          mybin::createWhole();
-      }
-  }
+    }
+    if (!wholeFound) {
+        mybin::createWhole();
+    }
+}
 
-  function mybin_createColors() {
+function mybin_createColors() {
     $colors = array();
 
     $color1['id'] = "black";
@@ -278,11 +276,8 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
     array_push($colors, $color9);
 
     return $colors;
-  }
+}
 
 // Fonction exécutée automatiquement après la suppression du plugin
-  function mybin_remove() {
-
-  }
-
-?>
+function mybin_remove() {
+}

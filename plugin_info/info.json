@@ -15,9 +15,9 @@
     "maxDependancyInstallTime": 0,
     "changelog": "https:\/\/hugoks3.github.io\/plugin-mybin\/#language#\/changelog",
     "documentation": "https:\/\/hugoks3.github.io\/plugin-mybin\/#language#\/",
-    "link" : {
-		"forum":"https://community.jeedom.com/t/nouveau-plugin-my-bin/54481"
-	},
+    "link": {
+        "forum": "https://community.jeedom.com/t/nouveau-plugin-my-bin/54481"
+    },
     "language": [
         "fr_FR",
         "en_US"
