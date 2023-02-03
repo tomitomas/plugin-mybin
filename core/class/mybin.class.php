@@ -800,7 +800,102 @@ class mybin extends eqLogic {
         ksort($datesArr);
         array_splice($datesArr, $max, count($datesArr));
 
-        return $datesArr;
+        return $this->checkPublicHoliday($datesArr);
+    }
+
+    public function checkPublicHoliday($dates) {
+        $actionTodo = $this->getConfiguration('public_holiday_action', 'nothing');
+        if ($actionTodo == 'nothing') return $dates;
+
+        $res = array();
+        foreach ($dates as $date => $notif) {
+            $d = DateTime::createFromFormat("Y-m-d H:i", $date);
+            $n = DateTime::createFromFormat("Y-m-d H:i", $notif);
+            $ph = self::isPublicHoliday($d);
+            if (self::isPublicHoliday($d)) {
+                log::add(__CLASS__, 'debug', $d->format('Y-m-d') . ' est un jour férié');
+                $d->modify('+1 day');
+                $n->modify('+1 day');
+                while (!self::isShiftableTo($d, $actionTodo)) {
+                    $d->modify('+1 day');
+                    $n->modify('+1 day');
+                }
+                $date = $d->format('Y-m-d H:i');
+                $notif = $n->format('Y-m-d H:i');
+            }
+            $res[$date] = $notif;
+        }
+        return $res;
+    }
+
+    public static function isShiftableTo($date, $shiftMode) {
+        $res = 1;
+        $dayOfWeek = 1 * $date->format('w');
+        switch ($shiftMode) {
+            case 'nextDayWithoutWeekEnd';
+                $res = $dayOfWeek != 6 && $dayOfWeek != 0 && !self::isPublicHoliday($date);
+                break;
+            case 'nextDayWithoutSunday';
+                $res = $dayOfWeek != 0 && !self::isPublicHoliday($date);
+                break;
+            case 'nextDay';
+                $res = !self::isPublicHoliday($date);
+                break;
+            case 'nothing';
+            default;
+                break;
+        }
+        log::add(__CLASS__, 'debug', $date->format('Y-m-d') . ($res ? ' est un jour de remplacement valide' : ' n\'est pas un jour de remplacement valide'));
+        return $res;
+    }
+
+    public static function isPublicHoliday($date) {
+        $jour = 1 * $date->format('d');
+        $mois = 1 * $date->format('n');
+        $annee = 1 * $date->format('Y');
+
+        $EstFerie = 0;
+        // dates fériées fixes
+        if ($jour == 1 && $mois == 1) $EstFerie = 1; // 1er janvier
+        if ($jour == 1 && $mois == 5) $EstFerie = 1; // 1er mai
+        if ($jour == 8 && $mois == 5) $EstFerie = 1; // 8 mai
+        if ($jour == 14 && $mois == 7) $EstFerie = 1; // 14 juillet
+        if ($jour == 15 && $mois == 8) $EstFerie = 1; // 15 aout
+        if ($jour == 1 && $mois == 11) $EstFerie = 1; // 1 novembre
+        if ($jour == 11 && $mois == 11) $EstFerie = 1; // 11 novembre
+        if ($jour == 25 && $mois == 12) $EstFerie = 1; // 25 décembre
+        // fetes religieuses mobiles
+        $pak = easter_date($annee);
+        $jp = date("d", $pak);
+        $mp = date("m", $pak);
+        if ($jp == $jour && $mp == $mois) {
+            $EstFerie = 1;
+        } // Pâques
+        $lpk = mktime(date("H", $pak), date("i", $pak), date("s", $pak), date("m", $pak), date("d", $pak) + 1, date("Y", $pak));
+        $jp = date("d", $lpk);
+        $mp = date("m", $lpk);
+        if ($jp == $jour && $mp == $mois) {
+            $EstFerie = 1;
+        } // Lundi de Pâques
+        $asc = mktime(date("H", $pak), date("i", $pak), date("s", $pak), date("m", $pak), date("d", $pak) + 39, date("Y", $pak));
+        $jp = date("d", $asc);
+        $mp = date("m", $asc);
+        if ($jp == $jour && $mp == $mois) {
+            $EstFerie = 1;
+        } //ascension
+        $pe = mktime(date("H", $pak), date("i", $pak), date("s", $pak), date("m", $pak), date("d", $pak) + 49, date("Y", $pak));
+        $jp = date("d", $pe);
+        $mp = date("m", $pe);
+        if ($jp == $jour && $mp == $mois) {
+            $EstFerie = 1;
+        } // Pentecôte
+        $lp = mktime(date("H", $asc), date("i", $pak), date("s", $pak), date("m", $pak), date("d", $pak) + 50, date("Y", $pak));
+        $jp = date("d", $lp);
+        $mp = date("m", $lp);
+        if ($jp == $jour && $mp == $mois) {
+            $EstFerie = 1;
+        } // lundi Pentecôte
+        return $EstFerie;
     }
 
     public function getNextRunDates($cron, $start) {
