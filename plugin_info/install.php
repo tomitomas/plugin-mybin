@@ -177,7 +177,7 @@ function mybin_update() {
             $eqLogic->save();
         }
     }
-    if (!wholeFound) {
+    if (!$wholeFound) {
         mybin::createWhole();
     }
 }
