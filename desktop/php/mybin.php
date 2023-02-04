@@ -241,7 +241,7 @@ foreach ($eqLogics as $eqLogic) {
 								<label class="col-sm-3 control-label help" data-help="{{Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.}}">{{Notification}}</label>
 								<div class="col-sm-7">
 									<span class="col-sm-2">
-										<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_days" />
+										<input type="number" min="0" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="notif_days" />
 									</span>
 									<span class="col-sm-3">
 										<label>{{jour(s) avant à}}</label>
