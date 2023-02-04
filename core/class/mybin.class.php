@@ -808,18 +808,18 @@ class mybin extends eqLogic {
 
     public function checkPublicHoliday($dates) {
         $actionTodo = $this->getConfiguration('public_holiday_action', 'nothing');
+        $withAlsace = $this->getConfiguration('withAlsace', '0');
         if ($actionTodo == 'nothing') return $dates;
 
         $res = array();
         foreach ($dates as $date => $notif) {
             $d = DateTime::createFromFormat("Y-m-d H:i", $date);
             $n = DateTime::createFromFormat("Y-m-d H:i", $notif);
-            $ph = self::isPublicHoliday($d);
-            if (self::isPublicHoliday($d)) {
+            if (self::isPublicHoliday($d, $withAlsace)) {
                 self::debug($d->format('Y-m-d') . ' est un jour férié');
                 $d->modify('+1 day');
                 $n->modify('+1 day');
-                while (!self::isShiftableTo($d, $actionTodo)) {
+                while (!self::isShiftableTo($d, $actionTodo, $withAlsace)) {
                     $d->modify('+1 day');
                     $n->modify('+1 day');
                 }
@@ -831,18 +831,18 @@ class mybin extends eqLogic {
         return $res;
     }
 
-    public static function isShiftableTo($date, $shiftMode) {
+    public static function isShiftableTo($date, $shiftMode, $withAlsace) {
         $res = 1;
         $dayOfWeek = 1 * $date->format('w');
         switch ($shiftMode) {
             case 'nextDayWithoutWeekEnd';
-                $res = $dayOfWeek != 6 && $dayOfWeek != 0 && !self::isPublicHoliday($date);
+                $res = $dayOfWeek != 6 && $dayOfWeek != 0 && !self::isPublicHoliday($date, $withAlsace);
                 break;
             case 'nextDayWithoutSunday';
-                $res = $dayOfWeek != 0 && !self::isPublicHoliday($date);
+                $res = $dayOfWeek != 0 && !self::isPublicHoliday($date, $withAlsace);
                 break;
             case 'nextDay';
-                $res = !self::isPublicHoliday($date);
+                $res = !self::isPublicHoliday($date, $withAlsace);
                 break;
             case 'nothing';
             default;
@@ -852,53 +852,66 @@ class mybin extends eqLogic {
         return $res;
     }
 
-    public static function isPublicHoliday($date) {
+    public static function isPublicHoliday($date, $withAlsace) {
         $jour = 1 * $date->format('d');
         $mois = 1 * $date->format('n');
         $annee = 1 * $date->format('Y');
 
-        $EstFerie = 0;
         // dates fériées fixes
-        if ($jour == 1 && $mois == 1) $EstFerie = 1; // 1er janvier
-        if ($jour == 1 && $mois == 5) $EstFerie = 1; // 1er mai
-        if ($jour == 8 && $mois == 5) $EstFerie = 1; // 8 mai
-        if ($jour == 14 && $mois == 7) $EstFerie = 1; // 14 juillet
-        if ($jour == 15 && $mois == 8) $EstFerie = 1; // 15 aout
-        if ($jour == 1 && $mois == 11) $EstFerie = 1; // 1 novembre
-        if ($jour == 11 && $mois == 11) $EstFerie = 1; // 11 novembre
-        if ($jour == 25 && $mois == 12) $EstFerie = 1; // 25 décembre
+        if ($jour == 1 && $mois == 1) return true; // 1er janvier
+        if ($jour == 1 && $mois == 5) return true; // 1er mai
+        if ($jour == 8 && $mois == 5) return true; // 8 mai
+        if ($jour == 14 && $mois == 7) return true; // 14 juillet
+        if ($jour == 15 && $mois == 8) return true; // 15 aout
+        if ($jour == 1 && $mois == 11) return true; // 1 novembre
+        if ($jour == 11 && $mois == 11) return true; // 11 novembre
+        if ($jour == 25 && $mois == 12) return true; // 25 décembre
         // fetes religieuses mobiles
         $pak = easter_date($annee);
         $jp = date("d", $pak);
         $mp = date("m", $pak);
         if ($jp == $jour && $mp == $mois) {
-            $EstFerie = 1;
+            return true;
         } // Pâques
         $lpk = mktime(date("H", $pak), date("i", $pak), date("s", $pak), date("m", $pak), date("d", $pak) + 1, date("Y", $pak));
         $jp = date("d", $lpk);
         $mp = date("m", $lpk);
         if ($jp == $jour && $mp == $mois) {
-            $EstFerie = 1;
+            return true;
         } // Lundi de Pâques
         $asc = mktime(date("H", $pak), date("i", $pak), date("s", $pak), date("m", $pak), date("d", $pak) + 39, date("Y", $pak));
         $jp = date("d", $asc);
         $mp = date("m", $asc);
         if ($jp == $jour && $mp == $mois) {
-            $EstFerie = 1;
+            return true;
         } //ascension
         $pe = mktime(date("H", $pak), date("i", $pak), date("s", $pak), date("m", $pak), date("d", $pak) + 49, date("Y", $pak));
         $jp = date("d", $pe);
         $mp = date("m", $pe);
         if ($jp == $jour && $mp == $mois) {
-            $EstFerie = 1;
+            return true;
         } // Pentecôte
         $lp = mktime(date("H", $asc), date("i", $pak), date("s", $pak), date("m", $pak), date("d", $pak) + 50, date("Y", $pak));
         $jp = date("d", $lp);
         $mp = date("m", $lp);
         if ($jp == $jour && $mp == $mois) {
-            $EstFerie = 1;
+            return true;
         } // lundi Pentecôte
-        return $EstFerie;
+
+
+        // for Alsace-Lorraine
+        if ($withAlsace) {
+            $vst = mktime(date("H", $pak), date("i", $pak), date("s", $pak), date("m", $pak), date("d", $pak) - 2, date("Y", $pak));
+            $jp = date("d", $vst);
+            $mp = date("m", $vst);
+            if ($jp == $jour && $mp == $mois) {
+                return true;
+            } // Vendredi saint
+
+            if ($jour == 26 && $mois == 12) return true; //  Saint-Etienne
+        }
+
+        return false;
     }
 
     public function getNextRunDates($cron, $start) {
