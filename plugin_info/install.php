@@ -70,17 +70,17 @@ function mybin_update() {
                 $eqLogic->setConfiguration('color', 'brown');
             }
             if ($eqLogic->getConfiguration('notif_veille') === "1") {
-                log::add('mybin', 'debug', $eqLogic->getHumanName() . ' notif veille 1');
+                mybin::debug($eqLogic->getHumanName() . ' notif veille 1');
                 $eqLogic->setConfiguration('notif_days', 1);
             }
             if ($eqLogic->getConfiguration('notif_veille') === "0") {
-                log::add('mybin', 'debug', $eqLogic->getHumanName() . ' notif veille 0');
+                mybin::debug($eqLogic->getHumanName() . ' notif veille 0');
                 $eqLogic->setConfiguration('notif_days', 0);
             }
             $eqLogic->setConfiguration('notif_veille', 'unused');
 
             if ($eqLogic->getConfiguration('Occm_0', 'unset') === 'unset') {
-                log::add('mybin', 'debug', $eqLogic->getHumanName() . ' occm_0 unset');
+                mybin::debug($eqLogic->getHumanName() . ' occm_0 unset');
                 $eqLogic->setConfiguration('Occm_0', 1);
             }
 

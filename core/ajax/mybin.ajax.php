@@ -29,7 +29,7 @@ try {
     if (init('action') == 'uploadCustomImg') {
         $id = init('id');
         $icon = init('icon');
-        log::add('mybin', 'debug', 'uploadCustomImg id: ' . $id . ' | icon: ' . $icon);
+        mybin::debug('uploadCustomImg id: ' . $id . ' | icon: ' . $icon);
 
         if (!isset($_FILES['file'])) {
             throw new Exception(__('Aucun fichier trouvé. Vérifiez le paramètre PHP (post size limit)', __FILE__));
@@ -43,7 +43,7 @@ try {
         }
 
         $filepath = __DIR__ . "/../../data/images/custom/{$id}_{$icon}{$extension}";
-        log::add('mybin', 'debug', "filepath: {$filepath}");
+        mybin::debug("filepath: {$filepath}");
         file_put_contents($filepath, file_get_contents($_FILES['file']['tmp_name']));
         if (!file_exists($filepath)) {
             throw new Exception(__('Impossible de sauvegarder l\'image', __FILE__));
@@ -61,12 +61,12 @@ try {
     if (init('action') == 'deleteCustomImg') {
         $id = init('id');
         $icon = init('icon');
-        log::add('mybin', 'debug', "deleteImage id: {$id} | icon: {$icon}");
+        mybin::debug("deleteImage id: {$id} | icon: {$icon}");
 
         $files = ls(__DIR__ . '/../../data/images/custom/', "{$id}_{$icon}*");
         if (count($files)  > 0) {
             foreach ($files as $file) {
-                log::add('mybin', 'debug', "delete file : {$file}");
+                mybin::debug("delete file : {$file}");
                 unlink(__DIR__ . '/../../data/images/custom/' . $file);
             }
         }
@@ -109,7 +109,7 @@ try {
         $files = ls(__DIR__ . '/../../data/images/custom/', "{$id}_*");
         if (count($files)  > 0) {
             foreach ($files as $file) {
-                log::add('mybin', 'debug', "delete file : {$file}");
+                mybin::debug("delete file : {$file}");
                 unlink(__DIR__ . '/../../data/images/custom/' . $file);
             }
         }
