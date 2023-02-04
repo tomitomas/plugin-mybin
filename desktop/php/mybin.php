@@ -87,7 +87,7 @@ foreach ($eqLogics as $eqLogic) {
 									<input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
 									<input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement My Bin}}" />
 								</div>
-								<div class="col-sm-2">
+								<div class="col-sm-2 tagColor">
 									tag <strong>#bin_name#</strong>
 								</div>
 							</div>
@@ -141,7 +141,7 @@ foreach ($eqLogics as $eqLogic) {
 											?>
 										</select>
 									</span>
-									<span class="col-sm-3">
+									<span class="col-sm-4 tagColor">
 										tag <strong>#bin_color#</strong>
 									</span>
 								</div>
@@ -278,7 +278,7 @@ foreach ($eqLogics as $eqLogic) {
 								<div class="col-sm-3">
 									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="seuil" />
 								</div>
-								<div class="col-sm-4">
+								<div class="col-sm-4 tagColor">
 									tag <strong>#bin_threshold#</strong>
 								</div>
 							</div>

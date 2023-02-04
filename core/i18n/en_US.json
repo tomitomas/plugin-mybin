@@ -140,7 +140,6 @@
         "Supprimer": "Delete"
     },
     "plugins\/mybin\/core\/class\/mybin.class.php": {
-        "L\\'heure de notification est après l\\'heure de collecte": "The time of notification is after the time of collect",
         "Il n\'y a (plus) aucune poubelle à sortir": "There\'s no more bin to put out",
         "Le seuil doit être un entier positif ou être laissé vide": "The threshold must be a positive integer or must be left empty",
         "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide": "The number of days for the notification must be a positive integer or 0 or must be left empty"
