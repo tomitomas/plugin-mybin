@@ -1,6 +1,3 @@
-> **Warning**
-> This plugin is no longer maintained
-
 # plugin-mybin
 
 This is a plugin for Jeedom aimed at easing management of domestic bins.
@@ -19,3 +16,7 @@ You like this plugin? You can, if you wish, encourage its developer:
 # Contributions
 
 This plugin is opened for contributions and even encouraged! Please submit your pull requests for improvements/fixes.
+
+# Origines
+
+Original developper --> hugoKs3
