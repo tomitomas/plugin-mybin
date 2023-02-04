@@ -1,0 +1,16 @@
+{
+    "name": "tomitomas/plugin-mybin",
+    "description": "MyBin plugin for jeedom",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "ToMtoM"
+        }
+    ],
+    "require": {
+        "tomitomas/jeedom-tools": "~0.3"
+    },
+    "config": {
+        "vendor-dir": "3rdparty/"
+    }
+}
