@@ -241,66 +241,8 @@ class mybin extends eqLogic {
 
     public function postUpdate() {
         if ($this->getConfiguration('type', '') <> 'whole') {
-            $cmd = $this->getCmd(null, 'bin');
-            if (!is_object($cmd)) {
-                $cmd = new mybinCmd();
-                $cmd->setLogicalId('bin');
-                $cmd->setEqLogic_id($this->getId());
-                $cmd->setName('Poubelle à sortir');
-                $cmd->setType('info');
-                $cmd->setSubType('binary');
-                $cmd->setIsHistorized(0);
-                $cmd->setTemplate('mobile', 'line');
-                $cmd->setTemplate('dashboard', 'line');
-                $cmd->save();
-            }
-            $cmd = $this->getCmd(null, 'ack');
-            if (!is_object($cmd)) {
-                $cmd = new mybinCmd();
-                $cmd->setLogicalId('ack');
-                $cmd->setEqLogic_id($this->getId());
-                $cmd->setName('Ack');
-                $cmd->setType('action');
-                $cmd->setSubType('other');
-                $cmd->save();
-            }
-            $cmd = $this->getCmd(null, 'counter');
-            if (!is_object($cmd)) {
-                $cmd = new mybinCmd();
-                $cmd->setLogicalId('counter');
-                $cmd->setEqLogic_id($this->getId());
-                $cmd->setName('Compteur');
-                $cmd->setType('info');
-                $cmd->setSubType('numeric');
-                $cmd->setIsHistorized(1);
-                $cmd->setTemplate('mobile', 'line');
-                $cmd->setTemplate('dashboard', 'line');
-                $cmd->save();
-                $cmd->event(0);
-            }
-            $cmd = $this->getCmd(null, 'resetcounter');
-            if (!is_object($cmd)) {
-                $cmd = new mybinCmd();
-                $cmd->setLogicalId('resetcounter');
-                $cmd->setEqLogic_id($this->getId());
-                $cmd->setName('Reset Compteur');
-                $cmd->setType('action');
-                $cmd->setSubType('other');
-                $cmd->save();
-            }
-            $cmd = $this->getCmd(null, 'nextcollect');
-            if (!is_object($cmd)) {
-                $cmd = new mybinCmd();
-                $cmd->setLogicalId('nextcollect');
-                $cmd->setEqLogic_id($this->getId());
-                $cmd->setName('Prochain ramassage');
-                $cmd->setType('info');
-                $cmd->setSubType('string');
-                $cmd->setIsHistorized(0);
-                $cmd->setTemplate('mobile', 'line');
-                $cmd->setTemplate('dashboard', 'line');
-                $cmd->save();
-            }
+            $this->createCommands(__DIR__  . '/../config/params.json', 'all');
+
             $dtNow = new DateTime("now");
             $nextOne = $this->getNextCollectsAndNotifs(1);
             if (is_array($nextOne)) {
