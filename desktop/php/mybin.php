@@ -207,8 +207,9 @@ foreach ($eqLogics as $eqLogic) {
 									</select>
 								</div>
 								<div class="col-sm-3">
-									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="withAlsace" />
-									<label class="control-label">{{avec Alsace-Moselle}}</label>
+									<label class="control-label">
+										<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="withAlsace" />
+										{{avec Alsace-Moselle}}</label>
 								</div>
 							</div>
 							<div class="form-group">

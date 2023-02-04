@@ -109,7 +109,8 @@
         "Non": "Non",
         "Jour suivant": "Jour suivant",
         "Jour suivant sauf dimanche": "Jour suivant sauf dimanche",
-        "Jour suivant sauf weekend": "Jour suivant sauf weekend"
+        "Jour suivant sauf weekend": "Jour suivant sauf weekend",
+        "avec Alsace-Moselle": "avec Alsace-Moselle"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
