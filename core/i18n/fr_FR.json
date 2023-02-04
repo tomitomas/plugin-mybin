@@ -105,12 +105,13 @@
         "4ème": "4ème",
         "Dernier du mois": "Dernier du mois",
         "Occurrence(s) du mois": "Occurrence(s) du mois",
-        "Décalage si jour férié": "Décalage si jour férié",
-        "Non": "Non",
-        "Jour suivant": "Jour suivant",
-        "Jour suivant sauf dimanche": "Jour suivant sauf dimanche",
-        "Jour suivant sauf weekend": "Jour suivant sauf weekend",
-        "avec Alsace-Moselle": "avec Alsace-Moselle"
+        "Action si jour férié": "Action si jour férié",
+        "Aucune": "Aucune",
+        "Décalage au jour suivant": "Décalage au jour suivant",
+        "Décalage au jour suivant sauf dimanche": "Décalage au jour suivant sauf dimanche",
+        "Décalage au jour suivant sauf weekend": "Décalage au jour suivant sauf weekend",
+        "avec Alsace-Moselle": "avec Alsace-Moselle",
+        "Supprimer l'occurence": "Supprimer l'occurence"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",

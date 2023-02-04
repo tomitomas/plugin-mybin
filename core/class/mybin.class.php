@@ -815,8 +815,10 @@ class mybin extends eqLogic {
         foreach ($dates as $date => $notif) {
             $d = DateTime::createFromFormat("Y-m-d H:i", $date);
             $n = DateTime::createFromFormat("Y-m-d H:i", $notif);
-            if (self::isPublicHoliday($d, $withAlsace)) {
+            $isPublicHoliday = self::isPublicHoliday($d, $withAlsace);
+            if ($isPublicHoliday) {
                 self::debug($d->format('Y-m-d') . ' est un jour férié');
+                if ($actionTodo == 'remove') continue;
                 $d->modify('+1 day');
                 $n->modify('+1 day');
                 while (!self::isShiftableTo($d, $actionTodo, $withAlsace)) {

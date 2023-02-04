@@ -105,12 +105,13 @@
         "4ème": "4th",
         "Dernier du mois": "Last of the month",
         "Occurrence(s) du mois": "Month occurence(s)",
-        "Décalage si jour férié": "Offset if public holiday",
-        "Non": "No",
-        "Jour suivant": "Next day",
-        "Jour suivant sauf dimanche": "Next day except sunday",
-        "Jour suivant sauf weekend": "Next weekday",
-        "avec Alsace-Moselle": "including Alsace-Moselle"
+        "Action si jour férié": "Action if public holiday",
+        "Aucune": "Nothing",
+        "Décalage au jour suivant": "Move to next day",
+        "Décalage au jour suivant sauf dimanche": "Move to next day except sunday",
+        "Décalage au jour suivant sauf weekend": "Move to next weekday",
+        "avec Alsace-Moselle": "including Alsace-Moselle",
+        "Supprimer l'occurence": "Remove this occurence"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
