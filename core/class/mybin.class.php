@@ -287,9 +287,9 @@ class mybin extends eqLogic {
                         $binimg = $this->getColorAttr($eqLogic->getConfiguration('color'), 'icon_on');
                         $ackCmd = $eqLogic->getCmd(null, 'ack');
                         $counterCmd = $eqLogic->getCmd(null, 'counter');
-                        $binnotifs = $binnotifs . '<div style="display: inline-block;" class="cmd ack' . $ackCmd->getId() . ' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/' . $binimg . '" width="80px"/>';
-                        $binnotifs = $binnotifs . '<br/><i class="fas fa-tachometer-alt"></i> ' . $counterCmd->execCmd();
-                        $binnotifs = $binnotifs . '</div>';
+                        $binnotifs .= '<div style="display: inline-block;" class="cmd ack' . $ackCmd->getId() . ' cursor" data-type="info" data-subtype="binary"><img src="plugins/mybin/data/images/' . $binimg . '" width="80px"/>';
+                        $binnotifs .= '<br/><i class="fas fa-tachometer-alt"></i> ' . $counterCmd->execCmd();
+                        $binnotifs .= '</div>';
                         $binscript = $binscript . "$('.eqLogic[data-eqLogic_uid=" . $replace['#uid#'] . "] .ack" . $ackCmd->getId() . "').on('click', function () {jeedom.cmd.execute({id: '" . $ackCmd->getId() . "'});});";
                     }
                 }
@@ -298,9 +298,20 @@ class mybin extends eqLogic {
                     $binnotifs = 'none';
                 }
             }
-            $replace['#binmsg#'] = __('Il n\'y a (plus) aucune poubelle à sortir', __FILE__);
+
             $replace['#binscript#'] = $binscript;
             $replace['#binnotifs#'] = $binnotifs;
+
+            $defaultNoBin = config::byKey('noBinColor', __CLASS__, 'text');
+            if ($defaultNoBin == 'text') {
+                $replace['#binmsg#'] = __('Il n\'y a (plus) aucune poubelle à sortir', __FILE__);
+            } elseif ($binnotifs == 'none') {
+                $defaultNoBinImg = $this->getColorAttr($defaultNoBin, 'icon_on');
+                $noBin = '<div><img src="plugins/mybin/data/images/' . $defaultNoBinImg . '" width="80px"/>';
+                $noBin .= '</div>';
+
+                $replace['#binnotifs#'] = $noBin;
+            }
 
             // calendar
             if (config::byKey('calendar', 'mybin', '', true) == 1) {

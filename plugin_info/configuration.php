@@ -62,5 +62,22 @@ if (!isConnect('admin')) {
 				</select>
 			</div>
 		</div>
+		<div class="form-group">
+			<label class="col-lg-4 control-label">{{Info si plus de poubelle}}</label>
+			<div class="col-lg-3">
+				<select id="sel_color" class="configKey form-control" data-l1key="noBinColor">
+					<?php
+					echo '<option value="text">{{Texte}}</option>';
+					$colors = config::byKey('colors', 'mybin', array(), true);
+					usort($colors, function ($a, $b) {
+						return strtolower($a['name']) <=> strtolower($b['name']);
+					});
+					foreach ($colors as $color) {
+						echo '<option value="' . $color["id"] . '">{{' . $color["name"] . '}}</option>';
+					}
+					?>
+				</select>
+			</div>
+		</div>
 	</fieldset>
 </form>

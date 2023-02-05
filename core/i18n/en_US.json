@@ -9,7 +9,8 @@
         "Paramètres du widget global": "Parameters of global widget",
         "Eléments à afficher sur le widget global": "Elements to display on the global widget",
         "Notifications": "Notifications",
-        "Calendrier": "Calendar"
+        "Calendrier": "Calendar",
+        "Info si plus de poubelle": "Info displayed if no more bin"
     },
     "plugins\/mybin\/desktop\/php\/mybin.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",
