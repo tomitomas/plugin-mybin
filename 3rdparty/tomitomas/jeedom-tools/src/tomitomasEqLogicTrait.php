@@ -63,6 +63,18 @@ trait tomitomasEqLogicTrait {
                 if (isset($cmdData["order"])) {
                     $cmd->setOrder($cmdData["order"]);
                 }
+
+                if (isset($cmdData['display'])) {
+                    foreach ($cmdData['display'] as $key => $value) {
+                        $cmd->setDisplay($key, $value);
+                    }
+                }
+
+                if (isset($cmdData['template'])) {
+                    foreach ($cmdData['template'] as $key => $value) {
+                        $cmd->setTemplate($key, $value);
+                    }
+                }
             }
 
             $cmd->setName(__($cmdData["name"], __FILE__));
@@ -77,18 +89,6 @@ trait tomitomasEqLogicTrait {
                         $value = self::createListOption(explode(";", $value), $dict);
                     }
                     $cmd->setConfiguration($key, $value);
-                }
-            }
-
-            if (isset($cmdData['display'])) {
-                foreach ($cmdData['display'] as $key => $value) {
-                    $cmd->setDisplay($key, $value);
-                }
-            }
-
-            if (isset($cmdData['template'])) {
-                foreach ($cmdData['template'] as $key => $value) {
-                    $cmd->setTemplate($key, $value);
                 }
             }
 
