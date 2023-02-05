@@ -591,6 +591,7 @@ class mybin extends eqLogic {
                     $options[$key] = $value;
                 }
             }
+            $options['source'] = __CLASS__;
             scenarioExpression::createAndExec('action', $action['cmd'], $options);
         } catch (Exception $e) {
             self::error($this->getHumanName() . ' Erreur lors de l\'execution de l\'action ' . $action['cmd'] . ': ' . $e->getMessage());
