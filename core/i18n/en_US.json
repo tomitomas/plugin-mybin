@@ -143,7 +143,8 @@
     "plugins\/mybin\/core\/class\/mybin.class.php": {
         "Il n\'y a (plus) aucune poubelle à sortir": "There\'s no more bin to put out",
         "Le seuil doit être un entier positif ou être laissé vide": "The threshold must be a positive integer or must be left empty",
-        "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide": "The number of days for the notification must be a positive integer or 0 or must be left empty"
+        "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide": "The number of days for the notification must be a positive integer or 0 or must be left empty",
+        "Ajouter une date spéciale": "Add a specific date"
     },
     "plugins\/mybin\/core\/ajax\/mybin.ajax.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",

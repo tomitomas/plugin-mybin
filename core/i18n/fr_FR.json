@@ -145,7 +145,8 @@
         "Le seuil doit être un entier positif ou être laissé vide": "Le seuil doit être un entier positif ou être laissé vide",
         "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide": "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide",
         "L\'heure de notification ne peut pas être vide": "L\'heure de notification ne peut pas être vide",
-        "L\'heure de ramassage ne peut pas être vide": "L\'heure de ramassage ne peut pas être vide"
+        "L\'heure de ramassage ne peut pas être vide": "L\'heure de ramassage ne peut pas être vide",
+        "Ajouter une date spéciale": "Ajouter une date spéciale"
     },
     "plugins\/mybin\/core\/ajax\/mybin.ajax.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
