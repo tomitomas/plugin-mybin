@@ -410,9 +410,9 @@ class mybin extends eqLogic {
 
         $isSpecificCron = false;
         $isSpecificDay = false;
-        $ismonth = false;
-        $isweek = false;
-        $isday = false;
+        $isMonth = false;
+        $isWeek = false;
+        $isDay = false;
 
         $specificCrons = $this->getConfiguration('specific_cron');
         if (is_array($specificCrons)) {
@@ -457,11 +457,11 @@ class mybin extends eqLogic {
             $isMonth = true;
         }
         if (($week % 2 == 0 && $this->getConfiguration('paire') == 1) || ($week % 2 != 0 && $this->getConfiguration('impaire') == 1)) {
-            $isweek = true;
+            $isWeek = true;
         }
         for ($i = 0; $i <= 6; $i++) {
             if ($this->getConfiguration('day_' . $i) == 1 && $i == $day) {
-                $isday = true;
+                $isDay = true;
                 break;
             }
         }
@@ -469,7 +469,7 @@ class mybin extends eqLogic {
         if ($this->getConfiguration('Occm_0') == 1) {
             $isocc = true;
         } else {
-            if ($isday) {
+            if ($isDay) {
                 $dayj = 1 * $dt->format('j');
                 $dtTemp = new DateTime($year . '-' . $month . '-01');
                 $Occdate = 0;
@@ -493,7 +493,7 @@ class mybin extends eqLogic {
             }
         }
 
-        if ($isSpecificCron || $isSpecificDay || ($isMonth && $isweek && $isday && $isocc)) {
+        if ($isSpecificCron || $isSpecificDay || ($isMonth && $isWeek && $isDay && $isocc)) {
             return true;
         } else {
             return false;
