@@ -609,6 +609,40 @@ class mybin extends eqLogic {
         }
     }
 
+    public function addSpecificDates($newDate) {
+        // check if it's a date
+        if (DateTime::createFromFormat('Y-m-d', $newDate) === false) {
+            self::error('La date ' . $newDate . ' n\'est pas valide (format : AAA-MM-JJ)');
+            return;
+        }
+
+
+        // check if it's a date in the futur
+        $dtNow = strtotime(date('Y-m-d'));
+        $dtCheck = strtotime($newDate);
+        if ($dtCheck < $dtNow) {
+            self::error('La date ' . $newDate . ' est dans le passé ! Pas d\'ajout');
+            return;
+        }
+
+        // check if the date does not already exist
+        $currentDates = $this->getConfiguration('specific_day');
+        $ajout = true;
+        foreach ($currentDates as $date) {
+            if ($date['myday'] == $newDate) {
+                $ajout = false;
+                self::debug('Pas d\'ajout ' . $date['myday'] . ' - date existante');
+            }
+        }
+
+        if ($ajout) {
+            self::debug('Adding ' . $newDate . ' as a new specific date');
+            array_push($currentDates, array("myday" => $newDate));
+            sort($currentDates);
+            $this->setConfiguration('specific_day', $currentDates)->save();
+        }
+    }
+
     public function cleanSpecificDates() {
         $change = false;
         $specificDays = $this->getConfiguration('specific_day');
@@ -985,11 +1019,12 @@ class mybinCmd extends cmd {
     }
 
     public function execute($_options = null) {
+        /** @var mybin $eqLogic */
         $eqLogic = $this->getEqLogic();
         if (!is_object($eqLogic) || $eqLogic->getIsEnable() != 1) {
             throw new Exception(__('Equipement desactivé impossible d\éxecuter la commande : ' . $this->getHumanName(), __FILE__));
         }
-        mybin::debug('Execution de la commande ' . $this->getLogicalId());
+        mybin::debug('Execution de la commande ' . $this->getLogicalId() . ' - avec les options : ' . json_encode($_options));
         switch ($this->getLogicalId()) {
             case "ack":
                 $eqLogic->ackBin(false);
@@ -997,6 +1032,18 @@ class mybinCmd extends cmd {
                 break;
             case "resetcounter":
                 $eqLogic->resetCounter();
+                break;
+
+            case "addSpecificDay":
+                if (empty($_options['message']) && $_options['message'] != '0') {
+                    mybin::error('Empty field "' . $this->getDisplay('message_placeholder', 'Message') . '" [cmdId : ' . $this->getId() . ']');
+                    return;
+                }
+                $allDates = explode(',', $_options['message']);
+                mybin::trace('will add dates list ' . json_encode($allDates));
+                foreach ($allDates as $date) {
+                    $eqLogic->addSpecificDates($date);
+                }
                 break;
         }
     }

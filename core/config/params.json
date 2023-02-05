@@ -55,6 +55,18 @@
                     "mobile": "line",
                     "dashboard": "line"
                 }
+            },
+            {
+                "logicalId": "addSpecificDay",
+                "name": "Ajouter une date spéciale",
+                "type": "action",
+                "subtype": "message",
+                "isVisible": 1,
+                "order": 6,
+                "display": {
+                    "message_placeholder": "AAAA-MM-JJ",
+                    "title_disable": 1
+                }
             }
         ]
     },
