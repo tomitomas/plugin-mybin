@@ -1042,7 +1042,7 @@ class mybinCmd extends cmd {
                 $allDates = explode(',', $_options['message']);
                 mybin::trace('will add dates list ' . json_encode($allDates));
                 foreach ($allDates as $date) {
-                    $eqLogic->addSpecificDates($date);
+                    $eqLogic->addSpecificDates(trim($date));
                 }
                 break;
         }
