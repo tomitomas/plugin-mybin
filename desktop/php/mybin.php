@@ -355,8 +355,8 @@ foreach ($eqLogics as $eqLogic) {
 							<th style="width:50px;">{{Id}}</th>
 							<th style="width:300px;">{{Nom}}</th>
 							<th>{{Type}}</th>
-							<th class="col-xs-3">{{Options}}</th>
 							<th>{{Etat}}</th>
+							<th class="col-xs-3">{{Options}}</th>
 							<th class="col-xs-2">{{Action}}</th>
 						</tr>
 					</thead>

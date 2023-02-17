@@ -138,14 +138,14 @@ function addCmdToTable(_cmd) {
   tr += '<span class="subType" subType="' + init(_cmd.subType) + '"></span>';
   tr += '</td>';
   tr += '<td>';
+  tr += '<span class="cmdAttr" data-l1key="htmlstate"></span>';
+  tr += '</td>';
+  tr += '<td>';
   tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="minValue" placeholder="{{Min}}" title="{{Min}}" style="width:30%;display:inline-block;">';
   tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="maxValue" placeholder="{{Max}}" title="{{Max}}" style="width:30%;display:inline-block;">';
   tr += '<input class="cmdAttr form-control input-sm" data-l1key="unite" placeholder="Unité" title="{{Unité}}" style="width:30%;display:inline-block;margin-left:2px;">';
   tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label></span> ';
   tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label></span> ';
-  tr += '</td>';
-  tr += '<td>';
-  tr += '<span class="cmdAttr" data-l1key="htmlstate"></span>';
   tr += '</td>';
   tr += '<td>';
   if (is_numeric(_cmd.id)) {
@@ -248,6 +248,9 @@ function addCron(_cron) {
   div += '</a>';
   div += '</span>';
   div += '</div>';
+  div += '<span class="input-group-btn" >';
+  div += '<input type="text" class="eqLogicAttr mycron" data-l1key="add_remove" style="width:50px" title="jour à ajouter/supprimer" value="0" />';
+  div += '</span>';
   div += '</div>';
   div += '</div>';
   div += '</div>';
