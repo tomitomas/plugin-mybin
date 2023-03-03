@@ -1,0 +1,74 @@
+{
+    "cmds": {
+        "all": [
+            {
+                "logicalId": "bin",
+                "name": "Poubelle à sortir",
+                "type": "info",
+                "subtype": "binary",
+                "isHistorized": 0,
+                "template": {
+                    "mobile": "line",
+                    "dashboard": "line"
+                },
+                "isVisible": 1,
+                "order": 1
+            },
+            {
+                "logicalId": "ack",
+                "name": "Ack",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "order": 2
+            },
+            {
+                "logicalId": "counter",
+                "name": "Compteur",
+                "type": "info",
+                "subtype": "numeric",
+                "isHistorized": 1,
+                "isVisible": 1,
+                "order": 3,
+                "template": {
+                    "mobile": "line",
+                    "dashboard": "line"
+                }
+            },
+            {
+                "logicalId": "resetcounter",
+                "name": "Reset Compteur",
+                "type": "action",
+                "subtype": "other",
+                "isVisible": 1,
+                "order": 4
+            },
+            {
+                "logicalId": "nextcollect",
+                "name": "Prochain ramassage",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "isHistorized": 0,
+                "order": 5,
+                "template": {
+                    "mobile": "line",
+                    "dashboard": "line"
+                }
+            },
+            {
+                "logicalId": "addSpecificDay",
+                "name": "Ajouter une date spéciale",
+                "type": "action",
+                "subtype": "message",
+                "isVisible": 1,
+                "order": 6,
+                "display": {
+                    "message_placeholder": "AAAA-MM-JJ",
+                    "title_disable": 1
+                }
+            }
+        ]
+    },
+    "dictionary": {}
+}

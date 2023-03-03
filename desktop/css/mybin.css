@@ -1,7 +1,7 @@
 #customBin {
-    background: no-repeat url("../../core/assets/icon_bkg.png") !important;
-	background-size: 60% !important;
-	background-position: center 0% !important;
+    background: no-repeat url("../../data/images/icon_bkg.png") !important;
+    background-size: 60% !important;
+    background-position: center 0% !important;
     margin-top: 15px !important;
 }
 
@@ -14,4 +14,9 @@
     vertical-align: baseline;
     padding-top: 0px !important;
     margin-bottom: 18px !important;
+}
+
+.tagColor {
+    color: rgba(0, 128, 255, 0.525);
+    font-style: italic;
 }

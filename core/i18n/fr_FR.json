@@ -9,7 +9,8 @@
         "Paramètres du widget global": "Paramètres du widget global",
         "Eléments à afficher sur le widget global": "Eléments à afficher sur le widget global",
         "Notifications": "Notifications",
-        "Calendrier": "Calendrier"
+        "Calendrier": "Calendrier",
+        "Info si plus de poubelle": "Info si plus de poubelle"
     },
     "plugins\/mybin\/desktop\/php\/mybin.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
@@ -78,15 +79,15 @@
         "Janvier": "Janvier",
         "Février": "Février",
         "Mars": "Mars",
-        "Avril": "Avril", 
-        "Mai": "Mai", 
+        "Avril": "Avril",
+        "Mai": "Mai",
         "Juin": "Juin",
         "Juillet": "Juillet",
         "Août": "Août",
         "Septembre": "Septembre",
         "Octobre": "Octobre",
         "Novembre": "Novembre",
-        "Décembre": "Décembre", 
+        "Décembre": "Décembre",
         "Mois de ramassage": "Mois de ramassage",
         "Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.": "Pour être notifié le jour même du ramassage, laissez le champ vide. Attention à l'heure dans ce cas.",
         "Avec votre configuration, voici les 10 prochaines dates de ramassage et de notification :": "Avec votre configuration, voici les 10 prochaines dates de ramassage et de notification :",
@@ -100,11 +101,18 @@
         "Cette expression binaire sera évaluée au moment de la notification": "Cette expression binaire sera évaluée au moment de la notification",
         "Tous": "Tous",
         "1er du mois": "1er du mois",
-        "2ème": "2ème", 
+        "2ème": "2ème",
         "3ème": "3ème",
         "4ème": "4ème",
         "Dernier du mois": "Dernier du mois",
-        "Occurrence(s) du mois": "Occurrence(s) du mois"
+        "Occurrence(s) du mois": "Occurrence(s) du mois",
+        "Action si jour férié": "Action si jour férié",
+        "Aucune": "Aucune",
+        "Décalage au jour suivant": "Décalage au jour suivant",
+        "Décalage au jour suivant sauf dimanche": "Décalage au jour suivant sauf dimanche",
+        "Décalage au jour suivant sauf weekend": "Décalage au jour suivant sauf weekend",
+        "avec Alsace-Moselle": "avec Alsace-Moselle",
+        "Supprimer l'occurence": "Supprimer l'occurence"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
@@ -133,12 +141,12 @@
         "Supprimer": "Supprimer"
     },
     "plugins\/mybin\/core\/class\/mybin.class.php": {
-        "L\\'heure de notification est après l\\'heure de collecte": "L\\'heure de notification est après l\\'heure de collecte",
         "Il n\'y a (plus) aucune poubelle à sortir": "Il n\'y a (plus) aucune poubelle à sortir",
-        "Le seuil doit être un entier positif ou être laissé vide": "Le seuil doit être un entier positif ou être laissé vide", 
+        "Le seuil doit être un entier positif ou être laissé vide": "Le seuil doit être un entier positif ou être laissé vide",
         "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide": "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide",
         "L\'heure de notification ne peut pas être vide": "L\'heure de notification ne peut pas être vide",
-        "L\'heure de ramassage ne peut pas être vide": "L\'heure de ramassage ne peut pas être vide"
+        "L\'heure de ramassage ne peut pas être vide": "L\'heure de ramassage ne peut pas être vide",
+        "Ajouter une date spéciale": "Ajouter une date spéciale"
     },
     "plugins\/mybin\/core\/ajax\/mybin.ajax.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",

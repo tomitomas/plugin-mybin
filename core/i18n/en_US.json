@@ -9,7 +9,8 @@
         "Paramètres du widget global": "Parameters of global widget",
         "Eléments à afficher sur le widget global": "Elements to display on the global widget",
         "Notifications": "Notifications",
-        "Calendrier": "Calendar"
+        "Calendrier": "Calendar",
+        "Info si plus de poubelle": "Info displayed if no more bin"
     },
     "plugins\/mybin\/desktop\/php\/mybin.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",
@@ -78,8 +79,8 @@
         "Janvier": "January",
         "Février": "February",
         "Mars": "March",
-        "Avril": "April", 
-        "Mai": "May", 
+        "Avril": "April",
+        "Mai": "May",
         "Juin": "June",
         "Juillet": "July",
         "Août": "August",
@@ -100,11 +101,18 @@
         "Cette expression binaire sera évaluée au moment de la notification": "This binary expression will be evaluated at notification's time",
         "Tous": "All",
         "1er du mois": "1st of the month",
-        "2ème": "2nd", 
+        "2ème": "2nd",
         "3ème": "3rd",
         "4ème": "4th",
         "Dernier du mois": "Last of the month",
-        "Occurrence(s) du mois": "Month occurence(s)"
+        "Occurrence(s) du mois": "Month occurence(s)",
+        "Action si jour férié": "Action if public holiday",
+        "Aucune": "Nothing",
+        "Décalage au jour suivant": "Move to next day",
+        "Décalage au jour suivant sauf dimanche": "Move to next day except sunday",
+        "Décalage au jour suivant sauf weekend": "Move to next weekday",
+        "avec Alsace-Moselle": "including Alsace-Moselle",
+        "Supprimer l'occurence": "Remove this occurence"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",
@@ -133,10 +141,10 @@
         "Supprimer": "Delete"
     },
     "plugins\/mybin\/core\/class\/mybin.class.php": {
-        "L\\'heure de notification est après l\\'heure de collecte": "The time of notification is after the time of collect",
         "Il n\'y a (plus) aucune poubelle à sortir": "There\'s no more bin to put out",
         "Le seuil doit être un entier positif ou être laissé vide": "The threshold must be a positive integer or must be left empty",
-        "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide": "The number of days for the notification must be a positive integer or 0 or must be left empty"
+        "Le nombre de jours pour la notification doit être un entier positif ou 0 ou être laissé vide": "The number of days for the notification must be a positive integer or 0 or must be left empty",
+        "Ajouter une date spéciale": "Add a specific date"
     },
     "plugins\/mybin\/core\/ajax\/mybin.ajax.php": {
         "401 - Accès non autorisé": "401 - Unauthorized access",
