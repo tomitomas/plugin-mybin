@@ -67,7 +67,7 @@ $("body").undelegate(".listAction", 'click').delegate(".listAction", 'click', fu
     el.value(result.human);
     jeedom.cmd.displayActionOption(el.value(), '', function (html) {
       el.closest('.' + type).find('.actionOptions').html(html);
-      taAutosize();
+      jeedomUtils.taAutosize();
     });
   });
 });

@@ -22,6 +22,7 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 function mybin_install() {
     mybin::createWhole();
     config::save('calendarType', 'collect', 'mybin');
+    config::save('noBinColor', 'text', 'mybin');
     config::save('notifs', 1, 'mybin');
     config::save('calendar', 1, 'mybin');
     config::save('colors', mybin_createColors(), 'mybin');
