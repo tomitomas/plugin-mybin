@@ -87,6 +87,14 @@ $("body").off('click', '.bt_removeDay').on('click', '.bt_removeDay', function ()
   $(this).closest('.specific_day').remove();
 });
 
+$("body").off('click', '.bt_removeDayAuto').on('click', '.bt_removeDayAuto', function () {
+  elts = $(this).closest('#div_specific_day_auto').find('.eqLogicAttr')
+  elts.each(function (key, element) {
+    element.value = ""
+  }
+  );
+});
+
 $("body").off('click', '.bt_removeCron').on('click', '.bt_removeCron', function () {
   $(this).closest('.specific_cron').remove();
 });
@@ -210,28 +218,28 @@ function addDay(_day) {
 
   $('#div_specific_day').append(div);
 
-  $('.datetimepicker').datetimepicker({
-    lang: 'fr',
-    dayOfWeekStart: 1,
-    i18n: {
-      fr: {
-        months: [
-          'Janvier', 'Février', 'Mars', 'Avril',
-          'Mai', 'Juin', 'Juillet', 'Aout',
-          'Septembre', 'Octobre', 'Novembre', 'Décembre',
-        ],
-        dayOfWeek: [
-          "Di", "Lu", "Ma", "Me",
-          "Je", "Ve", "Sa",
-        ]
-      }
-    },
-    timepicker: false,
-    format: 'Y-m-d'
-  });
-
   $('#div_specific_day .specific_day').last().setValues(_day, '.myday');
 }
+
+$('.datetimepicker').datetimepicker({
+  lang: 'fr',
+  dayOfWeekStart: 1,
+  i18n: {
+    fr: {
+      months: [
+        'Janvier', 'Février', 'Mars', 'Avril',
+        'Mai', 'Juin', 'Juillet', 'Aout',
+        'Septembre', 'Octobre', 'Novembre', 'Décembre',
+      ],
+      dayOfWeek: [
+        "Di", "Lu", "Ma", "Me",
+        "Je", "Ve", "Sa",
+      ]
+    }
+  },
+  timepicker: false,
+  format: 'Y-m-d'
+});
 
 function addCron(_cron) {
   var div = '<div class="specific_cron">';
@@ -266,16 +274,21 @@ function saveEqLogic(_eqLogic) {
   }
   _eqLogic.configuration.action_collect = $('#div_action_collect .action_collect').getValues('.expressionAttr');
   _eqLogic.configuration.action_notif = $('#div_action_notif .action_notif').getValues('.expressionAttr');
-  data = $('#div_specific_day .specific_day').getValues('.myday');
 
-  data.sort(function (a, b) {
+  data = $('#div_specific_day .specific_day').getValues('.myday');
+  data2 = data.filter(elt => {
+    return elt.myday != '';
+  });
+  data2.sort(function (a, b) {
     var x = a.myday, y = b.myday;
     return x < y ? -1 : x > y ? 1 : 0;
   });
 
-  _eqLogic.configuration.specific_day = data;
+  _eqLogic.configuration.specific_day = data2;
 
   _eqLogic.configuration.specific_cron = $('#div_specific_cron .specific_cron').getValues('.mycron');
+
+  _eqLogic.configuration.specific_day_auto = $('#div_specific_day_auto').getValues('.eqLogicAttr')[0];
 
   return _eqLogic;
 }
@@ -309,6 +322,11 @@ function printEqLogic(_eqLogic) {
         addCron(_eqLogic.configuration.specific_cron[i]);
       }
     }
+    if (isset(_eqLogic.configuration.specific_day_auto)) {
+      $('#div_specific_day_auto').setValues(_eqLogic.configuration.specific_day_auto, '.eqLogicAttr');
+    }
+
+
   }
 
   $('.allDates').hide();
