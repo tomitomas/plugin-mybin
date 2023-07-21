@@ -73,6 +73,9 @@ class mybin extends eqLogic {
     public static function checkAutoDate() {
         /** @var mybin $eqLogic */
         foreach (eqLogic::byType(__CLASS__) as $eqLogic) {
+            if ($eqLogic->getConfiguration('type', '') == 'whole') {
+                continue;
+            }
             $eqLogic->calculateNextAutoDate();
         }
     }
@@ -254,12 +257,13 @@ class mybin extends eqLogic {
             if ($this->getConfiguration('collect_time') == '') {
                 throw new Exception($this->getHumanName() . ": " . __('L\'heure de ramassage ne peut pas être vide', __FILE__));
             }
+
+            $calc = $this->calculateNextAutoDate();
+            if (!$calc) {
+                $this->setConfiguration('specific_day_auto', '');
+            }
         }
 
-        $calc = $this->calculateNextAutoDate();
-        if (!$calc) {
-            $this->setConfiguration('specific_day_auto', '');
-        }
 
         $specificCrons = $this->getConfiguration('specific_cron');
         if (is_array($specificCrons)) {
