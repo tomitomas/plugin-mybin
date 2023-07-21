@@ -26,10 +26,13 @@ function mybin_install() {
     config::save('notifs', 1, 'mybin');
     config::save('calendar', 1, 'mybin');
     config::save('colors', mybin_createColors(), 'mybin');
+    mybin::addCronCheck();
 }
 
 // Fonction exécutée automatiquement après la mise à jour du plugin
 function mybin_update() {
+
+    mybin::addCronCheck();
 
     $colors = config::byKey('colors', 'mybin', 'unset', true);
     if ($colors == 'unset') {
@@ -281,4 +284,5 @@ function mybin_createColors() {
 
 // Fonction exécutée automatiquement après la suppression du plugin
 function mybin_remove() {
+    mybin::removeCronItems();
 }

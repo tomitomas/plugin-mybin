@@ -120,8 +120,8 @@ foreach ($eqLogics as $eqLogic) {
 							<div class="form-group">
 								<label class="col-sm-3 control-label">{{Options}}</label>
 								<div class="col-sm-7">
-									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked />{{Activer}}</label>
-									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked />{{Visible}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" />{{Activer}}</label>
+									<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" />{{Visible}}</label>
 								</div>
 							</div>
 							<br>
@@ -218,6 +218,23 @@ foreach ($eqLogics as $eqLogic) {
 								<div class="col-sm-7">
 									<a class="btn btn-success btn-sm addDay" data-type="specific_day" style="margin:5px;"><i class="fas fa-plus-circle"></i> {{Ajouter une date}}</a>
 									<div id="div_specific_day"></div>
+								</div>
+							</div>
+							<br />
+							<div class="form-group">
+								<label class="col-sm-3 control-label help" data-help="{{Permet de calculer automatiquement des prochaines dates : toutes les 3 semaines, tous les 11 jours, ...<br>Indiquez la date du dernier ramassage connu et la fréquence (en jours), le plugin s'occupera d'ajouter les bonnes dates au bon moment.}}">{{Calcul auto date(s) particulière(s)}}</label>
+								<div class="col-sm-7" id="div_specific_day_auto">
+									<div class=" col-sm-6">
+										<div class="input-group">
+											<span class="input-group-btn">
+												<a class="btn btn-default bt_removeDayAuto roundedLeft" data-l1key="specific_day_auto" data-type="specific_day_auto"><i class="fas fa-minus-circle"></i></a>
+											</span>
+											<input class="eqLogicAttr form-control datetimepicker" type="text" data-type="specific_day_auto" data-l1key="last_day" placeholder="dernier passage connu">
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<input class="eqLogicAttr form-control" type="number" data-l1key="recurrence" placeholder="nb de jours">
+									</div>
 								</div>
 							</div>
 							<br />

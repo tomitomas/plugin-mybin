@@ -40,7 +40,45 @@ class mybin extends eqLogic {
         }
     }
 
+
+    public static function addCronCheck() {
+        $cron = cron::byClassAndFunction(__CLASS__, 'checkAutoDate');
+        if (!is_object($cron)) {
+            $cron = new cron();
+            $cron->setClass(__CLASS__);
+            $cron->setFunction('checkAutoDate');
+            $cron->setEnable(1);
+            $cron->setDeamon(0);
+            $cron->setSchedule('15 0 * * *');
+            $cron->setTimeout(5);
+            $cron->save();
+        }
+    }
+
+    public static function removeCronItems() {
+        try {
+            $crons = cron::searchClassAndFunction(__CLASS__, 'checkAutoDate');
+            if (is_array($crons)) {
+                foreach ($crons as $cron) {
+                    $cron->remove();
+                }
+            }
+        } catch (Exception $e) {
+        }
+    }
+
+
     /*     * *********************Méthodes d'instance************************* */
+
+    public static function checkAutoDate() {
+        /** @var mybin $eqLogic */
+        foreach (eqLogic::byType(__CLASS__) as $eqLogic) {
+            if ($eqLogic->getConfiguration('type', '') == 'whole') {
+                continue;
+            }
+            $eqLogic->calculateNextAutoDate();
+        }
+    }
 
     public function checkBin() {
         if ($this->getConfiguration('type', '') == 'whole') {
@@ -219,7 +257,13 @@ class mybin extends eqLogic {
             if ($this->getConfiguration('collect_time') == '') {
                 throw new Exception($this->getHumanName() . ": " . __('L\'heure de ramassage ne peut pas être vide', __FILE__));
             }
+
+            $calc = $this->calculateNextAutoDate();
+            if (!$calc) {
+                $this->setConfiguration('specific_day_auto', '');
+            }
         }
+
 
         $specificCrons = $this->getConfiguration('specific_cron');
         if (is_array($specificCrons)) {
@@ -609,19 +653,55 @@ class mybin extends eqLogic {
         }
     }
 
-    public function addSpecificDates($newDate) {
-        // check if it's a date
-        if (DateTime::createFromFormat('Y-m-d', $newDate) === false) {
-            self::error('La date ' . $newDate . ' n\'est pas valide (format : AAA-MM-JJ)');
+    private function calculateNextAutoDate() {
+
+        $specificDayAuto = $this->getConfiguration('specific_day_auto');
+        if (!is_array($specificDayAuto) || !isset($specificDayAuto['last_day']) || !isset($specificDayAuto['recurrence'])) {
+            self::debug('Il manque des éléments pour les jours auto');
+            return false;
+        }
+
+        $last = $specificDayAuto['last_day'];
+        $cycleRamassage = $specificDayAuto['recurrence'];
+        if ($last == '' && $cycleRamassage == '') {
             return;
         }
 
+        if ($last == '' || DateTime::createFromFormat('Y-m-d', $last) === false) {
+            self::warning('La date ' . $last . ' du "calcul auto" n\'est pas valide (format : AAA-MM-JJ)');
+            return false;
+        }
+
+        if ($cycleRamassage == '' || !is_numeric($cycleRamassage)) {
+            self::warning('La recurrence ' . $cycleRamassage . ' du "calcul auto" n\'est pas valide');
+            return false;
+        }
+
+        $dernierRamassage = $last . ' noon';
+        $nombreRamassage = 5;
+
+        for ($i = 0; $i < $nombreRamassage; $i++) {
+            $timestamp = strtotime($dernierRamassage) + (intdiv(strtotime("now") - strtotime($dernierRamassage), 7 * 86400 * $cycleRamassage) + 1) * 86400 * $cycleRamassage  + ($i * 86400 * $cycleRamassage);
+            $newDate = date('Y-m-d', $timestamp);
+            self::debug('Ajout date calculée automatiquement : ' . $newDate);
+            $this->addSpecificDates($newDate);
+        }
+
+        return true;
+    }
+
+    public function addSpecificDates($newDate) {
+        // check if it's a date
+        if (DateTime::createFromFormat('Y-m-d', $newDate) === false) {
+            self::info('La date ' . $newDate . ' n\'est pas valide (format : AAA-MM-JJ)');
+            return;
+        }
 
         // check if it's a date in the futur
         $dtNow = strtotime(date('Y-m-d'));
         $dtCheck = strtotime($newDate);
         if ($dtCheck < $dtNow) {
-            self::error('La date ' . $newDate . ' est dans le passé ! Pas d\'ajout');
+            self::info('La date ' . $newDate . ' est dans le passé ! Pas d\'ajout');
             return;
         }
 
@@ -639,7 +719,7 @@ class mybin extends eqLogic {
             self::debug('Adding ' . $newDate . ' as a new specific date');
             array_push($currentDates, array("myday" => $newDate));
             sort($currentDates);
-            $this->setConfiguration('specific_day', $currentDates)->save();
+            $this->setConfiguration('specific_day', $currentDates)->save(true);
         }
     }
 
