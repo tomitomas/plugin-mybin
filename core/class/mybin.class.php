@@ -228,6 +228,7 @@ class mybin extends eqLogic {
             $this->setConfiguration('impaire', 1);
             $this->setConfiguration('color', 'green');
             $this->setConfiguration('counter', 'auto');
+            $this->setConfiguration('dateFormat', 'Y-m-d H:i');
             $this->setConfiguration('Occm_0', 1);
             for ($i = 1; $i <= 12; $i++) {
                 $this->setConfiguration('month_' . $i, 1);

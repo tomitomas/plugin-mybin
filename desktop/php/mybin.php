@@ -343,10 +343,9 @@ foreach ($eqLogics as $eqLogic) {
 										<option value="Y-m-d H:i">2022-10-16 16:30</option>
 										<option value="d/m/Y H:i">16/10/2022 16:30</option>
 										<option value="d/m/y H:i">16/10/22 16:30</option>
+										<option value="d/m/y">16/10/22</option>
 										<option value="D d/m/Y">Lun 16/10/2022</option>
 										<option value="l d F">Lundi 16 Octobre</option>
-										<option value="d/m/y">16/10/22</option>
-										<option value="H:i">16:30</option>
 										<option value="custom">Personnalisé</option>
 										<!-- <option value="U">1665763502 (timestamp)</option> -->
 									</select>
