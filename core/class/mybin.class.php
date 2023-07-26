@@ -35,6 +35,8 @@ class mybin extends eqLogic {
     public static function cron5() {
         $eqLogics = self::byType(__CLASS__, true);
 
+
+        /** @var mybin $eqLogic */
         foreach ($eqLogics as $eqLogic) {
             $eqLogic->checkBin();
         }
@@ -134,7 +136,9 @@ class mybin extends eqLogic {
                 }
                 if ($nextRunRecorded == false && DateTime::createFromFormat("Y-m-d H:i", $collect) > $dtNow) {
                     $cmd = $this->getCmd(null, 'nextcollect');
-                    $cmd->event($collect);
+                    $date = self::dateToFrench($collect, $this->getDateFormat());
+                    $cmd->event($date);
+                    // $cmd->event($collect);
                     $nextRunRecorded = true;
                 }
             }
@@ -224,6 +228,7 @@ class mybin extends eqLogic {
             $this->setConfiguration('impaire', 1);
             $this->setConfiguration('color', 'green');
             $this->setConfiguration('counter', 'auto');
+            $this->setConfiguration('dateFormat', 'Y-m-d H:i');
             $this->setConfiguration('Occm_0', 1);
             for ($i = 1; $i <= 12; $i++) {
                 $this->setConfiguration('month_' . $i, 1);
@@ -293,13 +298,21 @@ class mybin extends eqLogic {
                 foreach ($nextOne as $collect => $notif) {
                     if (DateTime::createFromFormat("Y-m-d H:i", $collect) > $dtNow) {
                         $cmd = $this->getCmd(null, 'nextcollect');
-                        $cmd->event($collect);
+                        $date = self::dateToFrench($collect, $this->getDateFormat());
+                        $cmd->event($date);
                     }
                 }
             }
         }
         $this->emptyCacheWidget();
         $this->refreshWhole();
+    }
+
+    public function getDateFormat() {
+        $dateFormat = $this->getConfiguration('dateFormat', 'Y-m-d H:i');
+        $dateCustom =  $this->getConfiguration('dateFormatCustom', 'Y-m-d H:i');
+        $final =  ($dateFormat == 'custom') ? $dateCustom : $dateFormat;
+        return $final;
     }
 
     public function toHtml($_version = 'dashboard') {
@@ -369,6 +382,8 @@ class mybin extends eqLogic {
                     $replace['#day' . $i . '#'] = $this->getDayLetter($day);
                     $replace['#date' . $i . '#'] = $dateD . '/' . $dateM;
                     $display = "";
+
+                    /** @var mybin $eqLogic */
                     foreach ($eqLogics as $eqLogic) {
                         if ($eqLogic->getConfiguration('type') == 'whole') {
                             continue;
@@ -581,6 +596,14 @@ class mybin extends eqLogic {
                 break;
         }
         return $day;
+    }
+
+    public static function dateToFrench($date, $format) {
+        $english_days = array('Monday', 'Mon', 'Tuesday', 'Tue', 'Wednesday', 'Wed', 'Thursday', 'Thu', 'Friday', 'Fri', 'Saturday', 'Sat', 'Sunday', 'Sun');
+        $french_days = array('Lundi', 'Lun', 'Mardi', 'Mar', 'Mercredi', 'Mer', 'Jeudi', 'Jeu', 'Vendredi', 'Ven', 'Samedi', 'Sam', 'Dimanche', 'Dim');
+        $english_months = array('January', 'Jan', 'February', 'Feb', 'March', 'Mar', 'April', 'Apr', 'May', 'May', 'June', 'Jun', 'July', 'Jul', 'August', 'Aug', 'September', 'Sep', 'October', 'Oct', 'November', 'Nov', 'December', 'Dec');
+        $french_months = array('Janvier', 'Jan', 'Février', 'Fév', 'Mars', 'Mars', 'Avril', 'Avr', 'Mai', 'Mai', 'Juin', 'Juin', 'Juillet', 'Juil', 'Août', 'Août', 'Septembre', 'Sep', 'Octobre', 'Oct', 'Novembre', 'Nov', 'Décembre', 'Déc');
+        return str_replace($english_months, $french_months, str_replace($english_days, $french_days, date($format, strtotime($date))));
     }
 
     public static function createWhole() {

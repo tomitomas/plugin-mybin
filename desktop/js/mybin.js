@@ -332,3 +332,12 @@ function printEqLogic(_eqLogic) {
   $('.allDates').hide();
   $('.dates-' + _eqLogic.id).show();
 }
+
+$('.eqLogicAttr[data-l1key=configuration][data-l2key=dateFormat]').on('change', function () {
+  if ($(this).val() == 'custom') {
+    $('.dateFormatCustomDiv').show();
+  }
+  else {
+    $('.dateFormatCustomDiv').hide();
+  }
+});

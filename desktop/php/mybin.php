@@ -9,6 +9,7 @@ sendVarToJS('eqType', $plugin->getId());
 $eqLogics = eqLogic::byType($plugin->getId());
 
 $allDates = array();
+/** @var mybinb $eqLogic */
 foreach ($eqLogics as $eqLogic) {
 	if ($eqLogic->getConfiguration('type', '') <> 'whole') {
 		$allDates[$eqLogic->getId()] = $eqLogic->getNextCollectsAndNotifs(10, true);
@@ -18,23 +19,47 @@ foreach ($eqLogics as $eqLogic) {
 
 <div class="row row-overflow">
 	<div class="col-xs-12 eqLogicThumbnailDisplay">
-		<legend><i class="fas fa-cog"></i> {{Gestion}}</legend>
-		<div class="eqLogicThumbnailContainer">
-			<div class="cursor eqLogicAction logoPrimary" data-action="add">
-				<i class="fas fa-plus-circle"></i>
-				<br>
-				<span>{{Ajouter}}</span>
+		<div class="row">
+			<div class="col-sm-10">
+				<legend><i class="fas fa-cog"></i> {{Gestion}}</legend>
+				<div class="eqLogicThumbnailContainer">
+					<div class="cursor eqLogicAction logoPrimary" data-action="add">
+						<i class="fas fa-plus-circle"></i>
+						<br>
+						<span>{{Ajouter}}</span>
+					</div>
+					<div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
+						<i class="fas fa-wrench"></i>
+						<br>
+						<span>{{Configuration}}</span>
+					</div>
+					<div class="cursor eqLogicAction logoSecondary" id="bt_configImages">
+						<i class="fas fa-images"></i>
+						<br>
+						<span>{{Personnalisation}}</span>
+					</div>
+				</div>
 			</div>
-			<div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
-				<i class="fas fa-wrench"></i>
-				<br>
-				<span>{{Configuration}}</span>
-			</div>
-			<div class="cursor eqLogicAction logoSecondary" id="bt_configImages">
-				<i class="fas fa-images"></i>
-				<br>
-				<span>{{Personnalisation}}</span>
-			</div>
+
+			<?php
+			// uniquement si on est en version 4.4 ou supérieur
+			$jeedomVersion  = jeedom::version() ?? '0';
+			$displayInfoValue = version_compare($jeedomVersion, '4.4.0', '>=');
+			if ($displayInfoValue) {
+			?>
+				<div class="col-sm-2">
+					<legend><i class=" fas fa-comments"></i> {{Community}}</legend>
+					<div class="eqLogicThumbnailContainer">
+						<div class="cursor eqLogicAction logoSecondary" data-action="createCommunityPost" style="color:rgb(27,161,242);">
+							<i class="fas fa-ambulance"></i>
+							<br>
+							<span style="color:var(--txt-color)">{{Créer un post Community}}</span>
+						</div>
+					</div>
+				</div>
+			<?php
+			}
+			?>
 		</div>
 		<legend><i class="icon divers-slightly"></i> {{Mes poubelles}}</legend>
 		<div class="input-group" style="margin:5px;">
@@ -310,6 +335,37 @@ foreach ($eqLogics as $eqLogic) {
 									<input type="checkbox" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="widgetTemplate" />
 								</div>
 							</div>
+
+							<div class="form-group">
+								<label class="col-sm-4 control-label">{{Affichage du format date}}</label>
+								<div class="col-sm-6">
+									<select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="dateFormat">
+										<option value="Y-m-d H:i">2022-10-16 16:30</option>
+										<option value="d/m/Y H:i">16/10/2022 16:30</option>
+										<option value="d/m/y H:i">16/10/22 16:30</option>
+										<option value="d/m/y">16/10/22</option>
+										<option value="D d/m/Y">Lun 16/10/2022</option>
+										<option value="l d F">Lundi 16 Octobre</option>
+										<option value="custom">Personnalisé</option>
+										<!-- <option value="U">1665763502 (timestamp)</option> -->
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group" style="padding-top:2px;">
+								<div class="dateFormatCustomDiv" style="display:none;">
+									<label class="col-sm-4 control-label">Format de date personnalisé
+										<sup>
+											<i class="fas fa-question-circle floatright" style="color: var(--al-info-color) !important;" title="Cf <a href='https://www.php.net/manual/en/datetime.format.php'>doc PHP</a> pour définir un format correct"></i>
+										</sup>
+									</label>
+									<div class="col-sm-6">
+										<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="dateFormatCustom" placeholder="{{Date au format PHP}}" />
+									</div>
+								</div>
+							</div>
+
+
 						</div>
 						<br />
 						<div class="col-lg-5">
