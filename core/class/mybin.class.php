@@ -599,11 +599,11 @@ class mybin extends eqLogic {
     }
 
     public static function dateToFrench($date, $format) {
-        $english_days = array('Monday', 'Mon', 'Tuesday', 'Tue', 'Wednesday', 'Wed', 'Thursday', 'Thu', 'Friday', 'Fri', 'Saturday', 'Sat', 'Sunday', 'Sun');
+        $english_days = array('/\bMonday\b/', '/\bMon\b/', '/\bTuesday\b/', '/\bTue\b/', '/\bWednesday\b/', '/\bWed\b/', '/\bThursday\b/', '/\bThu\b/', '/\bFriday\b/', '/\bFri\b/', '/\bSaturday\b/', '/\bSat\b/', '/\bSunday\b/', '/\bSun\b/');
         $french_days = array('Lundi', 'Lun', 'Mardi', 'Mar', 'Mercredi', 'Mer', 'Jeudi', 'Jeu', 'Vendredi', 'Ven', 'Samedi', 'Sam', 'Dimanche', 'Dim');
-        $english_months = array('January', 'Jan', 'February', 'Feb', 'March', 'Mar', 'April', 'Apr', 'May', 'May', 'June', 'Jun', 'July', 'Jul', 'August', 'Aug', 'September', 'Sep', 'October', 'Oct', 'November', 'Nov', 'December', 'Dec');
-        $french_months = array('Janvier', 'Jan', 'Février', 'Fév', 'Mars', 'Mars', 'Avril', 'Avr', 'Mai', 'Mai', 'Juin', 'Juin', 'Juillet', 'Juil', 'Août', 'Août', 'Septembre', 'Sep', 'Octobre', 'Oct', 'Novembre', 'Nov', 'Décembre', 'Déc');
-        return str_replace($english_months, $french_months, str_replace($english_days, $french_days, date($format, strtotime($date))));
+        $english_months = array('/\bJanuary\b/', '/\bJan\b/', '/\bFebruary\b/', '/\bFeb\b/', '/\bMarch\b/', '/\bMar\b/', '/\bApril\b/', '/\bApr\b/', '/\bMay\b/', '/\bMay\b/', '/\bJune\b/', '/\bJun\b/', '/\bJuly\b/', '/\bJul\b/', '/\bAugust\b/', '/\bAug\b/', '/\bSeptember\b/', '/\bSep\b/', '/\bOctober\b/', '/\bOct\b/', '/\bNovember\b/', '/\bNov\b/', '/\bDecember\b/', '/\bDec\b/');
+        $french_months = array('Janvier', 'Janv', 'Février', 'Févr', 'Mars', 'Mars', 'Avril', 'Avril', 'Mai', 'Mai', 'Juin', 'Juin', 'Juillet', 'Juil', 'Août', 'Août', 'Septembre', 'Sept', 'Octobre', 'Oct', 'Novembre', 'Nov', 'Décembre', 'Déc');
+        return preg_replace($english_months, $french_months, preg_replace($english_days, $french_days, date($format, strtotime($date))));
     }
 
     public static function createWhole() {
