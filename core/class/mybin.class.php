@@ -704,7 +704,7 @@ class mybin extends eqLogic {
         $nombreRamassage = 5;
 
         for ($i = 0; $i < $nombreRamassage; $i++) {
-            $timestamp = strtotime($dernierRamassage) + (intdiv(strtotime("now") - strtotime($dernierRamassage), 7 * 86400 * $cycleRamassage) + 1) * 86400 * $cycleRamassage  + ($i * 86400 * $cycleRamassage);
+            $timestamp = strtotime($dernierRamassage) + (intdiv(strtotime("now") - strtotime($dernierRamassage), 86400 * $cycleRamassage) + 1) * 86400 * $cycleRamassage  + ($i * 86400 * $cycleRamassage);
             $newDate = date('Y-m-d', $timestamp);
             self::debug('Ajout date calculée automatiquement : ' . $newDate);
             $this->addSpecificDates($newDate);
