@@ -307,12 +307,11 @@ foreach ($eqLogics as $eqLogic) {
 							<div class="form-group">
 								<label class="col-sm-3 control-label help" data-help="{{En automatique, le compteur s'incrémentera à chaque ramassage ou lorsque la commande 'ack' est exécutée. En manuel, il ne s'incrémentera que si la commande 'ack' est exécutée.}}">{{Type}}</label>
 								<div class="col-sm-7">
-									<span class="col-sm-4">
-										<select id="sel_counter" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="counter">
-											<option value="auto">{{Automatique}}</option>
-											<option value="manu">{{Manuel}}</option>
-										</select>
-									</span>
+									<select id="sel_counter" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="counter">
+										<option value="auto">{{Automatique}}</option>
+										<option value="manu">{{Manuel}}</option>
+									</select>
+
 								</div>
 							</div>
 							<div class="form-group">
