@@ -298,7 +298,7 @@ foreach ($eqLogics as $eqLogic) {
 								<div class="col-sm-6 input-group">
 									<input class="eqLogicAttr expressionAttr form-control roundedLeft ui-autocomplete-input notifCondition" data-l1key="configuration" data-l2key="notifCondition">
 									<span class="input-group-btn">
-										<button type="button" class="btn btn-default cursor listCmdInfo tooltipstered" tooltip="Rechercher une commande"><i class="fas fa-list-alt"></i></button>
+										<button type="button" class="btn btn-default cursor listCmdInfoCond tooltipstered" tooltip="Rechercher une commande"><i class="fas fa-list-alt"></i></button>
 									</span>
 								</div>
 							</div>

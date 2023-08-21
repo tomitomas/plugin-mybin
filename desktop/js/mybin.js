@@ -50,7 +50,7 @@ $("body").off('click', '.listCmdAction').on('click', '.listCmdAction', function 
 });
 
 // permet d'afficher la liste des cmd Jeedom pour choisir sa commande de type "info"
-$("body").off('click', '.listCmdInfo').on('click', '.listCmdInfo', function () {
+$("body").off('click', '.listCmdInfoCond').on('click', '.listCmdInfoCond', function () {
   //var type = $(this).attr('data-type');
   //var el = $(this).closest('.' + type).find('.expressionAttr[data-l2key=notifCondition]');
   var el = $("body").find('.expressionAttr[data-l2key=notifCondition]');
