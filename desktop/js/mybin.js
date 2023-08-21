@@ -256,9 +256,6 @@ function addCron(_cron) {
   div += '</a>';
   div += '</span>';
   div += '</div>';
-  div += '<span class="input-group-btn" >';
-  div += '<input type="text" class="eqLogicAttr mycron" data-l1key="add_remove" style="width:50px" title="jour à ajouter/supprimer" value="0" />';
-  div += '</span>';
   div += '</div>';
   div += '</div>';
   div += '</div>';
