@@ -32,16 +32,12 @@ class mybin extends eqLogic {
 	public static $_widgetPossibility = array();
    */
 
-    public static function cron5() {
-        $eqLogics = self::byType(__CLASS__, true);
-
-
+    public static function checkAllBins() {
         /** @var mybin $eqLogic */
-        foreach ($eqLogics as $eqLogic) {
+        foreach (self::byType(__CLASS__, true) as $eqLogic) {
             $eqLogic->checkBin();
         }
     }
-
 
     public static function addCronCheck() {
         $cron = cron::byClassAndFunction(__CLASS__, 'checkAutoDate');
@@ -55,11 +51,30 @@ class mybin extends eqLogic {
             $cron->setTimeout(5);
             $cron->save();
         }
+
+        $cron = cron::byClassAndFunction(__CLASS__, 'checkAllBins');
+        if (!is_object($cron)) {
+            $cron = new cron();
+            $cron->setClass(__CLASS__);
+            $cron->setFunction('checkAllBins');
+            $cron->setEnable(1);
+            $cron->setDeamon(0);
+            $cron->setSchedule('*/5 * * * *');
+            $cron->setTimeout(5);
+            $cron->save();
+        }
     }
 
     public static function removeCronItems() {
         try {
             $crons = cron::searchClassAndFunction(__CLASS__, 'checkAutoDate');
+            if (is_array($crons)) {
+                foreach ($crons as $cron) {
+                    $cron->remove();
+                }
+            }
+
+            $crons = cron::searchClassAndFunction(__CLASS__, 'checkAllBins');
             if (is_array($crons)) {
                 foreach ($crons as $cron) {
                     $cron->remove();

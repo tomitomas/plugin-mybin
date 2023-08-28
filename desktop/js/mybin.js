@@ -50,7 +50,7 @@ $("body").off('click', '.listCmdAction').on('click', '.listCmdAction', function 
 });
 
 // permet d'afficher la liste des cmd Jeedom pour choisir sa commande de type "info"
-$("body").off('click', '.listCmdInfo').on('click', '.listCmdInfo', function () {
+$("body").off('click', '.listCmdInfoCond').on('click', '.listCmdInfoCond', function () {
   //var type = $(this).attr('data-type');
   //var el = $(this).closest('.' + type).find('.expressionAttr[data-l2key=notifCondition]');
   var el = $("body").find('.expressionAttr[data-l2key=notifCondition]');
@@ -172,27 +172,31 @@ function addCmdToTable(_cmd) {
 }
 
 function addAction(_action, _type) {
-  var div = '<div class="' + _type + '">';
-  div += '<div class="form-group ">';
 
-  div += '<label class="col-sm-3 control-label">Action</label>';
-  div += '<div class="col-sm-7">';
+  var div = '<div class="' + _type + '">';
+  div += '<div class="form-group">';
+  // div += '<div class="col-sm-1">';
+  // div += '<input type="checkbox" class="expressionAttr" data-l1key="options" data-l2key="enable" checked title="{{Décocher pour désactiver l\'action}}" />';
+  // div += '</div>';
+
+  div += '<div class="col-sm-5 has-success">';
   div += '<div class="input-group">';
   div += '<span class="input-group-btn">';
-  div += '<a class="btn btn-default bt_removeAction roundedLeft" data-type="' + _type + '"><i class="fas fa-minus-circle"></i></a>';
+  div += '<a class="btn btn-default bt_removeAction btn-sm" data-type="' + _type + '"><i class="fas fa-minus-circle"></i></a>';
   div += '</span>';
-  div += '<input class="expressionAttr form-control cmdAction" data-l1key="cmd" data-type="' + _type + '" />';
+
+  div += '<input class="expressionAttr form-control input-sm cmdAction" data-l1key="cmd" data-type="' + _type + '" />';
   div += '<span class="input-group-btn">';
-  div += '<a class="btn btn-default listAction" data-type="' + _type + '" title="{{Sélectionner un mot-clé}}"><i class="fa fa-tasks"></i></a>';
-  div += '<a class="btn btn-default listCmdAction roundedRight" data-type="' + _type + '" title="{{Sélectionner une commande}}"><i class="fas fa-list-alt"></i></a>';
+  div += '<a class="btn btn-success btn-sm listAction" data-type="' + _type + '" title="{{Sélectionner un mot-clé}}"><i class="fas fa-tasks"></i></a>';
+  div += '<a class="btn btn-success btn-sm listCmdAction" data-type="' + _type + '" title="{{Sélectionner une commande action}}"><i class="fas fa-list-alt"></i></a>';
+
+
   div += '</span>';
   div += '</div>';
-  div += '<div class="actionOptions">';
+  div += '</div>';
+  div += '<div class="col-sm-5 actionOptions" id="' + jeedomUtils.uniqId() + '">';
   div += jeedom.cmd.displayActionOption(init(_action.cmd, ''), _action.options);
   div += '</div>';
-  div += '</div>';
-  div += '</div>';
-
   div += '</div>';
 
   $('#div_' + _type).append(div);
@@ -221,24 +225,27 @@ function addDay(_day) {
   $('#div_specific_day .specific_day').last().setValues(_day, '.myday');
 }
 
-$('.datetimepicker').datetimepicker({
-  lang: 'fr',
-  dayOfWeekStart: 1,
-  i18n: {
-    fr: {
-      months: [
-        'Janvier', 'Février', 'Mars', 'Avril',
-        'Mai', 'Juin', 'Juillet', 'Aout',
-        'Septembre', 'Octobre', 'Novembre', 'Décembre',
-      ],
-      dayOfWeek: [
-        "Di", "Lu", "Ma", "Me",
-        "Je", "Ve", "Sa",
-      ]
-    }
-  },
-  timepicker: false,
-  format: 'Y-m-d'
+$(document).on('focus', ".datetimepicker", function () {
+  $(this).datetimepicker({
+    // $('.datetimepicker').datetimepicker({
+    lang: 'fr',
+    dayOfWeekStart: 1,
+    i18n: {
+      fr: {
+        months: [
+          'Janvier', 'Février', 'Mars', 'Avril',
+          'Mai', 'Juin', 'Juillet', 'Aout',
+          'Septembre', 'Octobre', 'Novembre', 'Décembre',
+        ],
+        dayOfWeek: [
+          "Di", "Lu", "Ma", "Me",
+          "Je", "Ve", "Sa",
+        ]
+      }
+    },
+    timepicker: false,
+    format: 'Y-m-d'
+  })
 });
 
 function addCron(_cron) {
@@ -256,9 +263,6 @@ function addCron(_cron) {
   div += '</a>';
   div += '</span>';
   div += '</div>';
-  div += '<span class="input-group-btn" >';
-  div += '<input type="text" class="eqLogicAttr mycron" data-l1key="add_remove" style="width:50px" title="jour à ajouter/supprimer" value="0" />';
-  div += '</span>';
   div += '</div>';
   div += '</div>';
   div += '</div>';
