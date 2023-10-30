@@ -622,17 +622,21 @@ class mybin extends eqLogic {
     }
 
     public static function createWhole() {
-        $eqLogicClient = new mybin();
+        $widget = eqlogic::bylogicalId('Mes poubelles', __CLASS__);
+
+        if (!is_object($widget)) {
+            $widget = new mybin();
+        }
         $defaultRoom = intval(config::byKey('parentObject', 'mybin', '', true));
-        $eqLogicClient->setName(__('Mes poubelles', __FILE__));
-        $eqLogicClient->setIsEnable(1);
-        $eqLogicClient->setIsVisible(1);
-        $eqLogicClient->setLogicalId(__('Mes poubelles', __FILE__));
-        $eqLogicClient->setEqType_name('mybin');
-        if ($defaultRoom) $eqLogicClient->setObject_id($defaultRoom);
-        $eqLogicClient->setConfiguration('type', 'whole');
-        $eqLogicClient->save();
-        self::info("Ensemble créé");
+        $widget->setName(__('Mes poubelles', __FILE__));
+        $widget->setIsEnable(1);
+        $widget->setIsVisible(1);
+        $widget->setLogicalId(__('Mes poubelles', __FILE__));
+        $widget->setEqType_name('mybin');
+        if ($defaultRoom) $widget->setObject_id($defaultRoom);
+        $widget->setConfiguration('type', 'whole');
+        $widget->save();
+        self::info("Widget créé");
     }
 
     public static function postConfig_globalWidget($value) {
