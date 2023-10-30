@@ -26,7 +26,7 @@
         "Supprimer": "Delete",
         "Equipement": "Equipment",
         "Commandes": "Commands",
-        "Nom de l'équipement My Bin": "Name of the My Bin equipment",
+        "Nom de l'équipement": "Equipment name",
         "Objet parent": "Parent object",
         "Aucun": "None",
         "Catégorie": "Category",
@@ -112,7 +112,10 @@
         "Décalage au jour suivant sauf dimanche": "Move to next day except sunday",
         "Décalage au jour suivant sauf weekend": "Move to next weekday",
         "avec Alsace-Moselle": "including Alsace-Moselle",
-        "Supprimer l'occurence": "Remove this occurence"
+        "Supprimer l'occurence": "Remove this occurence",
+        "Affichage du format date": "Date format",
+        "Format de date personnalisé": "Custom format",
+        "Date au format PHP": "Date using PHP format"
     },
     "plugins\/mybin\/desktop\/js\/mybin.js": {
         "Min": "Min",

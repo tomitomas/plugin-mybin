@@ -50,7 +50,7 @@ $("body").off('click', '.listCmdAction').on('click', '.listCmdAction', function 
 });
 
 // permet d'afficher la liste des cmd Jeedom pour choisir sa commande de type "info"
-$("body").off('click', '.listCmdInfo').on('click', '.listCmdInfo', function () {
+$("body").off('click', '.listCmdInfoCond').on('click', '.listCmdInfoCond', function () {
   //var type = $(this).attr('data-type');
   //var el = $(this).closest('.' + type).find('.expressionAttr[data-l2key=notifCondition]');
   var el = $("body").find('.expressionAttr[data-l2key=notifCondition]');
@@ -67,7 +67,7 @@ $("body").undelegate(".listAction", 'click').delegate(".listAction", 'click', fu
     el.value(result.human);
     jeedom.cmd.displayActionOption(el.value(), '', function (html) {
       el.closest('.' + type).find('.actionOptions').html(html);
-      taAutosize();
+      jeedomUtils.taAutosize();
     });
   });
 });
@@ -85,6 +85,14 @@ $('body').off('focusout', '.cmdAction.expressionAttr[data-l1key=cmd]').on('focus
 
 $("body").off('click', '.bt_removeDay').on('click', '.bt_removeDay', function () {
   $(this).closest('.specific_day').remove();
+});
+
+$("body").off('click', '.bt_removeDayAuto').on('click', '.bt_removeDayAuto', function () {
+  elts = $(this).closest('#div_specific_day_auto').find('.eqLogicAttr')
+  elts.each(function (key, element) {
+    element.value = ""
+  }
+  );
 });
 
 $("body").off('click', '.bt_removeCron').on('click', '.bt_removeCron', function () {
@@ -138,14 +146,14 @@ function addCmdToTable(_cmd) {
   tr += '<span class="subType" subType="' + init(_cmd.subType) + '"></span>';
   tr += '</td>';
   tr += '<td>';
+  tr += '<span class="cmdAttr" data-l1key="htmlstate"></span>';
+  tr += '</td>';
+  tr += '<td>';
   tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="minValue" placeholder="{{Min}}" title="{{Min}}" style="width:30%;display:inline-block;">';
   tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="maxValue" placeholder="{{Max}}" title="{{Max}}" style="width:30%;display:inline-block;">';
   tr += '<input class="cmdAttr form-control input-sm" data-l1key="unite" placeholder="Unité" title="{{Unité}}" style="width:30%;display:inline-block;margin-left:2px;">';
   tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label></span> ';
   tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label></span> ';
-  tr += '</td>';
-  tr += '<td>';
-  tr += '<span class="cmdAttr" data-l1key="htmlstate"></span>';
   tr += '</td>';
   tr += '<td>';
   if (is_numeric(_cmd.id)) {
@@ -164,27 +172,31 @@ function addCmdToTable(_cmd) {
 }
 
 function addAction(_action, _type) {
-  var div = '<div class="' + _type + '">';
-  div += '<div class="form-group ">';
 
-  div += '<label class="col-sm-3 control-label">Action</label>';
-  div += '<div class="col-sm-7">';
+  var div = '<div class="' + _type + '">';
+  div += '<div class="form-group">';
+  // div += '<div class="col-sm-1">';
+  // div += '<input type="checkbox" class="expressionAttr" data-l1key="options" data-l2key="enable" checked title="{{Décocher pour désactiver l\'action}}" />';
+  // div += '</div>';
+
+  div += '<div class="col-sm-5 has-success">';
   div += '<div class="input-group">';
   div += '<span class="input-group-btn">';
-  div += '<a class="btn btn-default bt_removeAction roundedLeft" data-type="' + _type + '"><i class="fas fa-minus-circle"></i></a>';
+  div += '<a class="btn btn-default bt_removeAction btn-sm" data-type="' + _type + '"><i class="fas fa-minus-circle"></i></a>';
   div += '</span>';
-  div += '<input class="expressionAttr form-control cmdAction" data-l1key="cmd" data-type="' + _type + '" />';
+
+  div += '<input class="expressionAttr form-control input-sm cmdAction" data-l1key="cmd" data-type="' + _type + '" />';
   div += '<span class="input-group-btn">';
-  div += '<a class="btn btn-default listAction" data-type="' + _type + '" title="{{Sélectionner un mot-clé}}"><i class="fa fa-tasks"></i></a>';
-  div += '<a class="btn btn-default listCmdAction roundedRight" data-type="' + _type + '" title="{{Sélectionner une commande}}"><i class="fas fa-list-alt"></i></a>';
+  div += '<a class="btn btn-success btn-sm listAction" data-type="' + _type + '" title="{{Sélectionner un mot-clé}}"><i class="fas fa-tasks"></i></a>';
+  div += '<a class="btn btn-success btn-sm listCmdAction" data-type="' + _type + '" title="{{Sélectionner une commande action}}"><i class="fas fa-list-alt"></i></a>';
+
+
   div += '</span>';
   div += '</div>';
-  div += '<div class="actionOptions">';
+  div += '</div>';
+  div += '<div class="col-sm-5 actionOptions" id="' + jeedomUtils.uniqId() + '">';
   div += jeedom.cmd.displayActionOption(init(_action.cmd, ''), _action.options);
   div += '</div>';
-  div += '</div>';
-  div += '</div>';
-
   div += '</div>';
 
   $('#div_' + _type).append(div);
@@ -210,7 +222,12 @@ function addDay(_day) {
 
   $('#div_specific_day').append(div);
 
-  $('.datetimepicker').datetimepicker({
+  $('#div_specific_day .specific_day').last().setValues(_day, '.myday');
+}
+
+$(document).on('focus', ".datetimepicker", function () {
+  $(this).datetimepicker({
+    // $('.datetimepicker').datetimepicker({
     lang: 'fr',
     dayOfWeekStart: 1,
     i18n: {
@@ -228,10 +245,8 @@ function addDay(_day) {
     },
     timepicker: false,
     format: 'Y-m-d'
-  });
-
-  $('#div_specific_day .specific_day').last().setValues(_day, '.myday');
-}
+  })
+});
 
 function addCron(_cron) {
   var div = '<div class="specific_cron">';
@@ -263,16 +278,21 @@ function saveEqLogic(_eqLogic) {
   }
   _eqLogic.configuration.action_collect = $('#div_action_collect .action_collect').getValues('.expressionAttr');
   _eqLogic.configuration.action_notif = $('#div_action_notif .action_notif').getValues('.expressionAttr');
-  data = $('#div_specific_day .specific_day').getValues('.myday');
 
-  data.sort(function (a, b) {
+  data = $('#div_specific_day .specific_day').getValues('.myday');
+  data2 = data.filter(elt => {
+    return elt.myday != '';
+  });
+  data2.sort(function (a, b) {
     var x = a.myday, y = b.myday;
     return x < y ? -1 : x > y ? 1 : 0;
   });
 
-  _eqLogic.configuration.specific_day = data;
+  _eqLogic.configuration.specific_day = data2;
 
   _eqLogic.configuration.specific_cron = $('#div_specific_cron .specific_cron').getValues('.mycron');
+
+  _eqLogic.configuration.specific_day_auto = $('#div_specific_day_auto').getValues('.eqLogicAttr')[0];
 
   return _eqLogic;
 }
@@ -306,8 +326,22 @@ function printEqLogic(_eqLogic) {
         addCron(_eqLogic.configuration.specific_cron[i]);
       }
     }
+    if (isset(_eqLogic.configuration.specific_day_auto)) {
+      $('#div_specific_day_auto').setValues(_eqLogic.configuration.specific_day_auto, '.eqLogicAttr');
+    }
+
+
   }
 
   $('.allDates').hide();
   $('.dates-' + _eqLogic.id).show();
 }
+
+$('.eqLogicAttr[data-l1key=configuration][data-l2key=dateFormat]').on('change', function () {
+  if ($(this).val() == 'custom') {
+    $('.dateFormatCustomDiv').show();
+  }
+  else {
+    $('.dateFormatCustomDiv').hide();
+  }
+});

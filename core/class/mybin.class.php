@@ -32,15 +32,70 @@ class mybin extends eqLogic {
 	public static $_widgetPossibility = array();
    */
 
-    public static function cron5() {
-        $eqLogics = self::byType(__CLASS__, true);
-
-        foreach ($eqLogics as $eqLogic) {
+    public static function checkAllBins() {
+        /** @var mybin $eqLogic */
+        foreach (self::byType(__CLASS__, true) as $eqLogic) {
             $eqLogic->checkBin();
         }
     }
 
+    public static function addCronCheck() {
+        $cron = cron::byClassAndFunction(__CLASS__, 'checkAutoDate');
+        if (!is_object($cron)) {
+            $cron = new cron();
+            $cron->setClass(__CLASS__);
+            $cron->setFunction('checkAutoDate');
+            $cron->setEnable(1);
+            $cron->setDeamon(0);
+            $cron->setSchedule('15 0 * * *');
+            $cron->setTimeout(5);
+            $cron->save();
+        }
+
+        $cron = cron::byClassAndFunction(__CLASS__, 'checkAllBins');
+        if (!is_object($cron)) {
+            $cron = new cron();
+            $cron->setClass(__CLASS__);
+            $cron->setFunction('checkAllBins');
+            $cron->setEnable(1);
+            $cron->setDeamon(0);
+            $cron->setSchedule('*/5 * * * *');
+            $cron->setTimeout(5);
+            $cron->save();
+        }
+    }
+
+    public static function removeCronItems() {
+        try {
+            $crons = cron::searchClassAndFunction(__CLASS__, 'checkAutoDate');
+            if (is_array($crons)) {
+                foreach ($crons as $cron) {
+                    $cron->remove();
+                }
+            }
+
+            $crons = cron::searchClassAndFunction(__CLASS__, 'checkAllBins');
+            if (is_array($crons)) {
+                foreach ($crons as $cron) {
+                    $cron->remove();
+                }
+            }
+        } catch (Exception $e) {
+        }
+    }
+
+
     /*     * *********************Méthodes d'instance************************* */
+
+    public static function checkAutoDate() {
+        /** @var mybin $eqLogic */
+        foreach (eqLogic::byType(__CLASS__) as $eqLogic) {
+            if ($eqLogic->getConfiguration('type', '') == 'whole') {
+                continue;
+            }
+            $eqLogic->calculateNextAutoDate();
+        }
+    }
 
     public function checkBin() {
         if ($this->getConfiguration('type', '') == 'whole') {
@@ -96,7 +151,9 @@ class mybin extends eqLogic {
                 }
                 if ($nextRunRecorded == false && DateTime::createFromFormat("Y-m-d H:i", $collect) > $dtNow) {
                     $cmd = $this->getCmd(null, 'nextcollect');
-                    $cmd->event($collect);
+                    $date = self::dateToFrench($collect, $this->getDateFormat());
+                    $cmd->event($date);
+                    // $cmd->event($collect);
                     $nextRunRecorded = true;
                 }
             }
@@ -186,6 +243,7 @@ class mybin extends eqLogic {
             $this->setConfiguration('impaire', 1);
             $this->setConfiguration('color', 'green');
             $this->setConfiguration('counter', 'auto');
+            $this->setConfiguration('dateFormat', 'Y-m-d H:i');
             $this->setConfiguration('Occm_0', 1);
             for ($i = 1; $i <= 12; $i++) {
                 $this->setConfiguration('month_' . $i, 1);
@@ -219,7 +277,13 @@ class mybin extends eqLogic {
             if ($this->getConfiguration('collect_time') == '') {
                 throw new Exception($this->getHumanName() . ": " . __('L\'heure de ramassage ne peut pas être vide', __FILE__));
             }
+
+            $calc = $this->calculateNextAutoDate();
+            if (!$calc) {
+                $this->setConfiguration('specific_day_auto', '');
+            }
         }
+
 
         $specificCrons = $this->getConfiguration('specific_cron');
         if (is_array($specificCrons)) {
@@ -249,13 +313,21 @@ class mybin extends eqLogic {
                 foreach ($nextOne as $collect => $notif) {
                     if (DateTime::createFromFormat("Y-m-d H:i", $collect) > $dtNow) {
                         $cmd = $this->getCmd(null, 'nextcollect');
-                        $cmd->event($collect);
+                        $date = self::dateToFrench($collect, $this->getDateFormat());
+                        $cmd->event($date);
                     }
                 }
             }
         }
         $this->emptyCacheWidget();
         $this->refreshWhole();
+    }
+
+    public function getDateFormat() {
+        $dateFormat = $this->getConfiguration('dateFormat', 'Y-m-d H:i');
+        $dateCustom =  $this->getConfiguration('dateFormatCustom', 'Y-m-d H:i');
+        $final =  ($dateFormat == 'custom') ? $dateCustom : $dateFormat;
+        return $final;
     }
 
     public function toHtml($_version = 'dashboard') {
@@ -325,6 +397,8 @@ class mybin extends eqLogic {
                     $replace['#day' . $i . '#'] = $this->getDayLetter($day);
                     $replace['#date' . $i . '#'] = $dateD . '/' . $dateM;
                     $display = "";
+
+                    /** @var mybin $eqLogic */
                     foreach ($eqLogics as $eqLogic) {
                         if ($eqLogic->getConfiguration('type') == 'whole') {
                             continue;
@@ -539,18 +613,30 @@ class mybin extends eqLogic {
         return $day;
     }
 
+    public static function dateToFrench($date, $format) {
+        $english_days = array('/\bMonday\b/', '/\bMon\b/', '/\bTuesday\b/', '/\bTue\b/', '/\bWednesday\b/', '/\bWed\b/', '/\bThursday\b/', '/\bThu\b/', '/\bFriday\b/', '/\bFri\b/', '/\bSaturday\b/', '/\bSat\b/', '/\bSunday\b/', '/\bSun\b/');
+        $french_days = array('Lundi', 'Lun', 'Mardi', 'Mar', 'Mercredi', 'Mer', 'Jeudi', 'Jeu', 'Vendredi', 'Ven', 'Samedi', 'Sam', 'Dimanche', 'Dim');
+        $english_months = array('/\bJanuary\b/', '/\bJan\b/', '/\bFebruary\b/', '/\bFeb\b/', '/\bMarch\b/', '/\bMar\b/', '/\bApril\b/', '/\bApr\b/', '/\bMay\b/', '/\bMay\b/', '/\bJune\b/', '/\bJun\b/', '/\bJuly\b/', '/\bJul\b/', '/\bAugust\b/', '/\bAug\b/', '/\bSeptember\b/', '/\bSep\b/', '/\bOctober\b/', '/\bOct\b/', '/\bNovember\b/', '/\bNov\b/', '/\bDecember\b/', '/\bDec\b/');
+        $french_months = array('Janvier', 'Janv', 'Février', 'Févr', 'Mars', 'Mars', 'Avril', 'Avril', 'Mai', 'Mai', 'Juin', 'Juin', 'Juillet', 'Juil', 'Août', 'Août', 'Septembre', 'Sept', 'Octobre', 'Oct', 'Novembre', 'Nov', 'Décembre', 'Déc');
+        return preg_replace($english_months, $french_months, preg_replace($english_days, $french_days, date($format, strtotime($date))));
+    }
+
     public static function createWhole() {
-        $eqLogicClient = new mybin();
+        $widget = eqlogic::bylogicalId('Mes poubelles', __CLASS__);
+
+        if (!is_object($widget)) {
+            $widget = new mybin();
+        }
         $defaultRoom = intval(config::byKey('parentObject', 'mybin', '', true));
-        $eqLogicClient->setName(__('Mes poubelles', __FILE__));
-        $eqLogicClient->setIsEnable(1);
-        $eqLogicClient->setIsVisible(1);
-        $eqLogicClient->setLogicalId(__('Mes poubelles', __FILE__));
-        $eqLogicClient->setEqType_name('mybin');
-        if ($defaultRoom) $eqLogicClient->setObject_id($defaultRoom);
-        $eqLogicClient->setConfiguration('type', 'whole');
-        $eqLogicClient->save();
-        self::info("Ensemble créé");
+        $widget->setName(__('Mes poubelles', __FILE__));
+        $widget->setIsEnable(1);
+        $widget->setIsVisible(1);
+        $widget->setLogicalId(__('Mes poubelles', __FILE__));
+        $widget->setEqType_name('mybin');
+        if ($defaultRoom) $widget->setObject_id($defaultRoom);
+        $widget->setConfiguration('type', 'whole');
+        $widget->save();
+        self::info("Widget créé");
     }
 
     public static function postConfig_globalWidget($value) {
@@ -609,19 +695,55 @@ class mybin extends eqLogic {
         }
     }
 
-    public function addSpecificDates($newDate) {
-        // check if it's a date
-        if (DateTime::createFromFormat('Y-m-d', $newDate) === false) {
-            self::error('La date ' . $newDate . ' n\'est pas valide (format : AAA-MM-JJ)');
+    private function calculateNextAutoDate() {
+
+        $specificDayAuto = $this->getConfiguration('specific_day_auto');
+        if (!is_array($specificDayAuto) || !isset($specificDayAuto['last_day']) || !isset($specificDayAuto['recurrence'])) {
+            self::debug('Il manque des éléments pour les jours auto');
+            return false;
+        }
+
+        $last = $specificDayAuto['last_day'];
+        $cycleRamassage = $specificDayAuto['recurrence'];
+        if ($last == '' && $cycleRamassage == '') {
             return;
         }
 
+        if ($last == '' || DateTime::createFromFormat('Y-m-d', $last) === false) {
+            self::warning('La date ' . $last . ' du "calcul auto" n\'est pas valide (format : AAA-MM-JJ)');
+            return false;
+        }
+
+        if ($cycleRamassage == '' || !is_numeric($cycleRamassage)) {
+            self::warning('La recurrence ' . $cycleRamassage . ' du "calcul auto" n\'est pas valide');
+            return false;
+        }
+
+        $dernierRamassage = $last . ' noon';
+        $nombreRamassage = 5;
+
+        for ($i = 0; $i < $nombreRamassage; $i++) {
+            $timestamp = strtotime($dernierRamassage) + (intdiv(strtotime("now") - strtotime($dernierRamassage), 86400 * $cycleRamassage) + 1) * 86400 * $cycleRamassage  + ($i * 86400 * $cycleRamassage);
+            $newDate = date('Y-m-d', $timestamp);
+            self::debug('Ajout date calculée automatiquement : ' . $newDate);
+            $this->addSpecificDates($newDate);
+        }
+
+        return true;
+    }
+
+    public function addSpecificDates($newDate) {
+        // check if it's a date
+        if (DateTime::createFromFormat('Y-m-d', $newDate) === false) {
+            self::info('La date ' . $newDate . ' n\'est pas valide (format : AAA-MM-JJ)');
+            return;
+        }
 
         // check if it's a date in the futur
         $dtNow = strtotime(date('Y-m-d'));
         $dtCheck = strtotime($newDate);
         if ($dtCheck < $dtNow) {
-            self::error('La date ' . $newDate . ' est dans le passé ! Pas d\'ajout');
+            self::info('La date ' . $newDate . ' est dans le passé ! Pas d\'ajout');
             return;
         }
 
@@ -639,7 +761,7 @@ class mybin extends eqLogic {
             self::debug('Adding ' . $newDate . ' as a new specific date');
             array_push($currentDates, array("myday" => $newDate));
             sort($currentDates);
-            $this->setConfiguration('specific_day', $currentDates)->save();
+            $this->setConfiguration('specific_day', $currentDates)->save(true);
         }
     }
 
