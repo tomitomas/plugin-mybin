@@ -23,17 +23,17 @@ foreach ($eqLogics as $eqLogic) {
 			<div class="col-sm-10">
 				<legend><i class="fas fa-cog"></i> {{Gestion}}</legend>
 				<div class="eqLogicThumbnailContainer">
-					<div class="cursor eqLogicAction logoPrimary" data-action="add">
+					<div class="cursor eqLogicAction logoPrimary" data-action="add" style="color:var(--main-color);">
 						<i class="fas fa-plus-circle"></i>
 						<br>
 						<span>{{Ajouter}}</span>
 					</div>
-					<div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
+					<div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf" style="color:var(--main-color);">
 						<i class="fas fa-wrench"></i>
 						<br>
 						<span>{{Configuration}}</span>
 					</div>
-					<div class="cursor eqLogicAction logoSecondary" id="bt_configImages">
+					<div class="cursor eqLogicAction logoSecondary" id="bt_configImages" style="color:var(--main-color);">
 						<i class="fas fa-images"></i>
 						<br>
 						<span>{{Personnalisation}}</span>
@@ -50,7 +50,7 @@ foreach ($eqLogics as $eqLogic) {
 				<div class="col-sm-2">
 					<legend><i class=" fas fa-comments"></i> {{Community}}</legend>
 					<div class="eqLogicThumbnailContainer">
-						<div class="cursor eqLogicAction logoSecondary" data-action="createCommunityPost" style="color:rgb(27,161,242);">
+						<div class="cursor eqLogicAction logoSecondary" data-action="createCommunityPost" style="color:var(--main-color);">
 							<i class="fas fa-ambulance"></i>
 							<br>
 							<span style="color:var(--txt-color)">{{Créer un post Community}}</span>
