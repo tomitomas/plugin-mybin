@@ -1,3 +1,7 @@
+:root {
+    --main-color: rgb(8, 138, 133);
+}
+
 #customBin {
     background: no-repeat url("../../data/images/icon_bkg.png") !important;
     background-size: 60% !important;
@@ -12,7 +16,7 @@
     max-width: 67px !important;
     overflow: hidden;
     vertical-align: baseline;
-    padding-top: 0px !important;
+    padding-top: 2px !important;
     margin-bottom: 18px !important;
 }
 
