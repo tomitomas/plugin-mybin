@@ -457,7 +457,7 @@ class mybin extends eqLogic {
 
                 $counterCmd = $this->getCmd(null, 'counter');
                 if ($counterCmd->getIsVisible() == 1) {
-                    $cmdVal = $counterCmd->execCmd();
+                    $cmdVal = (int) $counterCmd->execCmd();
                     $replace['#counter_id#'] = $counterCmd->getId();
                     $replace['#counter_uid#'] = $counterCmd->getId();
                     $replace['#counter_eqLogic_id#'] = $replace['#uid#'];
